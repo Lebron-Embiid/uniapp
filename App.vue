@@ -1,0 +1,235 @@
+<script>
+	export default {
+		onLaunch: function () {
+			console.log('App Launch')
+		},
+		onShow: function () {
+			console.log('App Show')
+		},
+		onHide: function () {
+			console.log('App Hide')
+		}
+	}
+</script>
+
+<style lang="scss">
+	/*每个页面公共css */
+	.mt44{
+		margin-top: 44px;
+	}
+	.mt130{
+		margin-top: 130upx;
+	}
+	.form_box{
+		display: block;
+		float: right;
+		width: 530upx;
+		background: #fff;
+		margin-top: 30upx;
+		position: relative;
+		border-radius: 5px;
+		input{
+			width: 80%;
+			height: 70upx;
+			color: #9d9d9d;
+			font-size: 22upx;
+			padding: 0 20upx;
+			box-sizing: border-box;
+		}
+		button{
+			width: 31upx;
+			height: 31upx;
+			position: absolute;
+			right: 30upx;
+			top: 20upx;
+			padding: 0;
+			margin: 0;
+			background: none;
+			border: 0;
+			&:after{
+				border: 0;
+			}
+			image{
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+	.list_nav{
+		position: fixed;
+		width: 100%;
+		left: 0;
+		top: 0;
+		z-index: 20;
+		background: #fff;
+		color: #00001f;
+		font-size: 28upx;
+		text-align: center;
+		overflow: hidden;
+		view{
+			width: 50%;
+			float: left;
+			padding: 20upx 0;
+			border-bottom: 1upx solid #fff;
+			&.active{
+				border-bottom: 1upx solid #3E3E3E;
+			}
+		}
+	}
+	.index_swiper { 
+		.uni-swiper-dots{
+			bottom: 30upx;
+			.uni-swiper-dot{
+				width: 29upx;
+				height: 5upx;
+				border-radius: 20upx;
+				background: rgba(255,255,255,.48);
+			}
+			.uni-swiper-dot-active{
+				background: rgba(255,255,255,1);
+			}
+		}
+	}
+	// 视频样式
+	.video_item{
+		margin-bottom: 30upx;
+		border-radius: 10upx;
+		box-shadow: 0 0 20upx #D6D6DB;
+		.v_poster{
+			position: relative;
+			.poster_img{
+				display: block;
+				width: 100%;
+				height: 355upx;
+			}
+			.v_play{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,.22);
+				z-index: 5;
+				image{
+					display: block;
+					width: 72upx;
+					height: 72upx !important;
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%,-50%);
+				}
+			}
+		}
+		.v_info{
+			background: #fff;
+			padding: 25upx 25upx 35upx;
+			box-sizing: border-box;
+			.head_img{
+				float: left;
+				margin-right: 25upx;
+				image{
+					display: block;
+					width: 75upx;
+					height: 75upx !important;
+				}
+			}
+			.v_title{
+				color: #00001f;
+				font-size: 24upx;
+				margin: 5upx 0 6upx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.v_look{
+				color: #4f4f50;
+				font-size: 20upx;
+			}
+		}
+	}
+	// 音频
+	uni-audio{
+		display: block;
+	}
+	
+	.audio_list{
+		padding: 30upx 20upx;
+		box-sizing: border-box;
+		.audio_item{
+			background: #fff;
+			margin-bottom: 20upx;
+			border: 1upx solid #E6E6E6;
+			padding: 50upx 30upx 40upx;
+			box-sizing: border-box;
+			border-radius: 10upx;
+			image{
+				display: block;
+				width: 269upx;
+				height: 269upx !important;
+				margin: 0 auto 50upx;
+			}
+			.ai_title{
+				color: #00001f;
+				font-size: 24upx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+	// 资讯
+	.news_item{
+		overflow: hidden;
+		padding-bottom: 10upx;
+		border-bottom: 1upx solid #F0F0F0;
+		margin-bottom: 10upx;
+		.item_left{
+			width: 450upx;
+			float: left;
+			padding-right: 20upx;
+			box-sizing: border-box;
+			.news_title{
+				color: #333;
+				font-size: 28upx;
+				overflow : hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				word-wrap: break-word;
+				word-break: break-all;
+			}
+			.news_info{
+				color: #333;
+				font-size: 22upx;
+				margin: 20upx 0 50upx;
+			}
+			.news_icon{
+				color: #bbb;
+				font-size: 22upx;
+				view{
+					display: inline-block;
+					margin-right: 20upx;
+					image{
+						display: inline-block;
+						vertical-align: middle;
+						width: 20upx;
+						height: 20upx !important;
+						margin: 0 5upx 3upx 0;
+					}
+				}
+			}
+		}
+		.item_right{
+			width: 260upx;
+			float: right;
+			image{
+				display: block;
+				width: 260upx;
+				height: 260upx;
+			}
+		}
+	}
+</style>

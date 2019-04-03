@@ -1,0 +1,14 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "素材",
+  "titleNView": {
+    "buttons": [
+      {
+        "type": "none",
+        "float": "right",
+        "text": "发布素材",
+        "fontSize": "28upx"
+      }
+    ]
+  }
+}

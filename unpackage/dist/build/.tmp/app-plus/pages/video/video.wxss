@@ -1,0 +1,11 @@
+
+.video_box.data-v-8dfbb44c{
+	padding: 30rpx 20rpx;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+#myVideo.data-v-8dfbb44c{
+	display: block;
+	width: 100%;
+}
+

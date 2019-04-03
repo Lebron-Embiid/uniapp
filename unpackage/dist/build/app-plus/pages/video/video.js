@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"video_box.",[1],"data-v-8dfbb44c{ padding: ",[0,30]," ",[0,20],"; -webkit-box-sizing: border-box; box-sizing: border-box; }\n#myVideo.data-v-8dfbb44c{ display: block; width: 100%; }\n",],"Some selectors are not allowed in component wxss, including tag name selectors, ID selectors, and attribute selectors.(./pages/video/video.wxss:7:1)",{path:"./pages/video/video.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/video/video.wxml') } }));

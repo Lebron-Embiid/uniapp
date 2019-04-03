@@ -1,0 +1,172 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"app-plus": {
+//                     "bounce": "none", //关闭窗口回弹效果
+//                     "titleNView": {
+// 						"searchInput": {
+// 							"align": "left",
+// 							"backgroundColor": "rgba(255,255,255,1)",
+// 							"borderRadius": "3px",
+// 							"placeholder": "请输入您要搜索的关键词"
+// 						},
+						// "type": "transparent",
+// 						"buttons":[
+// 							{
+// 								"type": "home",
+// 								"float": "left"
+// 							}
+// 						]
+//                     }
+                }
+			}
+		},
+		{
+			"path": "pages/train/train",
+			"style": {
+				"navigationBarTitleText": "培训"
+			}
+		},
+		{
+			"path": "pages/video/video",
+			"style": {
+				"navigationBarTitleText": "视频"
+			}
+		},
+		{
+			"path": "pages/audio/audio",
+			"style": {
+				"navigationBarTitleText": "音频"
+			}
+		},
+		{
+			"path": "pages/mater/mater",
+			"style": {
+				"navigationBarTitleText": "素材",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"type": "none",
+								"float": "right",
+								"text": "发布素材",
+								"fontSize": "28upx"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/release_mater/release_mater",
+			"style": {
+				"navigationBarTitleText": "发布素材",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"type": "none",
+								"float": "right",
+								"text": "确定发布",
+								"fontSize": "28upx"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/about/about",
+			"style": {
+				"navigationBarTitleText": "关于我们"
+			}
+		},
+		{
+			"path": "pages/science/science",
+			"style": {
+				"navigationBarTitleText": "呦蓝百科"
+			}
+		},
+		{
+			"path": "pages/news/news",
+			"style": {
+				"navigationBarTitleText": "活动资讯"
+			}
+		},
+		{
+			"path": "pages/news_detail/news_detail",
+			"style": {
+				"navigationBarTitleText": "活动资讯"
+			}
+		},
+		{
+			"path": "pages/list/list",
+			"style": {
+				
+			}
+		},
+		{
+			"path": "pages/detail/detail",
+			"style": {}
+		},
+		{
+			"path": "pages/test/test",
+			"style": {
+				"navigationBarTitleText": "倒数",
+				"enablePullDownRefresh": true,
+				"app-plus": {
+                    "titleNView": {
+                        "type": "transparent"//透明渐变导航栏
+                    }
+                }
+			}
+		},
+		{
+			"path": "pages/ucenter/ucenter",
+			"style": {
+				"navigationBarTitleText": "个人中心"
+			}
+		}
+	],
+	"tabBar": {
+		"color": "rgba(255,255,255,.7)",
+		"selectedColor": "rgba(255,255,255,1)",
+		"backgroundColor": "#00001f",
+		"borderStyle": "black",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/footer_icon1.png",
+			"selectedIconPath": "static/footer_icon1_active.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/train/train",
+			"iconPath": "static/footer_icon2.png",
+			"selectedIconPath": "static/footer_icon2_active.png",
+			"text": "培训"
+		},{
+			"pagePath": "pages/mater/mater",
+			"iconPath": "static/footer_icon3.png",
+			"selectedIconPath": "static/footer_icon3_active.png",
+			"text": "素材"
+		},{
+			"pagePath": "pages/test/test",
+			"iconPath": "static/footer_icon4.png",
+			"selectedIconPath": "static/footer_icon4_active.png",
+			"text": "商城"
+		},{
+			"pagePath": "pages/ucenter/ucenter",
+			"iconPath": "static/footer_icon5.png",
+			"selectedIconPath": "static/footer_icon5_active.png",
+			"text": "我的"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "呦蓝",
+		"navigationBarBackgroundColor": "#00001f",
+		"backgroundColor": "#FFFFFF"
+	}
+}

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "倒数",
+  "enablePullDownRefresh": true,
+  "titleNView": {
+    "type": "transparent"
+  }
+}
