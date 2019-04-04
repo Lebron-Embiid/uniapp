@@ -19,8 +19,11 @@
 纯净、温和的美肤元素，采撷能焕发女性娇嫩肌肤的美丽能量，帮助肌肤恢复平衡，焕活肌肤初生之美，守护每一刻，都如初美丽。</view>
 		</view>
 		<view class="page_ul">
-			<view class="prev">上一篇：焦恩俊携手多位知名歌手现身呦蓝周年庆</view>
-			<view class="next">下一篇：走进艾璐卡工厂——见证护肤新革命</view>
+			<view class="page_left">
+				<view class="prev">上一篇：焦恩俊携手多位知名歌手现身呦蓝周年庆</view>
+				<view class="next">下一篇：走进艾璐卡工厂——见证护肤新革命</view>
+			</view>
+			<view class="page_share" @click="toShare"><image src="../../static/share.png" mode="widthFix"></image></view>
 		</view>
 	</view>
 </template>
@@ -32,6 +35,20 @@
 				title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
 				look: "1.1w",
 				date: "04.28"
+			}
+		},
+		methods:{
+			toShare: function(e){
+				// this.version = plus.runtime.version;
+				uni.getProvider({
+					service: 'share',
+					success: (e) => {
+						
+					},
+					fail: (e) => {
+						console.log('获取登录通道失败'+ JSON.stringify(e));
+					}
+				});
 			}
 		}
 	}
@@ -80,12 +97,24 @@
 		overflow: hidden;
 		color: #252525;
 		font-size: 20upx;
-		view{
-			max-width: 80%;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
+		.page_left{
+			width: 80%;
 			margin-bottom: 10upx;
+			float: left;
+			view{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+		.page_share{
+			float: right;
+			padding: 15upx;
+			image{
+				display: block;
+				width: 30upx;
+				height: 32upx !important;
+			}
 		}
 	}
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<view class="common_box">
-		<view class="video_item" v-for="(item,index) in video_list" :key="index" @click="toVideoDetail(index)">
+		<view class="video_item" v-for="(item,index) in video_list" :key="index" @click="toVideoDetail(item)">
 			<view class="v_poster">
 				<image :src="item.poster" class="poster_img" mode="widthFix"></image>
 				<view class="v_play">
@@ -29,9 +29,9 @@
 			video_list: Array
 		},
 		methods:{
-			toVideoDetail: function(e){
+			toVideoDetail: function(res){
 				uni.navigateTo({
-					url: "/pages/video/video?id="+e
+					url: "/pages/video/video?id="+res.id+"&video="+res.video
 				})
 			}
 		}

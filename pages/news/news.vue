@@ -91,7 +91,7 @@
 			background: #000;
 			border-radius: 5upx;
 			text-align: center;
-			padding: 10upx 0 12upx;
+			padding: 14upx 0 16upx;
 		}
 		.prev{
 			margin-right: 5%;

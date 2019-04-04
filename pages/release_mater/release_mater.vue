@@ -63,9 +63,22 @@
 				
 			}
 		},
-		onNavigationBarButtonTap(e){
-			uni.navigateBack({
-				delta: 1
+		onNavigationBarButtonTap: function(){
+			uni.showModal({
+				title: "提示",
+				content: "确定发布？",
+				success: (res) => {
+					if(res.confirm){
+						uni.navigateBack({
+							delta: 1
+						})
+					}else{
+						console.log(this.photos)
+					}
+				},
+				fail: (err) => {
+					console.log(err)
+				}
 			})
 		}
 	}

@@ -35,19 +35,22 @@ export default{
 					poster: "../../static/video_poster1.jpg",
 					avatar: "../../static/video_img.png",
 					title: "冬季水嫩肌肤养成法",
-					look: "1.2w"
+					look: "1.2w",
+					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
 				},
 				{
 					poster: "../../static/video_poster2.jpg",
 					avatar: "../../static/video_img.png",
 					title: "问题性肌肤全解分析—说说色斑那点事",
-					look: "10w"
+					look: "10w",
+					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
 				},
 				{
 					poster: "../../static/video_poster3.jpg",
 					avatar: "../../static/video_img.png",
 					title: "问题性肌肤全解分析—痘痘肌",
-					look: "10w"
+					look: "10w",
+					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
 				}
 			],
 			auto_list:[
@@ -81,11 +84,6 @@ export default{
 	methods:{
 		navbarTap: function(e){
 			this.currentTab = e;
-		},
-		toVideoDetail: function(e){
-			uni.navigateTo({
-				url: "/pages/video/video?id="+e
-			})
 		},
 		toAudioDetail: function(e){
 			uni.navigateTo({

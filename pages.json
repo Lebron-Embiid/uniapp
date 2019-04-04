@@ -4,6 +4,7 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
+				"navigationBarTitleText": "",
 				"app-plus": {
 //                     "bounce": "none", //关闭窗口回弹效果
 //                     "titleNView": {
@@ -53,7 +54,27 @@
 								"type": "none",
 								"float": "right",
 								"text": "发布素材",
-								"fontSize": "28upx"
+								"fontSize": "28upx",
+								"width": "auto"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/mater_detail/mater_detail",
+			"style": {
+				"navigationBarTitleText": "素材",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"type": "none",
+								"float": "right",
+								"text": "发布素材",
+								"fontSize": "28upx",
+								"width": "auto"
 							}
 						]
 					}
@@ -71,7 +92,8 @@
 								"type": "none",
 								"float": "right",
 								"text": "确定发布",
-								"fontSize": "28upx"
+								"fontSize": "28upx",
+								"width": "auto"
 							}
 						]
 					}
@@ -87,7 +109,75 @@
 		{
 			"path": "pages/science/science",
 			"style": {
+				"navigationBarTitleText": "呦蓝百科",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"type": "none",
+								"float": "right",
+								"text": "在线留言",
+								"fontSize": "28upx",
+								"width": "auto"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/science_detail/science_detail",
+			"style": {
 				"navigationBarTitleText": "呦蓝百科"
+			}
+		},
+		{
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": "在线留言"
+			}
+		},
+		{
+			"path": "pages/feedback/feedback",
+			"style": {
+				"navigationBarTitleText": "意见反馈"
+			}
+		},
+		{
+			"path": "pages/person/person",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/settings/settings",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		},
+		{
+			"path": "pages/my_mater/my_mater",
+			"style": {
+				"navigationBarTitleText": "我的素材"
+			}
+		},
+		{
+			"path": "pages/wallet/wallet",
+			"style": {
+				"navigationBarTitleText": "我的钱包"
+			}
+		},
+		{
+			"path": "pages/withdraw/withdraw",
+			"style": {
+				"navigationBarTitleText": "提现"
+			}
+		},
+		{
+			"path": "pages/store/store",
+			"style": {
+				"navigationBarTitleText": "商城"
 			}
 		},
 		{
@@ -152,12 +242,12 @@
 			"selectedIconPath": "static/footer_icon3_active.png",
 			"text": "素材"
 		},{
-			"pagePath": "pages/test/test",
+			"pagePath": "pages/store/store",
 			"iconPath": "static/footer_icon4.png",
 			"selectedIconPath": "static/footer_icon4_active.png",
 			"text": "商城"
 		},{
-			"pagePath": "pages/ucenter/ucenter",
+			"pagePath": "pages/person/person",
 			"iconPath": "static/footer_icon5.png",
 			"selectedIconPath": "static/footer_icon5_active.png",
 			"text": "我的"

@@ -6,7 +6,7 @@
 		<view class="mt44"></view>
 		<view class="photo_mater" v-show="currentTab == 0">
 			<view class="photo_box">
-				<view class="photo_item" v-for="(item,index) in photo_list" :key="index">
+				<view class="photo_item" @click="toMaterDetail(item)" v-for="(item,index) in photo_list" :key="index">
 					<view class="photo_head">
 						<image :src="item.avatar" class="avatar_img" mode="widthFix"></image>
 						<text class="ph_name">{{item.name}}</text>
@@ -47,6 +47,7 @@
 				currentTab:0,
 				photo_list:[
 					{
+						id: 1,
 						avatar: "../../static/avatar1.png",
 						name: "小黄鸭",
 						time: "2018-03-24",
@@ -55,14 +56,16 @@
 						maters: ["../../static/mater_img1.jpg","../../static/mater_img2.jpg","../../static/mater_img3.jpg"]
 					},
 					{
+						id: 2,
 						avatar: "../../static/avatar2.png",
 						name: "小黄鸭",
 						time: "2018-03-24",
 						num: 123,
-						sign: true,
+						sign: false,
 						maters: ["../../static/mater_img4.jpg","../../static/mater_img5.jpg"]
 					},
 					{
+						id: 3,
 						avatar: "../../static/avatar1.png",
 						name: "小黄鸭",
 						time: "2018-03-24",
@@ -76,19 +79,22 @@
 						poster: "../../static/video_poster1.jpg",
 						avatar: "../../static/video_img.png",
 						title: "冬季水嫩肌肤养成法",
-						look: "1.5w"
+						look: "1.5w",
+						video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
 					},
 					{
 						poster: "../../static/video_poster2.jpg",
 						avatar: "../../static/video_img.png",
 						title: "问题性肌肤全解分析—说说色斑那点事",
-						look: "12w"
+						look: "12w",
+						video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
 					},
 					{
 						poster: "../../static/video_poster3.jpg",
 						avatar: "../../static/video_img.png",
 						title: "问题性肌肤全解分析—痘痘肌",
-						look: "1.7w"
+						look: "1.7w",
+						video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
 					}
 				]
 			}
@@ -99,9 +105,14 @@
 		methods:{
 			navbarTap: function(e){
 				this.currentTab = e;
+			},
+			toMaterDetail: function(res){
+				uni.navigateTo({
+					url: "/pages/mater_detail/mater_detail?id="+res.id+"&name="+res.name+"&avatar="+res.avatar+"&time="+res.time+"&num="+res.num+"&sign="+res.sign+"&maters="+res.maters
+				})
 			}
 		},
-		onNavigationBarButtonTap(e){
+		onNavigationBarButtonTap: function(){
 			uni.navigateTo({
 				url: "/pages/release_mater/release_mater"
 			})
@@ -136,7 +147,7 @@
 					vertical-align: middle;
 					width: 41upx;
 					height: 41upx !important;
-					margin: 0 10upx 8upx 0;
+					margin: 0 10upx 6upx 0;
 				}
 				.ph_name{
 					display: inline-block;

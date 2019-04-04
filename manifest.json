@@ -11,7 +11,8 @@
             "VideoPlayer" : {},
             "Messaging" : {},
             "Maps" : {},
-            "Share" : {}
+            "Share" : {},
+            "OAuth" : {}
         },
         /* 模块配置 */
         "distribute" : {

@@ -24,6 +24,7 @@
       "coordType": "gcj02"
     },
     "Share": {},
+    "OAuth": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }

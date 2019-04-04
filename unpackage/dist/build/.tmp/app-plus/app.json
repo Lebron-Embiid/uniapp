@@ -5,9 +5,19 @@
     "pages/video/video",
     "pages/audio/audio",
     "pages/mater/mater",
+    "pages/mater_detail/mater_detail",
     "pages/release_mater/release_mater",
     "pages/about/about",
     "pages/science/science",
+    "pages/science_detail/science_detail",
+    "pages/message/message",
+    "pages/feedback/feedback",
+    "pages/person/person",
+    "pages/settings/settings",
+    "pages/my_mater/my_mater",
+    "pages/wallet/wallet",
+    "pages/withdraw/withdraw",
+    "pages/store/store",
     "pages/news/news",
     "pages/news_detail/news_detail",
     "pages/detail/detail",
@@ -47,13 +57,13 @@
         "text": "素材"
       },
       {
-        "pagePath": "pages/test/test",
+        "pagePath": "pages/store/store",
         "iconPath": "static/footer_icon4.png",
         "selectedIconPath": "static/footer_icon4_active.png",
         "text": "商城"
       },
       {
-        "pagePath": "pages/ucenter/ucenter",
+        "pagePath": "pages/person/person",
         "iconPath": "static/footer_icon5.png",
         "selectedIconPath": "static/footer_icon5_active.png",
         "text": "我的"

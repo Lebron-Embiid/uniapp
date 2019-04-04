@@ -18,10 +18,10 @@ export default{
 	data(){
 		return{
 			isRotate: true,
-			title: "如何快速找到精准粉丝",
-			look: "1.0w",
-			src: "http://mouyizhan.com/5.mp3",
-			duration: 228
+			title: "",
+			look: "",
+			src: "",
+			duration: 0
 		}
 	},
 	components: {
@@ -39,7 +39,6 @@ export default{
 		}
 	},
 	onLoad(opt) {
-		console.log(opt)
 		this.title = opt.title;
 		this.look = opt.look;
 		this.src = opt.src;

@@ -1,6 +1,6 @@
 <template>
 	<view class="video_box">
-		<video id="myVideo" autoplay="true" direction="90" src="https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"></video>
+		<video id="myVideo" autoplay="true" direction="90" :src="video"></video>
 	</view>
 </template>
 
@@ -8,11 +8,12 @@
 	export default{
 		data(){
 			return{
-				
+				video: ""
 			}
 		},
 		onLoad(opt) {
-			console.log(opt)
+			let that = this;
+			that.video = opt.video;
 		}
 	}
 </script>

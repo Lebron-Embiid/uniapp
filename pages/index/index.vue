@@ -10,17 +10,11 @@
 			</form>
 		</view>
 		<view class="uni-padding-wrap mt130">
-            <view class="index_swiper swiper">
+            <view class="index_swiper">
                 <view class="page-section-spacing">
                     <swiper class="swiper" :indicator-dots="indicatorDots" circular="true" :autoplay="autoplay" :interval="interval" :duration="duration">
-                        <swiper-item>
-                            <view class="swiper-item"><image src="../../static/index_banner.jpg" mode="widthFix"></image></view>
-                        </swiper-item>
-                        <swiper-item>
-                            <view class="swiper-item"><image src="../../static/index_banner.jpg" mode="widthFix"></image></view>
-                        </swiper-item>
-                        <swiper-item>
-                            <view class="swiper-item"><image src="../../static/index_banner.jpg" mode="widthFix"></image></view>
+                        <swiper-item v-for="(item,index) in swiperList" :key="index">
+                            <view class="swiper-item"><image :src="item" mode="widthFix"></image></view>
                         </swiper-item>
                     </swiper>
                 </view>
@@ -83,6 +77,7 @@
 				autoplay: true,
 				interval: 3000,
 				duration: 800,
+				swiperList: ["../../static/index_banner.jpg","../../static/index_banner.jpg","../../static/index_banner.jpg"],
 				navList:[
 					{
 						url: "/pages/train/train",

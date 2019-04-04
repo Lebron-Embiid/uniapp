@@ -1,0 +1,126 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+page.data-v-242d898e {
+  background: #f5f5f7;
+}
+.change_box.data-v-242d898e {
+  padding: 35rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #fff;
+  margin-bottom: 8rpx;
+}
+.change_box .change_avatar.data-v-242d898e {
+    width: 132rpx;
+    height: 132rpx;
+    position: relative;
+    border-radius: 50%;
+    margin: 0 auto 20rpx;
+}
+.change_box .change_avatar .set_avatar.data-v-242d898e {
+      display: block;
+      width: 100%;
+      height: 100% !important;
+      border-radius: 50%;
+}
+.change_box .change_avatar .camera.data-v-242d898e {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 50%;
+      z-index: 5;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
+}
+.change_box .change_avatar .camera image.data-v-242d898e {
+        display: block;
+        width: 34rpx;
+        height: 29rpx !important;
+}
+.change_box .ca_till.data-v-242d898e {
+    color: #00001f;
+    font-size: 24rpx;
+    text-align: center;
+}
+.form.data-v-242d898e {
+  display: block;
+  overflow: hidden;
+}
+.form .section.data-v-242d898e {
+    background: #fff;
+    padding: 10rpx 20rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+.form .section text.data-v-242d898e {
+      color: #00001f;
+      font-size: 24rpx;
+      padding-right: 60rpx;
+      border-right: 1rpx solid #eee;
+}
+.form .section input.data-v-242d898e {
+      padding: 0 40rpx 0 50rpx;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      color: #333;
+      font-size: 22rpx;
+}
+.form .submit_btn.data-v-242d898e {
+    width: 80%;
+    margin-top: 200rpx;
+    color: #fff;
+    font-size: 24rpx;
+    background: #00001f;
+    border-radius: 5rpx;
+    padding: 10rpx 0 12rpx;
+}
+
