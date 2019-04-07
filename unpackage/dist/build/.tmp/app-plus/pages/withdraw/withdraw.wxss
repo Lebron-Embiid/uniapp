@@ -24,13 +24,13 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-a4c2a2c8 {
+page.data-v-fa34a7a6 {
   background: #f5f5f7;
 }
-.withdraw_box.data-v-a4c2a2c8 {
+.withdraw_box.data-v-fa34a7a6 {
   padding: 30rpx 20rpx;
 }
-.withdraw_box .section.data-v-a4c2a2c8 {
+.withdraw_box .section.data-v-fa34a7a6 {
     background: #fff;
     padding: 0 20rpx;
     height: 80rpx;
@@ -50,22 +50,22 @@ page.data-v-a4c2a2c8 {
         -ms-flex-align: center;
             align-items: center;
 }
-.withdraw_box .section text.data-v-a4c2a2c8 {
+.withdraw_box .section text.data-v-fa34a7a6 {
       color: #00001f;
       font-size: 24rpx;
       width: 120rpx;
       margin-right: 30rpx;
       border-right: 1rpx solid #eee;
 }
-.withdraw_box .section .txt.data-v-a4c2a2c8 {
+.withdraw_box .section .txt.data-v-fa34a7a6 {
       color: #333;
       font-size: 20rpx;
 }
-.withdraw_box .section input.data-v-a4c2a2c8 {
+.withdraw_box .section input.data-v-fa34a7a6 {
       color: #333;
       font-size: 22rpx;
 }
-.withdraw_box .submit_btn.data-v-a4c2a2c8 {
+.withdraw_box .submit_btn.data-v-fa34a7a6 {
     width: 80%;
     margin-top: 100rpx;
     color: #fff;

@@ -2,7 +2,7 @@
 	<view class="index_box">
 		<view class="search_fixed">
 			<view class="logo_box">
-				<image src="../../static/logo.png" mode="widthFix"></image>
+				<image :src="logo" mode="widthFix"></image>
 			</view>
 			<form @submit="formSubmit" class="form_box">
 				<input type="text" placeholder="请输入您要搜索的关键词" value="" />
@@ -11,13 +11,7 @@
 		</view>
 		<view class="uni-padding-wrap mt130">
             <view class="index_swiper">
-                <view class="page-section-spacing">
-                    <swiper class="swiper" :indicator-dots="indicatorDots" circular="true" :autoplay="autoplay" :interval="interval" :duration="duration">
-                        <swiper-item v-for="(item,index) in swiperList" :key="index">
-                            <view class="swiper-item"><image :src="item" mode="widthFix"></image></view>
-                        </swiper-item>
-                    </swiper>
-                </view>
+				<commonSwiper :swiperList="swiperList"></commonSwiper>
             </view>
         </view>
 		<view class="index_nav">
@@ -69,14 +63,12 @@
 </template>
 
 <script>
+	import commonSwiper from "../../components/common-swiper.vue"
 	import commonNews from "../../components/common-news.vue"
 	export default{
 		data(){
 			return{
-				indicatorDots: true,
-				autoplay: true,
-				interval: 3000,
-				duration: 800,
+				logo: "../../static/logo.png",
 				swiperList: ["../../static/index_banner.jpg","../../static/index_banner.jpg","../../static/index_banner.jpg"],
 				navList:[
 					{
@@ -158,6 +150,7 @@
 			}
 		},
 		components:{
+			commonSwiper,
 			commonNews
 		},
 		methods:{
@@ -198,13 +191,6 @@
 				width: 100%;
 				height: 100%;
 			}
-		}
-	}
-	.swiper{
-		height: 400upx;
-		.swiper-item image{
-			display: block;
-			width: 100%;
 		}
 	}
 	.index_nav{
