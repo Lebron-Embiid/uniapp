@@ -149,18 +149,18 @@
 			color: #4e4e4e;
 			font-size: 28upx;
 			text-align: center;
-			margin-bottom: 20upx;
+			margin-bottom: 40upx;
 			view{
 				padding: 20upx 10upx;
 				border-bottom: 1upx solid transparent;
 				display: inline-block;
-				margin-right: 20upx;
+				margin-left: 20upx;
 				&.active{
 					color: #000027;
 					border-bottom: 1upx solid #000;
 				}
 				&:last-of-type{
-					margin-right: 0;
+					// margin-right: 0;
 				}
 			}
 		}

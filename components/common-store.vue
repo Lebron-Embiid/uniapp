@@ -1,6 +1,6 @@
 <template>
 	<view class="common_store">
-		<view class="store_item" v-for="(item,index) in storeList" :key="index">
+		<view class="store_item" v-for="(item,index) in storeList" @click="toStoreDetail(item)" :key="index">
 			<image :src="item.src" mode="widthFix"></image>
 			<view class="si_title">{{item.title}}</view>
 			<view class="si_info">{{item.info}}</view>
@@ -20,7 +20,11 @@
 			storeList: Array
 		},
 		methods:{
-			
+			toStoreDetail: function(res){
+				uni.navigateTo({
+					url: "/pages/store_detail/store_detail?id="+res.id
+				})
+			}
 		}
 	}
 </script>
@@ -44,7 +48,7 @@
 				display: block;
 				width: 250upx;
 				height: 230upx !important;
-				margin: 30upx auto 30upx;
+				margin: 10upx auto 30upx;
 			}
 			.si_title{
 				color: #160c11;
@@ -56,6 +60,9 @@
 			.si_info{
 				color: #7d7d7d;
 				font-size: 20upx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 				margin: 5upx 0 10upx;
 			}
 			.si_price{

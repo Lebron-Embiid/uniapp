@@ -186,6 +186,47 @@
 			}
 		},
 		{
+			"path": "pages/store_detail/store_detail",
+			"style": {
+				"navigationBarTitleText": "产品详情",
+				"app-plus": {
+                    "titleNView": {
+                        "type": "transparent"//透明渐变导航栏
+                    }
+                }
+			}
+		},
+		{
+			"path": "pages/my_order/my_order",
+			"style": {
+				"navigationBarTitleText": "我的订单"
+			}
+		},
+		{
+			"path": "pages/account/account",
+			"style": {
+				"navigationBarTitleText": "结算"
+			}
+		},
+		{
+			"path": "pages/address/address",
+			"style": {
+				"navigationBarTitleText": "收货地址"
+			}
+		},
+		{
+			"path": "pages/order_detail/order_detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/logistics/logistics",
+			"style": {
+				"navigationBarTitleText": "物流详情"
+			}
+		},
+		{
 			"path": "pages/news/news",
 			"style": {
 				"navigationBarTitleText": "活动资讯"

@@ -57,7 +57,7 @@
 		}
 		.section{
 			background: #fff;
-			border: 1upx solid #E2E2E2;
+			border: 1px solid #E2E2E2;
 			margin-bottom: 15upx;
 			padding: 20upx 25upx;
 			box-sizing: border-box;

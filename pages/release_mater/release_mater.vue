@@ -115,7 +115,7 @@
 	}
 	.release_btn{
 		float: left;
-		border: 1upx dashed #EDEDED;
+		border: 1px dashed #EDEDED;
 		width: 220upx;
 		height: 270upx;
 		margin: 0 20upx 20upx 0;

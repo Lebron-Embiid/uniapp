@@ -48,7 +48,7 @@
 	.feedback_box{
 		.section{
 			background: #fff;
-			border: 1upx solid #E2E2E2;
+			border: 1px solid #E2E2E2;
 			border-left: 0;
 			border-right: 0;
 			margin-bottom: 15upx;
