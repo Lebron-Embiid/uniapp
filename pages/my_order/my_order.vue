@@ -114,7 +114,7 @@
 		position: fixed;
 		width: 100%;
 		left: 0;
-		top: 35upx;
+		top: 0;
 		z-index: 30;
 		// margin: 35upx 0 25upx;
 		padding: 0 30upx;
@@ -135,6 +135,6 @@
 		}
 	}
 	.order_list{
-		margin-top: 85upx;
+		margin-top: 55px;
 	}
 </style>

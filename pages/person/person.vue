@@ -28,7 +28,7 @@
 				<navigator class="navigator" url="">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
-				<navigator class="navigator" url="">我的购物车<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" url="/pages/car/car">我的购物车<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/my_mater/my_mater">我的素材<image src="../../static/next.png" mode="widthFix"></image></navigator>

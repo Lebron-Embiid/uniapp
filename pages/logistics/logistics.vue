@@ -142,7 +142,7 @@
 					width: 1px;
 					height: 100%;
 					position: absolute;
-					left: 8upx;
+					left: 10upx;
 					top: 0;
 					background: #E2E2E2;
 					z-index: 1;

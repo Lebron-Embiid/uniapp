@@ -26,7 +26,7 @@
             </view>
             <view class="scroll_box">
                 <scroll-view class="scroll-view_H" scroll-x="true">
-                    <view :id="item.id" class="scroll-view-item_H" v-for="(item,index) in hot_products" :key="index">
+                    <view :id="item.ref" class="scroll-view-item_H" v-for="(item,index) in hot_products" @click="toProductDetail(item.id)" :key="index">
 						<div class="p_img"><image :src="item.src" mode="widthFix"></image></div>
 						<view class="product_content">
 							<view class="product_title">{{item.title}}</view>
@@ -43,7 +43,7 @@
 		    </view>
 		    <view class="scroll_box">
 		        <scroll-view class="scroll-view" scroll-x="true">
-		            <view :id="item.id" class="mater_item" v-for="(item,index) in mater_products" :key="index">
+		            <view :id="item.ref" class="mater_item" v-for="(item,index) in mater_products" @click="toMaterDetail(item.id)" :key="index">
 		            	<view class="m_img">
 		            		<image :src="item.src" mode="widthFix"></image>
 		            	</view>
@@ -91,7 +91,8 @@
 				],
 				hot_products:[
 					{
-						id:"demo1",
+						id: 1,
+						ref:"demo1",
 						src: "../../static/product_img1.jpg",
 						title: "艾璐卡-山羊奶悦颜清透洁乳山羊奶悦颜清透洁乳山羊奶悦颜清透洁乳",
 						info: "清洁皮肤，长效保湿滋润",
@@ -99,7 +100,8 @@
 						format: "3.5g"
 					},
 					{
-						id:"demo2",
+						id: 2,
+						ref:"demo2",
 						src: "../../static/product_img2.jpg",
 						title: "艾璐卡-艾璐卡水漾唇膏",
 						info: "长久保湿·丝滑质感",
@@ -107,7 +109,8 @@
 						format: "3.5g"
 					},
 					{
-						id:"demo2",
+						id: 3,
+						ref:"demo2",
 						src: "../../static/product_img2.jpg",
 						title: "艾璐卡-艾璐卡水漾唇膏",
 						info: "长久保湿·丝滑质感",
@@ -117,15 +120,18 @@
 				],
 				mater_products:[
 					{
-						id: "mater1",
+						id: 1,
+						ref: "mater1",
 						src: "../../static/chosen_img1.jpg"
 					},
 					{
-						id: "mater2",
+						id: 2,
+						ref: "mater2",
 						src: "../../static/chosen_img2.jpg"
 					},
 					{
-						id: "mater3",
+						id: 3,
+						ref: "mater3",
 						src: "../../static/chosen_img1.jpg"
 					}
 				],
@@ -154,7 +160,7 @@
 			commonNews
 		},
 		methods:{
-			toDetail(idx,url){
+			toDetail: function(idx,url){
 				if(idx == 0){
 					uni.reLaunch({
 						url: url
@@ -164,6 +170,16 @@
 						url: url
 					})
 				}
+			},
+			toProductDetail: function(e){
+				uni.navigateTo({
+					url: "/pages/store_detail/store_detail?id="+e
+				})
+			},
+			toMaterDetail: function(e){
+				uni.navigateTo({
+					url: "/pages/mater_detail/mater_detail?id="+e
+				})
 			}
 		}
 	}

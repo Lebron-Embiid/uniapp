@@ -1,10 +1,10 @@
 
-.video_box.data-v-f67f6614{
+.video_box.data-v-45866a6e{
 	padding: 30rpx 20rpx;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 }
-#myVideo.data-v-f67f6614{
+#myVideo.data-v-45866a6e{
 	display: block;
 	width: 100%;
 }

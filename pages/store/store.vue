@@ -1,7 +1,7 @@
 <template>
 	<view class="store_box">
 		<view class="index_swiper">
-			<view class="search_top"><text>请输入您要搜索的关键词</text><image src="../../static/search.png" mode="widthFix"></image></view>
+			<view class="search_top" @click="toSearch"><text>请输入您要搜索的关键词</text><image src="../../static/search.png" mode="widthFix"></image></view>
 			<commonSwiper :swiperList="swiperList"></commonSwiper>
 		</view>
 		<view class="store_content">
@@ -109,6 +109,11 @@
 			navbarTap: function(e){
 				console.log(e)
 				this.currentTab = e;
+			},
+			toSearch: function(e){
+				uni.navigateTo({
+					url: "/pages/search/search"
+				})
 			}
 		}
 	}

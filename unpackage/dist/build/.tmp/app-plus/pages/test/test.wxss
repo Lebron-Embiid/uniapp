@@ -1,5 +1,5 @@
 
-[class*="icon-"].data-v-a2190912 {
+[class*="icon-"].data-v-39094210 {
 	font-family: "iconfont" !important;
 	font-size: inherit;
 	font-style: normal;
@@ -16,17 +16,17 @@
 		url('//at.alicdn.com/t/font_533566_yfq2d9wdij.svg?t=1545239985831#iconfont') format('svg');
 	/* iOS 4.1- */
 }
-.icon-text.data-v-a2190912 {
+.icon-text.data-v-39094210 {
 	font-size: 28rpx;
 	margin-top: -25%;
 }
-.icon-cameraadd.data-v-a2190912 {
+.icon-cameraadd.data-v-39094210 {
 	font-size: 60rpx;
 }
-.icon-cameraadd.data-v-a2190912:before {
+.icon-cameraadd.data-v-39094210:before {
 	content: "\E724";
 }
-.sunsin_picture_list.data-v-a2190912 {
+.sunsin_picture_list.data-v-39094210 {
 	width: 100%;
 	padding: 20rpx;
 	display: -webkit-box;
@@ -53,12 +53,12 @@
 	    -ms-flex-pack: start;
 	        justify-content: flex-start;
 }
-.sunsin_picture_list image.data-v-a2190912 {
+.sunsin_picture_list image.data-v-39094210 {
 	width: 40rpx;
 	height: 40rpx;
 	margin: 0 4%;
 }
-.sunsin-add-image.data-v-a2190912 {
+.sunsin-add-image.data-v-39094210 {
 	width: 160rpx;
 	height: 160rpx;
 	color: #ddd;
@@ -84,14 +84,14 @@
 	    -ms-flex-wrap: wrap;
 	        flex-wrap: wrap;
 }
-.sunsin_picture_item.data-v-a2190912 {
+.sunsin_picture_item.data-v-39094210 {
 	margin: 20rpx;
 	margin-left: 0;
 	position: relative;
 	width: 160rpx;
 	height: 160rpx;
 }
-.sunsin_picture_item .del.data-v-a2190912 {
+.sunsin_picture_item .del.data-v-39094210 {
 	position: absolute;
 	top: 0;
 	right: -6rpx;
@@ -105,7 +105,7 @@
 	text-align: center;
 	background-color: #E54D42;
 }
-.sunsin_upload_progress.data-v-a2190912 {
+.sunsin_upload_progress.data-v-39094210 {
 	font-size: 24rpx;
 	color: #fff;
 	width: 162rpx;
@@ -120,7 +120,7 @@
 	border-radius: 8rpx;
 	background-color: #000;
 }
-.sunsin_picture_item image.data-v-a2190912 {
+.sunsin_picture_item image.data-v-39094210 {
 	width: 160rpx;
 	height: 160rpx;
 	-webkit-box-shadow: 6rpx 6rpx 12rpx rgba(112, 128, 144, 0.7);

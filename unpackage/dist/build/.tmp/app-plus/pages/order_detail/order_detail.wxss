@@ -1,0 +1,246 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.order_top.data-v-381ec19c {
+  position: relative;
+  border-bottom: 6rpx solid #f3f3f3;
+}
+.order_top .order_bg.data-v-381ec19c {
+    display: block;
+    width: 100%;
+    height: 200rpx !important;
+}
+.order_top .ot_layer.data-v-381ec19c {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    padding: 0 25rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+.order_top .ot_layer .ot_word.data-v-381ec19c {
+      color: #fff;
+      font-size: 24rpx;
+}
+.order_top .ot_layer .ot_word view.data-v-381ec19c {
+        margin-bottom: 5rpx;
+}
+.order_top .ot_layer image.data-v-381ec19c {
+      display: block;
+      width: 99rpx;
+      height: 75rpx !important;
+      margin-right: 25rpx;
+}
+.order_info.data-v-381ec19c {
+  padding: 0 20rpx 40rpx;
+}
+.order_info .order_next.data-v-381ec19c {
+    padding: 25rpx 0;
+    border-bottom: 1px solid #E9E9E9;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-bottom: 30rpx;
+}
+.order_info .order_next .icon.data-v-381ec19c {
+      display: block;
+      width: 37rpx;
+      height: 29rpx !important;
+}
+.order_info .order_next .on_center.data-v-381ec19c {
+      width: 83%;
+      font-size: 20rpx;
+}
+.order_info .order_next .on_center .oc_title.data-v-381ec19c {
+        color: #fa3930;
+        margin-bottom: 5rpx;
+}
+.order_info .order_next .on_center .oc_time.data-v-381ec19c {
+        color: #999;
+}
+.order_info .order_next .next.data-v-381ec19c {
+      display: block;
+      width: 20rpx;
+      height: 34rpx !important;
+}
+.order_info .oi_name.data-v-381ec19c {
+    color: #333;
+    font-size: 24rpx;
+    margin-bottom: 20rpx;
+}
+.order_info .oi_name text.data-v-381ec19c {
+      margin-left: 25rpx;
+}
+.order_info .oi_address.data-v-381ec19c {
+    color: #666;
+    font-size: 20rpx;
+}
+.order_info .oi_address image.data-v-381ec19c {
+      display: inline-block;
+      vertical-align: middle;
+      width: 37rpx;
+      height: 29rpx !important;
+      margin: 0 5rpx 5rpx 0;
+}
+.oc_remark.data-v-381ec19c, .om_remark.data-v-381ec19c {
+  padding-bottom: 10rpx;
+  border-bottom: 1px solid #F7F7F9;
+  color: #333;
+  font-size: 24rpx;
+}
+.order_content.data-v-381ec19c {
+  padding: 25rpx 20rpx 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.order_content .order_item.data-v-381ec19c {
+    overflow: hidden;
+    padding: 10rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.order_content .order_item .oi_left.data-v-381ec19c {
+      float: left;
+      margin-right: 30rpx;
+      width: 140rpx;
+      height: 140rpx;
+      border: 1px solid #EAEAEA;
+}
+.order_content .order_item .oi_left image.data-v-381ec19c {
+        display: block;
+        width: 139rpx;
+        height: 139rpx !important;
+}
+.order_content .order_item .oi_center.data-v-381ec19c {
+      float: left;
+      width: 420rpx;
+}
+.order_content .order_item .oi_center .oi_title.data-v-381ec19c {
+        color: #1f1f1f;
+        font-size: 28rpx;
+        margin: 10rpx 0 5rpx;
+}
+.order_content .order_item .oi_center .oi_info.data-v-381ec19c, .order_content .order_item .oi_center .oi_type.data-v-381ec19c {
+        color: #747474;
+        font-size: 22rpx;
+        margin-bottom: 20rpx;
+}
+.order_content .order_item .oi_center .oi_type.data-v-381ec19c {
+        margin-bottom: 0;
+}
+.order_content .order_item .oi_right.data-v-381ec19c {
+      float: right;
+      text-align: right;
+}
+.order_content .order_item .oi_right .oi_price.data-v-381ec19c {
+        color: #797979;
+        font-size: 24rpx;
+        margin: 10rpx 0 6rpx;
+}
+.order_content .order_item .oi_right .oi_num.data-v-381ec19c {
+        color: #868686;
+        font-size: 20rpx;
+}
+.order_mess.data-v-381ec19c {
+  padding: 25rpx 20rpx 0;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.order_mess .om_item.data-v-381ec19c {
+    padding: 20rpx 0;
+    color: #797979;
+    font-size: 20rpx;
+    border-bottom: 1px solid #E5E5E5;
+}
+.order_mess .om_item.data-v-381ec19c:last-of-type {
+      border-bottom: 0;
+}
+.order_money.data-v-381ec19c {
+  padding: 0 20rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.order_money .money_item.data-v-381ec19c {
+    padding: 20rpx 0;
+    color: #333;
+    font-size: 20rpx;
+    border-bottom: 1px solid #E5E5E5;
+    overflow: hidden;
+}
+.order_money .money_item text.data-v-381ec19c {
+      float: right;
+}
+.order_money .money_item text.red.data-v-381ec19c {
+        color: #fa3930;
+}
+.order_money .money_btn.data-v-381ec19c {
+    margin-top: 20rpx;
+    text-align: right;
+}
+.order_money .money_btn button.data-v-381ec19c {
+      display: inline-block;
+      color: #333;
+      font-size: 24rpx;
+      background: #fff;
+      border: 1px solid #9B9B9B;
+      margin-left: 25rpx;
+}
+.order_money .money_btn button.ok.data-v-381ec19c {
+        color: #fa3930;
+        border: 1px solid #fa3930;
+}
+.order_money .money_btn button.data-v-381ec19c:after {
+        border: 0;
+}
+.bb12.data-v-381ec19c {
+  border-bottom: 12rpx solid #f3f3f3;
+}
+

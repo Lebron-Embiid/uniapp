@@ -163,6 +163,9 @@
 						color: #fa3930;
 						border: 1px solid #fa3930;
 					}
+					&:after{
+						border: 0;
+					}
 				}
 			}
 		}
