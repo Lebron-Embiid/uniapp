@@ -70,7 +70,7 @@
 </script>
 
 <style scoped lang="scss">
-	page{background: #f5f5f7;}
+	page{background: #f5f5f7 !important;}
 	.mater_detail{
 		padding: 60upx 20upx;
 		box-sizing: border-box;

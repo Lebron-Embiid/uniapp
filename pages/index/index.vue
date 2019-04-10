@@ -1,12 +1,17 @@
 <template>
 	<view class="index_box">
+		<!-- #ifdef APP-PLUS -->  
+		<view class="status_bar">  
+			<view class="top_view"></view>  
+		</view>  
+		<!-- #endif -->  
 		<view class="search_fixed">
 			<view class="logo_box">
 				<image :src="logo" mode="widthFix"></image>
 			</view>
-			<form @submit="formSubmit" class="form_box">
-				<input type="text" placeholder="请输入您要搜索的关键词" value="" />
-				<button formType="submit"><image src="../../static/search.png" mode=""></image></button>
+			<form @click="toSearch" class="form_box">
+				<input type="text" disabled placeholder="请输入您要搜索的关键词" value="" />
+				<button><image src="../../static/search.png" mode=""></image></button>
 			</form>
 		</view>
 		<view class="uni-padding-wrap mt130">
@@ -177,8 +182,13 @@
 				})
 			},
 			toMaterDetail: function(e){
+// 				uni.navigateTo({
+// 					url: "/pages/mater_detail/mater_detail?id="+e
+// 				})
+			},
+			toSearch: function(e){
 				uni.navigateTo({
-					url: "/pages/mater_detail/mater_detail?id="+e
+					url: "/pages/search/search"
 				})
 			}
 		}
@@ -190,7 +200,7 @@
 		position: fixed;
 		width: 100%;
 		left: 0;
-		top: 0;
+		top: var(--status-bar-height);
 		z-index: 20;
 		background: #00001f;
 		padding: 0 20upx;

@@ -69,6 +69,10 @@
 				audio.seek(e.detail.value)
 			}
 		},
+		onUnload(){
+			audio.pause();
+			this.current = 0;
+		},
 		created() {
 			audio.src = this.src
 			this.current = 0

@@ -96,7 +96,7 @@ export default{
 
 <style scoped lang="scss">
 	page{
-		background: #f5f5f7;
+		background: #f5f5f7 !important;
 	}
 	.video_list{
 		padding: 30upx 20upx;

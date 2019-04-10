@@ -109,7 +109,7 @@
 </script>
 
 <style scoped lang="scss">
-	page{background: #f5f5f5;overflow: hidden;}
+	page{background: #f5f5f5 !important;overflow: hidden;}
 	.order_nav{
 		position: fixed;
 		width: 100%;

@@ -56,7 +56,7 @@
 
 <style scoped lang="scss">
 	page{
-		background: #f5f5f7;
+		background: #f5f5f7 !important;
 		padding: 10upx 0 30upx;
 	}
 	.detail_box{

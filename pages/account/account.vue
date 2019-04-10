@@ -2,16 +2,16 @@
 	<view class="account_box">
 		<view class="acc_item borbom notop">
 			<text>请选择收货地址</text>
-			<view @click="toAddress">
+			<view class="acc_right" @click="toAddress">
 				<image src="../../static/next.png" mode="widthFix"></image>
 			</view>
 		</view>
 		<view class="acc_item borbom">
 			<text>支付方式</text>
-			<view>
-				在线支付
+			<picker class="acc_right" @change="bindPickerChange" :value="index" :range="array">
+				<view class="uni-input">{{array[index]}}</view>
 				<image src="../../static/next.png" mode="widthFix"></image>
-			</view>
+			</picker>
 		</view>
 		<view class="acc_content borbom">
 			<view class="content_item" v-for="(item,index) in accountList" :key="index">
@@ -45,6 +45,8 @@
 	export default{
 		data(){
 			return{
+				array: ['在线支付', '货到付款'],
+				index: 0,
 				accountList:[
 					{
 						id: 1,
@@ -73,13 +75,17 @@
 				uni.navigateTo({
 					url: "/pages/address/address"
 				})
+			},
+			bindPickerChange: function(e) {
+				console.log('picker发送选择改变，携带值为', e.target.value)
+				this.index = e.target.value
 			}
 		}
 	}
 </script>
 
 <style scoped lang="scss">
-	page{background: #f5f5f5;}
+	page{background: #f5f5f5 !important;}
 	.borbom{margin-bottom: 20upx;border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
 	.notop{border-top: 0;}
 	.pr45{padding-right: 45upx;}
@@ -92,9 +98,12 @@
 		align-items: center;
 		color: #2d2d2d;
 		font-size: 24upx;
-		view{
+		.acc_right{
 			width: 60%;
 			text-align: right;
+			view{
+				display: inline-block;
+			}
 			image{
 				display: inline-block;
 				vertical-align: middle;

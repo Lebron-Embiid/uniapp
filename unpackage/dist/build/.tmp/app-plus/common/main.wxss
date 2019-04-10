@@ -25,11 +25,27 @@
 /* 透明度 */
 /* 文章场景相关 */
 /*每个页面公共css */
+.status_bar {
+  height: var(--status-bar-height);
+  width: 100%;
+  background-color: #00001F;
+}
+.top_view {
+  height: var(--status-bar-height);
+  width: 100%;
+  position: fixed;
+  background-color: #00001F;
+  top: 0;
+  z-index: 999;
+}
 .mt44 {
   margin-top: 44px;
 }
 .mt130 {
   margin-top: 130rpx;
+}
+uni-picker .uni-picker-item {
+  font-size: 28rpx;
 }
 .form_box {
   display: block;

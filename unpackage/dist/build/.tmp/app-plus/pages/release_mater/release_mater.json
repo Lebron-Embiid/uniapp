@@ -7,7 +7,7 @@
         "type": "none",
         "float": "right",
         "text": "确定发布",
-        "fontSize": "28upx",
+        "fontSize": "14px",
         "width": "auto"
       }
     ]

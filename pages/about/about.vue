@@ -29,7 +29,7 @@
 
 <style scoped lang="scss">
 	page{
-		background: #f5f5f7;
+		background: #f5f5f7 !important;
 	}
 	.about_box{
 		padding: 40upx 20upx;

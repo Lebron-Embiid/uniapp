@@ -1,5 +1,10 @@
 <template>
 	<view class="search_box">
+		<!-- #ifdef APP-PLUS -->  
+		<view class="status_bar">  
+			<view class="top_view"></view>  
+		</view>  
+		<!-- #endif -->
 		<view class="search_form">
 			<view><image src="../../static/search.png" mode="widthFix"></image><input type="text" placeholder="请输入搜索内容" value="" /></view>
 			<button @click="back">取消</button>
@@ -20,14 +25,14 @@
 		data(){
 			return{
 				searchList:[
-					{
-						id: 1,
-						src: "../../static/store_img1.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					}
+// 					{
+// 						id: 1,
+// 						src: "../../static/store_img1.jpg",
+// 						title: "艾璐卡-山羊奶悦颜清透洁乳",
+// 						info: "清洁皮肤，长效保湿滋润",
+// 						price: 98,
+// 						type: "3.5g"
+// 					}
 				]
 			}
 		},
@@ -47,6 +52,9 @@
 </script>
 
 <style scoped lang="scss">
+	.status_bar,.top_view{
+		background: #fff !important;
+	}
 	.search_form{
 		padding: 10upx 20upx;
 		box-sizing: border-box;

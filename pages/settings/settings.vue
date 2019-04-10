@@ -50,7 +50,7 @@
 </script>
 
 <style scoped lang="scss">
-	page{background: #f5f5f7;}
+	page{background: #f5f5f7 !important;}
 	.change_box{
 		padding: 35upx;
 		box-sizing: border-box;

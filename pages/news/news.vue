@@ -1,9 +1,9 @@
 <template>
 	<view class="news_box">
 		<view class="search_box">
-			<form @submit="formSubmit" class="form_box">
+			<form @click="toSearch" class="form_box">
 				<input type="text" placeholder="请输入您要搜索的关键词" value="" />
-				<button formType="submit"><image src="../../static/search.png" mode=""></image></button>
+				<button><image src="../../static/search.png" mode=""></image></button>
 			</form>
 		</view>
 		<view class="news_content">
@@ -59,6 +59,13 @@
 		},
 		components:{
 			commonNews
+		},
+		methods:{
+			toSearch: function(e){
+				uni.navigateTo({
+					url: "/pages/search/search"
+				})
+			}
 		}
 	}
 </script>

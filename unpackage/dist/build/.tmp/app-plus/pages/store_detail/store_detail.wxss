@@ -24,56 +24,56 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.borbom.data-v-10ba7ca2 {
+.borbom.data-v-1a7a34c0 {
   border-bottom: 20rpx solid #f7f7f7;
 }
-.mb98.data-v-10ba7ca2 {
+.mb98.data-v-1a7a34c0 {
   margin-bottom: 98rpx;
 }
-.detail_info.data-v-10ba7ca2 {
+.detail_info.data-v-1a7a34c0 {
   padding: 40rpx 25rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
 }
-.detail_info .di_title.data-v-10ba7ca2 {
+.detail_info .di_title.data-v-1a7a34c0 {
     color: #1f1f1f;
     font-size: 28rpx;
 }
-.detail_info .di_info.data-v-10ba7ca2 {
+.detail_info .di_info.data-v-1a7a34c0 {
     color: #787878;
     font-size: 24rpx;
     margin: 5rpx 0 15rpx;
 }
-.detail_info .di_price.data-v-10ba7ca2 {
+.detail_info .di_price.data-v-1a7a34c0 {
     color: #ff4446;
     font-size: 34rpx;
 }
-.detail_info .di_price text.data-v-10ba7ca2 {
+.detail_info .di_price text.data-v-1a7a34c0 {
       color: #a1a1a1;
       font-size: 22rpx;
       margin-left: 70rpx;
 }
-.auth_box.data-v-10ba7ca2 {
+.auth_box.data-v-1a7a34c0 {
   padding: 30rpx 20rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
 }
-.auth_box view.data-v-10ba7ca2 {
+.auth_box view.data-v-1a7a34c0 {
     float: left;
     margin-right: 30rpx;
     color: #a1a1a1;
     font-size: 24rpx;
 }
-.auth_box view image.data-v-10ba7ca2 {
+.auth_box view image.data-v-1a7a34c0 {
       display: inline-block;
       vertical-align: middle;
       margin: 0 8rpx 6rpx 0;
       width: 33rpx;
       height: 33rpx !important;
 }
-.format_box.data-v-10ba7ca2 {
+.format_box.data-v-1a7a34c0 {
   overflow: hidden;
   padding: 30rpx 20rpx;
   -webkit-box-sizing: border-box;
@@ -91,25 +91,25 @@
       -ms-flex-align: center;
           align-items: center;
 }
-.format_box text.data-v-10ba7ca2 {
+.format_box text.data-v-1a7a34c0 {
     display: block;
     width: 15%;
     color: #1f1f1f;
     font-size: 30rpx;
 }
-.format_box .format_select.data-v-10ba7ca2 {
+.format_box .format_select.data-v-1a7a34c0 {
     width: 85%;
     color: #787878;
     font-size: 24rpx;
     overflow: hidden;
 }
-.format_box .format_select image.data-v-10ba7ca2 {
+.format_box .format_select image.data-v-1a7a34c0 {
       float: right;
       display: block;
       width: 20rpx;
       height: 34rpx !important;
 }
-.store_tab.data-v-10ba7ca2 {
+.store_tab.data-v-1a7a34c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -123,24 +123,24 @@
           align-items: center;
   border-bottom: 1rpx solid #EAEAEA;
 }
-.store_tab view.data-v-10ba7ca2 {
+.store_tab view.data-v-1a7a34c0 {
     color: #00001f;
     font-size: 28rpx;
     text-align: center;
     padding: 30rpx 10rpx;
 }
-.store_tab view.active.data-v-10ba7ca2 {
+.store_tab view.active.data-v-1a7a34c0 {
       border-bottom: 1rpx solid #00001F;
 }
-.store_content1.data-v-10ba7ca2, .store_content2.data-v-10ba7ca2 {
+.store_content1.data-v-1a7a34c0, .store_content2.data-v-1a7a34c0 {
   overflow: hidden;
   padding: 20rpx 0;
 }
-.store_content1 image.data-v-10ba7ca2, .store_content2 image.data-v-10ba7ca2 {
+.store_content1 image.data-v-1a7a34c0, .store_content2 image.data-v-1a7a34c0 {
     display: block;
     width: 100%;
 }
-.fixed_bottom.data-v-10ba7ca2 {
+.fixed_bottom.data-v-1a7a34c0 {
   position: fixed;
   width: 100%;
   height: 98rpx;
@@ -163,18 +163,18 @@
   background: #fff;
   border-top: 1rpx solid #EAEAEA;
 }
-.fixed_bottom .fb_left.data-v-10ba7ca2 {
+.fixed_bottom .fb_left.data-v-1a7a34c0 {
     width: 190rpx;
     color: #666;
     font-size: 22rpx;
 }
-.fixed_bottom .fb_left image.data-v-10ba7ca2 {
+.fixed_bottom .fb_left image.data-v-1a7a34c0 {
       display: block;
       width: 36rpx;
       height: 36rpx !important;
       margin: 0 auto 10rpx;
 }
-.fixed_bottom .fb_center.data-v-10ba7ca2 {
+.fixed_bottom .fb_center.data-v-1a7a34c0 {
     width: 280rpx;
     height: 98rpx;
     line-height: 98rpx;
@@ -182,7 +182,7 @@
     font-size: 30rpx;
     background: #f4a522;
 }
-.fixed_bottom .fb_right.data-v-10ba7ca2 {
+.fixed_bottom .fb_right.data-v-1a7a34c0 {
     width: 280rpx;
     height: 98rpx;
     line-height: 98rpx;

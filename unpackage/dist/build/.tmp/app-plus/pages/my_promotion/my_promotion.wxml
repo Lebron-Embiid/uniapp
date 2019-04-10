@@ -1,0 +1,2 @@
+<import src="./my_promotion.vue.wxml" />
+    <template is="6acac94b" data="{{ ...$root['0'], $root }}"/>

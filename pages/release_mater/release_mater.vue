@@ -86,7 +86,7 @@
 
 <style scoped lang="scss">
 	page{
-		background: #f5f5f7;
+		background: #f5f5f7 !important;
 	}
 	.release_box{
 		background: #fff;

@@ -1,9 +1,9 @@
 <template>
 	<view class="science_box">
 		<view class="form_top">
-			<form @submit="formSubmit" class="form_box">
+			<form @click="toSearch" class="form_box">
 				<input type="text" placeholder="请输入您要搜索的关键词" value="" />
-				<button formType="submit"><image src="../../static/search.png" mode=""></image></button>
+				<button><image src="../../static/search.png" mode=""></image></button>
 			</form>
 		</view>
 		<view class="science_ul">
@@ -67,6 +67,11 @@
 				uni.navigateTo({
 					url: "/pages/science_detail/science_detail?id="+res.id+"&question="+res.question+"&answer="+res.answer
 				})
+			},
+			toSearch: function(e){
+				uni.navigateTo({
+					url: "/pages/search/search"
+				})
 			}
 		},
 		onNavigationBarButtonTap: function(){
@@ -78,7 +83,7 @@
 </script>
 
 <style scoped lang="scss">
-	page{background: #f5f5f7;}
+	page{background: #f5f5f7 !important;}
 	.form_top{
 		padding: 20upx 20upx 40upx;
 		overflow: hidden;

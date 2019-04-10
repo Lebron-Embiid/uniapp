@@ -483,7 +483,7 @@
 			// 数量
 		&-quantity{
 			border-style: solid; border-width: 1px 1px 1px 1px; border-color: #E0E0E0;
-			width: 33.33%;height: 80%;font-size: 13px; 
+			width: 33.33%;height: 80%;font-size: 13px; line-height: 1.8;
 			position: relative; top:25%; transform:translateY(-50%);
 			}
 			// 加数量

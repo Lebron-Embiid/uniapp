@@ -61,7 +61,7 @@
 			},
 			toIndex: function(e){
 				uni.switchTab({
-					url: "/pages/store/store"
+					url: "/pages/index/index"
 				})
 			}
 		}

@@ -167,6 +167,7 @@
     width: 33.33%;
     height: 80%;
     font-size: 13px;
+    line-height: 1.8;
     position: relative;
     top: 25%;
     -webkit-transform: translateY(-50%);

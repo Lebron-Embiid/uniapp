@@ -103,7 +103,7 @@
 </script>
 
 <style scoped lang="scss">
-	page{background: #f5f5f7;}
+	page{background: #f5f5f7 !important;}
 	.wallet_box{
 		.withdraw_box{
 			padding: 100upx 50upx 60upx;

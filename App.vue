@@ -14,11 +14,28 @@
 
 <style lang="scss">
 	/*每个页面公共css */
+	// page{background: #f5f5f5;}
+	.status_bar {  
+		height: var(--status-bar-height);  
+		width: 100%;  
+		background-color: #00001F;  
+	}  
+	.top_view {  
+		height: var(--status-bar-height);  
+		width: 100%;  
+		position: fixed;  
+		background-color: #00001F;  
+		top: 0;  
+		z-index: 999;  
+	}  
 	.mt44{
 		margin-top: 44px;
 	}
 	.mt130{
 		margin-top: 130upx;
+	}
+	uni-picker .uni-picker-item{
+		font-size: 28upx;
 	}
 	.form_box{
 		display: block;
