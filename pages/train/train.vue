@@ -1,5 +1,6 @@
 <template>
 	<view class="train">
+		<view class="page_bg"></view>
 		<view class="train_box">
 			<view class="list_nav">
 				<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
@@ -102,21 +103,21 @@ export default{
 		padding: 30upx 20upx;
 		box-sizing: border-box;
 	}
-	.audio_list{
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		align-items: center;
-		.audio_item{
-			width: 48%;
-			padding: 20upx;
-			image{
-				width: 120upx;
-				height: 120upx !important;
-				margin-bottom: 20upx;
-			}
-		}
-	}
+// 	.audio_list{
+// 		display: flex;
+// 		justify-content: space-between;
+// 		flex-wrap: wrap;
+// 		align-items: center;
+// 		.audio_item{
+// 			width: 48%;
+// 			padding: 20upx;
+// 			image{
+// 				width: 120upx;
+// 				height: 120upx !important;
+// 				margin-bottom: 20upx;
+// 			}
+// 		}
+// 	}
 	// 音频样式
 	.ai_info{
 		color: #4f4f50;

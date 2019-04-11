@@ -1,5 +1,6 @@
 <template>
 	<view class="my_order_box">
+		<view class="page_bg"></view>
 		<view class="order_nav">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>

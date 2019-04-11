@@ -1,5 +1,6 @@
 <template>
 	<view class="detail_box">
+		<view class="page_bg"></view>
 		<view class="detail_title">{{title}}</view>
 		<view class="news_icon">
 			<view><image src="../../static/news_icon1.png" mode="widthFix"></image>{{look}}</view>
@@ -57,7 +58,7 @@
 <style scoped lang="scss">
 	page{
 		background: #f5f5f7 !important;
-		padding: 10upx 0 30upx;
+		// padding: 10upx 0 30upx;
 	}
 	.detail_box{
 		background: #fff;

@@ -27,6 +27,7 @@
     "pages/search/search",
     "pages/car/car",
     "pages/my_promotion/my_promotion",
+    "pages/my_agent/my_agent",
     "pages/news/news",
     "pages/news_detail/news_detail",
     "pages/detail/detail",

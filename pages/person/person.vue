@@ -1,5 +1,6 @@
 <template>
 	<view class="person_box">
+		<view class="page_bg"></view>
 		<!-- #ifdef APP-PLUS -->  
 		<view class="status_bar">  
 			<view class="top_view"></view>  
@@ -27,7 +28,7 @@
 				<navigator class="navigator" url="/pages/wallet/wallet">我的钱包<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
-				<navigator class="navigator" url="">我的代理<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" url="/pages/my_agent/my_agent">我的代理<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/my_promotion/my_promotion">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
@@ -65,8 +66,7 @@
 	}
 </script>
 
-<style scoped lang="scss">
-	page,body,.person_box{background: #f5f5f7 !important;}
+<style lang="scss">
 	.person_top{
 		position: relative;
 		.person_bg{

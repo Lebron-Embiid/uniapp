@@ -1,5 +1,6 @@
 <template>
 	<view class="wallet_box">
+		<view class="page_bg"></view>
 		<view class="withdraw_box">
 			<view class="over_word">可用余额(元)</view>
 			<view class="over_money">{{over_money}}</view>

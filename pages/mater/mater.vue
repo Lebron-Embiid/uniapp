@@ -1,5 +1,6 @@
 <template>
 	<view class="mater_box">
+		<view class="page_bg"></view>
 		<view class="list_nav">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
@@ -28,7 +29,7 @@
 		</view>
 		<view class="video_mater" v-show="currentTab == 1">
 			<form @click="toSearch" class="form_box">
-				<input type="text" placeholder="请输入您要搜索的关键词" value="" />
+				<input type="text" disabled placeholder="请输入您要搜索的关键词" value="" />
 				<button><image src="../../static/search.png" mode=""></image></button>
 			</form>
 			<view class="video_content">
@@ -108,7 +109,7 @@
 			},
 			toMaterDetail: function(res){
 				uni.navigateTo({
-					url: "/pages/mater_detail/mater_detail?id="+res.id+"&name="+res.name+"&avatar="+res.avatar+"&time="+res.time+"&num="+res.num+"&sign="+res.sign+"&maters="+res.maters
+					url: "/pages/mater_detail/mater_detail?id="+res.id
 				})
 			},
 			toSearch: function(e){

@@ -1,5 +1,6 @@
 <template>
 	<view class="account_box">
+		<view class="page_bg"></view>
 		<view class="acc_item borbom notop">
 			<text>请选择收货地址</text>
 			<view class="acc_right" @click="toAddress">

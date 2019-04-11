@@ -1,1 +1,1 @@
-<template name="2407100b"><view class="_view data-v-01c0d3a8 science_detail"><view class="_view data-v-01c0d3a8 si_question">{{question}}</view><view class="_view data-v-01c0d3a8 si_answer">{{answer}}</view></view></template>
+<template name="2407100b"><view class="_view data-v-40ce8de6 science_detail"><view class="_view data-v-40ce8de6 page_bg"></view><view class="_view data-v-40ce8de6 si_question">{{question}}</view><view class="_view data-v-40ce8de6 si_answer">{{answer}}</view></view></template>

@@ -1,5 +1,6 @@
 <template>
 	<view class="release_mater">
+		<view class="page_bg"></view>
 		<view class="release_box">
 			<view class="release_item item_box" v-for="(item,index) in photos" :key="index">
 				<image :src="item" class="photo_img" @click="previewPhoto(index)" mode="widthFix"></image>

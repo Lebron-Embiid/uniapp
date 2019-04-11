@@ -1,5 +1,6 @@
 <template>
 	<view class="mater_detail">
+		<view class="page_bg"></view>
 		<view class="photo_head">
 			<image :src="avatar" class="avatar_img" mode="widthFix"></image>
 			<text class="ph_name">{{name}}</text>
@@ -25,12 +26,12 @@
 	export default{
 		data(){
 			return{
-				name: "",
-				avatar: "",
-				time: "",
-				num: 0,
-				sign: "",
-				maters: []
+				avatar: "../../static/avatar1.png",
+				name: "小黄鸭",
+				time: "2018-03-24",
+				num: 123,
+				sign: true,
+				maters: ["../../static/mater_img1.jpg","../../static/mater_img2.jpg","../../static/mater_img3.jpg"]
 			}
 		},
 		methods:{
@@ -59,12 +60,12 @@
 		},
 		onLoad(opt) {
 			let that = this;
-			that.name = opt.name;
-			that.avatar = opt.avatar;
-			that.time = opt.time;
-			that.num = opt.num;
-			that.sign = opt.sign;
-			that.maters = opt.maters.split(",");
+// 			that.name = opt.name;
+// 			that.avatar = opt.avatar;
+// 			that.time = opt.time;
+// 			that.num = opt.num;
+// 			that.sign = opt.sign;
+// 			that.maters = opt.maters.split(",");
 		}
 	}
 </script>

@@ -182,9 +182,9 @@
 				})
 			},
 			toMaterDetail: function(e){
-// 				uni.navigateTo({
-// 					url: "/pages/mater_detail/mater_detail?id="+e
-// 				})
+				uni.navigateTo({
+					url: "/pages/mater_detail/mater_detail?id="+e
+				})
 			},
 			toSearch: function(e){
 				uni.navigateTo({

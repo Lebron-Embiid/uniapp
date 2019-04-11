@@ -1,5 +1,6 @@
 <template>
 	<view class="withdraw_box">
+		<view class="page_bg"></view>
 		<form @submit="formSubmit">
 			<view class="section">
 				<text>帐号</text>
@@ -31,7 +32,10 @@
 		},
 		methods:{
 			setMoney: function(e){
-				
+				this.money = e.detail.value;
+			},
+			formSubmit: function(e){
+				console.log(this.money);
 			}
 		}
 	}

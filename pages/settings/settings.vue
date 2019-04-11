@@ -1,5 +1,6 @@
 <template>
 	<view class="settings_box">
+		<view class="page_bg"></view>
 		<view class="change_box">
 			<view class="change_avatar">
 				<image :src="avatar" mode="aspectFit" class="set_avatar"></image>

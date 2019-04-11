@@ -61,7 +61,7 @@
             },
             "icons" : {
                 "ios" : {
-                    "appstore" : "static/logo.png",
+                    "appstore" : "static/video_img.png",
                     "ipad" : {
                         "app" : "unpackage/res/icons/76x76.png",
                         "app@2x" : "unpackage/res/icons/152x152.png",
@@ -92,7 +92,20 @@
                     "xxhdpi" : "unpackage/res/icons/144x144.png",
                     "xxxhdpi" : "unpackage/res/icons/192x192.png"
                 }
+            },
+            "splashscreen" : {
+                "ios" : {
+                    "iphone" : {
+                        "retina35" : ""
+                    }
+                },
+                "android" : {
+                    "hdpi" : ""
+                }
             }
+        },
+        "splashscreen" : {
+            "waiting" : false
         }
     },
     /* SDK配置 */

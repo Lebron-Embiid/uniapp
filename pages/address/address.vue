@@ -1,5 +1,6 @@
 <template>
 	<view class="address_box">
+		<view class="page_bg"></view>
 		<view class="add_item pd10">
 			<text>收货人</text>
 			<view class="acc_right">

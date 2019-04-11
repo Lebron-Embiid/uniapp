@@ -1,5 +1,6 @@
 <template>
 	<view class="about_box">
+		<view class="page_bg"></view>
 		<image src="../../static/about_img.jpg" mode="widthFix"></image>
 		<view class="about_title">呦蓝YOULAN</view>
 		<view class="about_content">

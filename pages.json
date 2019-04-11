@@ -249,6 +249,12 @@
 			}
 		},
 		{
+			"path": "pages/my_agent/my_agent",
+			"style": {
+				"navigationBarTitleText": "我的代理"
+			}
+		},
+		{
 			"path": "pages/news/news",
 			"style": {
 				"navigationBarTitleText": "活动资讯"

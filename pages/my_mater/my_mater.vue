@@ -1,5 +1,6 @@
 <template>
 	<view class="my_mater">
+		<view class="page_bg"></view>
 		<view class="my_item" v-for="(item,index) in myMaterList" :key="index">
 			<image :src="item.src" mode="widthFix"></image>
 			<view class="my_down">已有{{item.num}}人下载</view>

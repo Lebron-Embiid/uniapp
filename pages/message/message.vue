@@ -1,5 +1,6 @@
 <template>
 	<view class="message_box">
+		<view class="page_bg"></view>
 		<view class="m_till">请您把问题留下，我们为您提供专业化解的解决方案！</view>
 		<form @submit="formSubmit">
 			<view class="section">

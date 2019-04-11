@@ -1,5 +1,6 @@
 <template>
 	<view class="feedback_box">
+		<view class="page_bg"></view>
 		<form @submit="formSubmit">
 			<view class="section">
 				<textarea @input="getMessage" :value="message" name="message" maxlength="-1" placeholder="请把您的问题留给我们，我们会提供让您满意的答复~~" />
@@ -37,7 +38,24 @@
 				this.phone = e.detail.value;
 			},
 			formSubmit: function(e){
-				console.log(this.message,this.username,this.phone)
+				let that = this;
+				uni.request({
+					url: 'http://gao2.demenk.com/shop/web/index.php?store_id=1&r=api/passport/register', //仅为示例，并非真实接口地址。
+					data: {
+						contact_way: that.phone
+					},
+					dataType: "json",
+					method: "POST",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: function(res) {
+						console.log(res);
+					},
+					fail: function (err) {
+						console.log(err);
+					}
+				})
 			}
 		}
 	}

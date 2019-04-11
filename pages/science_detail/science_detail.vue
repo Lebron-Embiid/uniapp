@@ -1,5 +1,6 @@
 <template>
 	<view class="science_detail">
+		<view class="page_bg"></view>
 		<view class="si_question">{{question}}</view>
 		<view class="si_answer">{{answer}}</view>
 	</view>
