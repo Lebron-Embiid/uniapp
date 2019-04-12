@@ -10,7 +10,7 @@
 				</view>
 			</view>
 			<view class="item_right">
-				<image :src="item.src" mode="widthFix"></image>
+				<image :src="item.src" mode="aspectFill"></image>
 			</view>
 		</view>
 	</view>

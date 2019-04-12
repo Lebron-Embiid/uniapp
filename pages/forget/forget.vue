@@ -4,16 +4,16 @@
 		<view class="list">
 			<view class="tishi">若您忘记了密码，可在此重新设置新密码。</view>
 			<view class="list-call">
-				<image class="img" src="/static/shilu-login/1.png"></image>
+				<image class="img" src="/static/1.png"></image>
 				<input class="biaoti" type="number" v-model="phoneno" maxlength="11" placeholder="请输入手机号" />
 			</view>
 			<view class="list-call">
-				<image class="img" src="/static/shilu-login/2.png"></image>
+				<image class="img" src="/static/2.png"></image>
 				<input class="biaoti" type="text" v-model="password" maxlength="32" placeholder="请输入新密码" :password="!showPassword" />
-				<image class="img" :src="showPassword?'/static/shilu-login/op.png':'/static/shilu-login/cl.png'" @tap="display"></image>
+				<image class="img" :src="showPassword?'/static/op.png':'/static/cl.png'" @tap="display"></image>
 			</view>
 			<view class="list-call">
-				<image class="img" src="/static/shilu-login/3.png"></image>
+				<image class="img" src="/static/3.png"></image>
 				<input class="biaoti" type="number" v-model="code" maxlength="4" placeholder="验证码" />
 				<view class="yzm" :class="{ yzms: second>0 }" @tap="getcode">{{yanzhengma}}</view>
 			</view>
@@ -45,11 +45,7 @@
 				if(this.second==0){
 					return '获取验证码';
 				}else{
-					if(this.second<10){
-						return '重新获取0'+this.second;
-					}else{
-						return '重新获取'+this.second;
-					}
+					return this.second+'s';
 				}
 			}
 		},
@@ -62,17 +58,17 @@
 					return;
 				}
 				
-				uni.request({
-				    url: 'http://***/getcode.html', //仅为示例，并非真实接口地址。
-				    data: {phoneno:this.phoneno,code_type:'reg'},
-					method: 'POST',
-					dataType:'json',
-				    success: (res) => {
-						if(res.data.code!=200){
-							uni.showToast({title:res.data.msg,icon:'none'});
-							tha.second = 0;
-						}else{
-							uni.showToast({title:res.data.msg});
+// 				uni.request({
+// 				    url: 'http://***/getcode.html', //仅为示例，并非真实接口地址。
+// 				    data: {phoneno:this.phoneno,code_type:'reg'},
+// 					method: 'POST',
+// 					dataType:'json',
+// 				    success: (res) => {
+// 						if(res.data.code!=200){
+// 							uni.showToast({title:res.data.msg,icon:'none'});
+// 							tha.second = 0;
+// 						}else{
+// 							uni.showToast({title:res.data.msg});
 							tha.second = 60;
 							js = setInterval(function(){
 								tha.second--;
@@ -80,9 +76,9 @@
 									clearInterval(js)
 								}
 							},1000)
-						}
-				    }
-				});
+// 						}
+// 				    }
+// 				});
 			},
 			bindLogin() {
 				if (this.phoneno.length != 11) {
@@ -191,11 +187,10 @@
 	.yzm {
 		color: #FF7D13;
 		font-size: 24upx;
-		line-height: 64upx;
-		padding-left: 10upx;
-		padding-right: 10upx;
-		width:auto;
-		height:64upx;
+		line-height: 58upx;
+		width:150upx;
+		text-align: center;
+		height:58upx;
 		border:1upx solid rgba(255,131,30,1);
 		border-radius: 50upx;
 	}

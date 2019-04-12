@@ -1,6 +1,13 @@
 {
 	"pages": [
 		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": ""
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
@@ -25,13 +32,6 @@
 // 						]
 //                     }
                 }
-			}
-		},
-		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": ""
 			}
 		},
 		{

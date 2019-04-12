@@ -1,16 +1,16 @@
 <template>
 	<view class="content">
 		<view class="header">
-			<image src="../..../../static/shilu-login/logo.png"></image>
+			<image src="../../static/logo.png"></image>
 		</view>
 		
 		<view class="list">
 			<view class="list-call">
-				<image class="img" src="../../static/shilu-login/1.png"></image>
+				<image class="img" src="../../static/1.png"></image>
 				<input class="biaoti" v-model="phoneno" type="number" maxlength="11" placeholder="输入手机号" />
 			</view>
 			<view class="list-call">
-				<image class="img" src="../../static/shilu-login/2.png"></image>
+				<image class="img" src="../../static/2.png"></image>
 				<input class="biaoti" v-model="password" type="text" maxlength="32" placeholder="输入密码" password="true" />
 			</view>
 			
@@ -31,7 +31,7 @@
 <script>
 	export default {
 		onLoad(){
-			
+			console.log(this.$access_token)
 		},
 		data() {
 			return {
@@ -41,38 +41,41 @@
 		},
 		methods: {
 		    bindLogin() {
-				if (this.phoneno.length != 11) {
-				     uni.showToast({
-				        icon: 'none',
-				        title: '手机号不正确'
-				    });
-				    return;
-				}
-		        if (this.password.length < 6) {
-		            uni.showToast({
-		                icon: 'none',
-		                title: '密码不正确'
-		            });
-		            return;
-		        }
-				uni.request({
-				    url: 'http://***/login.html',
-				    data: {
-						phoneno:this.phoneno,
-						password:this.password
-					},
-					method: 'POST',
-					dataType:'json',
-				    success: (res) => {
-						if(res.data.code!=200){
-							uni.showToast({title:res.data.msg,icon:'none'});
-						}else{
-							uni.setStorageSync('user_data', JSON.stringify(res.data.data));
-							this.login();
-							uni.navigateBack();
-						}
-				    }
-				});
+				uni.reLaunch({
+					url: "/pages/index/index"
+				})
+// 				if (this.phoneno.length != 11) {
+// 				     uni.showToast({
+// 				        icon: 'none',
+// 				        title: '手机号不正确'
+// 				    });
+// 				    return;
+// 				}
+// 		        if (this.password.length < 6) {
+// 		            uni.showToast({
+// 		                icon: 'none',
+// 		                title: '密码不正确'
+// 		            });
+// 		            return;
+// 		        }
+// 				uni.request({
+// 				    url: 'http://***/login.html',
+// 				    data: {
+// 						phoneno:this.phoneno,
+// 						password:this.password
+// 					},
+// 					method: 'POST',
+// 					dataType:'json',
+// 				    success: (res) => {
+// 						if(res.data.code!=200){
+// 							uni.showToast({title:res.data.msg,icon:'none'});
+// 						}else{
+// 							uni.setStorageSync('user_data', JSON.stringify(res.data.data));
+// 							this.login();
+// 							uni.navigateBack();
+// 						}
+// 				    }
+// 				});
 				
 		    }
 		}
@@ -91,7 +94,7 @@
 		background:rgba(63,205,235,1);
 		box-shadow:0upx 12upx 13upx 0upx rgba(63,205,235,0.47);
 		border-radius:50%;
-		margin-top: 30upx;
+		margin-top: 50upx;
 		margin-left: auto;
 		margin-right: auto;
 	}

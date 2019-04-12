@@ -47,6 +47,42 @@ function friendlyDate(timestamp) {
 	}
 	return formats[diffType].replace('%n%', diffValue);
 }
-export {
-	friendlyDate
+
+// 时间戳转年月日 时分秒
+const formatTime = date => {
+    date = new Date(date);
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    const second = date.getSeconds()
+
+    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+}
+
+// 时间戳转年月日
+const formatDate = date => {
+    date = new Date(date);
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    const second = date.getSeconds()
+
+    // return [year, month, day].map(formatNumber).join('.');
+    return [month, day].map(formatNumber).join('.');
+}
+
+const formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : '0' + n
+}
+
+
+export default {
+	friendlyDate,
+    formatTime,
+    formatDate
 }

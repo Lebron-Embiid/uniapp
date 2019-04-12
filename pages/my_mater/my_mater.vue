@@ -1,10 +1,10 @@
 <template>
 	<view class="my_mater">
-		<view class="page_bg"></view>
-		<view class="my_item" v-for="(item,index) in myMaterList" :key="index">
+		<view class="my_item" v-for="(item,index) in myMaterList" @click="toMaterDetail(item.id)" :key="index">
 			<image :src="item.src" mode="widthFix"></image>
 			<view class="my_down">已有{{item.num}}人下载</view>
 		</view>
+		<view class="page_bg"></view>
 	</view>
 </template>
 
@@ -59,6 +59,13 @@
 						num: 39
 					}
 				]
+			}
+		},
+		methods:{
+			toMaterDetail: function(e){
+				uni.navigateTo({
+					url: "/pages/mater_detail/mater_detail?id="+e
+				})
 			}
 		}
 	}

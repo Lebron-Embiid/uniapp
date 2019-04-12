@@ -9,7 +9,7 @@
 			<view class="logo_box">
 				<image :src="logo" mode="widthFix"></image>
 			</view>
-			<form @click="toSearch" class="form_box">
+			<form @click="toSearch" class="form_box" hover-class="active">
 				<input type="text" disabled placeholder="请输入您要搜索的关键词" value="" />
 				<button><image src="/static/search.png" mode=""></image></button>
 			</form>
@@ -74,7 +74,9 @@
 		data(){
 			return{
 				logo: "../../static/logo.png",
-				swiperList: ["../../static/index_banner.jpg","../../static/index_banner.jpg","../../static/index_banner.jpg"],
+				swiperList: [
+					"../../static/index_banner.jpg","../../static/index_banner.jpg","../../static/index_banner.jpg",
+					],
 				navList:[
 					{
 						url: "/pages/train/train",
@@ -193,7 +195,23 @@
 			}
 		},
 		onLoad() {
-			console.log(this.$access_token)
+			// console.log(this.$access_token);
+			var that = this;
+			console.log(that.logo)
+			uni.request({
+				url: that.$api+'default/home',
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: res => {
+					console.log(res)
+				},
+				fail: () => {
+					
+				}
+			})
 		}
 	}
 </script>

@@ -91,6 +91,19 @@ export default{
 				url: "/pages/audio/audio?id="+e.id+"&title="+e.title+"&look="+e.look+"&src="+e.src+"&duration="+e.duration
 			})
 		}
+	},
+	onLoad(opt) {
+		var that = this;
+		uni.request({
+			url: that.$api+'default/video-list',
+			method: 'GET',
+			success: res => {
+				console.log(res)
+			},
+			fail: () => {
+				
+			}
+		});
 	}
 }
 </script>

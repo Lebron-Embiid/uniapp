@@ -14,6 +14,9 @@
 			<view class="store_list" v-show="currentTab == 1">
 					<commonStore :storeList="storeList2"></commonStore>
 			</view>
+			<view class="store_list" v-show="currentTab == 2">
+					<commonStore :storeList="storeList3"></commonStore>
+			</view>
 		</view>
 	</view>
 </template>
@@ -28,7 +31,7 @@
 				scrollLeft: 0,
 				tabIndex: 0,
 				navbar: [
-					{ name: '艾璐卡' },{ name: '纽西之谜'}
+					{ name: '艾璐卡' },{ name: '纽西之谜'},{ name: '特价商品'}
 				],
 				currentTab:0,
 				storeList1:[
@@ -98,6 +101,40 @@
 						price: 98,
 						type: "3.5g"
 					}
+				],
+				storeList3:[
+					{
+						id: 5,
+						src: "../../static/store_img1.jpg",
+						title: "艾璐卡-山羊奶悦颜清透洁乳",
+						info: "清洁皮肤，长效保湿滋润",
+						price: 98,
+						type: "3.5g"
+					},
+					{
+						id: 6,
+						src: "../../static/store_img3.jpg",
+						title: "艾璐卡-山羊奶悦颜清透洁乳",
+						info: "清洁皮肤，长效保湿滋润",
+						price: 98,
+						type: "3.5g"
+					},
+					{
+						id: 7,
+						src: "../../static/store_img5.jpg",
+						title: "艾璐卡-山羊奶悦颜清透洁乳",
+						info: "清洁皮肤，长效保湿滋润",
+						price: 98,
+						type: "3.5g"
+					},
+					{
+						id: 8,
+						src: "../../static/store_img7.jpg",
+						title: "艾璐卡-山羊奶悦颜清透洁乳",
+						info: "清洁皮肤，长效保湿滋润",
+						price: 98,
+						type: "3.5g"
+					}
 				]
 			}
 		},
@@ -107,7 +144,6 @@
 		},
 		methods:{
 			navbarTap: function(e){
-				console.log(e)
 				this.currentTab = e;
 			},
 			toSearch: function(e){

@@ -235,6 +235,9 @@
 				color: #333;
 				font-size: 22upx;
 				margin: 20upx 0 50upx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 			.news_icon{
 				color: #bbb;
@@ -258,7 +261,7 @@
 			image{
 				display: block;
 				width: 260upx;
-				height: 260upx;
+				height: 260upx !important;
 			}
 		}
 	}

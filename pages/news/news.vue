@@ -3,7 +3,7 @@
 		<view class="search_box">
 			<form @click="toSearch" class="form_box">
 				<input type="text" disabled placeholder="请输入您要搜索的关键词" value="" />
-				<button><image src="../../static/search.png" mode=""></image></button>
+				<button><image src="../../static/search.png" mode="widthFix"></image></button>
 			</form>
 		</view>
 		<view class="news_content">
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+	import util from "@/common/util.js"
 	import commonNews from "@/components/common-news.vue"
 	export default{
 		data(){
@@ -66,6 +67,35 @@
 					url: "/pages/search/search"
 				})
 			}
+		},
+		onLoad(opt) {
+			var that = this;
+			uni.request({
+				url: that.$api+'default/article-list&page=1&cat_id=2',
+				method: 'GET',
+				success: res => {
+					var news_list = [];
+					for(var i in res.data.data.list){
+						var item = res.data.data.list;
+						news_list.push({
+							id: item[i].id,
+							title: item[i].title,
+							info: item[i].describe,
+							look: item[i].num,
+							date: util.formatDate(parseInt(item[i].addtime)),
+							src: item[i].cover_pic
+						})
+					}
+					that.news_list = news_list;
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+				}
+			});
 		}
 	}
 </script>
