@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import imtAudio from "../../components/imt-audio/imt-audio.vue"
+import imtAudio from "@/components/imt-audio/imt-audio.vue"
 export default{
 	data(){
 		return{

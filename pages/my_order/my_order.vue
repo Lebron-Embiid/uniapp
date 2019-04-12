@@ -28,7 +28,7 @@
 </template>
 
 <script>
-	import commonOrder from "../../components/common-order.vue"
+	import commonOrder from "@/components/common-order.vue"
 	export default{
 		data(){
 			return{

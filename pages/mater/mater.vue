@@ -40,7 +40,7 @@
 </template>
 
 <script>
-	import commonVideo from "../../components/common-video.vue"
+	import commonVideo from "@/components/common-video.vue"
 	export default{
 		data(){
 			return{

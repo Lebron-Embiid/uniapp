@@ -3,17 +3,17 @@
 		onLaunch: function () {
 			console.log('App Launch');
 			//app启动时打开启动广告页
-			var w = plus.webview.open(
-				'hybrid/html/advertise/advertise.html',
-				'本地地址',
-				{ top: 0, bottom: 0, zindex: 999 },
-				'fade-in',
-				500
-			);
-			//设置定时器，4s后关闭启动广告页
-			setTimeout(function() {
-				plus.webview.close(w);
-			}, 4000);
+// 			var w = plus.webview.open(
+// 				'hybrid/html/advertise/advertise.html',
+// 				'本地地址',
+// 				{ top: 0, bottom: 0, zindex: 999 },
+// 				'fade-in',
+// 				500
+// 			);
+// 			//设置定时器，4s后关闭启动广告页
+// 			setTimeout(function() {
+// 				plus.webview.close(w);
+// 			}, 4000);
 		},
 		onShow: function () {
 			console.log('App Show')
@@ -26,7 +26,7 @@
 
 <style lang="scss">
 	/*每个页面公共css */
-	// page{background: #f5f5f5;}
+	// page{background: #fff;}
 	.page_bg{background: #f5f5f7 !important;min-height: 100%;position: fixed;width: 100%;z-index: -1;left: 0;top: 0;}
 	.status_bar {
 		height: var(--status-bar-height);

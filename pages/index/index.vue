@@ -11,7 +11,7 @@
 			</view>
 			<form @click="toSearch" class="form_box">
 				<input type="text" disabled placeholder="请输入您要搜索的关键词" value="" />
-				<button><image src="../../static/search.png" mode=""></image></button>
+				<button><image src="/static/search.png" mode=""></image></button>
 			</form>
 		</view>
 		<view class="uni-padding-wrap mt130">
@@ -68,8 +68,8 @@
 </template>
 
 <script>
-	import commonSwiper from "../../components/common-swiper.vue"
-	import commonNews from "../../components/common-news.vue"
+	import commonSwiper from "@/components/common-swiper.vue"
+	import commonNews from "@/components/common-news.vue"
 	export default{
 		data(){
 			return{
@@ -191,6 +191,9 @@
 					url: "/pages/search/search"
 				})
 			}
+		},
+		onLoad() {
+			console.log(this.$access_token)
 		}
 	}
 </script>

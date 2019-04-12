@@ -16,7 +16,7 @@
 </template>
 
 <script>
-	import commonAgent from '../../components/common-agent.vue'
+	import commonAgent from '@/components/common-agent.vue'
 	export default{
 		data(){
 			return{

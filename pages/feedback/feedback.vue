@@ -49,11 +49,12 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
-					success: function(res) {
-						console.log(res);
-					},
-					fail: function (err) {
-						console.log(err);
+					 success: function(res) {
+						 that.$access_token = res.data.data.access_token;
+						 console.log(that.$access_token)
+						 // const value = uni.setStorageSync('access_token',);
+						console.log(res.data.data);
+						// console.log(uni.getStorageSync('access_token'))
 					}
 				})
 			}

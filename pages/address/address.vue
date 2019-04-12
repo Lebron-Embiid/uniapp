@@ -35,7 +35,7 @@
 </template>
 
 <script>
-	import cityPicker from '../../components/citypicker/cityPicker.vue'
+	import cityPicker from '@/components/citypicker/cityPicker.vue'
 	import cityData from '../../common/city.data.js'
 	export default{
 		data(){

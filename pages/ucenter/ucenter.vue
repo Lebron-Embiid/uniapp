@@ -46,7 +46,7 @@
 		data() {
 			return {
 				login: false,
-				avatarUrl: '/static/logo.png',
+				avatarUrl: '../../static/logo.png',
 				uerInfo: {}
 			}
 		},

@@ -38,7 +38,7 @@
 </template>
 
 <script>
-	import commonSwiper from "../../components/common-swiper.vue"
+	import commonSwiper from "@/components/common-swiper.vue"
 	export default{
 		data(){
 			return{

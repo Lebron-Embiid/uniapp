@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import sunsinUpimg from '../../components/sunui-upimg/sunui-upimg.vue'
+import sunsinUpimg from '@/components/sunui-upimg/sunui-upimg.vue'
 export default{
 	data() {
 		return{
@@ -35,11 +35,11 @@ export default{
 			covers: [{
                 latitude: 39.909,
                 longitude: 116.39742,
-                iconPath: '../../../static/location.png'
+                iconPath: '../../static/location.png'
             }, {
                 latitude: 39.90,
                 longitude: 116.39,
-                iconPath: '../../../static/location.png'
+                iconPath: '../../static/location.png'
             }],
 			indicatorDots: true,
 			autoplay: false,
@@ -48,9 +48,9 @@ export default{
 			loop: true,
 			controls: true,
 			banners:[
-				require("../../static/timg.jpg"),
-				require("../../static/timg.jpg"),
-				require("../../static/timg.jpg")
+				"../../static/timg.jpg",
+				"../../static/timg.jpg",
+				"../../static/timg.jpg"
 			]
 		}
 	},

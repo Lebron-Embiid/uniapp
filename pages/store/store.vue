@@ -19,8 +19,8 @@
 </template>
 
 <script>
-	import commonSwiper from "../../components/common-swiper.vue"
-	import commonStore from "../../components/common-store.vue"
+	import commonSwiper from "@/components/common-swiper.vue"
+	import commonStore from "@/components/common-store.vue"
 	export default{
 		data(){
 			return{

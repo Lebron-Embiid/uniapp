@@ -17,7 +17,7 @@
 </template>
 
 <script>
-	import commonNews from "../../components/common-news.vue"
+	import commonNews from "@/components/common-news.vue"
 	export default{
 		data(){
 			return{
