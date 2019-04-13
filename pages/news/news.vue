@@ -23,38 +23,38 @@
 		data(){
 			return{
 				news_list:[
-					{
-						id: 1,
-						title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
-						info: "法国时间1月20日，由艾璐卡eloo Doca...",
-						look: "1.1w",
-						date: "04.28",
-						src: "../../static/hot_img1.jpg"
-					},
-					{
-						id: 2,
-						title: "武钢体育馆·呦蓝YOULAN周年庆典完美落幕",
-						info: "2017年10月10日，武汉武钢体育馆内...",
-						look: "1.1w",
-						date: "04.28",
-						src: "../../static/hot_img2.jpg"
-					},
-					{
-						id: 3,
-						title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
-						info: "法国时间1月20日，由艾璐卡eloo Doca...",
-						look: "1.1w",
-						date: "04.28",
-						src: "../../static/hot_img3.jpg"
-					},
-					{
-						id: 4,
-						title: "武钢体育馆·呦蓝YOULAN周年庆典完美落幕",
-						info: "2017年10月10日，武汉武钢体育馆内...",
-						look: "1.1w",
-						date: "04.28",
-						src: "../../static/hot_img4.jpg"
-					}
+// 					{
+// 						id: 1,
+// 						title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
+// 						info: "法国时间1月20日，由艾璐卡eloo Doca...",
+// 						look: "1.1w",
+// 						date: "04.28",
+// 						src: "../../static/hot_img1.jpg"
+// 					},
+// 					{
+// 						id: 2,
+// 						title: "武钢体育馆·呦蓝YOULAN周年庆典完美落幕",
+// 						info: "2017年10月10日，武汉武钢体育馆内...",
+// 						look: "1.1w",
+// 						date: "04.28",
+// 						src: "../../static/hot_img2.jpg"
+// 					},
+// 					{
+// 						id: 3,
+// 						title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
+// 						info: "法国时间1月20日，由艾璐卡eloo Doca...",
+// 						look: "1.1w",
+// 						date: "04.28",
+// 						src: "../../static/hot_img3.jpg"
+// 					},
+// 					{
+// 						id: 4,
+// 						title: "武钢体育馆·呦蓝YOULAN周年庆典完美落幕",
+// 						info: "2017年10月10日，武汉武钢体育馆内...",
+// 						look: "1.1w",
+// 						date: "04.28",
+// 						src: "../../static/hot_img4.jpg"
+// 					}
 				]
 			}
 		},

@@ -248,6 +248,10 @@ uni-audio {
       color: #333;
       font-size: 22rpx;
       margin: 20rpx 0 50rpx;
+      overflow: hidden;
+      -o-text-overflow: ellipsis;
+         text-overflow: ellipsis;
+      white-space: nowrap;
 }
 .news_item .item_left .news_icon {
       color: #bbb;
@@ -271,6 +275,6 @@ uni-audio {
 .news_item .item_right image {
       display: block;
       width: 260rpx;
-      height: 260rpx;
+      height: 260rpx !important;
 }
 

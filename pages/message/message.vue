@@ -7,10 +7,10 @@
 				<textarea @input="getProblem" :value="problem" name="problem" maxlength="-1" placeholder="请把您的问题留给我们，我们会提供让您满意的答复~~" />
 			</view>
 			<view class="section">
-				<input @input="getUsername" type="text" name="username" value="" placeholder="称呼" />
+				<input @input="getUsername" type="text" name="username" :value="username" placeholder="称呼" />
 			</view>
 			<view class="section">
-				<input @input="getPhone" type="text" name="phone" value="" placeholder="联系方式" />
+				<input @input="getPhone" type="text" name="phone" maxlength="11" :value="phone" placeholder="联系方式" />
 			</view>
 			<view class="btn-area">
 				<button formType="submit">提交留言</button>
@@ -39,7 +39,24 @@
 				this.phone = e.detail.value;
 			},
 			formSubmit: function(e){
-				console.log(this.problem,this.username,this.phone)
+				var that = this;
+				uni.request({
+					url: that.$api+'default/article-message', //仅为示例，并非真实接口地址。
+					data: {
+						cat_id: '1',
+						name: that.username,
+						content: that.problem,
+						mobile: that.phone
+					},
+					dataType: "json",
+					method: "POST",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: function(res) {
+						console.log(res.data);
+					}
+				})
 			}
 		}
 	}

@@ -37,20 +37,26 @@
 		methods:{
 			downloadMater: function(e){
 				let that = this;
-				uni.downloadFile({
-					url: that.maters[e],
-					success: (res) => {
-						if (res.statusCode === 200) {
-							console.log('下载成功');
-// 							uni.saveImageToPhotosAlbum({
-// 								filePath: res.tempFilePath,
-// 								success: function () {
-// 									console.log('save success');
-// 								}
-// 							});
-						}
+				// console.log(that.maters[e])
+				uni.saveImageToPhotosAlbum({
+					filePath: that.maters[e],
+					success: function () {
+						uni.showToast({
+							title: '下载成功！',
+							icon: 'none',
+							duration: 1500
+						})
 					}
 				});
+// 				uni.downloadFile({
+// 					url: that.maters[e],
+// 					success: (res) => {
+// 						if (res.statusCode === 200) {
+// 							console.log('下载成功');
+// 							
+// 						}
+// 					}
+// 				});
 			}
 		},
 		onNavigationBarButtonTap: function(){

@@ -95,8 +95,9 @@
 			};
 		},
 		onLoad:function() {
+			var that = this;
 			// 从缓存或服务端获取到购物车商品 这里示例数据如下：
-			let objcart = [
+			var objcart = [
 				{
 					items:[
 						{
@@ -112,6 +113,16 @@
 					]
 				}
 			]
+			
+			uni.request({
+				url: that.$api+'cart/list&access_token='+that.$access_token,
+				method: 'GET',
+				success: res => {
+					
+				},
+				fail: () => {}
+			});
+			
 
 			// 这里示例数据对象存入缓存
 			try {
@@ -124,7 +135,7 @@
 				const objcart = uni.getStorageSync('cart');
 				if (objcart) {
 					// 装载this cart
-					this.cart = objcart;
+					that.cart = objcart;
 				}
 			} catch (e) {
 				// error
@@ -132,15 +143,15 @@
 			
 			// console.log(this.cart)
 			// 默认勾选购物车所有商品 合计金额 合计数量
-			for (let i = 0; i < this.cart.length; i++) {
-				for (let k = 0; k < this.cart[i].items.length; k++) {
+			for (let i = 0; i < that.cart.length; i++) {
+				for (let k = 0; k < that.cart[i].items.length; k++) {
 					// 总金额 
-					this.totalamount = this.totalamount + this.cart[i].items[k].price * this.cart[i].items[k].quantity
+					that.totalamount = that.totalamount + that.cart[i].items[k].price * that.cart[i].items[k].quantity
 					// 总数量
-					this.cntitems = this.cntitems + this.cart[i].items[k].quantity
+					that.cntitems = that.cntitems + that.cart[i].items[k].quantity
 				}
 			}
-			this.totalamount = this.fmamount(this.totalamount)
+			that.totalamount = that.fmamount(that.totalamount)
 		},
 		// 下拉刷新
 		onPullDownRefresh(){

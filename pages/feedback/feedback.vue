@@ -6,10 +6,10 @@
 				<textarea @input="getMessage" :value="message" name="message" maxlength="-1" placeholder="请把您的问题留给我们，我们会提供让您满意的答复~~" />
 			</view>
 			<view class="section">
-				<input @input="getUsername" type="text" name="username" value="" placeholder="称呼" />
+				<input @input="getUsername" type="text" name="username" :value="username" placeholder="称呼" />
 			</view>
 			<view class="section">
-				<input @input="getPhone" type="text" name="phone" value="" placeholder="联系方式" />
+				<input @input="getPhone" type="text" name="phone" maxlength="11" :value="phone" placeholder="联系方式" />
 			</view>
 			<view class="btn-area">
 				<button formType="submit">提交留言</button>
@@ -40,21 +40,21 @@
 			formSubmit: function(e){
 				let that = this;
 				uni.request({
-					url: 'http://gao2.demenk.com/shop/web/index.php?store_id=1&r=api/passport/register', //仅为示例，并非真实接口地址。
+					url: that.$api+'default/article-message', //仅为示例，并非真实接口地址。
 					data: {
-						contact_way: that.phone
+						cat_id: '2',
+						name: that.username,
+						content: that.message,
+						mobile: that.phone
 					},
 					dataType: "json",
 					method: "POST",
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
-					 success: function(res) {
-						 that.$access_token = res.data.data.access_token;
-						 console.log(that.$access_token)
-						 // const value = uni.setStorageSync('access_token',);
-						console.log(res.data.data);
-						// console.log(uni.getStorageSync('access_token'))
+					success: function(res) {
+						console.log(that.$access_token)
+						console.log(res.data);
 					}
 				})
 			}

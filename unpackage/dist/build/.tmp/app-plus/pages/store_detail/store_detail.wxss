@@ -24,56 +24,56 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.borbom.data-v-1a7a34c0 {
+.borbom.data-v-a1e205ea {
   border-bottom: 20rpx solid #f7f7f7;
 }
-.mb98.data-v-1a7a34c0 {
+.mb98.data-v-a1e205ea {
   margin-bottom: 98rpx;
 }
-.detail_info.data-v-1a7a34c0 {
+.detail_info.data-v-a1e205ea {
   padding: 40rpx 25rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
 }
-.detail_info .di_title.data-v-1a7a34c0 {
+.detail_info .di_title.data-v-a1e205ea {
     color: #1f1f1f;
     font-size: 28rpx;
 }
-.detail_info .di_info.data-v-1a7a34c0 {
+.detail_info .di_info.data-v-a1e205ea {
     color: #787878;
     font-size: 24rpx;
     margin: 5rpx 0 15rpx;
 }
-.detail_info .di_price.data-v-1a7a34c0 {
+.detail_info .di_price.data-v-a1e205ea {
     color: #ff4446;
     font-size: 34rpx;
 }
-.detail_info .di_price text.data-v-1a7a34c0 {
+.detail_info .di_price text.data-v-a1e205ea {
       color: #a1a1a1;
       font-size: 22rpx;
       margin-left: 70rpx;
 }
-.auth_box.data-v-1a7a34c0 {
+.auth_box.data-v-a1e205ea {
   padding: 30rpx 20rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
 }
-.auth_box view.data-v-1a7a34c0 {
+.auth_box view.data-v-a1e205ea {
     float: left;
     margin-right: 30rpx;
     color: #a1a1a1;
     font-size: 24rpx;
 }
-.auth_box view image.data-v-1a7a34c0 {
+.auth_box view image.data-v-a1e205ea {
       display: inline-block;
       vertical-align: middle;
       margin: 0 8rpx 6rpx 0;
       width: 33rpx;
       height: 33rpx !important;
 }
-.format_box.data-v-1a7a34c0 {
+.format_box.data-v-a1e205ea {
   overflow: hidden;
   padding: 30rpx 20rpx;
   -webkit-box-sizing: border-box;
@@ -91,25 +91,25 @@
       -ms-flex-align: center;
           align-items: center;
 }
-.format_box text.data-v-1a7a34c0 {
+.format_box text.data-v-a1e205ea {
     display: block;
     width: 15%;
     color: #1f1f1f;
     font-size: 30rpx;
 }
-.format_box .format_select.data-v-1a7a34c0 {
+.format_box .format_select.data-v-a1e205ea {
     width: 85%;
     color: #787878;
     font-size: 24rpx;
     overflow: hidden;
 }
-.format_box .format_select image.data-v-1a7a34c0 {
+.format_box .format_select image.data-v-a1e205ea {
       float: right;
       display: block;
       width: 20rpx;
       height: 34rpx !important;
 }
-.store_tab.data-v-1a7a34c0 {
+.store_tab.data-v-a1e205ea {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -123,24 +123,24 @@
           align-items: center;
   border-bottom: 1rpx solid #EAEAEA;
 }
-.store_tab view.data-v-1a7a34c0 {
+.store_tab view.data-v-a1e205ea {
     color: #00001f;
     font-size: 28rpx;
     text-align: center;
     padding: 30rpx 10rpx;
 }
-.store_tab view.active.data-v-1a7a34c0 {
+.store_tab view.active.data-v-a1e205ea {
       border-bottom: 1rpx solid #00001F;
 }
-.store_content1.data-v-1a7a34c0, .store_content2.data-v-1a7a34c0 {
+.store_content1.data-v-a1e205ea, .store_content2.data-v-a1e205ea {
   overflow: hidden;
   padding: 20rpx 0;
 }
-.store_content1 image.data-v-1a7a34c0, .store_content2 image.data-v-1a7a34c0 {
+.store_content1 image.data-v-a1e205ea, .store_content2 image.data-v-a1e205ea {
     display: block;
     width: 100%;
 }
-.fixed_bottom.data-v-1a7a34c0 {
+.fixed_bottom.data-v-a1e205ea {
   position: fixed;
   width: 100%;
   height: 98rpx;
@@ -163,18 +163,18 @@
   background: #fff;
   border-top: 1rpx solid #EAEAEA;
 }
-.fixed_bottom .fb_left.data-v-1a7a34c0 {
+.fixed_bottom .fb_left.data-v-a1e205ea {
     width: 190rpx;
     color: #666;
     font-size: 22rpx;
 }
-.fixed_bottom .fb_left image.data-v-1a7a34c0 {
+.fixed_bottom .fb_left image.data-v-a1e205ea {
       display: block;
       width: 36rpx;
       height: 36rpx !important;
       margin: 0 auto 10rpx;
 }
-.fixed_bottom .fb_center.data-v-1a7a34c0 {
+.fixed_bottom .fb_center.data-v-a1e205ea {
     width: 280rpx;
     height: 98rpx;
     line-height: 98rpx;
@@ -182,7 +182,7 @@
     font-size: 30rpx;
     background: #f4a522;
 }
-.fixed_bottom .fb_right.data-v-1a7a34c0 {
+.fixed_bottom .fb_right.data-v-a1e205ea {
     width: 280rpx;
     height: 98rpx;
     line-height: 98rpx;

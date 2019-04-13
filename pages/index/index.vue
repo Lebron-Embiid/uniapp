@@ -197,7 +197,6 @@
 		onLoad() {
 			// console.log(this.$access_token);
 			var that = this;
-			console.log(that.logo)
 			uni.request({
 				url: that.$api+'default/home',
 				method: 'GET',

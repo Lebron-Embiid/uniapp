@@ -60,6 +60,17 @@
 				this.$refs.cityPicker.showPickerView();
 			}
 		},
+		onLoad() {
+			var that = this;
+			uni.request({
+				url: that.$api+'user/address-list&access_token='+that.$access_token,
+				method: 'GET',
+				success: res => {
+					
+				},
+				fail: () => {}
+			});
+		},
         onBackPress() {
           if (this.$refs.cityPicker.showPicker) {
             this.$refs.cityPicker.pickerCancel();

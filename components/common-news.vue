@@ -1,6 +1,6 @@
 <template>
 	<view class="common_news">
-		<view class="news_item" v-for="(item,index) in news_list" @click="toNewsDetail(index)" :key="index">
+		<view class="news_item" v-for="(item,index) in news_list" @click="toNewsDetail(item.id)" :key="index">
 			<view class="item_left">
 				<view class="news_title">{{item.title}}</view>
 				<view class="news_info">{{item.info}}</view>

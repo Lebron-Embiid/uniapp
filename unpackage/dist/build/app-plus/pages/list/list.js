@@ -96,7 +96,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.friendlyDate = friendlyDate;function friendlyDate(timestamp) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function friendlyDate(timestamp) {
   var formats = {
     'year': '%n% 年前',
     'month': '%n% 月前',
@@ -145,6 +145,44 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.friendlyDa
   }
   return formats[diffType].replace('%n%', diffValue);
 }
+
+// 时间戳转年月日 时分秒
+var formatTime = function formatTime(date) {
+  date = new Date(date);
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+
+  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':');
+};
+
+// 时间戳转年月日
+var formatDate = function formatDate(date) {
+  date = new Date(date);
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+
+  // return [year, month, day].map(formatNumber).join('.');
+  return [month, day].map(formatNumber).join('.');
+};
+
+var formatNumber = function formatNumber(n) {
+  n = n.toString();
+  return n[1] ? n : '0' + n;
+};var _default =
+
+
+{
+  friendlyDate: friendlyDate,
+  formatTime: formatTime,
+  formatDate: formatDate };exports.default = _default;
 
 /***/ }),
 

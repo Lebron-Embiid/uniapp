@@ -99,12 +99,41 @@
 		},
 		methods:{
 			navbarTap: function(e){
-				this.currentTab = e;
+				var that = this;
+				that.currentTab = e;
+				uni.request({
+					url: that.$api+'order/list&status='+that.currentTab+'&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: res => {
+						console.log(res.data)
+					},
+					fail: () => {
+						
+					}
+				})
 			}
 		},
 		onLoad: function(opt){
 			let that = this;
 			that.currentTab = opt.id;
+			uni.request({
+				url: that.$api+'order/list&status='+opt.id+'&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: res => {
+					console.log(res.data)
+				},
+				fail: () => {
+					
+				}
+			})
 		}
 	}
 </script>

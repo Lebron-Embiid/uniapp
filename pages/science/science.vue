@@ -66,7 +66,7 @@
 		methods:{
 			toDetail: function(res,idx){
 				uni.navigateTo({
-					url: "/pages/science_detail/science_detail?id="+res.id+"&question="+res.question+"&answer="+res.answer
+					url: "/pages/science_detail/science_detail?id="+res.id
 				})
 			},
 			toSearch: function(e){
@@ -79,6 +79,32 @@
 			uni.navigateTo({
 				url: "/pages/message/message"
 			})
+		},
+		onLoad(){
+			var that = this;
+			uni.request({
+				url: that.$api+'default/article-list&page=1&cat_id=3',
+				method: 'GET',
+				success: res => {
+					var science_list = [];
+					for(var i in res.data.data.list){
+						var item = res.data.data.list;
+						science_list.push({
+							id: item[i].id,
+							question: item[i].title,
+							answer: item[i].content
+						})
+					}
+					that.science_list = science_list;
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+				}
+			});
 		}
 	}
 </script>

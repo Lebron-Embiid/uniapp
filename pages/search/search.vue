@@ -6,7 +6,7 @@
 		</view>  
 		<!-- #endif -->
 		<view class="search_form">
-			<view><image src="../../static/search.png" mode="widthFix"></image><input type="text" placeholder="请输入搜索内容" value="" /></view>
+			<view><image src="../../static/search.png" mode="widthFix"></image><input type="text" placeholder="请输入搜索内容" @blur="confirm" @input="getKeyword" :value="keyword" /></view>
 			<button @click="back">取消</button>
 		</view>
 		<view class="search_content">
@@ -24,6 +24,7 @@
 	export default{
 		data(){
 			return{
+				keyword: '',
 				searchList:[
 // 					{
 // 						id: 1,
@@ -46,7 +47,35 @@
 				uni.navigateTo({
 					url: "/pages/store_detail/store_detail?id="+e
 				})
+			},
+			getKeyword: function(e){
+				this.keyword = e.detail.value;
+			},
+			confirm: function(e){
+				var that = this;
+				uni.request({
+					url: that.$api+'default/article-list&page=1&cat_id=2',
+					method: 'GET',
+					data: {
+						cat_id: 2,
+						keyword: that.keyword,
+						page: 1
+					},
+					success: res => {
+						
+					},
+					fail: () => {
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})					
+					}
+				});
 			}
+		},
+		onLoad(opt) {
+			
 		}
 	}
 </script>

@@ -1,6 +1,9 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/index/index",
+    "pages/register/register",
+    "pages/forget/forget",
     "pages/train/train",
     "pages/video/video",
     "pages/audio/audio",
@@ -90,8 +93,8 @@
     }
   },
   "splashscreen": {
-    "alwaysShowBeforeRender": true,
-    "autoclose": false
+    "alwaysShowBeforeRender": false,
+    "autoclose": true
   },
   "appname": "呦蓝",
   "compilerVersion": "1.8.2"
