@@ -31,7 +31,7 @@
 	export default{
 		data(){
 			return{
-				over_money: "180.00",
+				over_money: "",
 				record_list: [
 					{
 						id: 1,
@@ -99,6 +99,32 @@
 					url: "/pages/withdraw/withdraw"
 				})
 			}
+		},
+		onLoad(opt) {
+			let that = this;
+			uni.request({
+				url: that.$api+'recharge/index&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					uni.showToast({
+						title: res.data.msg,
+						icon: 'none',
+						duration: 1500
+					})
+					that.over_money = res.data.data.money;
+				},
+				fail: err => {
+					uni.showToast({
+						title: JSON.stringify(err),
+						icon: 'none',
+						duration: 1500
+					})
+				}
+			});
 		}
 	}
 </script>

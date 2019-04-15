@@ -3,7 +3,7 @@
 		<view class="page_bg"></view>
 		<form @submit="formSubmit">
 			<view class="section">
-				<textarea @input="getMessage" :value="message" name="message" maxlength="-1" placeholder="请把您的问题留给我们，我们会提供让您满意的答复~~" />
+				<textarea @input="getMessage" name="message" :value="message" maxlength="-1" placeholder="请把您的问题留给我们，我们会提供让您满意的答复~~" />
 			</view>
 			<view class="section">
 				<input @input="getUsername" type="text" name="username" :value="username" placeholder="称呼" />
@@ -40,7 +40,7 @@
 			formSubmit: function(e){
 				let that = this;
 				uni.request({
-					url: that.$api+'default/article-message', //仅为示例，并非真实接口地址。
+					url: that.$api+'default/article-message&access_token='+that.$access_token,
 					data: {
 						cat_id: '2',
 						name: that.username,
@@ -50,11 +50,17 @@
 					dataType: "json",
 					method: "POST",
 					header: {
-						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: function(res) {
-						console.log(that.$access_token)
 						console.log(res.data);
+					},
+					fail:function(err){
+						uni.showToast({
+							title: JSON.stringify(err),
+							icon: 'none',
+							duration: 1500
+						})
 					}
 				})
 			}

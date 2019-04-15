@@ -122,6 +122,17 @@
 			uni.navigateTo({
 				url: "/pages/release_mater/release_mater"
 			})
+		},
+		onLoad() {
+			var that = this;
+			uni.request({
+				url: that.$api+'order/source-list&access_toke='+that.$access_token,
+				method: 'GET',
+				data: {},
+				success: res => {},
+				fail: () => {},
+				complete: () => {}
+			});
 		}
 	}
 </script>

@@ -74,13 +74,34 @@
 		methods:{
 			toAddress: function(e){
 				uni.navigateTo({
-					url: "/pages/address/address"
+					url: "/pages/address_list/address_list"
 				})
 			},
 			bindPickerChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
 			}
+		},
+		onLoad(opt) {
+			var that = this;
+			uni.request({
+				url: that.$api+'&access_token='+that.$access_token,
+				method: 'POST',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					
+				},
+				fail: () => {
+					uni.showToast({
+						title: res.data.msg,
+						icon: 'none',
+						duration: 1500
+					})					
+				}
+			});
 		}
 	}
 </script>

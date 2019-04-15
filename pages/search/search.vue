@@ -16,11 +16,15 @@
 				<view class="si_info">{{item.info}}</view>
 				<view class="si_price">￥{{item.price}}<text>规格：{{item.type}}</text></view>
 			</view>
+			<!-- <view class="uni-tab-bar-loading">
+				<uni-load-more :contentText="loadingText"></uni-load-more>
+			</view> -->
 		</view>
 	</view>
 </template>
 
 <script>
+	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 	export default{
 		data(){
 			return{
@@ -34,10 +38,21 @@
 // 						price: 98,
 // 						type: "3.5g"
 // 					}
-				]
+				],
+				loadingText: {
+					contentdown: '上拉加载更多',
+					contentrefresh: '正在加载...',
+					contentnomore: '没有更多数据了'
+				}
 			}
 		},
+		components:{
+			uniLoadMore
+		},
 		methods:{
+			loadMore() {
+				this.getList(2);
+			},
 			back: function(e){
 				uni.navigateBack({
 					delta: 1
@@ -54,15 +69,22 @@
 			confirm: function(e){
 				var that = this;
 				uni.request({
-					url: that.$api+'default/article-list&page=1&cat_id=2',
+					url: that.$api+'default/search&keyword='+that.keyword,
 					method: 'GET',
-					data: {
-						cat_id: 2,
-						keyword: that.keyword,
-						page: 1
-					},
 					success: res => {
-						
+						var list = [];
+						for(let i in res.data.data.list){
+							var item = res.data.data.list;
+							list.push({
+								id: item[i].id,
+								src: item[i].pic_url,
+								title: item[i].name,
+								info: "",
+								price: item[i].price,
+								type: ""
+							})
+						}
+						that.searchList = list;
 					},
 					fail: () => {
 						uni.showToast({

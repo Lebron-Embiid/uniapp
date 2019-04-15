@@ -41,9 +41,7 @@
 		},
 		methods: {
 		    bindLogin() {
-				uni.reLaunch({
-					url: "/pages/index/index"
-				})
+				var that = this;
 // 				if (this.phoneno.length != 11) {
 // 				     uni.showToast({
 // 				        icon: 'none',
@@ -58,24 +56,32 @@
 // 		            });
 // 		            return;
 // 		        }
-// 				uni.request({
-// 				    url: 'http://***/login.html',
-// 				    data: {
-// 						phoneno:this.phoneno,
-// 						password:this.password
-// 					},
-// 					method: 'POST',
-// 					dataType:'json',
-// 				    success: (res) => {
-// 						if(res.data.code!=200){
-// 							uni.showToast({title:res.data.msg,icon:'none'});
-// 						}else{
-// 							uni.setStorageSync('user_data', JSON.stringify(res.data.data));
-// 							this.login();
-// 							uni.navigateBack();
-// 						}
-// 				    }
-// 				});
+				uni.request({
+				    url: that.$api+'passport/login-log',
+				    data: {
+						contact_way:this.phoneno,
+						password:this.password
+					},
+					method: 'POST',
+					dataType:'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+				    success: (res) => {
+						uni.reLaunch({
+							url: "/pages/index/index"
+						})
+						if(res.data.code!=200){
+							uni.showToast({title:res.data.msg,icon:'none'});
+						}else{
+							uni.setStorageSync('access_token',res.data.data.access_token);
+							// console.log(res.data)
+// 							uni.reLaunch({
+// 								url: "/pages/index/index"
+// 							})
+						}
+				    }
+				});
 				
 		    }
 		}

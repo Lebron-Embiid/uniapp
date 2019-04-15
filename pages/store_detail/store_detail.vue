@@ -1,7 +1,7 @@
 <template>
 	<view class="store_detail">
 		<view class="detail_banner">
-			<commonSwiper :swiperList="swiperList"></commonSwiper>
+			<commonSwiper :swiperList="swiperList" @preview="previewImgs"></commonSwiper>
 		</view>
 		<view class="detail_info borbom">
 			<view class="di_title">{{title}}</view>
@@ -23,6 +23,7 @@
 		</view>
 		<!-- 商品详情 -->
 		<view class="store_content1 mb98" v-show="currentTab == 0">
+			{{content}}
 			<image src="../../static/detail_img.jpg" mode="aspectFill"></image>
 		</view>
 		<!-- 评价 -->
@@ -42,13 +43,16 @@
 	export default{
 		data(){
 			return{
-				swiperList: ["../../static/detail_banner.jpg","../../static/detail_banner.jpg","../../static/detail_banner.jpg"],
+				swiperList: [
+					// "../../static/detail_banner.jpg","../../static/detail_banner.jpg","../../static/detail_banner.jpg"
+				],
 				navbar:[{name:"商品详情"},{name:"评价"}],
 				currentTab:0,
-				title: "艾璐卡山羊奶悦颜清透洁面乳",
+				title: "",
 				info: "深层清洁皮肤，长效保湿滋润",
-				price: "98.00",
-				type: "120g"
+				price: "",
+				type: "120g",
+				content: ""
 			}
 		},
 		components:{
@@ -63,7 +67,45 @@
 				uni.switchTab({
 					url: "/pages/index/index"
 				})
+			},
+			previewImgs: function(e){
+				let that = this;
+				uni.previewImage({
+					urls: that.swiperList,
+					current: that.swiperList[e]
+				})
 			}
+		},
+		onLoad(opt) {
+			let that = this;
+			uni.request({
+				url: that.$api+'default/goods&id=1',
+				method: 'GET',
+				data: {
+					id: opt.id
+				},
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					console.log(res.data);
+					let swiperList = [];
+					for(let i in res.data.data.pic_list){
+						swiperList.push(res.data.data.pic_list[i].pic_url);
+					}
+					that.swiperList = swiperList;
+					that.title = res.data.data.name;
+					that.price = res.data.data.price;
+				},
+				fail: err => {
+					uni.showToast({
+						title: JSON.stringify(err),
+						icon: 'none',
+						duration: 1500
+					})
+				}
+			});
 		}
 	}
 </script>

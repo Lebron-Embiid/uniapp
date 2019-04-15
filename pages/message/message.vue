@@ -41,7 +41,7 @@
 			formSubmit: function(e){
 				var that = this;
 				uni.request({
-					url: that.$api+'default/article-message', //仅为示例，并非真实接口地址。
+					url: that.$api+'default/article-message&access_token='+that.$access_token,
 					data: {
 						cat_id: '1',
 						name: that.username,
@@ -51,10 +51,22 @@
 					dataType: "json",
 					method: "POST",
 					header: {
-						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: function(res) {
 						console.log(res.data);
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})
+					},
+					fail:function(err){
+						uni.showToast({
+							title: JSON.stringify(err),
+							icon: 'none',
+							duration: 1500
+						})
 					}
 				})
 			}

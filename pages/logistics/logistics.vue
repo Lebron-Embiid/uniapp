@@ -3,9 +3,9 @@
 		<view class="logist_top">
 			<view class="lt_img"><image src="../../static/order_img1.jpg" mode="widthFix"></image><view>1件商品</view></view>
 			<view class="lt_word">
-				<view>快递公司<text>中通汇通</text></view>
-				<view>快递单号<text>71136364847389</text></view>
-				<view>官方电话<text class="red">95311</text></view>
+				<view>快递公司<text>{{express}}</text></view>
+				<view>快递单号<text>{{express_no}}</text></view>
+				<view>官方电话<text class="red">{{phone}}</text></view>
 			</view>
 		</view>
 		<view class="logist_content">
@@ -26,45 +26,78 @@
 	export default{
 		data(){
 			return{
+				express: "",
+				express_no: "",
+				phone: "",
 				logists:[
-					{
-						title: "【深圳市】快件已送到代收点，感谢使用中通快递，期待再次为您服务！",
-						time: "2018-11-23 19:28:12"
-					},
-					{
-						title: "【深圳市】快件已到达 【深圳爱联】",
-						time: "2018-11-23 19:28:12"
-					},
-					{
-						title: "【深圳市】 快件离开 【深圳中心】 发往 【深圳爱联】",
-						time: "2018-11-23 19:28:12"
-					},
-					{
-						title: "【深圳市】 快件到达 【深圳中心】",
-						time: "2018-11-23 19:28:12"
-					},
-					{
-						title: "【嘉兴市】 快件离开 【杭州中转部】 发往 【深圳中心】",
-						time: "2018-11-23 19:28:12"
-					},
-					{
-						title: "【嘉兴市】 快件到达 【杭州中转部】",
-						time: "2018-11-23 19:28:12"
-					},
-					{
-						title: "【杭州市】 快件离开 【杭州临平区】 发往 【深圳中心】",
-						time: "2018-11-23 19:28:12"
-					},
-					{
-						title: "已发货",
-						time: "2018-11-23 19:28:12"
-					},
-					{
-						title: "已下单",
-						time: "2018-11-23 19:28:12"
-					}
+// 					{
+// 						title: "【深圳市】快件已送到代收点，感谢使用中通快递，期待再次为您服务！",
+// 						time: "2018-11-23 19:28:12"
+// 					},
+// 					{
+// 						title: "【深圳市】快件已到达 【深圳爱联】",
+// 						time: "2018-11-23 19:28:12"
+// 					},
+// 					{
+// 						title: "【深圳市】 快件离开 【深圳中心】 发往 【深圳爱联】",
+// 						time: "2018-11-23 19:28:12"
+// 					},
+// 					{
+// 						title: "【深圳市】 快件到达 【深圳中心】",
+// 						time: "2018-11-23 19:28:12"
+// 					},
+// 					{
+// 						title: "【嘉兴市】 快件离开 【杭州中转部】 发往 【深圳中心】",
+// 						time: "2018-11-23 19:28:12"
+// 					},
+// 					{
+// 						title: "【嘉兴市】 快件到达 【杭州中转部】",
+// 						time: "2018-11-23 19:28:12"
+// 					},
+// 					{
+// 						title: "【杭州市】 快件离开 【杭州临平区】 发往 【深圳中心】",
+// 						time: "2018-11-23 19:28:12"
+// 					},
+// 					{
+// 						title: "已发货",
+// 						time: "2018-11-23 19:28:12"
+// 					},
+// 					{
+// 						title: "已下单",
+// 						time: "2018-11-23 19:28:12"
+// 					}
 				]
 			}
+		},
+		onLoad(opt) {
+			var that = this;
+			uni.request({
+				url: that.$api+'order/express-detail&order_id=5&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.express = res.data.data.express;
+					that.express_no = res.data.data.express_no;
+					for(let i in res.data.data.list){
+						var list = [];
+						list.push({
+							title: res.data.data.list[i].detail,
+							time: res.data.data.list[i].datetime
+						})
+					}
+					that.logists = list
+				},
+				fail: () => {
+					uni.showToast({
+						title: res.data.msg,
+						icon: 'none',
+						duration: 1500
+					})					
+				}
+			});
 		}
 	}
 </script>

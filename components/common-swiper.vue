@@ -1,7 +1,7 @@
 <template>
 	<view class="common-swiper">
 		<swiper class="swiper" :indicator-dots="indicatorDots" circular="true" :autoplay="autoplay" :interval="interval" :duration="duration">
-			<swiper-item v-for="(item,index) in swiperList" :key="index">
+			<swiper-item v-for="(item,index) in swiperList" :key="index" @click="preview(index)">
 				<view class="swiper-item"><image :src="item" mode="aspectFill"></image></view>
 			</swiper-item>
 		</swiper>
@@ -22,7 +22,9 @@
 			swiperList: Array
 		},
 		methods:{
-			
+			preview(e) {
+				this.$emit('preview',e)
+			}
 		}
 	}
 </script>

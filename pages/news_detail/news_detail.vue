@@ -43,13 +43,36 @@
 		methods:{
 			toShare: function(e){
 				// this.version = plus.runtime.version;
-				uni.getProvider({
-					service: 'share',
-					success: (e) => {
-						
+// 				uni.getProvider({
+// 					service: 'share',
+// 					success: (e) => {
+// 						
+// 					},
+// 					fail: (e) => {
+// 						console.log('获取登录通道失败'+ JSON.stringify(e));
+// 					}
+// 				});
+				uni.share({
+					provider: "weixin",
+					scene: "WXSceneSession",
+					type: 0,
+					href: "http://uniapp.dcloud.io/",
+					title: "uni-app分享",
+					summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+					imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
+					success: function (res) {
+						uni.showToast({
+							title: JSON.stringify(res),
+							icon: 'none',
+							duration: 1500
+						})
 					},
-					fail: (e) => {
-						console.log('获取登录通道失败'+ JSON.stringify(e));
+					fail: function (err) {
+						uni.showToast({
+							title: JSON.stringify(err),
+							icon: 'none',
+							duration: 1500
+						})
 					}
 				});
 			}
@@ -63,6 +86,10 @@
 					id: opt.id
 				},
 				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
 				success: res => {
 					that.title = res.data.data.title;
 					that.look = res.data.data.num;

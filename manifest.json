@@ -1,4 +1,4 @@
-{
+	{
     "name" : "呦蓝",
     "appid" : "__UNI__4B173B4",
     "description" : "uni-app",
@@ -11,8 +11,7 @@
             "VideoPlayer" : {},
             "Messaging" : {},
             "Maps" : {},
-            "Share" : {},
-            "OAuth" : {}
+            "Share" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -57,7 +56,8 @@
             "ios" : {},
             /* ios打包配置 */
             "sdkConfigs" : {
-                "maps" : {}
+                "maps" : {},
+                "oauth" : {}
             },
             "icons" : {
                 "ios" : {

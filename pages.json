@@ -236,6 +236,25 @@
 			}
 		},
 		{
+			"path": "pages/address_list/address_list",
+			"style": {
+				"navigationBarTitleText": "收货地址",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"type": "none",
+								"float": "right",
+								"text": "添加地址",
+								"fontSize": "14px",
+								"width": "auto"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
 			"path": "pages/order_detail/order_detail",
 			"style": {
 				"navigationBarTitleText": "订单详情"

@@ -38,25 +38,31 @@
 			downloadMater: function(e){
 				let that = this;
 				// console.log(that.maters[e])
-				uni.saveImageToPhotosAlbum({
-					filePath: that.maters[e],
-					success: function () {
+				uni.downloadFile({
+					url: that.maters[e],
+					success: (res) => {
+						if (res.statusCode === 200) {
+							// console.log('下载成功');
+							uni.saveImageToPhotosAlbum({
+								filePath: res.tempFilePath,
+								success: function () {
+									uni.showToast({
+										title: '下载成功！',
+										icon: 'none',
+										duration: 1500
+									})
+								}
+							});
+						}
+					},
+					fail: () => {
 						uni.showToast({
-							title: '下载成功！',
+							title: '下载失败！',
 							icon: 'none',
 							duration: 1500
 						})
 					}
 				});
-// 				uni.downloadFile({
-// 					url: that.maters[e],
-// 					success: (res) => {
-// 						if (res.statusCode === 200) {
-// 							console.log('下载成功');
-// 							
-// 						}
-// 					}
-// 				});
 			}
 		},
 		onNavigationBarButtonTap: function(){

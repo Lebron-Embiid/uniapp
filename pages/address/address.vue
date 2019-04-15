@@ -4,13 +4,13 @@
 		<view class="add_item pd10">
 			<text>收货人</text>
 			<view class="acc_right">
-				<input type="text" name="username" value="" />
+				<input type="text" name="username" :value="name" @input="getName" />
 			</view>
 		</view>
 		<view class="add_item pd10">
 			<text>联系电话</text>
 			<view class="acc_right">
-				<input type="text" name="phone" value="" />
+				<input type="number" name="phone" maxlength="11" :value="phone" @input="getPhone" />
 			</view>
 		</view>
 		<view class="add_item">
@@ -25,10 +25,10 @@
 		<view class="add_item pd10">
 			<text>详细地址</text>
 			<view class="acc_right">
-				<input type="text" name="address" value="" />
+				<input type="text" name="address" :value="detail" @input="getDetail" />
 			</view>
 		</view>
-		<view class="fixed_save">
+		<view class="fixed_save" @click="saveAddress">
 			<button>保存</button>
 		</view>
 	</view>
@@ -36,13 +36,17 @@
 
 <script>
 	import cityPicker from '@/components/citypicker/cityPicker.vue'
-	import cityData from '../../common/city.data.js'
 	export default{
 		data(){
 			return{
-				cityPickerValueDefault: [0, 0, 1],
+				cityPickerValueDefault: [0, 0, 0],
                 themeColor: '#007AFF',
-				pickerText: '请选择'
+				pickerText: '请选择',
+				arr: [],
+				pic: [],
+				name: "",
+				phone: "",
+				detail: ""
 			}
 		},
 		components:{
@@ -53,23 +57,75 @@
                 this.$refs.cityPicker.pickerCancel();
             },
 			onConfirm(e) {
-				console.log(e.label);
+				this.arr = [];
+				console.log(e.label,e.cityCode);
+				var str = e.cityCode;
                 this.pickerText = e.label;
+				this.pic = e.label.split("-");
+				console.log(this.pic);
+				var str1 = "";
+				var arr = [str.length/2];
+				for(let i=0;i<str.length;i++){
+					str1+=str.charAt(i);
+					if((i+1)%2==0){
+						arr[i/2] = str1;
+						this.arr.push(arr[i/2]);
+						str1 = "";
+					}
+				}
+				console.log(this.arr);
             },
 			showMulLinkageThreePicker(e){
 				this.$refs.cityPicker.showPickerView();
+			},
+			getName(e){
+				this.name = e.detail.value;
+			},
+			getPhone(e){
+				this.phone = e.detail.value;				
+			},
+			getDetail(e){
+				this.detail = e.detail.value;				
+			},
+			saveAddress(e){
+				var that = this;
+				uni.request({
+					url: that.$api+'user/address-save&access_token='+that.$access_token,
+					method: 'POST',
+					data:{
+						name: that.name,
+						mobile: that.phone,
+						province_id: that.arr[0],
+						province: that.pic[0],
+						city_id: that.arr[1],
+						city: that.pic[1],
+						district_id: that.arr[2],
+						district: that.pic[2],
+						detail: that.detail
+					},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})
+					},
+					fail: () => {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})
+					}
+				});
 			}
 		},
 		onLoad() {
-			var that = this;
-			uni.request({
-				url: that.$api+'user/address-list&access_token='+that.$access_token,
-				method: 'GET',
-				success: res => {
-					
-				},
-				fail: () => {}
-			});
+			
 		},
         onBackPress() {
           if (this.$refs.cityPicker.showPicker) {

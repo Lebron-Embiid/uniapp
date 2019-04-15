@@ -69,14 +69,14 @@
 			}
 		},
 		onLoad(opt) {
-			var that = this;
+			let that = this;
 			uni.request({
 				url: that.$api+'default/article-list&page=1&cat_id=2',
 				method: 'GET',
 				success: res => {
-					var news_list = [];
-					for(var i in res.data.data.list){
-						var item = res.data.data.list;
+					let news_list = [];
+					for(let i in res.data.data.list){
+						let item = res.data.data.list;
 						news_list.push({
 							id: item[i].id,
 							title: item[i].title,

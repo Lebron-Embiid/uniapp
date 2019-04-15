@@ -151,6 +151,27 @@
 					url: "/pages/search/search"
 				})
 			}
+		},
+		onLoad(opt) {
+			var that = this;
+			uni.request({
+				url: that.$api+'default/shop&access_toke='+that.$access_token,
+				data: {},
+				dataType: "json",
+				method: 'GET',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
+			});
 		}
 	}
 </script>

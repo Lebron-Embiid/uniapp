@@ -133,15 +133,15 @@
 				uni.request({
 				    url: that.$api+'passport/register',
 				    data: {
-						contact_way:that.phoneno
-// 						password:this.password,
+						contact_way:that.phoneno,
+						password:that.password
 // 						code:this.code,
 // 						invitation:this.invitation
 					},
 					method: 'POST',
 					dataType:'json',
 					header: {
-						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						'content-type': 'application/x-www-form-urlencoded'
 					},
 				    success: (res) => {
 						console.log(res.data);

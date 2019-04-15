@@ -60,10 +60,56 @@ export default {
   methods: {
 		init() {
 			this.handPickValueDefault(); // 对 pickerValueDefault 做兼容处理
-			this.provinceDataList = provinceData;
-			this.cityDataList = cityData[this.pickerValueDefault[0]];
-			this.areaDataList = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]];
-			this.pickerValue = this.pickerValueDefault;
+// 			uni.request({
+// 				url: this.$api+'default/district&access_token='+this.$access_token,
+// 				method: 'GET',
+// 				dataType: "json",
+// 				header: {
+// 					'content-type': 'application/x-www-form-urlencoded'
+// 				},
+// 				success: res => {
+// 					var data = [];
+// 					var provinces = [];
+// 					var citys = [];
+// 					var areas = [];
+// 					for(var i in res.data.data){
+// 						var item = res.data.data;
+// 						provinces.push({
+// 							"label": item[i].name,
+// 							"value": item[i].id
+// 						})
+// 						for(var j in item[i].list){
+// 							var city = [];
+// 							city.push({
+// 								"label": item[i].list[j].name,
+// 								"value": item[i].list[j].id
+// 							})
+// 							citys.push(city);
+// 							for(var k in item[i].list[j].list){
+// 								var area = [];
+// 								var area1 = [];
+// 								area.push({
+// 									"label": item[i].list[j].list[k].name,
+// 									"value": item[i].list[j].list[k].id
+// 								})
+// 								area1.push(area);
+// 								areas.push(area1);
+// 							}
+// 						}
+// 					}
+// 					data.push(provinces,citys,areas)
+					// this.provinceDataList = provinces;
+					// this.cityDataList = citys[this.pickerValueDefault[0]];
+					// this.areaDataList = areas[this.pickerValueDefault[0]][this.pickerValueDefault[1]];
+					this.provinceDataList = provinceData;
+					this.cityDataList = cityData[this.pickerValueDefault[0]];
+					this.areaDataList = areaData[this.pickerValueDefault[0]][this.pickerValueDefault[1]];
+					this.pickerValue = this.pickerValueDefault;
+// 				},
+// 				fail: () => {
+// 					
+// 				}
+// 			});
 		},
     show() {
       setTimeout(() => {
