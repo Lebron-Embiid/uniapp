@@ -150,6 +150,7 @@
 						}else{
 							uni.showToast({title:res.data.msg});
 							uni.setStorageSync('access_token',res.data.data.access_token);
+							that.$access_token = uni.getStorageSync('access_token');
 							setTimeout(function(){
 								uni.reLaunch({
 									url: "/pages/login/login"

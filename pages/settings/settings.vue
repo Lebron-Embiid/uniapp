@@ -46,6 +46,28 @@
 			formSubmit: function(e){
 				console.log(this.username);
 			}
+		},
+		onLoad(opt) {
+			var that = this;
+			uni.request({
+				url: that.$api+'&access_token='+that.$access_token,
+				dataType: "json",
+				method: 'GET',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					if(res.data.code == 1){
+						
+					}
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
+			});
 		}
 	}
 </script>

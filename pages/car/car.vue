@@ -2,15 +2,15 @@
 <template name="glanceShopcart">
 	<view class="glance-shop-cart" style="background-color: #F5F5F5;" @touchmove ="scrollhoming" @touchend="scrollhomed">
 		<!-- 空购物车背景 -->
-		<view v-if="shownullcart" style="width: 100%;height: 250px;" >
+		<view v-if="shownullcart" style="width: 100%;height: 250px;background: #fff;padding-top: 300upx;" >
 			<view class="glance-shop-cart-nullcart"></view>
-			<view style="height: 30px;width: 100%;font-size: 15px;line-height: 30px;text-align: center;">您的购物车为空，快去添加心爱的商品吧！</view>
+			<view style="height: 30px;width: 100%;font-size: 15px;line-height: 30px;text-align: center;" @click="toStore">您的购物车为空，快去商城添加商品吧！</view>
 		</view>
 		
 		<!-- 购物车商品 -->
-		<view v-for="(carts,index) in cart" :key="index" style="background-color: #FFFFFF;">
+		<view v-for="(item,index) in cart" :key="index" style="background-color: #FFFFFF;">
 			<!-- 按营销活动分组的商品 -->
-			<view v-for="(item,i) in carts.items" :key="i">
+			<view>
 				<scroll-view style="width: 100%;white-space: nowrap;border-bottom: 1px solid #F6F6F6;" scroll-x= "true" :scroll-left='scrollposition' scroll-with-animation="true" v-if="item.id > -99">
 					<view class="glance-shop-cart-scrollx-items" style="display: inline-block;width: 100%;">
 						<view class="glance-shop-cart-scrollx-items-item">
@@ -31,7 +31,7 @@
 								<view class="sigle-line-text" style="color: #747474;font-size: 22upx;height: 33.33%;text-align: left;" @click="clickitemhref(item.id)">{{ item.attributes }}</view>
 								<!-- 价格 & 数量-->
 								<view class="glance-shop-cart-items-item-pq">
-									<view class="sigle-line-text" style="color: #fa3930;font-size: 26upx;text-align: left;width: 50%;">￥{{item.price}} <text style="color: #747474;font-size: 22upx;margin-left: 20upx;">规格：{{item.type}}</text></view>
+									<view class="sigle-line-text1" style="color: #fa3930;font-size: 26upx;text-align: left;width: 50%;">￥{{item.price}} <text style="color: #747474;font-size: 22upx;margin-left: 20upx;">规格：{{item.type}}</text></view>
 									<!-- 数量操作 -->
 									<view class="glance-shop-cart-items-item-opt">
 										<!-- 减数量 -->
@@ -54,7 +54,7 @@
 			</view>
 		</view>
 	<!-- 金额合计 -->
-	<view class="glance-shop-cart-order">
+	<view class="glance-shop-cart-order" v-if="!shownullcart">
 		<!-- 全选 -->
 		<view style="width: 9%;">
 			<!-- 勾选 -->
@@ -97,61 +97,75 @@
 		onLoad:function() {
 			var that = this;
 			// 从缓存或服务端获取到购物车商品 这里示例数据如下：
-			var objcart = [
-				{
-					items:[
-						{
-							'id':1,
-							'name':'艾璐卡柔雾丝绒唇釉',
-							'imgsrc':'../../static/order_img1.jpg',
-							'href':'点击了商品请跳转至商品详情页',
-							'attributes':'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
-							'quantity':1,
-							'price':168,
-							'type':'6.8ml'
-						}
-					]
-				}
-			]
+			// var objcart = [
+// 				{
+// 					'id':1,
+// 					'name':'艾璐卡柔雾丝绒唇釉',
+// 					'imgsrc':'../../static/order_img1.jpg',
+// 					'href':'点击了商品请跳转至商品详情页',
+// 					'attributes':'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
+// 					'quantity':1,
+// 					'price':168,
+// 					'type':'6.8ml'
+// 				}
+			// ]
 			
 			uni.request({
 				url: that.$api+'cart/list&access_token='+that.$access_token,
 				method: 'GET',
 				success: res => {
+					var carList = [];
+					var item = res.data.data.list;
+					for(let i in item){
+						carList.push({
+							id: item[i].cart_id,
+							name: item[i].goods_name,
+							imgsrc: item[i].goods_pic,
+							attributes:'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
+							quantity: item[i].num,
+							price: item[i].price,
+							type:'6.8ml'
+						})
+					}
+					that.cart = carList;
 					
+					// 默认勾选购物车所有商品 合计金额 合计数量
+					for (let i = 0; i < that.cart.length; i++) {
+							// 总金额 
+							that.totalamount = that.totalamount + that.cart[i].price * that.cart[i].quantity
+							// 总数量
+							that.cntitems = that.cntitems + that.cart[i].quantity
+					}
+					that.totalamount = that.fmamount(that.totalamount)
+					
+					if(that.cart.length == 0){
+						that.shownullcart = true;
+					}else{
+						that.shownullcart = false;
+					}
 				},
 				fail: () => {}
 			});
 			
 
 			// 这里示例数据对象存入缓存
-			try {
-				uni.setStorageSync('cart', objcart);
-			} catch (e) {
-				// error
-			}
-			// 从缓存获取
-			try {
-				const objcart = uni.getStorageSync('cart');
-				if (objcart) {
-					// 装载this cart
-					that.cart = objcart;
-				}
-			} catch (e) {
-				// error
-			}
+// 			try {
+// 				uni.setStorageSync('cart', objcart);
+// 			} catch (e) {
+// 				// error
+// 			}
+// 			// 从缓存获取
+// 			try {
+// 				const objcart = uni.getStorageSync('cart');
+// 				if (objcart) {
+// 					// 装载this cart
+// 					that.cart = objcart;
+// 				}
+// 			} catch (e) {
+// 				// error
+// 			}
 			
 			// console.log(this.cart)
-			// 默认勾选购物车所有商品 合计金额 合计数量
-			for (let i = 0; i < that.cart.length; i++) {
-				for (let k = 0; k < that.cart[i].items.length; k++) {
-					// 总金额 
-					that.totalamount = that.totalamount + that.cart[i].items[k].price * that.cart[i].items[k].quantity
-					// 总数量
-					that.cntitems = that.cntitems + that.cart[i].items[k].quantity
-				}
-			}
-			that.totalamount = that.fmamount(that.totalamount)
 		},
 		// 下拉刷新
 		onPullDownRefresh(){
@@ -175,6 +189,11 @@
 			}
 		},
 		methods:{
+			toStore(){
+				uni.reLaunch({
+					url: "/pages/store/store"
+				})
+			},
 			// scroll x 归位
 			scrollhoming(){
 				this.scrollposition = this.scrollposition -1
@@ -192,17 +211,15 @@
 				if (this.isselectedall){
 					if (this.cart){
 						for (var i = 0; i < this.cart.length; i++) {
-							for (let k = 0; k < this.cart[i].items.length; k++) {
 								// 未选的则选
-								if (this.cart[i].items[k].id < 0){
-									this.cart[i].items[k].id = - this.cart[i].items[k].id
+								if (this.cart[i].id < 0){
+									this.cart[i].id = - this.cart[i].id
 									// 更新总数量
-									this.cntitems = this.cntitems + this.cart[i].items[k].quantity
+									this.cntitems = this.cntitems + this.cart[i].quantity
 									// 更新总金额
-									this.totalamount = this.totalamount + this.cart[i].items[k].price * this.cart[i].items[k].quantity
+									this.totalamount = this.totalamount + this.cart[i].price * this.cart[i].quantity
 									this.totalamount = this.fmamount(this.totalamount)
 								}
-							}
 						}
 					}
 				}else{
@@ -210,17 +227,15 @@
 					// this.cntitems = 0
 					if (this.cart){
 						for (var i = 0; i < this.cart.length; i++) {
-							for (let k = 0; k < this.cart[i].items.length; k++) {
 								// 累计总金额和总数量 勾选时加
-								if (this.isselected(this.cart[i].items[k].id)){
-									this.cart[i].items[k].id = - this.cart[i].items[k].id
+								if (this.isselected(this.cart[i].id)){
+									this.cart[i].id = - this.cart[i].id
 									// 更新总数量
-									this.cntitems = this.cntitems - this.cart[i].items[k].quantity
+									this.cntitems = this.cntitems - this.cart[i].quantity
 									// 更新总金额
-									this.totalamount = this.totalamount - this.cart[i].items[k].price * this.cart[i].items[k].quantity
+									this.totalamount = this.totalamount - this.cart[i].price * this.cart[i].quantity
 									this.totalamount = this.fmamount(this.totalamount)
 								}
-							}
 						}
 					}
 				}
@@ -229,15 +244,14 @@
 			clickitemselected(id){
 				if (this.cart){
 					for (var i = 0; i < this.cart.length; i++) {
-						for (let k = 0; k < this.cart[i].items.length; k++) {
-							if (this.cart[i].items[k].id == id){
-								this.cart[i].items[k].id = - this.cart[i].items[k].id
+							if (this.cart[i].id == id){
+								this.cart[i].id = - this.cart[i].id
 								// 累计总金额和总数量 勾选时加
-								if (this.isselected(this.cart[i].items[k].id)){
+								if (this.isselected(this.cart[i].id)){
 									// 更新总数量
-									this.cntitems = this.cntitems + this.cart[i].items[k].quantity
+									this.cntitems = this.cntitems + this.cart[i].quantity
 									// 更新总金额
-									this.totalamount = this.totalamount + this.cart[i].items[k].price * this.cart[i].items[k].quantity
+									this.totalamount = this.totalamount + this.cart[i].price * this.cart[i].quantity
 									this.totalamount = this.fmamount(this.totalamount)
 									// 最后已勾选则 全选
 									if (this._isselectedall()){
@@ -246,92 +260,115 @@
 								}else{
 									// 取消勾选时减
 									// 更新总数量
-									this.cntitems = this.cntitems - this.cart[i].items[k].quantity
+									this.cntitems = this.cntitems - this.cart[i].quantity
 									// 更新总金额
-									this.totalamount = this.totalamount - this.cart[i].items[k].price * this.cart[i].items[k].quantity
+									this.totalamount = this.totalamount - this.cart[i].price * this.cart[i].quantity
 									this.totalamount = this.fmamount(this.totalamount)
 									this.isselectedall = false
 								}
 								return
 							}
-						}
 					}
 				}
 			},
 			// 点击删除
 			clickdel(itemid){
-				for (let i = 0; i < this.cart.length; i++) {
-					for (let k = 0; k < this.cart[i].items.length; k++) {
-						if (this.cart[i].items[k].id == itemid){
-							// 勾选状态下更新数量和金额
-							if (this.isselected(this.cart[i].items[k].id)){
-								// 更新总数量
-								this.cntitems = this.cntitems - this.cart[i].items[k].quantity
-								// 更新总金额
-								this.totalamount = this.totalamount - this.cart[i].items[k].price * this.cart[i].items[k].quantity
-								this.totalamount = this.fmamount(this.totalamount)
-								// 删除商品
-								this.cart[i].items[k].id = -99 - itemid
-							}else{
-								// 未勾选时 删除商品 列表中不再显示 id= -99-原始id
-								this.cart[i].items[k].id = -99 + itemid
-							}
-							// 如果全部删除 则显示空购物车背景
-							if (this._isdeledall()){
-								this.shownullcart = true
-								this.isselectedall = false
-							}
-							return
+				var that = this;
+				uni.showModal({
+					title: "提示",
+					content: "确定删除该商品？",
+					success: (res) => {
+						if(res.confirm){
+							uni.request({
+								url: that.$api+'cart/delete&access_token='+that.$access_token,
+								data: {
+									cart_id_list: []
+								},
+								method: 'GET',
+								dataType: "json",
+								header: {
+									'content-type': 'application/x-www-form-urlencoded'
+								},
+								success: res => {
+									if(res.data.code == 1){
+										// 删除购物车商品时 更新合计金额
+										for (let i = 0; i < that.cart.length; i++) {
+											if (that.cart[i].id == itemid){
+												// 勾选状态下更新数量和金额
+												if (that.isselected(that.cart[i].id)){
+													// 更新总数量
+													that.cntitems = that.cntitems - that.cart[i].quantity
+													// 更新总金额
+													that.totalamount = that.totalamount - that.cart[i].price * that.cart[i].quantity
+													that.totalamount = that.fmamount(that.totalamount)
+													// 删除商品
+													that.cart[i].id = -99 - itemid
+												}else{
+													// 未勾选时 删除商品 列表中不再显示 id= -99-原始id
+													that.cart[i].id = -99 + itemid
+												}
+												// 如果全部删除 则显示空购物车背景
+												if (that._isdeledall()){
+													that.shownullcart = true
+													that.isselectedall = false
+												}
+												return
+											}
+										}
+									}
+								},
+								fail: () => {
+									uni.showToast({
+										title:res.data.msg,
+										icon:'none',
+									});
+								}
+							});
 						}
 					}
-				}
-				// 删除购物车商品时 更新合计金额
-				
+				})
 			},
 			// 减数量
 			minusitem(itemid){
 				for (let i = 0; i < this.cart.length; i++) {
-					for (let k = 0; k < this.cart[i].items.length; k++) {
-						if ((this.cart[i].items[k].id == itemid) && (this.cart[i].items[k].quantity > 0)) {
+						if ((this.cart[i].id == itemid) && (this.cart[i].quantity > 0)) {
 							// 更新item数量
-							this.cart[i].items[k].quantity = this.cart[i].items[k].quantity - 1
+							this.cart[i].quantity = this.cart[i].quantity - 1
 							// 勾选状态下更新数量和金额
-							if (this.isselected(this.cart[i].items[k].id)){
+							if (this.isselected(this.cart[i].id)){
 								// 更新总数量
 								this.updatecntitems(-1)
 								// 更新总金额
-								this.updatetotalamt(-this.cart[i].items[k].price)
+								this.updatetotalamt(-this.cart[i].price)
 							}
 							// 数量减为0时 不勾选
-							if (this.cart[i].items[k].quantity == 0){
-								this.cart[i].items[k].id = this._unselected(this.cart[i].items[k].id)
+							if (this.cart[i].quantity == 0){
+								this.cart[i].id = this._unselected(this.cart[i].id)
 							}
 							return
 						}
-					}
 				}
 			},
 			// 加数量
 			plusitem(itemid){
 				for (let i = 0; i < this.cart.length; i++) {
-					for (let k = 0; k < this.cart[i].items.length; k++) {
 						// 这里需要进行超卖控制 商品可售卖的数量 这里面示例可售卖100
-						if ((this.cart[i].items[k].id == itemid) && (this.cart[i].items[k].quantity < 100)){
+						if ((this.cart[i].id == itemid) && (this.cart[i].quantity < 100)){
 							// 更新item数量
-							this.cart[i].items[k].quantity = this.cart[i].items[k].quantity +1
+							this.cart[i].quantity = this.cart[i].quantity +1
 							// 勾选状态下更新数量和金额
-							if (this.isselected(this.cart[i].items[k].id)){
+							if (this.isselected(this.cart[i].id)){
 								// 更新总数量
 								this.updatecntitems(1)
 								// 更新总金额
-								this.updatetotalamt(this.cart[i].items[k].price)
+								this.updatetotalamt(this.cart[i].price)
 							} else {
 								// 加数量时未勾选则 勾选
-								this.cart[i].items[k].id = this._selected(this.cart[i].items[k].id)
+								this.cart[i].id = this._selected(this.cart[i].id)
 								// 更新总数量、
-								this.cntitems = this.cntitems + this.cart[i].items[k].quantity
+								this.cntitems = this.cntitems + this.cart[i].quantity
 								// 更新总金额
-								this.totalamount = this.totalamount + this.cart[i].items[k].price * this.cart[i].items[k].quantity
+								this.totalamount = this.totalamount + this.cart[i].price * this.cart[i].quantity
 								this.totalamount = this.fmamount(this.totalamount)
 							}
 						
@@ -341,7 +378,6 @@
 							}
 							return
 						}
-					}
 				}
 			},
 			// 点击商品href
@@ -351,12 +387,12 @@
 				})
 			},
 			// 点击了营销活动
-			clickgroupkey(str){
-				let mehref = this.getgroupkeyhref(str)
-				uni.showModal({
-					content:'点击了营销活动'+ mehref
-				})
-			},
+// 			clickgroupkey(str){
+// 				let mehref = this.getgroupkeyhref(str)
+// 				uni.showModal({
+// 					content:'点击了营销活动'+ mehref
+// 				})
+// 			},
 			// 更新合计金额
 			updatetotalamt(amt){
 				this.totalamount = this.totalamount + amt
@@ -386,32 +422,28 @@
 			// 是否全部已勾选
 			_isselectedall(){
 				for (let i = 0; i < this.cart.length; i++) {
-					for (let k = 0; k < this.cart[i].items.length; k++) {
 						// 存在一个未勾选 则未全选
-						if (this.cart[i].items[k].id < 0 ){
+						if (this.cart[i].id < 0 ){
 							return false
 						}
-					}
 				}
 				return true
 			},
 			// 是否全部删除
 			_isdeledall(){
 				for (let i = 0; i < this.cart.length; i++) {
-					for (let k = 0; k < this.cart[i].items.length; k++) {
 						// 存在 未删除
-						if (this.cart[i].items[k].id > -99){
+						if (this.cart[i].id > -99){
 							return false
 						}
-					}
 				}
 				return true
 			},
 			// 获取营销页面链接
-			getgroupkeyhref(str){
-				// 这里通过营销活动名称 获取营销活动页面 需要自己实现
-				return '营销活动页面'
-			},
+// 			getgroupkeyhref(str){
+// 				// 这里通过营销活动名称 获取营销活动页面 需要自己实现
+// 				return '营销活动页面'
+// 			},
 			// 生成订单
 			createorder(){
 				// 合计金额大于0 创建订单
@@ -422,12 +454,10 @@
 				}else{
 					// 1、处理购物车内已选择的订单生成商品
 					for (let i = 0; i < this.cart.length; i++) {
-						for (let k = 0; k < this.cart[i].items.length; k++) {
 							// item id 大于0 的是勾选的
 							if (this.cart[i].items > 0){
 								//这里的item 是下单的
 							}
-						}
 					}
 					uni.navigateTo({
 						url: "/pages/account/account"
@@ -540,7 +570,7 @@
 		}
 	
 	// 空购物车背景样式
-	.glance-shop-cart-nullcart{width: 120px;height: 120px;position: relative;transform:translateY(-50%);left:50%;transform:translateX(-50%);background-repeat:no-repeat; 
+	.glance-shop-cart-nullcart{width: 120px;height: 120px;position: relative;transform:translateY(-50%);left:50%;top: 0;transform:translateX(-50%);background-repeat:no-repeat; 
 		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAP+klEQVR4Xu1daZRcRRWuW90TMq0wAwiEPSiETZSwg7IIkUU2PQLCAUQQiAsEkvSr6k5QWg6Z6ao3TCAaj2EVkMWAHhEOCCKLHJHlCAQh7EyAhACyGEy6J6H7Xc/FN2N3Tc/0657u6ffmvfrZXVXv3q++d6verVu3gEUl1AhAqLWPlGcRAUJOgogAEQFCjkDI1Y8sQESAkCMQcvUjCxARIOQIhFz9yAJEBAg5AiFXP7IAEQFCjkDI1Y8sQESAkCMQcvUjCxARIOQIhFz9yAJEBBgZgd7e3o0KhcIcxtiejNUcP4CMsTcdx1kCAI9KKR8LOd6+U7+qBVBKPQsAuzVI8mccxzktlUo936D+om5GicCIBOjp6dnWcZxlo3yG2XxNsVg8MJ1OP93gfqPu6kBgRAJkMpkJiUTiLcbYpnX0PWwTRHy1s7Nzl+nTp3/SyH6jvmpHoOoUYNv2voi40F0D1P6EYVo4jnNuKpW6qmEdRh3VhUBVAtTT6/z58zdft27dvoyxS0ZYP/xOCHFCPf1HbRqHQFMIMCBeJpPhiUSimzEmTJER8QMp5ecap0rUUz0INJUAAwIppRYCwI9MATnneyWTyX+MJLhS6jgAUIyxnepRMAxtEHEdANBa7QVEvD2fz9+YyWQcL7qPCQF6e3vbC4XCR4yx9UqFQsSLpJTzhhNUaz0JEd8AgAlelInqDCJwRy6XOymTyayrhsmYEICE0FrfyRg7xhDoESHEQcMJadv2NET8czUlov+HIoCIi6WU36mGzVgS4IeMsV8aAhUdx9k4lUqtqiSoUmoLxlhfZAGqDWPl/xFxJynlSyO1HjMC0GACwIoKi8ETpZS3j2AFjkfEC+twQ9eHWkBbIeIkANjRmGKVlDLlCwKQEEqppwBgqiHk9VLK7wUUd9+IvXjx4lhfX99qAJg4IJSXaWDMLAAJZdv2xYiYMVB737KsTQGANo6iMgoEtNb9pQttRLxXSnmkbyyA61UcsiPIOd8nmUw+OQrdQ9/Utu3tEPF1A4grhRDTfUMARASt9UcA0GEINVcI0RX6URwFAEqpMwHgWqMLSwjR4xsCuOuAGwDgdGMd8KCU8tBR6B/6pkqp3wLASaVAkBvesqzn/EaAEwDgNoMAhba2tg1mzZqVD/1I1gFAV1fXJrFY7G0AiJcsAN+WUm5ZrbsxXQSSMJlMJpFIJD5mjMUM4Y4WQtxdTeDo/6EIKKUuBYC5xj9aCCGr4TXmBHCngT8BwBGGcAuFEOdVEzj6vxyBhQsXfnbNmjW0D9BZ8vYXGGPbSSmXV8OrVQSYAQBXGNPAcinl1tUEjv4vR0ApNRcALjWwvEZKebYXrFpCAK31Doyxl00Bi8XiDul0+lUvgkd1Pp1O4+3t7csBYLMSPLBYLG6fTqfNT8KKkLWEACSJ1poG+gsGc8+XUv4iGlxvCNi2fRoi3mjUvksIcay3HmoP8/bab9V6Sqn5AEA+/tJytxDi6KqNowqfIqCUehIA9jJeomlSyr94haiVFuBwxti9hqBrJ06c2DFjxoy1XhUIaz2l1H4A8Hdj8F+QUu5SCyYtI8CCBQvW6+/vp21gM0jkcCllFANQZRS11jczxk4xCHC2lPKaQBDANWF3AUCZyUfEy6WUM2tRImx13TgJipQadPwwxj6cOHHiFrVaz5ZZAHchWClI5BUhxJSwDWot+mqtbcZY0nj750kpL6qlH6rbUgIopbZygxnL5C4Wi9ul0+lGn0iqFRtf1ifHz+rVq8ntu/6AgBQUWiwWt5ozZ86/ahW6pQRwp4EhZw8B4AeWZS2qVZkw1NdaU4QPhdoPFkS8Skp5bj36t5wAWmtSpixsCRF/L6X8dj0Kjec27sKZ3Lul5ylqcvyY+LScALZt74+IjxqCrbEsa/0oSqgcFa01hc5dZ2A1Kt9JywkwXJAIIu4f5RMoH2ql1FIA2Ln0V8dxjkylUqY/xbMhbDkB3K8BcmeeZkh9sRDiEs+ajPOK2Wz2IM75w8bcX7Pjx3dTAAmUzWZP5pzfYij3mJRy/3E+rp7VU0rdBgDmYdrpQogrPXdSoaIvLMCCBQs26O/v/9AIEkHHcTYc7tDIaJQOWlv6XGaMkeOHD8iOiB+1t7dvXqvjx5cWwJ0GHmSMHWLMb6ekUqlbgzZgjZZXKZUFADO6p0sIYUYB1fxoX1gAklopZQGANqaB66SUZ9Ws1ThqoJQih88Kw/FTKBQKW82dO/fd0arqGwJks9ldOedmBOt7QojSYIfR6hu49kqp2QBQFtqNiLdKKcs2gupVzDcEcK0AzXPblCrDOd81mUwurVfBILejBBvt7e2ECa0BBouXcG+vevuKAFprOj1MG0SlZYYQ4udeFRpP9WzbpoOxfzB0uk8IYQbU1q223whA+QMoj0BpuVMIcVzdGga4odaaPKRln8KI2NB4CV8RYJggkTW5XK4zk8lQqHNoim3bhyJiWWgXIo7a8WMC6CsCkHBa63sYY2UnWh3HOTiVSv01NKP/PxwoKmpaqc7NSK3nOwIopSqdGeiWUlK+4lAUpdTOAFC28CXHTz6fn+Ql708tIPmOAMOcGXhGCFGWWKIWJYNWVyl1LQCcach9iRDi4kbr4jsCkIJKqdcA4POlyra1tW0xc+bMlY0GwG/9ZbPZbTjndKhj8OwkIq6eMGHC1jNnzvx3o+X1JQG01gsYY+cbyp4hhLih0QD4rT+t9eWMsQtK5ULEuuL9vOjmSwJks9mjOOdlJ4UR8SYppbll7EXHwNRxvaGURb1tQGhEbJjbtxIQviQAJZb85JNP3geARAkQ70opJwVmNOsQVGs9ZEOMMXa1EOKcOrrz1MSXBHDXAUPODDTSBeoJnTGspLWmsxC9hunv55xva1nWe80Sxc8EOA8ATBfwHYj4TLPAaGG/RwDAfubzEfECKSWth5pWfEsArTWdHA7zUfFXOjo6dm32pRq+JQBRXmtNn33jet6v9Goj4n8451+1LOvZpr36bsd+JwCFQIcqiygiruKcH2VZVtnJ32YRwdcEUEqdDgDj/tvfHdwPEXER5/zyZi76TCL5mgCU/iwej1PY06CciPg25/zUZr0RY90vItLJnhVr16593eslD42U0dcEcD8HHweAfYzPo5qyYDQSsPHWVxAIMGR3kDF2vxDi6+NtMFqhj+8JQGcG8vn8ylKvoAvUsUKIu1oB2nh6pu8J4H4OVtog+Sgej+83e/bsIenmxtMANVuXQBCgu7t7Q845bRFvaKwF3uWcT6uWELnZIAa5/0AQwLUCldLJMMqOwRi7wnGcK6Mkk7VTMTAEcL8Ifg0AZwynJiK+CwDkPg5MACkirnQcR7fqMu1AEYDuxVm2bBmlmv9W7Vz3bwtE7I/H41Nmz55NSZ/HtASKAISMe1rGBoBZY4pUkx+GiGdJKc3sH01+aouzhI1GO6314Yh4jXlsajR9trJtq+5NCpwFKB0k27Y/Q9OB4zhfca+j2woRNy89R9/KQfX47HcAINOqrGiBJoBHgKNqIyAQESDk9Ag0AdzUKQcDwO6IuA0AbICIlEzh5VgsdksrVtUj8YmmLMdxDmCM0ZS1LWOM7kb+ABGXcc7vSyaTD491arxAEsC27S8hIiWY/MYIgNNO6wOc87mWZT3eyhc9m812cM4FY4wCP9tHkOUNRMzm8/mrx+owbOAIQBnFAOCmWhZ6dKtGW1vb9FZcS9fd3T2Zc/4gAEyugYQvOo5zUiqV+mcNbeqqGigCaK3JHbywziTXSwuFwkFz5sz5oC6k6miklNoRAOhU86Z1NKdLM05o9o5nYAiglDoOAChbRkWZyaUKACsR8YsAMGEYwB/K5XKHjUXkzbx58zaLx+NPmClvBuRCxBwAvICIkwFg40ry0plAx3GmNnOPIxAEcOfQFYwx+u4fLO5GkOSc3zwQR0fu4jfffHOPYrF4DgDQ1WllOiKikFJSvv2mFq31YsbYiRUeQhlQfprL5Z4dICIdCAWAYwCATv+a1uIZy7L2aNbiMBAEUEp1AUDaAHOF4zhHp1KpJcONpFJqyOESevOKxeLkenLre2VMT0/PTo7jvGDUR8aYGOky58suu2xKsVj8m5ENnLr5vhDCvBjaqzgj1vM9ASiZtG3b7zPGNirRZK3jOHt7WSQppdIAUHYzOSJeJKWc1xAEK3Sitaar735s/HWpEOIn1Z5J5CkWi0uMaew5IcRu1drW87/vCaC1Ppgx9pChXFYIYVqEivpnMpkJiUSCdtlKTetTQog96wHMSxvzQAsivt7Z2bmT11M+lbKlNesWlSAQgO7GMefsKUKIV7wMBtWpkGoVLcuKNWNe7e3t3bJQKJTd2ev6+n/mVd5sNvtlznnZGUgAONWyLLoprKHF9wQwL5ikkzNSysGLkr2gobX+LmPs+tK6zco4opTaBwBMx1NNN6O7Vqvs7sRmLV59TwCt9a8YY9NLBu8dIcTmXgZ+oI7WmlbjtCofLM26p7jSlIWIh0op6ey/p+JeolEwnF1NuT/B9wRQSmXcz6NB8BzH6awljXylRNS5XK6tGe5W1/nzojHSNWU7rXSbGiLWfCmkF7b5ngCV7smpFQytNSVcPLQEkD4hRFkSKi9geamTyWQSiUTiY+PugweEEId5aU91tNZ0A1jZrWnNukLH9wTo6uraOB6P0314pbIu7ejo2N3LqlprfSBjrCzJZLNvJ1VKPQAAXzOmnD28BH5SepxCofASY2zrgfaI+IEQYpNmLFp9TwD3jTDfYAoHvyefzx83khl3V+RPVfCuTRVCNC3TiNaaPJBXlRKABhERKePp88NZAnfuvxkATjba2lJK2k1seAkEAbq7u6fGYjEayLJCJHAc57x0Ok159cqKUorewFsAwLxv4A4hxDcbjmRJh+SO7uvrexEAtjcGkiwZzeV/NJ/vnoT+DWOMblUfLBQxHIvFtk4mk+QMa3gJBAFIa6XUFQAwowICtO9PYNMb/QoiUoJF8p1TvmFTP0q0uJcQ4rWGI2l0mM1mDwCARyptW1PaV8YYbRQtQcQ8BYcg4rHDbAqdJ4SgHdCmlMAQYNGiRW2rVq0iP/nedSKRR8RDpJRP1Nm+5mZKKQkA2Zob/r/BZUKIskuiR9FXxaaBIQBJ7+4K3m5m0a4GCuXcoTZjOfgDMmmtaQCJBIOpX6vJS/9TxNNYJMgOFAFcYMANDCH/wCbVwETEe2Ox2IXJZNL8Nq/WtGH/9/T07O04DqW829dDp285jpNMpVJljisP7eqqEjgCDGhJAZaISAmk6KzgwLRA7tPltPnCGHuUc35Pq+MBS0clm81SPsCzAOB4xth6/3vR8R33TsCnEfH+fD5/V6NTwo/EjMASoC66R42GIBARIOSkiAgQESDkCIRc/cgCRAQIOQIhVz+yABEBQo5AyNWPLEBEgJAjEHL1IwsQESDkCIRc/cgCRAQIOQIhVz+yABEBQo5AyNWPLEBEgJAjEHL1/wusPTrbT4cN9QAAAABJRU5ErkJggg==)
 		}
 </style>

@@ -81,27 +81,27 @@
 // 				});
 			},
 			bindLogin() {
-				if (this.phoneno.length != 11) {
-				     uni.showToast({
-				        icon: 'none',
-				        title: '手机号不正确'
-				    });
-				    return;
-				}
-			    if (this.password.length < 6) {
-			        uni.showToast({
-			            icon: 'none',
-			            title: '密码不正确'
-			        });
-			        return;
-			    }
-				if (this.code.length != 4) {
-				    uni.showToast({
-				        icon: 'none',
-				        title: '验证码不正确'
-				    });
-				    return;
-				}
+// 				if (this.phoneno.length != 11) {
+// 				     uni.showToast({
+// 				        icon: 'none',
+// 				        title: '手机号不正确'
+// 				    });
+// 				    return;
+// 				}
+// 			    if (this.password.length < 6) {
+// 			        uni.showToast({
+// 			            icon: 'none',
+// 			            title: '密码不正确'
+// 			        });
+// 			        return;
+// 			    }
+// 				if (this.code.length != 4) {
+// 				    uni.showToast({
+// 				        icon: 'none',
+// 				        title: '验证码不正确'
+// 				    });
+// 				    return;
+// 				}
 				uni.request({
 				    url: 'http://***/forget.html',
 				    data: {
@@ -112,7 +112,7 @@
 					method: 'POST',
 					dataType:'json',
 				    success: (res) => {
-						if(res.data.code!=200){
+						if(res.data.code!=1){
 							uni.showToast({title:res.data.msg,icon:'none'});
 						}else{
 							uni.showToast({title:res.data.msg});

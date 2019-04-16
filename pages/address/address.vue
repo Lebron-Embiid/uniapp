@@ -108,11 +108,18 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none',
-							duration: 1500
-						})
+						if(res.data.code == 1){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none',
+								duration: 1500
+							})
+							setTimeout(function(){
+								uni.navigateBack({
+									delta: 1
+								})
+							},1500)
+						}
 					},
 					fail: () => {
 						uni.showToast({
@@ -125,7 +132,25 @@
 			}
 		},
 		onLoad() {
-			
+			var that = this;
+			// console.log(that.$access_token)
+			uni.request({
+				url: that.$api+'user/address-save&access_token='+that.$access_token,
+				dataType: "json",
+				method: 'GET',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				},
+			})
 		},
         onBackPress() {
           if (this.$refs.cityPicker.showPicker) {
@@ -137,7 +162,15 @@
             if (this.$refs.cityPicker.showPicker) {
                 this.$refs.cityPicker.pickerCancel();
             }
-        }
+        },
+		// 上拉加载
+		onReachBottom(){
+			
+		},
+		// 下拉刷新
+		onPullDownRefresh(){
+			
+		}
 	}
 </script>
 

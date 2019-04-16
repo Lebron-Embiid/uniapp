@@ -62,6 +62,26 @@
 					url: "/pages/settings/settings"
 				})
 			}
+		},
+		onLoad(opt) {
+			var that = this;
+			uni.request({
+				url: that.$api+'user/user-info&access_token='+that.$access_token,
+				dataType: "json",
+				method: 'GET',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
+			});
 		}
 	}
 </script>

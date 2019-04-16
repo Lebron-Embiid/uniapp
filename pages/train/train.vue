@@ -33,6 +33,7 @@ export default{
 			currentTab:0,
 			video_list:[
 				{
+					id: 1,
 					poster: "../../static/video_poster1.jpg",
 					avatar: "../../static/video_img.png",
 					title: "冬季水嫩肌肤养成法",
@@ -40,6 +41,7 @@ export default{
 					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
 				},
 				{
+					id: 2,
 					poster: "../../static/video_poster2.jpg",
 					avatar: "../../static/video_img.png",
 					title: "问题性肌肤全解分析—说说色斑那点事",
@@ -47,6 +49,7 @@ export default{
 					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
 				},
 				{
+					id: 3,
 					poster: "../../static/video_poster3.jpg",
 					avatar: "../../static/video_img.png",
 					title: "问题性肌肤全解分析—痘痘肌",
@@ -84,7 +87,66 @@ export default{
 	},
 	methods:{
 		navbarTap: function(e){
-			this.currentTab = e;
+			var that = this;
+			that.currentTab = e;
+			if(that.currentTab == 0){
+				uni.request({
+					url: that.$api+'default/video-list&type=0&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						var video_list = [];
+						var item = res.data.data.list;
+						for(let i in item){
+							video_list.push({
+								id: item[i].id,
+								poster: item[i].pic_url,
+								avatar: item[i].avatar,
+								title: item[i].title,
+								look: item[i].num,
+								video: item[i].url
+							})
+						}
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
+			}else{
+				uni.request({
+					url: that.$api+'default/video-list&type=1&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						var auto_list = [];
+						var item = res.data.data.list;
+						for(let i in item){
+							auto_list.push({
+								id: item[i].id,
+								title: item[i].title,
+								look: item[i].num,
+								src: item[i].url,
+								duration: item[i].sort
+							})
+						}
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
+			}
 		},
 		toAudioDetail: function(e){
 			uni.navigateTo({
@@ -95,13 +157,30 @@ export default{
 	onLoad(opt) {
 		var that = this;
 		uni.request({
-			url: that.$api+'default/video-list',
+			url: that.$api+'default/video-list&type=0&access_token='+that.$access_token,
 			method: 'GET',
+			dataType: "json",
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
 			success: res => {
-				console.log(res)
+				var video_list = [];
+				var item = res.data.data.list;
+				for(let i in item){
+					video_list.push({
+						poster: item[i].pic_url,
+						avatar: item[i].avatar,
+						title: item[i].title,
+						look: item[i].num,
+						video: item[i].url
+					})
+				}
 			},
 			fail: () => {
-				
+				uni.showToast({
+					title:res.data.msg,
+					icon:'none',
+				});
 			}
 		});
 	}

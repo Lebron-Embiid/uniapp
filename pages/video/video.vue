@@ -8,11 +8,13 @@
 	export default{
 		data(){
 			return{
+				id: "",
 				video: ""
 			}
 		},
 		onLoad(opt) {
 			let that = this;
+			that.id = opt.id;
 			that.video = opt.video;
 		}
 	}

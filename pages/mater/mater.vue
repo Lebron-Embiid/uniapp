@@ -13,15 +13,15 @@
 						<text class="ph_name">{{item.name}}</text>
 						<text class="ph_txt">{{item.time}}</text>
 						<text class="ph_txt">浏览：{{item.num}}</text>
-						<block v-if="item.sign == true">
+						<block v-if="item.sign == 1">
 							<text class="ph_sign">精选</text>
 						</block>
-						<image src="../../static/share.png" class="share_img" mode="widthFix"></image>
+						<!-- <image src="../../static/share.png" class="share_img" mode="widthFix"></image> -->
 					</view>
 					<view class="photo_content">
 						<view class="pc_item" v-for="(mater,idx) in item.maters" :key="idx">
-							<image :src="mater" class="c_img" mode="widthFix"></image>
-							<image src="../../static/download.png" class="download_icon" mode="widthFix"></image>
+							<image :src="mater.cover_pic" class="c_img" mode="widthFix"></image>
+							<!-- <image src="../../static/download.png" class="download_icon" mode="widthFix"></image> -->
 						</view>
 					</view>
 				</view>
@@ -105,11 +105,43 @@
 		},
 		methods:{
 			navbarTap: function(e){
-				this.currentTab = e;
+				var that = this;
+				that.currentTab = e;
+				if(that.currentTab == 0){
+					
+				}else{
+					uni.request({
+						url: that.$api+'default/video-list&type=0&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							var video_list = [];
+							var item = res.data.data.list;
+							for(let i in item){
+								video_list.push({
+									poster: item[i].pic_url,
+									avatar: item[i].avatar,
+									title: item[i].title,
+									look: item[i].num,
+									video: item[i].url
+								})
+							}
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}
 			},
 			toMaterDetail: function(res){
 				uni.navigateTo({
-					url: "/pages/mater_detail/mater_detail?id="+res.id
+					url: "/pages/mater_detail/mater_detail?id="+res.id+"&sign="+res.sign
 				})
 			},
 			toSearch: function(e){
@@ -126,12 +158,35 @@
 		onLoad() {
 			var that = this;
 			uni.request({
-				url: that.$api+'order/source-list&access_toke='+that.$access_token,
+				url: that.$api+'default/source-list&access_token='+that.$access_token,
 				method: 'GET',
-				data: {},
-				success: res => {},
-				fail: () => {},
-				complete: () => {}
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					var photo_list = [];
+					var item = res.data.data;
+					for(let i in item.list){
+						photo_list.push({
+							id: item.list[i].id,
+							avatar: item.list[i].avatar_url,
+							name: item.list[i].nickname,
+							time: item.list[i].addtime,
+							num: item.list[i].read_count,
+							sign: item.list[i].type,
+							maters: item.list[i].cover_pic[0]
+						})
+					}
+					console.log(photo_list)
+					that.photo_list = photo_list;
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
 			});
 		}
 	}

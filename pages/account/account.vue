@@ -37,7 +37,7 @@
 		</view>
 		<view class="fixed_account">
 			<view class="fa_left">总计：￥{{all}}</view>
-			<view class="fa_right">提交</view>
+			<view class="fa_right" @click="toSubmit">提交</view>
 		</view>
 	</view>
 </template>
@@ -80,13 +80,40 @@
 			bindPickerChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
+			},
+			toSubmit: function(e){
+				var that = this;
+				uni.request({
+					url: that.$api+'order/new-submit&access_token='+that.$access_token,
+					method: 'POST',
+					data: {
+						
+					},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						
+					},
+					fail: () => {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})					
+					}
+				});
 			}
 		},
 		onLoad(opt) {
 			var that = this;
 			uni.request({
-				url: that.$api+'&access_token='+that.$access_token,
+				url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
 				method: 'POST',
+				data: {
+					
+				},
 				dataType: "json",
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
@@ -101,7 +128,7 @@
 						duration: 1500
 					})					
 				}
-			});
+			});			
 		}
 	}
 </script>

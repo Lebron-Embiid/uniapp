@@ -155,15 +155,20 @@
 		onLoad(opt) {
 			var that = this;
 			uni.request({
-				url: that.$api+'default/shop&access_toke='+that.$access_token,
-				data: {},
+				url: that.$api+'default/shop&access_token='+that.$access_token,
 				dataType: "json",
 				method: 'GET',
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					
+					var swiperList = [];
+					var storeList = [];
+					var item = res.data.data;
+					for(let i in item.shop_banner){
+						swiperList.push(item.shop_banner[i].pic_url)
+					}
+					that.swiperList = swiperList;
 				},
 				fail: () => {
 					uni.showToast({

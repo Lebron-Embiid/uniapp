@@ -43,7 +43,7 @@
 				uni.request({
 					url: that.$api+'default/article-message&access_token='+that.$access_token,
 					data: {
-						cat_id: '1',
+						cat_id: 1,
 						name: that.username,
 						content: that.problem,
 						mobile: that.phone
@@ -54,16 +54,22 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: function(res) {
-						console.log(res.data);
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none',
-							duration: 1500
-						})
+						if(res.data.code == 1){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none',
+								duration: 1500
+							})
+							setTimeout(function(){
+								that.username = "";
+								that.problem = "";
+								that.phone = "";
+							},1500)
+						}
 					},
 					fail:function(err){
 						uni.showToast({
-							title: JSON.stringify(err),
+							title: res.data.msg,
 							icon: 'none',
 							duration: 1500
 						})

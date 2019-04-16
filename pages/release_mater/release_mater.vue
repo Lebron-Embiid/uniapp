@@ -70,9 +70,38 @@
 				content: "确定发布？",
 				success: (res) => {
 					if(res.confirm){
-						uni.navigateBack({
-							delta: 1
-						})
+						var that = this;
+						uni.request({
+							url: that.$api+'default/source-edit&access_token='+that.$access_token,
+							dataType: "json",
+							method: 'GET',
+							data: {
+								content: that.photos
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							success: res => {
+								if(res.data.code == 1){
+									uni.showToast({
+										title: res.data.msg,
+										icon: 'none',
+										duration: 1000
+									});
+									setTimeout(function(){
+										uni.navigateBack({
+											delta: 1
+										})
+									},1000)
+								}
+							},
+							fail: () => {
+								uni.showToast({
+									title:res.data.msg,
+									icon:'none',
+								});
+							}
+						});
 					}else{
 						console.log(this.photos)
 					}

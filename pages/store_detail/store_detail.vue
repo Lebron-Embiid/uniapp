@@ -32,7 +32,7 @@
 		</view>
 		<view class="fixed_bottom">
 			<view class="fb_left" @click="toIndex"><image src="../../static/back_home.png" mode="widthFix"></image>首页</view>
-			<view class="fb_center">加入购物车</view>
+			<view class="fb_center" @click="toAddCar">加入购物车</view>
 			<view class="fb_right">立即购买</view>
 		</view>
 	</view>
@@ -48,6 +48,7 @@
 				],
 				navbar:[{name:"商品详情"},{name:"评价"}],
 				currentTab:0,
+				id: "",
 				title: "",
 				info: "深层清洁皮肤，长效保湿滋润",
 				price: "",
@@ -60,8 +61,27 @@
 		},
 		methods:{
 			navbarTap: function(e){
-				console.log(e)
-				this.currentTab = e;
+				var that = this;
+				that.currentTab = e;
+				if(that.currentTab == 1){
+					uni.request({
+						url: that.$api+'order/comment-preview&order_id='+that.id+'&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}				
 			},
 			toIndex: function(e){
 				uni.switchTab({
@@ -74,10 +94,41 @@
 					urls: that.swiperList,
 					current: that.swiperList[e]
 				})
+			},
+			toAddCar: function(e){
+				var that = this;
+				uni.request({
+					url: that.$api+'cart/add-cart&access_token='+that.$access_token,
+					method: 'POST',
+					data: {
+						goods_id: that.id,
+						attr: {attr_name: "规格"},
+						num: 1
+					},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						if(res.data.code == 1){
+							uni.showToast({
+								title: "已添加至购物车！",
+								icon: "success"
+							})
+						}
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
 			}
 		},
 		onLoad(opt) {
 			let that = this;
+			that.id = opt.id;
 			uni.request({
 				url: that.$api+'default/goods&id=1',
 				method: 'GET',

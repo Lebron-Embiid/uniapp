@@ -42,7 +42,7 @@
 				uni.request({
 					url: that.$api+'default/article-message&access_token='+that.$access_token,
 					data: {
-						cat_id: '2',
+						cat_id: 2,
 						name: that.username,
 						content: that.message,
 						mobile: that.phone
@@ -53,11 +53,22 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: function(res) {
-						console.log(res.data);
+						if(res.data.code == 1){
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none',
+								duration: 1500
+							})
+							setTimeout(function(){
+								that.username = "";
+								that.message = "";
+								that.phone = "";
+							},1500)
+						}
 					},
 					fail:function(err){
 						uni.showToast({
-							title: JSON.stringify(err),
+							title: res.data.msg,
 							icon: 'none',
 							duration: 1500
 						})

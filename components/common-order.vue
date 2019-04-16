@@ -21,7 +21,7 @@
 				<view class="ob_price"><view>商品实付：<text>￥{{item.pay}}</text></view></view>
 				<view class="ob_btn">
 					<block v-if="item.finish == false">
-						<button>取消订单</button>
+						<button @click="toCancle(item.id)">取消订单</button>
 						<button @click="toPay(item.id)">去支付</button>
 					</block>
 					<block v-else>
@@ -48,6 +48,28 @@
 				uni.navigateTo({
 					url: "/pages/account/account?id="+e
 				})
+			},
+			toCancle: function(e){
+				var that = this;
+				uni.request({
+					url: that.$api+'order/revoke&order_id='+e+'&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						if(res.data.code == 1){
+									
+						}
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
 			},
 			toOrderDetail: function(e){
 				uni.navigateTo({

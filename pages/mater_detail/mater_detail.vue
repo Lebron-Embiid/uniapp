@@ -4,7 +4,7 @@
 		<view class="photo_head">
 			<image :src="avatar" class="avatar_img" mode="widthFix"></image>
 			<text class="ph_name">{{name}}</text>
-			<block v-if="sign == 'true'">
+			<block v-if="sign == 1">
 				<text class="ph_sign">精选</text>
 			</block>
 			<text class="ph_txt">{{time}}</text>
@@ -30,7 +30,7 @@
 				name: "小黄鸭",
 				time: "2018-03-24",
 				num: 123,
-				sign: true,
+				sign: 1,
 				maters: ["../../static/mater_img1.jpg","../../static/mater_img2.jpg","../../static/mater_img3.jpg"]
 			}
 		},
@@ -72,6 +72,28 @@
 		},
 		onLoad(opt) {
 			let that = this;
+			uni.request({
+				url: that.$api+'default/source-detail&access_token='+that.$access_token+'&id='+opt.id,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					var item = res.data.data;
+					that.avatar = item.source.avatar_url;
+					that.name = item.source.username;
+					that.time = item.source.addtime;
+					that.num = item.source.read_count;
+					that.sign = item.source.type;
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
+			});
 // 			that.name = opt.name;
 // 			that.avatar = opt.avatar;
 // 			that.time = opt.time;

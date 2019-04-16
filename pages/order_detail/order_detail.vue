@@ -47,7 +47,7 @@
 			<view class="money_item">配送费<text>￥0</text></view>
 			<view class="money_item">实付款<text class="red">￥98.00</text></view>
 			<view class="money_btn">
-				<button>查看物流</button>
+				<button @click="toLogistics(id)">查看物流</button>
 				<button class="ok">确认收货</button>
 			</view>
 		</view>
@@ -86,8 +86,9 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.id = opt.id;
 			uni.request({
-				url: that.$api+'&access_token='+that.$access_token,
+				url: that.$api+'order/confirm&order_id='+opt.id+'&access_token='+that.$access_token,
 				method: 'GET',
 				dataType: "json",
 				header: {

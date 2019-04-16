@@ -48,7 +48,7 @@
 		    </view>
 		    <view class="scroll_box">
 		        <scroll-view class="scroll-view" scroll-x="true">
-		            <view :id="item.ref" class="mater_item" v-for="(item,index) in mater_products" @click="toMaterDetail(item.id)" :key="index">
+		            <view class="mater_item" v-for="(item,index) in mater_products" @click="toMaterDetail(item.id)" :key="index">
 		            	<view class="m_img">
 		            		<image :src="item.src" mode="widthFix"></image>
 		            	</view>
@@ -70,12 +70,13 @@
 <script>
 	import commonSwiper from "@/components/common-swiper.vue"
 	import commonNews from "@/components/common-news.vue"
+	import date from "@/common/util.js"
 	export default{
 		data(){
 			return{
 				logo: "../../static/logo.png",
 				swiperList: [
-					"../../static/index_banner.jpg","../../static/index_banner.jpg","../../static/index_banner.jpg",
+					// "../../static/index_banner.jpg","../../static/index_banner.jpg","../../static/index_banner.jpg",
 					],
 				navList:[
 					{
@@ -97,74 +98,38 @@
 					}
 				],
 				hot_products:[
-					{
-						id: 1,
-						ref:"demo1",
-						src: "../../static/product_img1.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳山羊奶悦颜清透洁乳山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						format: "3.5g"
-					},
-					{
-						id: 2,
-						ref:"demo2",
-						src: "../../static/product_img2.jpg",
-						title: "艾璐卡-艾璐卡水漾唇膏",
-						info: "长久保湿·丝滑质感",
-						price: 118,
-						format: "3.5g"
-					},
-					{
-						id: 3,
-						ref:"demo2",
-						src: "../../static/product_img2.jpg",
-						title: "艾璐卡-艾璐卡水漾唇膏",
-						info: "长久保湿·丝滑质感",
-						price: 118,
-						format: "3.5g"
-					}
+// 					{
+// 						id: 1,
+// 						ref:"demo1",
+// 						src: "../../static/product_img1.jpg",
+// 						title: "艾璐卡-山羊奶悦颜清透洁乳山羊奶悦颜清透洁乳山羊奶悦颜清透洁乳",
+// 						info: "清洁皮肤，长效保湿滋润",
+// 						price: 98,
+// 						format: "3.5g"
+// 					}
 				],
 				mater_products:[
-					{
-						id: 1,
-						ref: "mater1",
-						src: "../../static/chosen_img1.jpg"
-					},
-					{
-						id: 2,
-						ref: "mater2",
-						src: "../../static/chosen_img2.jpg"
-					},
-					{
-						id: 3,
-						ref: "mater3",
-						src: "../../static/chosen_img1.jpg"
-					}
+// 					{
+// 						id: 1,
+// 						src: "../../static/chosen_img1.jpg"
+// 					}
 				],
 				news_list:[
-					{
-						id: 1,
-						title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
-						info: "法国时间1月20日，由艾璐卡eloo Doca...",
-						look: "1.1w",
-						date: "04.28",
-						src: "../../static/hot_img1.jpg"
-					},
-					{
-						id: 2,
-						title: "武钢体育馆·呦蓝YOULAN周年庆典完美落幕",
-						info: "2017年10月10日，武汉武钢体育馆内...",
-						look: "1.1w",
-						date: "04.28",
-						src: "../../static/hot_img2.jpg"
-					}
+// 					{
+// 						id: 1,
+// 						title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
+// 						info: "法国时间1月20日，由艾璐卡eloo Doca...",
+// 						look: "1.1w",
+// 						date: "04.28",
+// 						src: "../../static/hot_img1.jpg"
+// 					}
 				]
 			}
 		},
 		components:{
 			commonSwiper,
-			commonNews
+			commonNews,
+			date
 		},
 		methods:{
 			toDetail: function(idx,url){
@@ -195,20 +160,57 @@
 			}
 		},
 		onLoad() {
-			console.log(this.$access_token);
 			var that = this;
+			console.log(that.$access_token);
 			uni.request({
-				url: that.$api+'default/home',
+				url: that.$api+'default/index',
 				method: 'GET',
 				dataType: "json",
 				header: {
 					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 				},
 				success: res => {
-					console.log(res)
+					var article = [];
+					var mater_products = [];
+					var hot_products = [];
+					var swiperList = [];
+					var item = res.data.data;
+					for(let i in item.article){
+						article.push({
+							id: item.article[i].id,
+							title: item.article[i].title,
+							info: item.article[i].describe,
+							look: item.article[i].num,
+							date: date.formatDate(parseInt(item.article[i].addtime)),
+							src: item.article[i].cover_pic
+						})
+					}
+					for(let i in item.list){
+						mater_products.push({
+							id: item.list[i].id,
+							src: item.list[i].cover_pic
+						})
+					}
+					for(let i in item.goods){
+						hot_products.push({
+							id: item.goods[i].id,
+							src: item.goods[i].cover_pic,
+							title: item.goods[i].name,
+							info: "清洁皮肤，长效保湿滋润",
+							price: item.goods[i].price,
+							format: "3.5g"
+						})
+					}
+					for(let i in item.nav){
+						swiperList.push(item.nav[i].pic_url)
+					}
+					that.news_list = article;
+					that.mater_products = mater_products;
+					that.hot_products = hot_products;
+					that.swiperList = swiperList;
 				},
 				fail: () => {
-					
+					uni.showToast({title:res.data.msg,icon:'none'});
 				}
 			})
 		}

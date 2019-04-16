@@ -96,7 +96,7 @@
 		methods:{
 			toWithdraw: function(e){
 				uni.navigateTo({
-					url: "/pages/withdraw/withdraw"
+					url: "/pages/withdraw/withdraw?money="+this.over_money
 				})
 			}
 		},
@@ -110,11 +110,6 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					uni.showToast({
-						title: res.data.msg,
-						icon: 'none',
-						duration: 1500
-					})
 					that.over_money = res.data.data.money;
 				},
 				fail: err => {
