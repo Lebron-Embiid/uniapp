@@ -8,15 +8,15 @@
 			<view class="store_nav">
 				<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 			</view>
-			<view class="store_list" v-show="currentTab == 0">
-					<commonStore :storeList="storeList1"></commonStore>
+			<view class="store_list">
+				<commonStore :storeList="storeList"></commonStore>
 			</view>
-			<view class="store_list" v-show="currentTab == 1">
-					<commonStore :storeList="storeList2"></commonStore>
+			<!-- <view class="store_list" v-show="currentTab == 1">
+					<commonStore :storeList="storeList"></commonStore>
 			</view>
 			<view class="store_list" v-show="currentTab == 2">
-					<commonStore :storeList="storeList3"></commonStore>
-			</view>
+					<commonStore :storeList="storeList"></commonStore>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -27,114 +27,48 @@
 	export default{
 		data(){
 			return{
-				swiperList: ["../../static/store_banner.jpg","../../static/store_banner.jpg","../../static/store_banner.jpg"],
+				swiperList: [
+					"../../static/store_banner.jpg","../../static/store_banner.jpg","../../static/store_banner.jpg",
+				],
 				scrollLeft: 0,
 				tabIndex: 0,
 				navbar: [
-					{ name: '艾璐卡' },{ name: '纽西之谜'},{ name: '特价商品'}
+					// { name: '艾璐卡' },{ name: '纽西之谜'},{ name: '特价商品'}
 				],
 				currentTab:0,
-				storeList1:[
-					{
-						id: 1,
-						src: "../../static/store_img1.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 2,
-						src: "../../static/store_img2.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 3,
-						src: "../../static/store_img3.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 4,
-						src: "../../static/store_img4.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					}
-				],
-				storeList2:[
-					{
-						id: 5,
-						src: "../../static/store_img5.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 6,
-						src: "../../static/store_img6.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 7,
-						src: "../../static/store_img7.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 8,
-						src: "../../static/store_img8.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					}
-				],
-				storeList3:[
-					{
-						id: 5,
-						src: "../../static/store_img1.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 6,
-						src: "../../static/store_img3.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 7,
-						src: "../../static/store_img5.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					},
-					{
-						id: 8,
-						src: "../../static/store_img7.jpg",
-						title: "艾璐卡-山羊奶悦颜清透洁乳",
-						info: "清洁皮肤，长效保湿滋润",
-						price: 98,
-						type: "3.5g"
-					}
+				storeList:[
+// 					{
+// 						id: 1,
+// 						src: "../../static/store_img1.jpg",
+// 						title: "艾璐卡-山羊奶悦颜清透洁乳",
+// 						info: "清洁皮肤，长效保湿滋润",
+// 						price: 98,
+// 						type: "3.5g"
+// 					},
+// 					{
+// 						id: 2,
+// 						src: "../../static/store_img2.jpg",
+// 						title: "艾璐卡-山羊奶悦颜清透洁乳",
+// 						info: "清洁皮肤，长效保湿滋润",
+// 						price: 98,
+// 						type: "3.5g"
+// 					},
+// 					{
+// 						id: 3,
+// 						src: "../../static/store_img3.jpg",
+// 						title: "艾璐卡-山羊奶悦颜清透洁乳",
+// 						info: "清洁皮肤，长效保湿滋润",
+// 						price: 98,
+// 						type: "3.5g"
+// 					},
+// 					{
+// 						id: 4,
+// 						src: "../../static/store_img4.jpg",
+// 						title: "艾璐卡-山羊奶悦颜清透洁乳",
+// 						info: "清洁皮肤，长效保湿滋润",
+// 						price: 98,
+// 						type: "3.5g"
+// 					}
 				]
 			}
 		},
@@ -144,7 +78,105 @@
 		},
 		methods:{
 			navbarTap: function(e){
-				this.currentTab = e;
+				var that = this;
+				that.currentTab = e;
+				if(that.currentTab == 0){
+					uni.request({
+						url: that.$api+'default/goods-list&cat_id=1&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							// if(res.data.code == 1){
+								var storeList1 = [];
+								var item = res.data.data;
+								for(let i in item.list){
+									storeList1.push({
+										id: item.list[i].id,
+										src: item.list[i].pic_url,
+										title: item.list[i].name,
+										info: "清洁皮肤，长效保湿滋润",
+										price: item.list[i].price,
+										type: "3.5g"
+									})
+								}	
+								that.storeList = storeList1;
+							// }
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}else if(that.currentTab == 1){
+					uni.request({
+						url: that.$api+'default/goods-list&cat_id=2&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							// if(res.data.code == 1){
+								var storeList2 = [];
+								var item = res.data.data;
+								for(let i in item.list){
+									storeList2.push({
+										id: item.list[i].id,
+										src: item.list[i].pic_url,
+										title: item.list[i].name,
+										info: "清洁皮肤，长效保湿滋润",
+										price: item.list[i].price,
+										type: "3.5g"
+									})
+								}	
+								that.storeList = storeList2;
+							// }
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}else{
+					uni.request({
+						url: that.$api+'default/goods-list&cat_id=3&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							// if(res.data.code == 1){
+								var storeList3 = [];
+								var item = res.data.data;
+								for(let i in item.list){
+									storeList3.push({
+										id: item.list[i].id,
+										src: item.list[i].pic_url,
+										title: item.list[i].name,
+										info: "清洁皮肤，长效保湿滋润",
+										price: item.list[i].price,
+										type: "3.5g"
+									})
+								}	
+								that.storeList = storeList3;
+							// }
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}
 			},
 			toSearch: function(e){
 				uni.navigateTo({
@@ -162,12 +194,30 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
+					var navbar = [];
 					var swiperList = [];
 					var storeList = [];
 					var item = res.data.data;
+					for(let i in item.cat){
+						navbar.push({
+							name: item.cat[i].name
+						})
+					}
+					for(let i in item.list){
+						storeList.push({
+							id: item.list[i].id,
+							src: item.list[i].pic_url,
+							title: item.list[i].name,
+							info: "清洁皮肤，长效保湿滋润",
+							price: item.list[i].price,
+							type: "3.5g"
+						})
+					}
 					for(let i in item.shop_banner){
 						swiperList.push(item.shop_banner[i].pic_url)
 					}
+					that.navbar = navbar;
+					that.storeList = storeList;
 					that.swiperList = swiperList;
 				},
 				fail: () => {

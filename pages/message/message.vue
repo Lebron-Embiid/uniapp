@@ -40,6 +40,30 @@
 			},
 			formSubmit: function(e){
 				var that = this;
+				if(that.problem == ""){
+					uni.showToast({
+						title: "请填写问题！",
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(that.username == ""){
+					uni.showToast({
+						title: "请填写称呼！",
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(that.phone == ""){
+					uni.showToast({
+						title: "请填写联系方式！",
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
 				uni.request({
 					url: that.$api+'default/article-message&access_token='+that.$access_token,
 					data: {
@@ -54,7 +78,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: function(res) {
-						if(res.data.code == 1){
+						// if(res.data.code == 1){
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none',
@@ -65,7 +89,7 @@
 								that.problem = "";
 								that.phone = "";
 							},1500)
-						}
+						// }
 					},
 					fail:function(err){
 						uni.showToast({

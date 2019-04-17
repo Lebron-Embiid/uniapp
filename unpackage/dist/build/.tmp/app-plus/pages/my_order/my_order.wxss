@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.order_item.data-v-635516ee {
+.order_item.data-v-1f27f4bc {
   background: #fff;
   padding: 25rpx;
   -webkit-box-sizing: border-box;
@@ -32,7 +32,7 @@
   overflow: hidden;
   margin-bottom: 20rpx;
 }
-.order_item .order_top.data-v-635516ee {
+.order_item .order_top.data-v-1f27f4bc {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -48,72 +48,79 @@
     border-bottom: 1px solid #F7F7F9;
     padding-bottom: 20rpx;
 }
-.order_item .order_top view.data-v-635516ee {
+.order_item .order_top view.data-v-1f27f4bc {
       color: #797979;
       font-size: 22rpx;
 }
-.order_item .order_top view image.data-v-635516ee {
+.order_item .order_top view image.data-v-1f27f4bc {
         display: inline-block;
         vertical-align: middle;
         margin: 0 10rpx 5rpx 0;
         width: 26rpx;
         height: 26rpx !important;
 }
-.order_item .order_top text.data-v-635516ee {
+.order_item .order_top text.data-v-1f27f4bc {
       font-size: 22rpx;
 }
-.order_item .order_top text.active.data-v-635516ee {
+.order_item .order_top text.active.data-v-1f27f4bc {
         color: #fa3930;
 }
-.order_item .order_info.data-v-635516ee {
+.order_item .order_info.data-v-1f27f4bc {
     overflow: hidden;
     padding: 20rpx 0 25rpx;
-    margin-bottom: 20rpx;
     border-bottom: 1px solid #F7F7F9;
 }
-.order_item .order_info .oi_left.data-v-635516ee {
+.order_item .order_info .oi_left.data-v-1f27f4bc {
       float: left;
       margin-right: 30rpx;
       width: 140rpx;
       height: 140rpx;
       border: 1px solid #EAEAEA;
 }
-.order_item .order_info .oi_left image.data-v-635516ee {
+.order_item .order_info .oi_left image.data-v-1f27f4bc {
         display: block;
         width: 139rpx;
         height: 139rpx !important;
 }
-.order_item .order_info .oi_center.data-v-635516ee {
+.order_item .order_info .oi_center.data-v-1f27f4bc {
       float: left;
       width: 420rpx;
 }
-.order_item .order_info .oi_center .oi_title.data-v-635516ee {
+.order_item .order_info .oi_center .oi_title.data-v-1f27f4bc {
         color: #1f1f1f;
         font-size: 28rpx;
         margin: 10rpx 0 5rpx;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        white-space: nowrap;
 }
-.order_item .order_info .oi_center .oi_info.data-v-635516ee, .order_item .order_info .oi_center .oi_type.data-v-635516ee {
+.order_item .order_info .oi_center .oi_info.data-v-1f27f4bc, .order_item .order_info .oi_center .oi_type.data-v-1f27f4bc {
         color: #747474;
         font-size: 22rpx;
         margin-bottom: 20rpx;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        white-space: nowrap;
 }
-.order_item .order_info .oi_center .oi_type.data-v-635516ee {
+.order_item .order_info .oi_center .oi_type.data-v-1f27f4bc {
         margin-bottom: 0;
 }
-.order_item .order_info .oi_right.data-v-635516ee {
+.order_item .order_info .oi_right.data-v-1f27f4bc {
       float: right;
       text-align: right;
 }
-.order_item .order_info .oi_right .oi_price.data-v-635516ee {
+.order_item .order_info .oi_right .oi_price.data-v-1f27f4bc {
         color: #797979;
         font-size: 24rpx;
         margin: 10rpx 0 6rpx;
 }
-.order_item .order_info .oi_right .oi_num.data-v-635516ee {
+.order_item .order_info .oi_right .oi_num.data-v-1f27f4bc {
         color: #868686;
         font-size: 20rpx;
 }
-.order_item .order_bottom.data-v-635516ee {
+.order_item .order_bottom.data-v-1f27f4bc {
     overflow: hidden;
     display: -webkit-box;
     display: -webkit-flex;
@@ -127,19 +134,20 @@
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
+    margin-top: 20rpx;
 }
-.order_item .order_bottom .ob_price.data-v-635516ee {
+.order_item .order_bottom .ob_price.data-v-1f27f4bc {
       color: #797979;
       font-size: 22rpx;
 }
-.order_item .order_bottom .ob_price text.data-v-635516ee {
+.order_item .order_bottom .ob_price text.data-v-1f27f4bc {
         color: #fa3930;
         font-size: 26rpx;
 }
-.order_item .order_bottom .ob_btn.data-v-635516ee {
+.order_item .order_bottom .ob_btn.data-v-1f27f4bc {
       overflow: hidden;
 }
-.order_item .order_bottom .ob_btn button.data-v-635516ee {
+.order_item .order_bottom .ob_btn button.data-v-1f27f4bc {
         float: left;
         color: #333;
         font-size: 24rpx;
@@ -147,11 +155,11 @@
         border: 1px solid #9B9B9B;
         margin-left: 25rpx;
 }
-.order_item .order_bottom .ob_btn button.data-v-635516ee:active {
+.order_item .order_bottom .ob_btn button.data-v-1f27f4bc:active {
           color: #fa3930;
           border: 1px solid #fa3930;
 }
-.order_item .order_bottom .ob_btn button.data-v-635516ee:after {
+.order_item .order_bottom .ob_btn button.data-v-1f27f4bc:after {
           border: 0;
 }
 
@@ -181,15 +189,15 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-b9586124 {
+page.data-v-32b5ed05 {
   background: #f5f5f5 !important;
   overflow: hidden;
 }
-.order_nav.data-v-b9586124 {
+.order_nav.data-v-32b5ed05 {
   position: fixed;
   width: 100%;
   left: 0;
-  top: 0;
+  top: 44px;
   z-index: 30;
   padding: 0 30rpx;
   -webkit-box-sizing: border-box;
@@ -208,17 +216,17 @@ page.data-v-b9586124 {
       -ms-flex-align: center;
           align-items: center;
 }
-.order_nav view.data-v-b9586124 {
+.order_nav view.data-v-32b5ed05 {
     color: #797979;
     font-size: 24rpx;
     padding: 30rpx 0;
     border-bottom: 2rpx solid transparent;
 }
-.order_nav view.active.data-v-b9586124 {
+.order_nav view.active.data-v-32b5ed05 {
       color: #00001f;
       border-bottom: 2rpx solid #00001F;
 }
-.order_list.data-v-b9586124 {
+.order_list.data-v-32b5ed05 {
   margin-top: 55px;
 }
 

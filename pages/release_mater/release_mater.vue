@@ -9,7 +9,7 @@
 			<view class="release_btn item_box" @click="selectPhoto">
 				<view class="btn_box">
 					<image src="../../static/release_btn.png" mode="widthFix"></image>
-					<text>上传素材</text>
+					<text>上传图片</text>
 				</view>
 			</view>
 		</view>
@@ -61,7 +61,6 @@
 						}
 					}
 				})
-				
 			}
 		},
 		onNavigationBarButtonTap: function(){
@@ -71,6 +70,14 @@
 				success: (res) => {
 					if(res.confirm){
 						var that = this;
+						if(that.photos.length == 0){
+							uni.showToast({
+								title: "请上传图片！",
+								icon: 'none',
+								duration: 1000
+							});
+							return false;
+						}
 						uni.request({
 							url: that.$api+'default/source-edit&access_token='+that.$access_token,
 							dataType: "json",
@@ -82,7 +89,7 @@
 								'content-type': 'application/x-www-form-urlencoded'
 							},
 							success: res => {
-								if(res.data.code == 1){
+								// if(res.data.code == 1){
 									uni.showToast({
 										title: res.data.msg,
 										icon: 'none',
@@ -93,7 +100,7 @@
 											delta: 1
 										})
 									},1000)
-								}
+								// }
 							},
 							fail: () => {
 								uni.showToast({

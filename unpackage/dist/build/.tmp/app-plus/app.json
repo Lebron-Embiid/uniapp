@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/index/index",
+    "pages/login/login",
     "pages/register/register",
     "pages/forget/forget",
     "pages/train/train",
@@ -10,6 +10,7 @@
     "pages/mater/mater",
     "pages/mater_detail/mater_detail",
     "pages/release_mater/release_mater",
+    "pages/release_video/release_video",
     "pages/about/about",
     "pages/science/science",
     "pages/science_detail/science_detail",
@@ -25,6 +26,7 @@
     "pages/my_order/my_order",
     "pages/account/account",
     "pages/address/address",
+    "pages/address_list/address_list",
     "pages/order_detail/order_detail",
     "pages/logistics/logistics",
     "pages/search/search",
@@ -97,5 +99,5 @@
     "autoclose": true
   },
   "appname": "呦蓝",
-  "compilerVersion": "1.8.2"
+  "compilerVersion": "1.9.1"
 }

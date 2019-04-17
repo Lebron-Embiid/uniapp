@@ -1,13 +1,6 @@
 {
 	"pages": [
 		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": ""
-			}
-		},
-		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom",
@@ -32,6 +25,13 @@
 // 						]
 //                     }
                 }
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationStyle": "custom",
+				"navigationBarTitleText": ""
 			}
 		},
 		{
@@ -107,7 +107,26 @@
 		{
 			"path": "pages/release_mater/release_mater",
 			"style": {
-				"navigationBarTitleText": "发布素材",
+				"navigationBarTitleText": "发布图片",
+				"app-plus":{
+					"titleNView":{
+						"buttons":[
+							{
+								"type": "none",
+								"float": "right",
+								"text": "确定发布",
+								"fontSize": "14px",
+								"width": "auto"
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/release_video/release_video",
+			"style": {
+				"navigationBarTitleText": "发布视频",
 				"app-plus":{
 					"titleNView":{
 						"buttons":[

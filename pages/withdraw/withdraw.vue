@@ -4,21 +4,21 @@
 		<form @submit="formSubmit">
 			<view class="over_till">账户剩余余额：<text>{{over_money}}</text>元</view>
 			<view class="section">
-				<view>姓名<text>*</text></view>
+				<view class="left_txt">姓名<text>*</text></view>
 				<input type="text" name="name" @input="setName" :value="name" />
 				<!-- <view class="txt">{{username}}</view> -->
 			</view>
 			<view class="section">
-				<view>帐号<text>*</text></view>
+				<view class="left_txt">帐号<text>*</text></view>
 				<input type="text" name="username" @input="setUserName" :value="username" />
 				<!-- <view class="txt">{{username}}</view> -->
 			</view>
 			<view class="section">
-				<view>提现金额<text>*</text></view>
+				<view class="left_txt">提现金额<text>*</text></view>
 				<input type="number" name="money" @input="setMoney" :value="money" />
 			</view>
 			<view class="section">
-				<view>提现方式</view>
+				<view class="left_txt">提现方式</view>
 				<view class="txt">微信</view>
 			</view>
 			<view class="btn-area">
@@ -65,7 +65,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						if(res.data.code == 1){
+						// if(res.data.code == 1){
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -76,7 +76,7 @@
 								that.username = "";
 								that.money = "";
 							},1000)
-						}
+						// }
 					},
 					fail: () => {
 						uni.showToast({
@@ -115,7 +115,7 @@
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
-			view{
+			.left_txt{
 				color: #00001f;
 				font-size: 24upx;
 				width: 120upx;

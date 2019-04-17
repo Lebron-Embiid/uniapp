@@ -11,7 +11,7 @@
 		</view>
 		<view class="photo_content">
 			<view class="pc_item" @click="downloadMater(idx)" v-for="(mater,idx) in maters" :key="idx">
-				<image :src="mater" class="c_img" mode="widthFix"></image>
+				<image :src="mater.cover_pic" class="c_img" mode="widthFix"></image>
 				<image src="../../static/download.png" class="download_icon" mode="widthFix"></image>
 			</view>
 		</view>
@@ -26,12 +26,14 @@
 	export default{
 		data(){
 			return{
-				avatar: "../../static/avatar1.png",
-				name: "小黄鸭",
-				time: "2018-03-24",
-				num: 123,
-				sign: 1,
-				maters: ["../../static/mater_img1.jpg","../../static/mater_img2.jpg","../../static/mater_img3.jpg"]
+				avatar: "",
+				name: "",
+				time: "",
+				num: "",
+				sign: "",
+				maters: [
+					// "../../static/mater_img1.jpg","../../static/mater_img2.jpg","../../static/mater_img3.jpg",
+				]
 			}
 		},
 		methods:{
@@ -84,8 +86,9 @@
 					that.avatar = item.source.avatar_url;
 					that.name = item.source.username;
 					that.time = item.source.addtime;
-					that.num = item.source.read_count;
+					that.num = item.source.browse_id;
 					that.sign = item.source.type;
+					that.maters = item.topic.cover_pic;
 				},
 				fail: () => {
 					uni.showToast({

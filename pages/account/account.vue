@@ -9,10 +9,14 @@
 		</view>
 		<view class="acc_item borbom">
 			<text>支付方式</text>
-			<picker class="acc_right" @change="bindPickerChange" :value="index" :range="array">
+			<view class="acc_right pr45">
+				在线支付
+				<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
+			</view>
+			<!-- <picker class="acc_right" @change="bindPickerChange" :value="index" :range="array">
 				<view class="uni-input">{{array[index]}}</view>
 				<image src="../../static/next.png" mode="widthFix"></image>
-			</picker>
+			</picker> -->
 		</view>
 		<view class="acc_content borbom">
 			<view class="content_item" v-for="(item,index) in accountList" :key="index">
@@ -109,11 +113,8 @@
 		onLoad(opt) {
 			var that = this;
 			uni.request({
-				url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
-				method: 'POST',
-				data: {
-					
-				},
+				url: that.$api+'order/pay-data&order_id=3&access_token='+that.$access_token,
+				method: 'GET',
 				dataType: "json",
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'

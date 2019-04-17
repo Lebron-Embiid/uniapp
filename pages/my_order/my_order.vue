@@ -5,25 +5,25 @@
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
 		<!-- 全部订单 -->
-		<view class="order_list" v-show="currentTab == 0">
+		<view class="order_list">
 			<commonOrder :orderList="orderList"></commonOrder>
 		</view>
 		<!-- 待付款 -->
-		<view class="order_list" v-show="currentTab == 1">
-			
-		</view>
+		<!-- <view class="order_list" v-show="currentTab == 1">
+			<commonOrder :orderList="orderList"></commonOrder>
+		</view> -->
 		<!-- 待发货 -->
-		<view class="order_list" v-show="currentTab == 2">
-			
-		</view>
+		<!-- <view class="order_list" v-show="currentTab == 2">
+			<commonOrder :orderList="orderList"></commonOrder>
+		</view> -->
 		<!-- 待收货 -->
-		<view class="order_list" v-show="currentTab == 3">
-			
-		</view>
+		<!-- <view class="order_list" v-show="currentTab == 3">
+			<commonOrder :orderList="orderList"></commonOrder>
+		</view> -->
 		<!-- 已完成 -->
-		<view class="order_list" v-show="currentTab == 4">
-			
-		</view>
+		<!-- <view class="order_list" v-show="currentTab == 4">
+			<commonOrder :orderList="orderList"></commonOrder>
+		</view> -->
 	</view>
 </template>
 
@@ -32,65 +32,34 @@
 	export default{
 		data(){
 			return{
-				navbar:[{name:"全部订单"},{name:"待付款"},{name:"待发货"},{name:"待收货"},{name:"已完成"}],
+				navbar:[
+					{name:"待付款"},
+					{name:"待发货"},
+					{name:"待收货"},
+					{name:"已完成"},
+					// {name:"售后"}
+				],
 				currentTab: 0,
 				orderList:[
-					{
-						id: 1,
-						time: "2019-03-20 15:21",
-						status: true,
-						statusText: "等待您的付款",
-						img: "../../static/order_img1.jpg",
-						title: "艾璐卡柔雾丝绒唇釉",
-						info: "持久滋润·饱满显色·细腻亮泽·抚平唇纹",
-						type: "6.8ml",
-						price: 168,
-						num: 1,
-						pay: 168,
-						finish: false
-					},
-					{
-						id: 2,
-						time: "2019-03-20 15:21",
-						status: false,
-						statusText: "未发货",
-						img: "../../static/order_img2.jpg",
-						title: "艾璐卡山羊奶悦颜清透洁面乳",
-						info: "深层清洁皮肤，长效保湿滋润",
-						type: "120g",
-						price: 168,
-						num: 1,
-						pay: 98,
-						finish: false
-					},
-					{
-						id: 3,
-						time: "2019-03-20 15:21",
-						status: false,
-						statusText: "已发货",
-						img: "../../static/order_img3.jpg",
-						title: "艾璐卡山羊奶悦颜清透凝霜",
-						info: "深层清洁皮肤，长效保湿滋润",
-						type: "20ml",
-						price: 168,
-						num: 1,
-						pay: 168,
-						finish: false
-					},
-					{
-						id: 4,
-						time: "2019-03-20 15:21",
-						status: false,
-						statusText: "已完成",
-						img: "../../static/order_img4.jpg",
-						title: "艾璐卡水光美颜气垫 [象牙白]",
-						info: "提亮  修颜   均匀   遮瑕   持久   保湿 ",
-						type: "15g",
-						price: 168,
-						num: 1,
-						pay: 158,
-						finish: true
-					}
+// 					{
+// 						id: 1,
+// 						time: "2019-03-20 15:21",
+// 						status: true,
+// 						statusText: "等待您的付款",
+// 						goods:[
+// 							{
+// 								id: 1,
+// 								img: "../../static/order_img1.jpg",
+// 								title: "艾璐卡柔雾丝绒唇釉",
+// 								info: "持久滋润·饱满显色·细腻亮泽·抚平唇纹",
+// 								type: "6.8ml",
+// 								price: 168
+// 							}
+// 						],
+// 						num: 1,
+// 						pay: 168,
+// 						finish: false
+// 					}
 				]
 			}
 		},
@@ -109,7 +78,33 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: res => {
-						console.log(res.data)
+						var orderList = [];
+						var goods = [];
+						var item = res.data.data;
+						for(let i in item.list){
+							for(let j in item.list[i].goods_list){
+								goods.push({
+									id: item.list[i].goods_list[j].goods_id,
+									img: item.list[i].goods_list[j].goods_pic,
+									title: item.list[i].goods_list[j].goods_name,
+									// info: "提亮  修颜   均匀   遮瑕   持久   保湿 ",
+									type: item.list[i].goods_list[j].attr_list.attr_name,
+									price: item.list[i].goods_list[j].price,
+									num: item.list[i].goods_list[j].num,
+								})
+							}
+							orderList.push({
+								id: item.list[i].order_id,
+								order_no: item.list[i].order_no,
+								time: item.list[i].addtime,
+								status: !item.list[i].pay_type,
+								// statusText: "已完成",
+								goods: goods,
+								pay: item.list[i].total_price,
+								finish: item.list[i].pay_type
+							})
+						}
+						that.orderList = orderList;
 					},
 					fail: () => {
 						
@@ -128,7 +123,33 @@
 					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 				},
 				success: res => {
-					console.log(res.data)
+					var orderList = [];
+					var goods = [];
+					var item = res.data.data;
+					for(let i in item.list){
+						for(let j in item.list[i].goods_list){
+							goods.push({
+								id: item.list[i].goods_list[j].goods_id,
+								img: item.list[i].goods_list[j].goods_pic,
+								title: item.list[i].goods_list[j].goods_name,
+								info: "提亮  修颜   均匀   遮瑕   持久   保湿 ",
+								type: item.list[i].goods_list[j].attr_list.attr_name,
+								price: item.list[i].goods_list[j].price,
+								num: item.list[i].goods_list[j].num,
+							})
+						}
+						orderList.push({
+							id: item.list[i].order_id,
+							order_no: item.list[i].order_no,
+							time: item.list[i].addtime,
+							status: !item.list[i].pay_type,
+							statusText: "已完成",
+							goods: goods,
+							pay: item.list[i].total_price,
+							finish: item.list[i].pay_type
+						})
+					}
+					that.orderList = orderList;
 				},
 				fail: () => {
 					
@@ -144,7 +165,7 @@
 		position: fixed;
 		width: 100%;
 		left: 0;
-		top: 0;
+		top: 44px;
 		z-index: 30;
 		// margin: 35upx 0 25upx;
 		padding: 0 30upx;

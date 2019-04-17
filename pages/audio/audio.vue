@@ -39,10 +39,27 @@ export default{
 		}
 	},
 	onLoad(opt) {
-		this.title = opt.title;
-		this.look = opt.look;
-		this.src = opt.src;
-		this.duration = parseInt(opt.duration);
+		var that = this;
+		uni.request({
+			url: that.$api+'default/video-detail&access_token='+that.$access_token+'&id='+opt.id,
+			method: 'GET',
+			dataType: "json",
+			header: {
+				'content-type': 'application/x-www-form-urlencoded'
+			},
+			success: res => {
+				that.title = res.data.data.title;
+				that.look = res.data.data.num;
+				that.src = res.data.data.url;
+				that.duration = parseInt(res.data.data.audio_num);
+			},
+			fail: () => {
+				uni.showToast({
+					title:res.data.msg,
+					icon:'none',
+				});
+			}
+		});
 	}
 }
 </script>

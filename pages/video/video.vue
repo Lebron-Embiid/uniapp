@@ -15,7 +15,23 @@
 		onLoad(opt) {
 			let that = this;
 			that.id = opt.id;
-			that.video = opt.video;
+			uni.request({
+				url: that.$api+'default/video-detail&access_token='+that.$access_token+'&id='+opt.id,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.video = res.data.data.url
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
+			});
 		}
 	}
 </script>

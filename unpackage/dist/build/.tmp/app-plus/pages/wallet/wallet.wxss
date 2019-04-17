@@ -24,10 +24,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-06046c5c {
+page.data-v-0999ba8c {
   background: #f5f5f7 !important;
 }
-.wallet_box .withdraw_box.data-v-06046c5c {
+.wallet_box .withdraw_box.data-v-0999ba8c {
   padding: 100rpx 50rpx 60rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -37,14 +37,14 @@ page.data-v-06046c5c {
   margin-bottom: 25rpx;
   border-bottom: 1rpx solid #DFDFDF;
 }
-.wallet_box .withdraw_box .over_word.data-v-06046c5c {
+.wallet_box .withdraw_box .over_word.data-v-0999ba8c {
     font-size: 26rpx;
 }
-.wallet_box .withdraw_box .over_money.data-v-06046c5c {
+.wallet_box .withdraw_box .over_money.data-v-0999ba8c {
     font-size: 60rpx;
     margin: 0 0 60rpx;
 }
-.wallet_box .withdraw_box .withdraw_btn.data-v-06046c5c {
+.wallet_box .withdraw_box .withdraw_btn.data-v-0999ba8c {
     width: 80%;
     margin: 0 auto;
     color: #fff;
@@ -53,21 +53,21 @@ page.data-v-06046c5c {
     padding: 20rpx 0;
     border-radius: 5rpx;
 }
-.wallet_box .record_box.data-v-06046c5c {
+.wallet_box .record_box.data-v-0999ba8c {
   border-top: 1rpx solid #EBEBED;
 }
-.wallet_box .record_box .record_item.data-v-06046c5c {
+.wallet_box .record_box .record_item.data-v-0999ba8c {
     border-bottom: 1rpx solid #ddd;
     padding: 30rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
 }
-.wallet_box .record_box .record_item .record_info.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_info.data-v-0999ba8c {
       overflow: hidden;
       color: #222;
 }
-.wallet_box .record_box .record_item .record_info .ri_name.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_info .ri_name.data-v-0999ba8c {
         display: inline-block;
         vertical-align: top;
         font-size: 24rpx;
@@ -78,44 +78,44 @@ page.data-v-06046c5c {
            text-overflow: ellipsis;
         white-space: nowrap;
 }
-.wallet_box .record_box .record_item .record_info .ri_time.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_info .ri_time.data-v-0999ba8c {
         display: inline-block;
         vertical-align: top;
         font-size: 20rpx;
 }
-.wallet_box .record_box .record_item .record_info .ri_money.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_info .ri_money.data-v-0999ba8c {
         float: right;
         font-size: 24rpx;
 }
-.wallet_box .record_box .record_item .record_info .ri_money .ri_red.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_info .ri_money .ri_red.data-v-0999ba8c {
           color: #d70d0d;
           margin-left: 10rpx;
 }
-.wallet_box .record_box .record_item .record_content.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_content.data-v-0999ba8c {
       color: #222;
       font-size: 24rpx;
       overflow: hidden;
 }
-.wallet_box .record_box .record_item .record_content .rl_txt.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_content .rl_txt.data-v-0999ba8c {
         float: left;
         margin-right: 10rpx;
 }
-.wallet_box .record_box .record_item .record_content .record_list.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_content .record_list.data-v-0999ba8c {
         width: 80%;
         float: left;
         overflow: hidden;
 }
-.wallet_box .record_box .record_item .record_content .record_list .rl_item.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_content .record_list .rl_item.data-v-0999ba8c {
           width: 100%;
           overflow: hidden;
           margin-bottom: 10rpx;
 }
-.wallet_box .record_box .record_item .record_content .record_list .rl_item .ri_name.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_content .record_list .rl_item .ri_name.data-v-0999ba8c {
             margin-right: 40rpx;
             float: left;
             width: 65%;
 }
-.wallet_box .record_box .record_item .record_content .record_list .rl_item .ri_num.data-v-06046c5c {
+.wallet_box .record_box .record_item .record_content .record_list .rl_item .ri_num.data-v-0999ba8c {
             float: left;
 }
 

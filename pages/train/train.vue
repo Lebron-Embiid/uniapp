@@ -9,7 +9,7 @@
 		<!-- 视频 -->
 		<view class="mt44"></view>
 		<view class="video_list" v-show="currentTab == 0">
-			<commonVideo :video_list="video_list"></commonVideo>
+			<commonVideo :video_list="video_list" :isDownload="0"></commonVideo>
 		</view>
 		<!-- 音频 -->
 		<view class="audio_list" v-show="currentTab == 1">
@@ -32,53 +32,53 @@ export default{
 			navbar:[{name:"视频"},{name:"音频"}],
 			currentTab:0,
 			video_list:[
-				{
-					id: 1,
-					poster: "../../static/video_poster1.jpg",
-					avatar: "../../static/video_img.png",
-					title: "冬季水嫩肌肤养成法",
-					look: "1.2w",
-					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-				},
-				{
-					id: 2,
-					poster: "../../static/video_poster2.jpg",
-					avatar: "../../static/video_img.png",
-					title: "问题性肌肤全解分析—说说色斑那点事",
-					look: "10w",
-					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-				},
-				{
-					id: 3,
-					poster: "../../static/video_poster3.jpg",
-					avatar: "../../static/video_img.png",
-					title: "问题性肌肤全解分析—痘痘肌",
-					look: "10w",
-					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-				}
+// 				{
+// 					id: 1,
+// 					poster: "../../static/video_poster1.jpg",
+// 					avatar: "../../static/video_img.png",
+// 					title: "冬季水嫩肌肤养成法",
+// 					look: "1.2w",
+// 					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
+// 				},
+// 				{
+// 					id: 2,
+// 					poster: "../../static/video_poster2.jpg",
+// 					avatar: "../../static/video_img.png",
+// 					title: "问题性肌肤全解分析—说说色斑那点事",
+// 					look: "10w",
+// 					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
+// 				},
+// 				{
+// 					id: 3,
+// 					poster: "../../static/video_poster3.jpg",
+// 					avatar: "../../static/video_img.png",
+// 					title: "问题性肌肤全解分析—痘痘肌",
+// 					look: "10w",
+// 					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
+// 				}
 			],
 			auto_list:[
-				{
-					id: 1,
-					title: "如何快速找到精准粉丝",
-					look: "1.0w",
-					src: "http://other.web.nf01.sycdn.kuwo.cn/resource/n2/23/43/994306111.mp3",
-					duration: 229
-				},
-				{
-					id: 2,
-					title: "如何快速找到精准粉丝",
-					look: "1.2w",
-					src: "http://mouyizhan.com/4.mp3",
-					duration: 205
-				},
-				{
-					id: 3,
-					title: "如何快速找到精准粉丝",
-					look: "1.0w",
-					src: "http://mouyizhan.com/5.mp3",
-					duration: 228
-				}
+// 				{
+// 					id: 1,
+// 					title: "如何快速找到精准粉丝",
+// 					look: "1.0w",
+// 					src: "http://other.web.nf01.sycdn.kuwo.cn/resource/n2/23/43/994306111.mp3",
+// 					duration: 229
+// 				},
+// 				{
+// 					id: 2,
+// 					title: "如何快速找到精准粉丝",
+// 					look: "1.2w",
+// 					src: "http://mouyizhan.com/4.mp3",
+// 					duration: 205
+// 				},
+// 				{
+// 					id: 3,
+// 					title: "如何快速找到精准粉丝",
+// 					look: "1.0w",
+// 					src: "http://mouyizhan.com/5.mp3",
+// 					duration: 228
+// 				}
 			]
 		}
 	},
@@ -98,10 +98,10 @@ export default{
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						var video_list = [];
+						var video_list1 = [];
 						var item = res.data.data.list;
 						for(let i in item){
-							video_list.push({
+							video_list1.push({
 								id: item[i].id,
 								poster: item[i].pic_url,
 								avatar: item[i].avatar,
@@ -110,6 +110,7 @@ export default{
 								video: item[i].url
 							})
 						}
+						that.video_list = video_list1;
 					},
 					fail: () => {
 						uni.showToast({
@@ -135,9 +136,10 @@ export default{
 								title: item[i].title,
 								look: item[i].num,
 								src: item[i].url,
-								duration: item[i].sort
+								duration: item[i].audio_num
 							})
 						}
+						that.auto_list = auto_list;
 					},
 					fail: () => {
 						uni.showToast({
@@ -150,7 +152,7 @@ export default{
 		},
 		toAudioDetail: function(e){
 			uni.navigateTo({
-				url: "/pages/audio/audio?id="+e.id+"&title="+e.title+"&look="+e.look+"&src="+e.src+"&duration="+e.duration
+				url: "/pages/audio/audio?id="+e.id
 			})
 		}
 	},
@@ -175,6 +177,7 @@ export default{
 						video: item[i].url
 					})
 				}
+				that.video_list = video_list;
 			},
 			fail: () => {
 				uni.showToast({

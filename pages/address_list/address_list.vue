@@ -11,8 +11,8 @@
 				</view>
 			</view>
 			<view class="add_bottom">
-				<label class="uni-list-cell uni-list-cell-pd" @tap="selectTap(index)">
-					<radio :value="value" :checked="item.index == current" />{{name}}
+				<label class="uni-list-cell uni-list-cell-pd" @tap="selectTap(item.id,index)">
+					<radio :value="value" color="#00001F" name="default" :checked="current === index && item.is_default == 1" />{{name}}
                 </label>
 				<view class="right-edit" @tap="editAddess(item.id)">编辑</view>
 				<view class="right-del" @tap="delAddess(item.id)">删除</view>
@@ -54,8 +54,9 @@
 			}
 		},
 		methods:{
-			selectTap(id) {
+			selectTap(id,idx) {
 				var that = this;
+				that.current = idx;
 				uni.request({
 					url: that.$api+'user/address-set-default&access_token='+that.$access_token+'&address_id='+id,
 					dataType: "json",
@@ -119,7 +120,7 @@
 							linkMan: item[i].name,
 							mobile: item[i].mobile,
 							address: item[i].address,
-							isDefault: item[i].isDefault
+							is_default: item[i].is_default
 						})
 					}
 					that.addressList = list;

@@ -1,11 +1,11 @@
 <template>
 	<view class="logistics_box">
 		<view class="logist_top">
-			<view class="lt_img"><image src="../../static/order_img1.jpg" mode="widthFix"></image><view>1件商品</view></view>
+			<view class="lt_img"><image :src="goods_pic" mode="widthFix"></image></view>
 			<view class="lt_word">
 				<view>快递公司<text>{{express}}</text></view>
 				<view>快递单号<text>{{express_no}}</text></view>
-				<view>官方电话<text class="red">{{phone}}</text></view>
+				<!-- <view>官方电话<text class="red">{{phone}}</text></view> -->
 			</view>
 		</view>
 		<view class="logist_content">
@@ -29,6 +29,7 @@
 				express: "",
 				express_no: "",
 				phone: "",
+				goods_pic: "",
 				logists:[
 // 					{
 // 						title: "【深圳市】快件已送到代收点，感谢使用中通快递，期待再次为您服务！",
@@ -81,11 +82,12 @@
 				success: res => {
 					that.express = res.data.data.express;
 					that.express_no = res.data.data.express_no;
+					that.goods_pic = res.data.data.goods_pic;
 					for(let i in res.data.data.list){
 						var list = [];
 						list.push({
 							title: res.data.data.list[i].detail,
-							time: res.data.data.list[i].datetime
+							time: res.data.data.list[i].datetime,
 						})
 					}
 					that.logists = list

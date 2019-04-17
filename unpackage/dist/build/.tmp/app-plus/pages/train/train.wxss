@@ -24,15 +24,15 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-a0383a7c {
+page.data-v-14ef2afa {
   background: #f5f5f7 !important;
 }
-.video_list.data-v-a0383a7c {
+.video_list.data-v-14ef2afa {
   padding: 30rpx 20rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-.ai_info.data-v-a0383a7c {
+.ai_info.data-v-14ef2afa {
   color: #4f4f50;
   font-size: 20rpx;
   text-align: left;

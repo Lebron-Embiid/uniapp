@@ -7,7 +7,10 @@
 		</view>  
 		<!-- #endif -->
 		<view class="person_top">
-			<image src="../../static/person_bg.jpg" mode="widthFix" class="person_bg"></image>
+			<view class="person_bg">
+				<image src="../../static/person_bg.jpg" mode="widthFix"></image>
+				<view class="person_layer"></view>
+			</view>
 			<view class="person_layer">
 				<view class="settings" @click="toSettings"><image src="../../static/settings.png" mode="widthFix"></image></view>
 				<view class="person_avatar"><image src="../../static/person_avatar.png" mode="widthFix"></image></view>
@@ -16,13 +19,13 @@
 		</view>
 		<view class="nav_box">
 			<view class="nav_item radius">
-				<navigator class="navigator" url="../my_order/my_order?id=0">我的订单<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" url="../my_order/my_order?id=-1">我的订单<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="order_box">
-				<view class="order_item"><navigator url="../my_order/my_order?id=1"><image src="../../static/order_icon1.png" mode="widthFix"></image>待付款</navigator></view>
-				<view class="order_item"><navigator url="../my_order/my_order?id=2"><image src="../../static/order_icon2.png" mode="widthFix"></image>待发货</navigator></view>
-				<view class="order_item"><navigator url="../my_order/my_order?id=3"><image src="../../static/order_icon3.png" mode="widthFix"></image>待收货</navigator></view>
-				<view class="order_item"><navigator url="../my_order/my_order?id=4"><image src="../../static/order_icon4.png" mode="widthFix"></image>已完成</navigator></view>
+				<view class="order_item"><navigator url="../my_order/my_order?id=0"><image src="../../static/order_icon1.png" mode="widthFix"></image>待付款</navigator></view>
+				<view class="order_item"><navigator url="../my_order/my_order?id=1"><image src="../../static/order_icon2.png" mode="widthFix"></image>待发货</navigator></view>
+				<view class="order_item"><navigator url="../my_order/my_order?id=2"><image src="../../static/order_icon3.png" mode="widthFix"></image>待收货</navigator></view>
+				<view class="order_item"><navigator url="../my_order/my_order?id=3"><image src="../../static/order_icon4.png" mode="widthFix"></image>已完成</navigator></view>
 			</view>
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/wallet/wallet">我的钱包<image src="../../static/next.png" mode="widthFix"></image></navigator>
@@ -90,9 +93,21 @@
 	.person_top{
 		position: relative;
 		.person_bg{
-			display: block;
-			width: 100%;
-			height: 340upx !important;
+			position: relative;
+			image{
+				display: block;
+				width: 100%;
+				height: 340upx !important;
+			}
+			.person_layer{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				left: 0;
+				top: 0;
+				background: rgba(255,255,255,.1);
+				z-index: 5;
+			}
 		}
 		.person_layer{
 			position: absolute;

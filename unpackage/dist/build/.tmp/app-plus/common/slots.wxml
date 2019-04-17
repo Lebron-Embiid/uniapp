@@ -1,10 +1,10 @@
-<import src="/components/common-swiper.vue.wxml" />
-<import src="/components/common-news.vue.wxml" />
 <import src="/components/common-video.vue.wxml" />
 <import src="/components/imt-audio/imt-audio.vue.wxml" />
+<import src="/components/common-swiper.vue.wxml" />
+<import src="/components/common-news.vue.wxml" />
 <import src="/components/common-store.vue.wxml" />
 <import src="/components/common-order.vue.wxml" />
 <import src="/components/citypicker/cityPicker.vue.wxml" />
-<import src="/components/common-agent.vue.wxml" />
 <import src="/components/sunui-upimg/sunui-upimg.vue.wxml" />
+<import src="/components/common-agent.vue.wxml" />
 

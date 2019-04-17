@@ -90,7 +90,7 @@
 		position: fixed;
 		width: 100%;
 		left: 0;
-		top: 0;
+		top: 44px;
 		z-index: 20;
 		background: #fff;
 		color: #00001f;
@@ -156,6 +156,7 @@
 			background: #fff;
 			padding: 25upx 25upx 35upx;
 			box-sizing: border-box;
+			position: relative;
 			.head_img{
 				float: left;
 				margin-right: 25upx;
@@ -176,6 +177,17 @@
 			.v_look{
 				color: #4f4f50;
 				font-size: 20upx;
+			}
+			.v_download{
+				position: absolute;
+				right: 50upx;
+				top: 45upx;
+				z-index: 5;
+				image{
+					display: block;
+					width: 40upx;
+					height: 40upx !important;
+				}
 			}
 		}
 	}

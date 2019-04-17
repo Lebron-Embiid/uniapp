@@ -28,9 +28,21 @@
   position: relative;
 }
 .person_top .person_bg {
-    display: block;
-    width: 100%;
-    height: 340rpx !important;
+    position: relative;
+}
+.person_top .person_bg image {
+      display: block;
+      width: 100%;
+      height: 340rpx !important;
+}
+.person_top .person_bg .person_layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 5;
 }
 .person_top .person_layer {
     position: absolute;

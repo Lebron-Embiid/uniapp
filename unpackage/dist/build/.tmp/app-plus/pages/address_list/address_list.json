@@ -1,0 +1,15 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "收货地址",
+  "titleNView": {
+    "buttons": [
+      {
+        "type": "none",
+        "float": "right",
+        "text": "添加地址",
+        "fontSize": "14px",
+        "width": "auto"
+      }
+    ]
+  }
+}

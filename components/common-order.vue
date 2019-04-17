@@ -2,30 +2,37 @@
 	<view class="order_box">
 		<view class="order_item" v-for="(item,index) in orderList" :key="index">
 			<view class="order_top">
+				<view>订单号：{{item.order_no}}</view>
 				<view><image src="../../static/clock.png" mode="widthFix"></image>{{item.time}}</view>
-				<text :class="[item.status?'active':'']">{{item.statusText}}</text>
+				<!-- <text :class="[item.status?'active':'']">{{item.statusText}}</text> -->
 			</view>
-			<view class="order_info" @click="toOrderDetail(item.id)">
-				<view class="oi_left"><image :src="item.img" mode="widthFix"></image></view>
+			<view class="order_info" @click="toOrderDetail(goods.id)" v-for="(goods,idx) in item.goods" :key="idx">
+				<view class="oi_left"><image :src="goods.img" mode="widthFix"></image></view>
 				<view class="oi_center">
-					<view class="oi_title">{{item.title}}</view>
-					<view class="oi_info">{{item.info}}</view>
-					<view class="oi_type">规格：{{item.type}}</view>
+					<view class="oi_title">{{goods.title}}</view>
+					<!-- <view class="oi_info">{{goods.info}}</view> -->
+					<view class="oi_type">规格：{{goods.type}}</view>
 				</view>
 				<view class="oi_right">
-					<view class="oi_price">￥{{item.price}}</view>
-					<view class="oi_num">x{{item.num}}</view>
+					<view class="oi_price">￥{{goods.price}}</view>
+					<view class="oi_num">x{{goods.num}}</view>
 				</view>
 			</view>
 			<view class="order_bottom">
 				<view class="ob_price"><view>商品实付：<text>￥{{item.pay}}</text></view></view>
 				<view class="ob_btn">
-					<block v-if="item.finish == false">
+					<block v-if="item.finish == 0">
 						<button @click="toCancle(item.id)">取消订单</button>
 						<button @click="toPay(item.id)">去支付</button>
 					</block>
-					<block v-else>
-						<button>产品详情</button>
+					<block v-else-if="item.finish == 1">
+						<button @click="toOrderDetail(item.id)">产品详情</button>
+					</block>
+					<block v-else-if="item.finish == 2">
+						<button @click="toOrderDetail(item.id)">产品详情</button>
+					</block>
+					<block v-else-if="item.finish == 3">
+						<button @click="queryOrder(item.id)">确认收货</button>
 					</block>
 				</view>
 			</view>
@@ -45,9 +52,27 @@
 		},
 		methods:{
 			toPay: function(e){
-				uni.navigateTo({
-					url: "/pages/account/account?id="+e
-				})
+				var that = this;
+				uni.request({
+					url: that.$api+'order/pay-data&order_id='+e+'&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
 			},
 			toCancle: function(e){
 				var that = this;
@@ -59,9 +84,10 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						if(res.data.code == 1){
-									
-						}
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
 					},
 					fail: () => {
 						uni.showToast({
@@ -75,6 +101,9 @@
 				uni.navigateTo({
 					url: "/pages/order_detail/order_detail?id="+e
 				})
+			},
+			queryOrder: function(e){
+				
 			}
 		}
 	}
@@ -114,7 +143,7 @@
 		.order_info{
 			overflow: hidden;
 			padding: 20upx 0 25upx;
-			margin-bottom: 20upx;
+			// margin-bottom: 20upx;
 			border-bottom: 1px solid #F7F7F9;
 			.oi_left{
 				float: left;
@@ -135,11 +164,17 @@
 					color: #1f1f1f;
 					font-size: 28upx;
 					margin: 10upx 0 5upx;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 				.oi_info,.oi_type{
 					color: #747474;
 					font-size: 22upx;
 					margin-bottom: 20upx;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
 				}
 				.oi_type{
 					margin-bottom: 0;
@@ -164,6 +199,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			margin-top: 20upx;
 			.ob_price{
 				color: #797979;
 				font-size: 22upx;

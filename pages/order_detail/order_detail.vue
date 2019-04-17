@@ -48,7 +48,7 @@
 			<view class="money_item">实付款<text class="red">￥98.00</text></view>
 			<view class="money_btn">
 				<button @click="toLogistics(id)">查看物流</button>
-				<button class="ok">确认收货</button>
+				<button class="ok" @click="toConfirm(id)">确认收货</button>
 			</view>
 		</view>
 	</view>
@@ -82,29 +82,36 @@
 				uni.navigateTo({
 					url: "/pages/logistics/logistics?id="+e
 				})
+			},
+			toConfirm: function(e){
+				var that = this;
+				uni.request({
+					url: that.$api+'order/confirm&order_id='+e+'&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})
+					},
+					fail: () => {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})					
+					}
+				});
 			}
 		},
 		onLoad(opt) {
 			var that = this;
 			that.id = opt.id;
-			uni.request({
-				url: that.$api+'order/confirm&order_id='+opt.id+'&access_token='+that.$access_token,
-				method: 'GET',
-				dataType: "json",
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					
-				},
-				fail: () => {
-					uni.showToast({
-						title: res.data.msg,
-						icon: 'none',
-						duration: 1500
-					})					
-				}
-			});
 		}
 	}
 </script>

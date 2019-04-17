@@ -1,0 +1,15 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "发布视频",
+  "titleNView": {
+    "buttons": [
+      {
+        "type": "none",
+        "float": "right",
+        "text": "确定发布",
+        "fontSize": "14px",
+        "width": "auto"
+      }
+    ]
+  }
+}

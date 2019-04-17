@@ -446,19 +446,42 @@
 // 			},
 			// 生成订单
 			createorder(){
+				var that = this;
 				// 合计金额大于0 创建订单
-				if (this.totalamount == 0){
+				if (that.totalamount == 0){
 					uni.showModal({
 						content: '请选择下单的商品！'
 					})
 				}else{
 					// 1、处理购物车内已选择的订单生成商品
-					for (let i = 0; i < this.cart.length; i++) {
+					for (let i = 0; i < that.cart.length; i++) {
 							// item id 大于0 的是勾选的
-							if (this.cart[i].items > 0){
+							if (that.cart[i].items > 0){
 								//这里的item 是下单的
+								
 							}
 					}
+					uni.request({
+						url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
+						method: 'POST',
+						data: {
+							goods_list: that.cart
+						},
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							
+						},
+						fail: () => {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none',
+								duration: 1500
+							})					
+						}
+					});	
 					uni.navigateTo({
 						url: "/pages/account/account"
 					})

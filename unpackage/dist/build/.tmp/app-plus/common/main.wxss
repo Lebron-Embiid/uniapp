@@ -97,7 +97,7 @@ uni-picker .uni-picker-item {
   position: fixed;
   width: 100%;
   left: 0;
-  top: 0;
+  top: 44px;
   z-index: 20;
   background: #fff;
   color: #00001f;
@@ -165,6 +165,7 @@ uni-picker .uni-picker-item {
     padding: 25rpx 25rpx 35rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+    position: relative;
 }
 .video_item .v_info .head_img {
       float: left;
@@ -187,6 +188,17 @@ uni-picker .uni-picker-item {
 .video_item .v_info .v_look {
       color: #4f4f50;
       font-size: 20rpx;
+}
+.video_item .v_info .v_download {
+      position: absolute;
+      right: 50rpx;
+      top: 45rpx;
+      z-index: 5;
+}
+.video_item .v_info .v_download image {
+        display: block;
+        width: 40rpx;
+        height: 40rpx !important;
 }
 uni-audio {
   display: block;
