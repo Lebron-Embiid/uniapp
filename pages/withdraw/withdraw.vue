@@ -49,8 +49,28 @@
 				this.money = e.detail.value;
 			},
 			formSubmit: function(e){
-				console.log(this.money);
 				var that = this;
+				if(that.name == ""){
+					uni.showToast({
+						title: "请输入姓名！",
+						icon: "none"
+					})
+					return false;
+				}
+				if(that.username == ""){
+					uni.showToast({
+						title: "请输入账号！",
+						icon: "none"
+					})
+					return false;
+				}
+				if(that.money == ""){
+					uni.showToast({
+						title: "请输入提现金额！",
+						icon: "none"
+					})
+					return false;
+				}
 				uni.request({
 					url: that.$api+'share/get-price&access_token='+that.$access_token,
 					method: 'POST',
