@@ -50,7 +50,7 @@
 				<view class="format_item" v-for="(format,index) in buy_format" :key="index">
 					<view class="format_name">{{format.name}}</view>
 					<view class="format_list">
-						<view class="fl_item" :class="[item.current == idx?'active':'']" v-for="(item,idx) in format.list" :key="idx" @click="selectFormat(format.id,item.id,index,idx)">{{item.name}}</view>
+						<view class="fl_item" :class="[format.current[0] == index && format.current[1] == idx?'active':'']" v-for="(item,idx) in format.list" :key="idx" @click="selectFormat(format.id,item.attr_id,index,idx)">{{item.attr_name}}</view>
 					</view>
 				</view>
 			</view>
@@ -155,7 +155,7 @@
 			},
 			toAddCar: function(e){
 				var that = this;
-				if(that.is_format == 1){
+				if(that.is_format != 0){
 					that.fixed_show = 0;
 					return false;
 				}
@@ -189,7 +189,7 @@
 			},
 			toBuy:function(e){
 				var that = this;
-				if(that.is_format == 1){
+				if(that.is_format != 0){
 					that.fixed_show = 0;
 					return false;
 				}
@@ -232,21 +232,19 @@
 			},
 			selectFormat: function(id,sid,index,idx){
 				var that = this;
-				for(let i in that.buy_format){
-					for(let j in that.buy_format[i].list){
-						that.buy_format[i].list[j].current = -1;
-					}
-				}
 				that.attr.push({
 					attr_group_id: that.buy_format[index].id,
 					attr_group_name: that.buy_format[index].name,
 					attr_id: that.buy_format[index].list[idx].id,
 					attr_name: that.buy_format[index].list[idx].name,
 				})
-				console.log(that.attr);
 				
-				that.buy_format[index].list[idx].current = idx;
-				that.is_format = 0;
+				that.buy_format[index].current = [index,idx];
+				var len = that.buy_format.length;
+				console.log(that.attr.length)
+				if(that.attr.length == len){
+					that.is_format = 0;
+				}
 			},
 			minus_num: function(e){
 				this.buy_num--;
@@ -307,15 +305,9 @@
 						formatList.push({
 							id: item.attr_group_list[i].attr_group_id,
 							name: item.attr_group_list[i].attr_group_name,
-							list: list
+							list: item.attr_group_list[i].attr_list,
+							current: [-1,-1]
 						});
-						for(let j in item.attr_group_list[i].attr_list){
-							list.push({
-								id: item.attr_group_list[i].attr_list[j].attr_id,
-								name: item.attr_group_list[i].attr_list[j].attr_name,
-								current: -1
-							})
-						}
 					}
 					that.swiperList = swiperList;
 					that.title = item.name;
