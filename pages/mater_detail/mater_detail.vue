@@ -88,7 +88,7 @@
 					that.time = item.source.addtime;
 					that.num = item.source.browse_id;
 					that.sign = item.source.type;
-					that.maters = item.topic.cover_pic;
+					that.maters = item.topic;
 				},
 				fail: () => {
 					uni.showToast({

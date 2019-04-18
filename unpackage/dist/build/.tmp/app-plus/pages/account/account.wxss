@@ -24,21 +24,21 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-6661c2c0 {
+page.data-v-0bb58623 {
   background: #f5f5f5 !important;
 }
-.borbom.data-v-6661c2c0 {
+.borbom.data-v-0bb58623 {
   margin-bottom: 20rpx;
   border-top: 1px solid #E0E0E0;
   border-bottom: 1px solid #E0E0E0;
 }
-.notop.data-v-6661c2c0 {
+.notop.data-v-0bb58623 {
   border-top: 0;
 }
-.pr45.data-v-6661c2c0 {
+.pr45.data-v-0bb58623 {
   padding-right: 45rpx;
 }
-.acc_item.data-v-6661c2c0 {
+.acc_item.data-v-0bb58623 {
   background: #fff;
   padding: 25rpx;
   -webkit-box-sizing: border-box;
@@ -58,25 +58,25 @@ page.data-v-6661c2c0 {
   color: #2d2d2d;
   font-size: 24rpx;
 }
-.acc_item .acc_right.data-v-6661c2c0 {
+.acc_item .acc_right.data-v-0bb58623 {
     width: 60%;
     text-align: right;
 }
-.acc_item .acc_right view.data-v-6661c2c0 {
+.acc_item .acc_right view.data-v-0bb58623 {
       display: inline-block;
 }
-.acc_item .acc_right image.data-v-6661c2c0 {
+.acc_item .acc_right image.data-v-0bb58623 {
       display: inline-block;
       vertical-align: middle;
       margin: 0 0 5rpx 25rpx;
       width: 20rpx;
       height: 34rpx !important;
 }
-.acc_content.data-v-6661c2c0 {
+.acc_content.data-v-0bb58623 {
   padding: 40rpx 25rpx;
   background: #fff;
 }
-.acc_content .content_item.data-v-6661c2c0 {
+.acc_content .content_item.data-v-0bb58623 {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     overflow: hidden;
@@ -90,64 +90,64 @@ page.data-v-6661c2c0 {
             justify-content: space-between;
     margin-bottom: 20rpx;
 }
-.acc_content .content_item.data-v-6661c2c0:last-of-type {
+.acc_content .content_item.data-v-0bb58623:last-of-type {
       margin-bottom: 0;
 }
-.acc_content .content_item .ac_left.data-v-6661c2c0 {
+.acc_content .content_item .ac_left.data-v-0bb58623 {
       width: 20%;
       width: 140rpx;
       height: 140rpx;
       border: 1px solid #EAEAEA;
 }
-.acc_content .content_item .ac_left image.data-v-6661c2c0 {
+.acc_content .content_item .ac_left image.data-v-0bb58623 {
         display: block;
         width: 139rpx;
         height: 139rpx !important;
 }
-.acc_content .content_item .ac_right.data-v-6661c2c0 {
+.acc_content .content_item .ac_right.data-v-0bb58623 {
       width: 75%;
 }
-.acc_content .content_item .ac_right .ac_title.data-v-6661c2c0 {
+.acc_content .content_item .ac_right .ac_title.data-v-0bb58623 {
         color: #1f1f1f;
         font-size: 28rpx;
         margin: 10rpx 0 5rpx;
 }
-.acc_content .content_item .ac_right .ac_info.data-v-6661c2c0, .acc_content .content_item .ac_right .ac_type.data-v-6661c2c0 {
+.acc_content .content_item .ac_right .ac_info.data-v-0bb58623, .acc_content .content_item .ac_right .ac_type.data-v-0bb58623 {
         color: #747474;
         font-size: 22rpx;
         margin-bottom: 20rpx;
 }
-.acc_content .content_item .ac_right .ac_type.data-v-6661c2c0 {
+.acc_content .content_item .ac_right .ac_type.data-v-0bb58623 {
         margin-bottom: 0;
         overflow: hidden;
 }
-.acc_content .content_item .ac_right .ac_type text.data-v-6661c2c0 {
+.acc_content .content_item .ac_right .ac_type text.data-v-0bb58623 {
           margin-right: 60rpx;
 }
-.acc_content .content_item .ac_right .ac_type .ac_price.data-v-6661c2c0 {
+.acc_content .content_item .ac_right .ac_type .ac_price.data-v-0bb58623 {
           float: right;
           color: #fa3930;
           font-size: 26rpx;
           margin-right: 0;
 }
-.acc_mess.data-v-6661c2c0 {
+.acc_mess.data-v-0bb58623 {
   background: #fff;
   padding: 25rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-.acc_mess view.data-v-6661c2c0 {
+.acc_mess view.data-v-0bb58623 {
     color: #2d2d2d;
     font-size: 24rpx;
     margin-bottom: 10rpx;
 }
-.acc_mess input.data-v-6661c2c0 {
+.acc_mess input.data-v-0bb58623 {
     color: #606060;
     font-size: 24rpx;
     display: block;
     width: 100%;
 }
-.fixed_account.data-v-6661c2c0 {
+.fixed_account.data-v-0bb58623 {
   position: fixed;
   width: 100%;
   background: #fff;
@@ -160,7 +160,7 @@ page.data-v-6661c2c0 {
           box-sizing: border-box;
   overflow: hidden;
 }
-.fixed_account .fa_left.data-v-6661c2c0 {
+.fixed_account .fa_left.data-v-0bb58623 {
     float: left;
     width: 350rpx;
     color: #fa3930;
@@ -170,7 +170,7 @@ page.data-v-6661c2c0 {
             box-sizing: border-box;
     line-height: 95rpx;
 }
-.fixed_account .fa_right.data-v-6661c2c0 {
+.fixed_account .fa_right.data-v-0bb58623 {
     float: right;
     width: 400rpx;
     color: #fff;

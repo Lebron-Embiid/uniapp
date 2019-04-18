@@ -28,10 +28,10 @@
 								<!-- 名称 -->
 								<view class="sigle-line-text" style="color: #1f1f1f;font-size: 28upx;height: 33.33%;text-align: left;" @click="clickitemhref(item.id)">{{ item.name }}</view>
 								<!-- 属性 -->
-								<view class="sigle-line-text" style="color: #747474;font-size: 22upx;height: 33.33%;text-align: left;" @click="clickitemhref(item.id)">{{ item.attributes }}</view>
+								<view class="sigle-line-text" style="color: #747474;font-size: 22upx;height: 33.33%;text-align: left;" @click="clickitemhref(item.id)">规格：{{ item.type }}</view>
 								<!-- 价格 & 数量-->
 								<view class="glance-shop-cart-items-item-pq">
-									<view class="sigle-line-text1" style="color: #fa3930;font-size: 26upx;text-align: left;width: 50%;">￥{{item.price}} <text style="color: #747474;font-size: 22upx;margin-left: 20upx;">规格：{{item.type}}</text></view>
+									<view class="sigle-line-text1" style="color: #fa3930;font-size: 26upx;text-align: left;width: 50%;">￥{{item.price}}</view>
 									<!-- 数量操作 -->
 									<view class="glance-shop-cart-items-item-opt">
 										<!-- 减数量 -->
@@ -121,7 +121,7 @@
 							id: item[i].cart_id,
 							name: item[i].goods_name,
 							imgsrc: item[i].goods_pic,
-							attributes:'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
+							// attributes:'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
 							quantity: item[i].num,
 							price: item[i].price,
 							type:'6.8ml'
@@ -274,6 +274,9 @@
 			// 点击删除
 			clickdel(itemid){
 				var that = this;
+				var cart_arr = [];
+				cart_arr.push(itemid);
+				console.log(cart_arr)
 				uni.showModal({
 					title: "提示",
 					content: "确定删除该商品？",
@@ -282,7 +285,7 @@
 							uni.request({
 								url: that.$api+'cart/delete&access_token='+that.$access_token,
 								data: {
-									cart_id_list: []
+									cart_id_list: JSON.stringify(cart_arr)
 								},
 								method: 'GET',
 								dataType: "json",
@@ -290,8 +293,12 @@
 									'content-type': 'application/x-www-form-urlencoded'
 								},
 								success: res => {
-									if(res.data.code == 1){
+									// if(res.data.code == 1){
 										// 删除购物车商品时 更新合计金额
+										uni.showToast({
+											title:res.data.msg,
+											icon:'none',
+										});
 										for (let i = 0; i < that.cart.length; i++) {
 											if (that.cart[i].id == itemid){
 												// 勾选状态下更新数量和金额
@@ -312,10 +319,10 @@
 													that.shownullcart = true
 													that.isselectedall = false
 												}
-												return
+												return false;
 											}
 										}
-									}
+									// }
 								},
 								fail: () => {
 									uni.showToast({

@@ -37,7 +37,8 @@
 				title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
 				look: "1.1w",
 				date: "04.28",
-				content: ""
+				content: "",
+				node_type: ""
 			}
 		},
 		methods:{

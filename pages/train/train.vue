@@ -14,7 +14,10 @@
 		<!-- 音频 -->
 		<view class="audio_list" v-show="currentTab == 1">
 			<view class="audio_item" v-for="(item,index) in auto_list" :key="index" @click="toAudioDetail(item)">
-				<image src="../../static/audio_cd.png" mode="widthFix"></image>
+				<view class="audio_img">
+					<image src="../../static/audio_cd.png" class="cd_img" mode="widthFix"></image>
+					<image :src="item.logo" class="logo_img" mode=""></image>
+				</view>
 				<view class="ai_title">{{item.title}}</view>
 				<view class="ai_info">听众：{{item.look}}</view>
 				<!-- <audio :src="item.src" controls></audio> -->
@@ -104,7 +107,8 @@ export default{
 							video_list1.push({
 								id: item[i].id,
 								poster: item[i].pic_url,
-								avatar: item[i].avatar,
+								// avatar: item[i].avatar,
+								avatar: "../../static/video_img.png",
 								title: item[i].title,
 								look: item[i].num,
 								video: item[i].url
@@ -136,6 +140,7 @@ export default{
 								title: item[i].title,
 								look: item[i].num,
 								src: item[i].url,
+								logo: item[i].pic_url,
 								duration: item[i].audio_num
 							})
 						}
@@ -171,7 +176,8 @@ export default{
 				for(let i in item){
 					video_list.push({
 						poster: item[i].pic_url,
-						avatar: item[i].avatar,
+						// avatar: item[i].avatar,
+						avatar: "../../static/video_img.png",
 						title: item[i].title,
 						look: item[i].num,
 						video: item[i].url

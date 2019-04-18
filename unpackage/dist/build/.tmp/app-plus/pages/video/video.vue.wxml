@@ -1,1 +1,1 @@
-<template name="25e2cc83"><view class="_view data-v-3caffe41 video_box"><video id="myVideo" autoplay="true" direction="90" src="{{video}}" class="_video data-v-3caffe41"></video></view></template>
+<template name="25e2cc83"><view class="_view data-v-1a9f74b4 video_box"><video id="myVideo" autoplay="true" direction="90" src="{{video}}" class="_video data-v-1a9f74b4"></video></view></template>

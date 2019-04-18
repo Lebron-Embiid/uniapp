@@ -27,20 +27,32 @@
 			selectPhoto: function(e){
 				var that = this;
 				uni.chooseImage({
-					count: 6, //默认9
+					count: 1, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: function (res) {
-						var len = res.tempFilePaths.length;
-						for(var i=0;i<len;i++){
-							uni.getImageInfo({
-								src: res.tempFilePaths[i],
-								success: function (image) {
-									console.log(image)
-								}
-							});
-							that.photos.push(res.tempFilePaths[i])
-						}
+						console.log(res.tempFilePaths[0])
+						uni.uploadFile({
+							url: that.$api+'default/upload-image', //图片接口
+							filePath: res.tempFilePaths[0],
+							name: 'image',
+							success: (uploadFileRes) => {
+								var data = JSON.parse(uploadFileRes.data);
+								console.log(data.data.url);
+								that.photos.push(data.data.url);
+								console.log(that.photos)
+							}
+						});
+// 						var len = res.tempFilePaths.length;
+// 						for(var i=0;i<len;i++){
+// 							uni.getImageInfo({
+// 								src: res.tempFilePaths[i],
+// 								success: function (image) {
+// 									console.log(image)
+// 								}
+// 							});
+// 							that.photos.push(res.tempFilePaths[i])
+// 						}
 					}
 				});
 			},
@@ -59,6 +71,7 @@
 						if(res.confirm){
 							this.photos.splice(e, 1);
 						}
+								console.log(this.photos)
 					}
 				})
 			}
@@ -79,9 +92,9 @@
 							return false;
 						}
 						uni.request({
-							url: that.$api+'default/source-edit&access_token='+that.$access_token,
+							url: that.$api+'default/source-edit&access_toke='+that.$access_token,
 							dataType: "json",
-							method: 'GET',
+							method: 'POST',
 							data: {
 								content: that.photos
 							},
@@ -95,11 +108,11 @@
 										icon: 'none',
 										duration: 1000
 									});
-									setTimeout(function(){
-										uni.navigateBack({
-											delta: 1
-										})
-									},1000)
+// 									setTimeout(function(){
+// 										uni.navigateBack({
+// 											delta: 1
+// 										})
+// 									},1000)
 								// }
 							},
 							fail: () => {

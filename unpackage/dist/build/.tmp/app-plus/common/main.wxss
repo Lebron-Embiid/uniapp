@@ -246,15 +246,12 @@ uni-audio {
 }
 .news_item .item_left .news_title {
       color: #333;
-      font-size: 28rpx;
+      font-size: 30rpx;
+      margin: 30rpx 0 10rpx;
       overflow: hidden;
       -o-text-overflow: ellipsis;
          text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      word-wrap: break-word;
-      word-break: break-all;
+      white-space: nowrap;
 }
 .news_item .item_left .news_info {
       color: #333;
@@ -263,7 +260,11 @@ uni-audio {
       overflow: hidden;
       -o-text-overflow: ellipsis;
          text-overflow: ellipsis;
-      white-space: nowrap;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-wrap: break-word;
+      word-break: break-all;
 }
 .news_item .item_left .news_icon {
       color: #bbb;

@@ -3,7 +3,7 @@
 		<view class="page_bg"></view>
 		<view class="form_top">
 			<form @click="toSearch" class="form_box">
-				<input type="text" disabled placeholder="请输入您要搜索的关键词" value="" />
+				<input type="text" placeholder="请输入您要搜索的关键词" value="" />
 				<button><image src="../../static/search.png" mode=""></image></button>
 			</form>
 		</view>
@@ -70,9 +70,7 @@
 				})
 			},
 			toSearch: function(e){
-				uni.navigateTo({
-					url: "/pages/search/search"
-				})
+				
 			}
 		},
 		onNavigationBarButtonTap: function(){

@@ -97,9 +97,9 @@
 										id: item.list[i].id,
 										src: item.list[i].pic_url,
 										title: item.list[i].name,
-										info: "清洁皮肤，长效保湿滋润",
+										// info: "清洁皮肤，长效保湿滋润",
 										price: item.list[i].price,
-										type: "3.5g"
+										type: item.list[i].weight
 									})
 								}	
 								that.storeList = storeList1;
@@ -129,9 +129,9 @@
 										id: item.list[i].id,
 										src: item.list[i].pic_url,
 										title: item.list[i].name,
-										info: "清洁皮肤，长效保湿滋润",
+										// info: "清洁皮肤，长效保湿滋润",
 										price: item.list[i].price,
-										type: "3.5g"
+										type: item.list[i].weight
 									})
 								}	
 								that.storeList = storeList2;
@@ -161,9 +161,9 @@
 										id: item.list[i].id,
 										src: item.list[i].pic_url,
 										title: item.list[i].name,
-										info: "清洁皮肤，长效保湿滋润",
+										// info: "清洁皮肤，长效保湿滋润",
 										price: item.list[i].price,
-										type: "3.5g"
+										type: item.list[i].weight
 									})
 								}	
 								that.storeList = storeList3;
@@ -208,9 +208,9 @@
 							id: item.list[i].id,
 							src: item.list[i].pic_url,
 							title: item.list[i].name,
-							info: "清洁皮肤，长效保湿滋润",
+							// info: "清洁皮肤，长效保湿滋润",
 							price: item.list[i].price,
-							type: "3.5g"
+							type: item.list[i].weight
 						})
 					}
 					for(let i in item.shop_banner){

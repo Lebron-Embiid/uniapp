@@ -143,7 +143,7 @@
 					});
 				}else{
 					uni.request({
-						url: that.$api+'default/video-list&type=0&access_token='+that.$access_token,
+						url: that.$api+'default/movies-list',
 						method: 'GET',
 						dataType: "json",
 						header: {

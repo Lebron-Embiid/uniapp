@@ -35,7 +35,7 @@
 						<div class="p_img"><image :src="item.src" mode="widthFix"></image></div>
 						<view class="product_content">
 							<view class="product_title">{{item.title}}</view>
-							<view class="product_info">{{item.info}}</view>
+							<!-- <view class="product_info">{{item.info}}</view> -->
 							<view class="product_price">￥{{item.price}}<text>规格：{{item.format}}</text></view>
 						</view>
 					</view>
@@ -167,7 +167,7 @@
 				method: 'GET',
 				dataType: "json",
 				header: {
-					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
 					var article = [];
@@ -306,6 +306,7 @@
 						overflow: hidden;
 						text-overflow: ellipsis;
 						white-space: nowrap;
+						margin-bottom: 8upx;
 					}
 					.product_info{
 						overflow: hidden;
@@ -313,7 +314,7 @@
 						white-space: nowrap;
 						color: #7d7d7d;
 						font-size: 20upx;
-						margin: 5upx 0 8upx;
+						// margin: 5upx 0 8upx;
 					}
 					.product_price{
 						color: #00001f;
