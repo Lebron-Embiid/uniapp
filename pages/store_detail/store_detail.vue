@@ -232,16 +232,16 @@
 			},
 			selectFormat: function(id,sid,index,idx){
 				var that = this;
-				that.attr.push({
+				that.attr[index] = {
 					attr_group_id: that.buy_format[index].id,
 					attr_group_name: that.buy_format[index].name,
-					attr_id: that.buy_format[index].list[idx].id,
-					attr_name: that.buy_format[index].list[idx].name,
-				})
+					attr_id: that.buy_format[index].list[idx].attr_id,
+					attr_name: that.buy_format[index].list[idx].attr_name,
+				}
 				
 				that.buy_format[index].current = [index,idx];
 				var len = that.buy_format.length;
-				console.log(that.attr.length)
+				console.log(that.attr);
 				if(that.attr.length == len){
 					that.is_format = 0;
 				}

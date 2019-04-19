@@ -7,18 +7,8 @@
 			<view><image src="../../static/news_icon2.png" mode="widthFix"></image>{{date}}</view>
 		</view>
 		<view class="detail_content">
-			{{content}}
-			<!-- <view>法国时间1月20日，一辆承载初见之美的巴士在巴黎惊艳亮相。据悉，这辆由护肤品牌艾璐卡eloo Doca定制的“初见巴士”将环绕巴黎城一周，为冬日的巴黎带来一道
-亮丽的风景线，并以暖心互动活动，唤醒人们初见时刻的美好回忆和幸福感受。</view>
-			<image src="../../static/news_detail1.jpg" mode="widthFix"></image>
-			<view>一周前，艾璐卡重回品牌诞生地法国，开启为期一周的溯源探秘之旅。两位创始人一路考察了艾璐卡产品的原料产地、生产工厂和产品检测实验室等地，所有的足迹都见证
-了艾璐卡为美丽事业精益求精的初心和对产品品质的坚守。这次“初见巴士”在巴黎的亮相，让更多人认识艾璐卡、了解艾璐卡，更将艾璐卡的品牌影响力扩展至全世界。</view>
-			<image src="../../static/news_detail2.jpg" mode="widthFix"></image>
-			<view>艾璐卡“初见巴士”在环城巡游过程中，会不定时停靠巴黎街头与游客展开互动。车上的工作人员只从结伴而行的人群中挑选互动对象，这一神秘举动引发围观者好奇，许多
-人跃跃欲试，场面热烈。</view>
-			<image src="../../static/news_detail3.jpg" mode="widthFix"></image>
-			<view>艾璐卡用别出心裁的“初见巴士”，唤醒人们对“初见”的美丽回忆，也唤醒了人们对“初生美肌”的强烈渴求。秉承自然平衡美学理念的艾璐卡，一直致力于寻找天然、
-纯净、温和的美肤元素，采撷能焕发女性娇嫩肌肤的美丽能量，帮助肌肤恢复平衡，焕活肌肤初生之美，守护每一刻，都如初美丽。</view> -->
+			<u-parse :content="content"></u-parse>
+			<!-- {{content}} -->
 		</view>
 		<view class="page_ul">
 			<view class="page_left">
@@ -31,6 +21,7 @@
 </template>
 
 <script>
+	import uParse from '@/components/u-parse/u-parse.vue'
 	export default{
 		data(){
 			return{
@@ -40,6 +31,9 @@
 				content: "",
 				node_type: ""
 			}
+		},
+		components:{
+			uParse
 		},
 		methods:{
 			toShare: function(e){
@@ -141,7 +135,7 @@
 	}
 	.detail_content{
 		color: #252525;
-		font-size: 24upx;
+		font-size: 24upx !important;
 		image{
 			display: block;
 			max-width: 100%;

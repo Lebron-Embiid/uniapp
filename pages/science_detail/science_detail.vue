@@ -2,17 +2,21 @@
 	<view class="science_detail">
 		<view class="page_bg"></view>
 		<view class="si_question">{{question}}</view>
-		<view class="si_answer">{{answer}}</view>
+		<view class="si_answer"><u-parse :content="answer"></u-parse></view>
 	</view>
 </template>
 
 <script>
+	import uParse from '@/components/u-parse/u-parse.vue'
 	export default{
 		data(){
 			return{
 				question: "",
 				answer: ""
 			}
+		},
+		components:{
+			uParse
 		},
 		onLoad(opt) {
 			let that = this;
