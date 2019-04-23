@@ -1,2 +1,1 @@
-<import src="./video.vue.wxml" />
-    <template is="25e2cc83" data="{{ ...$root['0'], $root }}"/>
+<view class="video_box data-v-1a9f74b4" bind:__l="__l"><video id="myVideo" autoplay="true" direction="90" src="{{video}}" class="data-v-1a9f74b4"></video></view>

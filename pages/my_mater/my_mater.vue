@@ -71,7 +71,7 @@
 		onLoad(opt) {
 			var that = this;
 			uni.request({
-				url: that.$api+'&access_token='+that.$access_token,
+				url: that.$api+'user/topic-list&access_token='+that.$access_token,
 				method: 'GET',
 				dataType: "json",
 				header: {

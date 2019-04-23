@@ -217,11 +217,27 @@ uni-audio {
             box-sizing: border-box;
     border-radius: 10rpx;
 }
-.audio_list .audio_item image {
-      display: block;
+.audio_list .audio_item .audio_img {
+      position: relative;
       width: 269rpx;
       height: 269rpx !important;
       margin: 0 auto 50rpx;
+}
+.audio_list .audio_item .audio_img .cd_img {
+        display: block;
+        width: 269rpx;
+        height: 269rpx !important;
+}
+.audio_list .audio_item .audio_img .logo_img {
+        position: absolute;
+        width: 89rpx;
+        height: 89rpx !important;
+        border-radius: 50%;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
 }
 .audio_list .audio_item .ai_title {
       color: #00001f;

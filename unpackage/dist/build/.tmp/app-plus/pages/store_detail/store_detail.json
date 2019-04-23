@@ -1,7 +1,9 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "产品详情",
   "titleNView": {
     "type": "transparent"
+  },
+  "usingComponents": {
+    "common-swiper": "/components/common-swiper"
   }
 }

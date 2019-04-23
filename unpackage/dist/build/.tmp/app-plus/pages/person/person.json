@@ -1,6 +1,6 @@
 {
-  "usingComponents": {},
   "navigationStyle": "custom",
   "navigationBarTitleText": "",
-  "titleNView": false
+  "titleNView": false,
+  "usingComponents": {}
 }

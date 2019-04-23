@@ -82,24 +82,24 @@
 						var goods = [];
 						var item = res.data.data;
 						for(let i in item.list){
-							for(let j in item.list[i].goods_list){
-								goods.push({
-									id: item.list[i].goods_list[j].goods_id,
-									img: item.list[i].goods_list[j].goods_pic,
-									title: item.list[i].goods_list[j].goods_name,
-									// info: "提亮  修颜   均匀   遮瑕   持久   保湿 ",
-									type: item.list[i].goods_list[j].attr_list.attr_name,
-									price: item.list[i].goods_list[j].price,
-									num: item.list[i].goods_list[j].num,
-								})
-							}
+// 							for(let j in item.list[i].goods_list){
+// 								goods.push({
+// 									id: item.list[i].goods_list[j].goods_id,
+// 									img: item.list[i].goods_list[j].goods_pic,
+// 									title: item.list[i].goods_list[j].goods_name,
+// 									// info: "提亮  修颜   均匀   遮瑕   持久   保湿 ",
+// 									type: item.list[i].goods_list[j].attr_list,
+// 									price: item.list[i].goods_list[j].price,
+// 									num: item.list[i].goods_list[j].num,
+//  								})
+// 							}
 							orderList.push({
 								id: item.list[i].order_id,
 								order_no: item.list[i].order_no,
 								time: item.list[i].addtime,
 								status: !item.list[i].pay_type,
 								// statusText: "已完成",
-								goods: goods,
+								goods: item.list[i].goods_list,
 								pay: item.list[i].total_price,
 								finish: item.list[i].pay_type
 							})
@@ -127,24 +127,24 @@
 					var goods = [];
 					var item = res.data.data;
 					for(let i in item.list){
-						for(let j in item.list[i].goods_list){
-							goods.push({
-								id: item.list[i].goods_list[j].goods_id,
-								img: item.list[i].goods_list[j].goods_pic,
-								title: item.list[i].goods_list[j].goods_name,
-								info: "提亮  修颜   均匀   遮瑕   持久   保湿 ",
-								type: item.list[i].goods_list[j].attr_list.attr_name,
-								price: item.list[i].goods_list[j].price,
-								num: item.list[i].goods_list[j].num,
-							})
-						}
+// 						for(let j in item.list[i].goods_list){
+// 							goods.push({
+// 								id: item.list[i].goods_list[j].goods_id,
+// 								img: item.list[i].goods_list[j].goods_pic,
+// 								title: item.list[i].goods_list[j].goods_name,
+// 								info: "提亮  修颜   均匀   遮瑕   持久   保湿 ",
+// 								type: item.list[i].goods_list[j].attr_list,
+// 								price: item.list[i].goods_list[j].price,
+// 								num: item.list[i].goods_list[j].num,
+// 							})
+// 						}
 						orderList.push({
 							id: item.list[i].order_id,
 							order_no: item.list[i].order_no,
 							time: item.list[i].addtime,
 							status: !item.list[i].pay_type,
 							statusText: "已完成",
-							goods: goods,
+							goods: item.list[i].goods_list,
 							pay: item.list[i].total_price,
 							finish: item.list[i].pay_type
 						})

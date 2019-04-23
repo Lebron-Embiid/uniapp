@@ -1,2 +1,1 @@
-<import src="./my_mater.vue.wxml" />
-    <template is="611097ea" data="{{ ...$root['0'], $root }}"/>
+<view class="my_mater data-v-2096dce9" bind:__l="__l"><block wx:for="{{myMaterList}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view data-event-opts="{{[['tap',[['toMaterDetail',['$0'],[[['myMaterList','',index,'id']]]]]]]}}" class="my_item data-v-2096dce9" bindtap="__e"><image src="{{item.src}}" mode="widthFix" class="data-v-2096dce9"></image><view class="my_down data-v-2096dce9">{{"已有"+item.num+"人下载"}}</view></view></block><view class="page_bg data-v-2096dce9"></view></view>

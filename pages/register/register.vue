@@ -41,8 +41,10 @@
 <script>
 	var tha,js;
 	export default {
-		onLoad(){
-			
+		onLoad(t){
+			console.log(t)
+			var uid = t.uid;
+			console.log(uid)
 		},
 		onUnload(){
 			clearInterval(js)
@@ -51,6 +53,7 @@
 		data() {
 			return {
 				phoneno:'',
+				uid:'',
 				password:'',
 				code:'',
 				invitation:'',

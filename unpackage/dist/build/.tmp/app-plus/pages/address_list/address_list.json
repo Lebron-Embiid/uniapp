@@ -1,5 +1,4 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "收货地址",
   "titleNView": {
     "buttons": [
@@ -11,5 +10,6 @@
         "width": "auto"
       }
     ]
-  }
+  },
+  "usingComponents": {}
 }

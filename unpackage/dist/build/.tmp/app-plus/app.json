@@ -46,7 +46,6 @@
     "navigationBarBackgroundColor": "#00001f",
     "backgroundColor": "#FFFFFF"
   },
-  "usingComponents": {},
   "tabBar": {
     "color": "rgba(255,255,255,.7)",
     "selectedColor": "rgba(255,255,255,1)",
@@ -99,5 +98,6 @@
     "autoclose": true
   },
   "appname": "呦蓝",
-  "compilerVersion": "1.9.1"
+  "compilerVersion": "1.9.1",
+  "usingComponents": {}
 }

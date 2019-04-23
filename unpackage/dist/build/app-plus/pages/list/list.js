@@ -410,10 +410,10 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
-/***/ "./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue/dist/index.js":
-/*!**************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue/dist/index.js ***!
-  \**************************************************************************************************/
+/***/ "./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue-v8/dist/index.js":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue-v8/dist/index.js ***!
+  \*****************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -477,26 +477,13 @@ var promisify = function promisify(api) {
   };
 };
 
-var UNIAPP_LAUNCH_WEBVIEW_ID = '__UNIAPP_LAUNCH_WEBVIEW_ID';
-
 var plus = weex.requireModule('plus');
-var storage = weex.requireModule('plusstorage');
 var globalEvent = weex.requireModule('globalEvent');
 
 var id = 0;
 var callbacks = {};
 
-var WEBVIEW_ID = '';
-
-if (weex.config.plus_appid) {
-  WEBVIEW_ID = weex.config.plus_appid;
-} else {
-  storage && storage.getItem && storage.getItem(UNIAPP_LAUNCH_WEBVIEW_ID, function (evt) {
-    if (evt.result === 'success' && evt.data) {
-      WEBVIEW_ID = evt.data;
-    }
-  });
-}
+var UNIAPP_SERVICE_NVUE_ID = '__uniapp__service';
 
 globalEvent.addEventListener('plusMessage', function (e) {
   if (e.data.type === 'UniAppJsApi') {
@@ -504,18 +491,6 @@ globalEvent.addEventListener('plusMessage', function (e) {
   } else if (e.data.type === 'onNavigationBarButtonTap') {
     if (typeof onNavigationBarButtonTapCallback === 'function') {
       onNavigationBarButtonTapCallback(e.data.data);
-    }
-  } else if (e.data.type === 'onNavigationBarSearchInputChanged') {
-    if (typeof onNavigationBarSearchInputChangedCallback === 'function') {
-      onNavigationBarSearchInputChangedCallback(e.data.data);
-    }
-  } else if (e.data.type === 'onNavigationBarSearchInputConfirmed') {
-    if (typeof onNavigationBarSearchInputConfirmedCallback === 'function') {
-      onNavigationBarSearchInputConfirmedCallback(e.data.data);
-    }
-  } else if (e.data.type === 'onNavigationBarSearchInputClicked') {
-    if (typeof onNavigationBarSearchInputClickedCallback === 'function') {
-      onNavigationBarSearchInputClickedCallback(e.data.data);
     }
   }
 });
@@ -557,23 +532,15 @@ var publish = function publish(_ref) {
       params = _ref.params;
 
   callbacks[id] = createCallback(params, type);
-  if (WEBVIEW_ID) {
-    plus.postMessage({
-      id: id,
-      type: type,
-      params: params
-    }, WEBVIEW_ID);
-  } else {
-    console.error('launch webview id is not ready');
-  }
+  plus.postMessage({
+    id: id,
+    type: type,
+    params: params
+  }, UNIAPP_SERVICE_NVUE_ID);
 };
 
 function postMessage(data) {
-  if (WEBVIEW_ID) {
-    plus.postMessage(data, WEBVIEW_ID);
-  } else {
-    console.error('launch webview id is not ready');
-  }
+  plus.postMessage(data, UNIAPP_SERVICE_NVUE_ID);
 }
 
 var createPublish = function createPublish(name) {
@@ -587,20 +554,8 @@ var createPublish = function createPublish(name) {
 };
 
 var onNavigationBarButtonTapCallback = void 0;
-var onNavigationBarSearchInputChangedCallback = void 0;
-var onNavigationBarSearchInputConfirmedCallback = void 0;
-var onNavigationBarSearchInputClickedCallback = void 0;
 function onNavigationBarButtonTap(callback) {
   onNavigationBarButtonTapCallback = callback;
-}
-function onNavigationBarSearchInputChanged(callback) {
-  onNavigationBarSearchInputChangedCallback = callback;
-}
-function onNavigationBarSearchInputConfirmed(callback) {
-  onNavigationBarSearchInputConfirmedCallback = callback;
-}
-function onNavigationBarSearchInputClicked(callback) {
-  onNavigationBarSearchInputClickedCallback = callback;
 }
 
 function requireNativePlugin(pluginName) {
@@ -749,7 +704,7 @@ function request(_ref) {
   };
 }
 
-var storage$1 = weex.requireModule('plusstorage');
+var storage = weex.requireModule('plusstorage');
 var UNIAPP_STORAGE_DATA_TYPE = '__TYPE';
 
 function getStorage(_ref) {
@@ -759,10 +714,10 @@ function getStorage(_ref) {
       fail = _ref.fail,
       complete = _ref.complete;
 
-  storage$1.getItem(key + UNIAPP_STORAGE_DATA_TYPE, function (ret) {
+  storage.getItem(key + UNIAPP_STORAGE_DATA_TYPE, function (ret) {
     if (ret.result === 'success') {
       var dataType = ret.data;
-      storage$1.getItem(key, function (res) {
+      storage.getItem(key, function (res) {
         if (res.result === 'success') {
           var result = res.data;
           if (dataType && result) {
@@ -802,9 +757,9 @@ function setStorage(_ref2) {
     dataType = 'Object';
     data = JSON.stringify(data);
   }
-  storage$1.setItem(key, data, function (res) {
+  storage.setItem(key, data, function (res) {
     if (res.result === 'success') {
-      storage$1.setItem(key + UNIAPP_STORAGE_DATA_TYPE, dataType, function (ret) {
+      storage.setItem(key + UNIAPP_STORAGE_DATA_TYPE, dataType, function (ret) {
         if (ret.result === 'success') {
           isFn(success) && success({
             errMsg: 'setStorage:ok'
@@ -829,7 +784,7 @@ function removeStorage(_ref3) {
       fail = _ref3.fail,
       complete = _ref3.complete;
 
-  storage$1.removeItem(key, function (res) {
+  storage.removeItem(key, function (res) {
     if (res.result === 'success') {
       isFn(success) && success({
         errMsg: 'removeStorage:ok'
@@ -840,7 +795,7 @@ function removeStorage(_ref3) {
     }
     isFn(complete) && complete(res);
   });
-  storage$1.removeItem(key + UNIAPP_STORAGE_DATA_TYPE);
+  storage.removeItem(key + UNIAPP_STORAGE_DATA_TYPE);
 }
 
 function clearStorage(_ref4) {
@@ -979,15 +934,6 @@ if (typeof Proxy !== 'undefined') {
       if (name === 'onNavigationBarButtonTap') {
         return onNavigationBarButtonTap;
       }
-      if (name === 'onNavigationBarSearchInputChanged') {
-        return onNavigationBarSearchInputChanged;
-      }
-      if (name === 'onNavigationBarSearchInputConfirmed') {
-        return onNavigationBarSearchInputConfirmed;
-      }
-      if (name === 'onNavigationBarSearchInputClicked') {
-        return onNavigationBarSearchInputClicked;
-      }
       var method = api[name];
       if (!method) {
         method = createPublish(name);
@@ -1008,12 +954,6 @@ if (typeof Proxy !== 'undefined') {
   uni.requireNativePlugin = requireNativePlugin;
 
   uni.onNavigationBarButtonTap = onNavigationBarButtonTap;
-
-  uni.onNavigationBarSearchInputChanged = onNavigationBarSearchInputChanged;
-
-  uni.onNavigationBarSearchInputConfirmed = onNavigationBarSearchInputConfirmed;
-
-  uni.onNavigationBarSearchInputClicked = onNavigationBarSearchInputClicked;
 
   Object.keys(wx).forEach(function (name) {
     var method = api[name];
@@ -2253,7 +2193,7 @@ var dom = weex.requireModule('dom');var _default =
         this.refreshText = "下拉可以刷新";
       }
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue/dist/index.js */ "./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue/dist/index.js")["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue-v8/dist/index.js */ "./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue-v8/dist/index.js")["default"]))
 
 /***/ }),
 

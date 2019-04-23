@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "收货地址"
+  "navigationBarTitleText": "收货地址",
+  "usingComponents": {
+    "city-picker": "/components/citypicker/cityPicker"
+  }
 }

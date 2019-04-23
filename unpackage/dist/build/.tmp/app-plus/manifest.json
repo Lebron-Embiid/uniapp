@@ -11,7 +11,7 @@
     "code": "100"
   },
   "description": "uni-app",
-  "launch_path": "__uniappservice.html",
+  "launch_path": "__uniapptabbar.html",
   "developer": {
     "name": "",
     "email": "",
@@ -46,6 +46,7 @@
       "style": "light",
       "background": "#00001f"
     },
+    "usingComponents": true,
     "distribute": {
       "icons": {
         "ios": {
@@ -147,7 +148,14 @@
     },
     "uni-app": {
       "compilerVersion": "1.9.1",
-      "control": "webview"
+      "control": "v8"
+    },
+    "secondwebview": {
+      "id": "1",
+      "launch_path": "__uniappview.html",
+      "mode": "child",
+      "top": 0,
+      "bottom": 56
     }
   }
 }

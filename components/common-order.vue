@@ -6,12 +6,12 @@
 				<view><image src="../../static/clock.png" mode="widthFix"></image>{{item.time}}</view>
 				<!-- <text :class="[item.status?'active':'']">{{item.statusText}}</text> -->
 			</view>
-			<view class="order_info" @click="toOrderDetail(goods.id)" v-for="(goods,idx) in item.goods" :key="idx">
-				<view class="oi_left"><image :src="goods.img" mode="widthFix"></image></view>
+			<view class="order_info" @click="toOrderDetail(item.id)" v-for="(goods,idx) in item.goods" :key="idx">
+				<view class="oi_left"><image :src="goods.goods_pic" mode="widthFix"></image></view>
 				<view class="oi_center">
-					<view class="oi_title">{{goods.title}}</view>
-					<!-- <view class="oi_info">{{goods.info}}</view> -->
-					<view class="oi_type">规格：{{goods.type}}</view>
+					<view class="oi_title">{{goods.goods_name}}</view>
+					<view class="oi_info"><text v-for="(attr,idx) in goods.attr_list" :key="idx">{{attr.attr_group_name}}: {{attr.attr_name}}</text></view>
+					<!-- <view class="oi_type">规格：{{goods.type}}</view> -->
 				</view>
 				<view class="oi_right">
 					<view class="oi_price">￥{{goods.price}}</view>
@@ -98,6 +98,7 @@
 				});
 			},
 			toOrderDetail: function(e){
+				console.log(e)
 				uni.navigateTo({
 					url: "/pages/order_detail/order_detail?id="+e
 				})

@@ -41,7 +41,7 @@
 			<view class="fixed_top">
 				<view class="ft_img"><image :src="buy_img" mode="widthFix"></image></view>
 				<view class="ft_info">
-					<view class="fi_price">￥{{buy_price}}</view>
+					<view class="fi_price">￥{{price}}</view>
 					<view class="fi_save">库存{{buy_save}}</view>
 					<view class="fi_close" @click="hideFixed"><image src="../../static/close.png" mode="widthFix"></image></view>
 				</view>
@@ -197,7 +197,7 @@
 				goods_list.push({
 					goods_id: that.id,
 					num: that.buy_num,
-					attr: that.buy_format
+					attr: that.attr
 				})
 				that.mch_list.push({
 					mch_id: 0,
@@ -208,7 +208,7 @@
 					url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
 					method: 'POST',
 					data: {
-						mch_list: that.mch_list
+						mch_list: JSON.stringify(that.mch_list)
 					},
 					dataType: "json",
 					header: {
@@ -218,8 +218,20 @@
 						// if(res.data.code == 1){
 							uni.showToast({
 								title: res.data.msg,
-								icon: "success"
+								icon: "success",
+								duration:1000
 							})
+// 							var data = [];
+// 							data.push({
+// 								address: res.data.data.address,
+// 								level: res.data.data.level,
+// 								mch_list: res.data.data.mch_list
+// 							})
+							setTimeout(function(){
+								uni.navigateTo({
+									url: "/pages/account/account?data="+JSON.stringify(res.data.data)
+								})
+							},1000)
 						// }
 					},
 					fail: () => {
@@ -283,7 +295,7 @@
 			let that = this;
 			that.id = opt.id;
 			uni.request({
-				url: that.$api+'default/goods&id=1',
+				url: that.$api+'default/goods&id=1&access_token='+that.$access_token,
 				method: 'GET',
 				data: {
 					id: opt.id
@@ -312,6 +324,7 @@
 					that.swiperList = swiperList;
 					that.title = item.name;
 					that.price = item.price;
+					that.buy_save = item.num;
 					that.buy_format = formatList;
 					console.log(that.buy_format)
 				},

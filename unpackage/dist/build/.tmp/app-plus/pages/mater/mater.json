@@ -1,5 +1,4 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "素材",
   "titleNView": {
     "buttons": [
@@ -11,5 +10,8 @@
         "width": "auto"
       }
     ]
+  },
+  "usingComponents": {
+    "common-video": "/components/common-video"
   }
 }

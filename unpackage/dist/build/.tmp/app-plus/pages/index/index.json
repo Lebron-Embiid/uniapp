@@ -1,7 +1,11 @@
 {
-  "usingComponents": {},
   "navigationStyle": "custom",
   "navigationBarTitleText": "",
   "titleNView": false,
-  "softinputNavBar": "none"
+  "softinputNavBar": "none",
+  "usingComponents": {
+    "common-swiper": "/components/common-swiper",
+    "common-news": "/components/common-news",
+    "date": "/common/util"
+  }
 }

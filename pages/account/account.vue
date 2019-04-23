@@ -1,9 +1,18 @@
 <template>
 	<view class="account_box">
 		<view class="page_bg"></view>
-		<view class="acc_item borbom notop">
+		<view class="acc_item borbom notop" @click="toAddress" v-if="address == null || address == ''">
 			<text>请选择收货地址</text>
-			<view class="acc_right" @click="toAddress">
+			<view class="acc_right">
+				<image src="../../static/next.png" mode="widthFix"></image>
+			</view>
+		</view>
+		<view class="acc_item borbom notop default" @click="toAddress" v-else>
+			<view class="default_address">
+				<view class="oi_name">{{address.name}}<text>{{address.mobile}}</text></view>
+				<view class="oi_address"><image src="../../static/car_icon2.png" mode="widthFix"></image>{{address.province}}{{address.city}}{{address.district}}{{address.detail}}</view>
+			</view>
+			<view class="acc_right">
 				<image src="../../static/next.png" mode="widthFix"></image>
 			</view>
 		</view>
@@ -20,18 +29,18 @@
 		</view>
 		<view class="acc_content borbom">
 			<view class="content_item" v-for="(item,index) in accountList" :key="index">
-				<view class="ac_left"><image :src="item.img" mode="widthFix"></image></view>
+				<view class="ac_left"><image :src="item.goods_pic" mode="widthFix"></image></view>
 				<view class="ac_right">
-					<view class="ac_title">{{item.title}}</view>
-					<view class="ac_info">{{item.info}}</view>
-					<view class="ac_type"><text>x{{item.num}}</text><text>规格：{{item.type}}</text><text class="ac_price">￥{{item.price}}</text></view>
+					<view class="ac_title">{{item.goods_name}}</view>
+					<view class="ac_info"><text v-for="(attr,idx) in item.attr_list" :key="idx">{{attr.attr_group_name}}: {{attr.attr_name}}</text></view>
+					<view class="ac_type"><text>x{{item.num}}</text><text class="ac_price">￥{{item.price}}</text></view>
 				</view>
 			</view>
 		</view>
 		<view class="acc_item borbom">
 			<text>运费</text>
-			<view class="pr45">
-				在线支付
+			<view class="pr45" style="color: #fa3930;">
+				￥{{express_price}}
 				<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
 			</view>
 		</view>
@@ -50,8 +59,19 @@
 	export default{
 		data(){
 			return{
+				address: {
+					id: "",
+					name: "",
+					mobile: "",
+					province: "",
+					city: "",
+					district: "",
+					detail: "",
+					is_default: ""
+				},
 				array: ['在线支付', '货到付款'],
 				index: 0,
+				express_price: 0,
 				accountList:[
 					{
 						id: 1,
@@ -111,25 +131,29 @@
 			}
 		},
 		onLoad(opt) {
+			var data = JSON.parse(opt.data);
 			var that = this;
-			uni.request({
-				url: that.$api+'order/pay-data&order_id=3&access_token='+that.$access_token,
-				method: 'GET',
-				dataType: "json",
-				header: {
-					'content-type': 'application/x-www-form-urlencoded'
-				},
-				success: res => {
-					
-				},
-				fail: () => {
-					uni.showToast({
-						title: res.data.msg,
-						icon: 'none',
-						duration: 1500
-					})					
-				}
-			});			
+			that.address = data.address;
+			that.accountList = data.mch_list[0].goods_list;
+			that.express_price = data.mch_list[0].express_price;
+// 			uni.request({
+// 				url: that.$api+'order/pay-data&order_id=3&access_token='+that.$access_token,
+// 				method: 'GET',
+// 				dataType: "json",
+// 				header: {
+// 					'content-type': 'application/x-www-form-urlencoded'
+// 				},
+// 				success: res => {
+// 					
+// 				},
+// 				fail: () => {
+// 					uni.showToast({
+// 						title: res.data.msg,
+// 						icon: 'none',
+// 						duration: 1500
+// 					})					
+// 				}
+// 			});			
 		}
 	}
 </script>
@@ -192,12 +216,22 @@
 				.ac_title{
 					color: #1f1f1f;
 					font-size: 28upx;
-					margin: 10upx 0 5upx;
+					margin: 0 0 5upx;
+					overflow : hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 2;
+					-webkit-box-orient: vertical;
+					word-wrap: break-word;
+					word-break: break-all;
 				}
 				.ac_info,.ac_type{
 					color: #747474;
 					font-size: 22upx;
-					margin-bottom: 20upx;
+					margin-bottom: 10upx;
+					text{
+						margin-right: 10upx;
+					}
 				}
 				.ac_type{
 					margin-bottom: 0;
@@ -259,6 +293,31 @@
 			line-height: 95upx;
 			background: #fa3930;
 			text-align: center;
+		}
+	}
+	.default_address{
+		width: 100%;
+	}
+	.acc_item.default .acc_right{
+		width: 20%;
+	}
+	.oi_name{
+		color: #333;
+		font-size: 24upx;
+		margin-bottom: 20upx;
+		text{
+			margin-left: 25upx;
+		}
+	}
+	.oi_address{
+		color: #666;
+		font-size: 20upx;
+		image{
+			display: inline-block;
+			vertical-align: middle;
+			width: 37upx;
+			height: 29upx !important;
+			margin: 0 5upx 5upx 0;
 		}
 	}
 </style>

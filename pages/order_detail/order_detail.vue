@@ -5,50 +5,52 @@
 			<view class="ot_layer">
 				<view class="ot_word">
 					<view>订单状态：已发货</view>
-					<view>订单号：hyjf201811201621</view>
+					<view>订单号：{{orders.order_no}}</view>
+					<view>下单时间：{{orders.addtime}}</view>
 				</view>
 				<image src="../../static/car.png" mode="widthFix"></image>
 			</view>
 		</view>
 		<view class="order_info bb12">
-			<view class="order_next" @click="toLogistics(id)">
+			<!-- <view class="order_next" @click="toLogistics(id)"> -->
+			<view class="order_next" v-if="orders.express_no != ''">
 				<image src="../../static/car_icon1.png" class="icon" mode="widthFix"></image>
 				<view class="on_center">
-					<view class="oc_title">卖家已发货</view>
-					<view class="oc_time">2016-03-20 20:19:30</view>
+					<view class="oc_title">物流公司:{{orders.express}}</view>
+					<view class="oc_time">物流单号:{{orders.express_no}}</view>
 				</view>
-				<image src="../../static/next.png" class="next" mode="widthFix"></image>
+				<!-- <image src="../../static/next.png" class="next" mode="widthFix"></image> -->
 			</view>
-			<view class="oi_name">容景<text>137****0183</text></view>
-			<view class="oi_address"><image src="../../static/car_icon2.png" mode="widthFix"></image>深圳市龙岗区硅谷动力电子商务港6楼</view>
+			<view class="oi_name">{{orders.name}} <text>{{orders.mobile}} </text></view>
+			<view class="oi_address"><image src="../../static/car_icon2.png" mode="widthFix"></image>{{orders.address}} </view>
 		</view>
 		<view class="order_content bb12">
 			<view class="oc_remark">商品信息</view>
-			<view class="order_item" v-for="(item,index) in orders" :key="index">
-				<view class="oi_left"><image :src="item.img" mode="widthFix"></image></view>
+			<view class="order_item" v-for="(item,index) in orders.goods_list" :key="index">
+				<view class="oi_left"><image :src="item.goods_pic" mode="widthFix"></image></view>
 				<view class="oi_center">
-					<view class="oi_title">{{item.title}}</view>
-					<view class="oi_info">{{item.info}}</view>
-					<view class="oi_type">规格：{{item.type}}</view>
-				</view>
+					<view class="oi_title">{{item.name}}</view>
+					<view class="oi_info"><text v-for="(attr,idx) in item.attr" :key="idx">{{attr.attr_group_name}}: {{attr.attr_name}}</text></view>
+<!-- 					<view class="oi_type">规格：{{item.type}}</view>
+ -->				</view>
 				<view class="oi_right">
-					<view class="oi_price">￥{{item.price}}</view>
-					<view class="oi_num">x{{item.num}}</view>
+					<view class="oi_price">￥{{item.total_price}} <text class="oi_num">x{{item.num}}</text></view>
+					<!-- <view class="oi_num">x{{item.num}}</view> -->
 				</view>
 			</view>
 		</view>
-		<view class="order_mess bb12">
-			<view class="om_remark">订单信息</view>
-			<view class="om_item">配送方式：快递</view>
-			<view class="om_item">创建时间：2018-11-20 16:40:53</view>
-		</view>
+		<!-- <view class="order_mess bb12"> -->
+			<!-- <view class="om_remark">订单信息</view> -->
+			<!-- <view class="om_item">配送方式：快递</view> -->
+			<!-- <view class="om_item">创建时间：{{orders.addtime}}</view> -->
+		<!-- </view> -->
 		<view class="order_money">
-			<view class="money_item">商品总价<text>￥98</text></view>
-			<view class="money_item">配送费<text>￥0</text></view>
-			<view class="money_item">实付款<text class="red">￥98.00</text></view>
+			<view class="money_item">商品总价<text>￥{{orders.goods_total_price}}</text></view>
+			<view class="money_item">配送费<text>￥{{orders.express_price}}</text></view>
+			<view class="money_item">实付款<text class="red">￥{{orders.pay_price}}</text></view>
 			<view class="money_btn">
-				<button @click="toLogistics(id)">查看物流</button>
-				<button class="ok" @click="toConfirm(id)">确认收货</button>
+				<!-- <button @click="toLogistics(id)">查看物流</button> -->
+				<!-- <button class="ok" @click="toConfirm(id)">确认收货</button> -->
 			</view>
 		</view>
 	</view>
@@ -111,7 +113,28 @@
 		},
 		onLoad(opt) {
 			var that = this;
-			that.id = opt.id;
+			that.id = opt.id; 
+			uni.request({
+				url: that.$api+'order/detail&order_id='+that.id+'&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					var orders = res.data.data;
+					that.orders = orders;
+					console.log(that.orders)
+					 
+				},
+				fail: () => {
+					uni.showToast({
+						title: res.data.msg,
+						icon: 'none',
+						duration: 1500
+					})					
+				}
+			});
 		}
 	}
 </script>
@@ -145,10 +168,11 @@
 				}
 			}
 			image{
-				display: block;
+				// display: block;
 				width: 99upx;
 				height: 75upx !important;
 				margin-right: 25upx;
+				display: none;
 			}
 		}
 	}
@@ -160,21 +184,20 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			margin-bottom: 30upx;
 			.icon{
 				display: block;
 				width: 37upx;
 				height: 29upx !important;
 			}
 			.on_center{
-				width: 83%;
+				width: 90%;
 				font-size: 20upx;
 				.oc_title{
-					color: #fa3930;
+					color: #000;
 					margin-bottom: 5upx;
 				}
 				.oc_time{
-					color: #999;
+					color: #000;
 				}
 			}
 			.next{
@@ -186,7 +209,7 @@
 		.oi_name{
 			color: #333;
 			font-size: 24upx;
-			margin-bottom: 20upx;
+			margin: 30upx 0 20upx;
 			text{
 				margin-left: 25upx;
 			}
@@ -219,7 +242,7 @@
 			// border-bottom: 1px solid #F7F7F9;
 			.oi_left{
 				float: left;
-				margin-right: 30upx;
+				margin: 10upx 30upx 0 0;
 				width: 140upx;
 				height: 140upx;
 				border: 1px solid #EAEAEA;
@@ -231,32 +254,39 @@
 			}
 			.oi_center{
 				float: left;
-				width: 420upx;
+				width: 70%;
 				.oi_title{
 					color: #1f1f1f;
-					font-size: 28upx;
+					font-size: 26upx;
 					margin: 10upx 0 5upx;
+					overflow : hidden;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-line-clamp: 2;
+					-webkit-box-orient: vertical;
+					word-wrap: break-word;
+					word-break: break-all;
 				}
 				.oi_info,.oi_type{
 					color: #747474;
 					font-size: 22upx;
-					margin-bottom: 20upx;
+					margin-bottom: 10upx;
 				}
 				.oi_type{
 					margin-bottom: 0;
 				}
 			}
 			.oi_right{
-				float: right;
-				text-align: right;
+				// float: right;
 				.oi_price{
 					color: #797979;
 					font-size: 24upx;
 					margin: 10upx 0 6upx;
-				}
-				.oi_num{
-					color: #868686;
-					font-size: 20upx;
+					.oi_num{
+						float: right;
+						color: #868686;
+						font-size: 20upx;
+					}
 				}
 			}
 		}

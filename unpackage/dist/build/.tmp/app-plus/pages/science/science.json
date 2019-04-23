@@ -1,5 +1,4 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "呦蓝百科",
   "titleNView": {
     "buttons": [
@@ -11,5 +10,6 @@
         "width": "auto"
       }
     ]
-  }
+  },
+  "usingComponents": {}
 }

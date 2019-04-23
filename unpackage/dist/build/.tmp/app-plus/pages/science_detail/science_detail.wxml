@@ -1,2 +1,1 @@
-<import src="./science_detail.vue.wxml" />
-    <template is="2407100b" data="{{ ...$root['0'], $root }}"/>
+<view class="science_detail data-v-5ac07498" bind:__l="__l"><view class="page_bg data-v-5ac07498"></view><view class="si_question data-v-5ac07498">{{question}}</view><view class="si_answer data-v-5ac07498"><u-parse content="{{answer}}" class="data-v-5ac07498"></u-parse></view></view>
