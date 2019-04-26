@@ -10,7 +10,7 @@
 		</view>
 		<!-- 二级代理 -->
 		<view class="agent_list" v-show="currentTab == 1">
-			<commonAgent :agentList="agentList2"></commonAgent>				
+			<commonAgent :agentList="agentList1"></commonAgent>				
 		</view>
 	</view>
 </template>
@@ -20,24 +20,24 @@
 	export default{
 		data(){
 			return{
-				navbar:[{name:"一级代理",num: 8},{name:"二级代理",num: 5}],
+				navbar:[{name:"一级代理",num: 0},{name:"二级代理",num: 5}],
 				currentTab:0,
 				agentList1: [
 					{
-						id: 1,
-						avatar: "../../static/avatar1.png",
-						name: "小黄鸭",
-						time: "2019-03-26",
-						type: "天使代理"
+// 						id: 1,
+// 						avatar: "../../static/avatar1.png",
+// 						name: "小黄鸭",
+// 						time: "2019-03-26",
+// 						type: "天使代理"
 					}
 				],
 				agentList2: [
 					{
-						id: 2,
-						avatar: "../../static/avatar2.png",
-						name: "小黄鸭",
-						time: "2019-03-26",
-						type: "天使代理"
+// 						id: 2,
+// 						avatar: "../../static/avatar2.png",
+// 						name: "小黄鸭",
+// 						time: "2019-03-26",
+// 						type: "天使代理"
 					}
 				]
 			}
@@ -46,24 +46,52 @@
 			commonAgent
 		},
 		methods:{
-			navbarTap: function(e){
-				console.log(e)
+			navbarTap: function(e){ 
 				this.currentTab = e;
+				var that = this;
+				console.log(that.currentTab)
+				uni.request({
+					url: that.$api+'user/agent-list&access_token='+that.$access_token,
+					method: 'GET',
+					data:{level_id:that.currentTab},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						if(res.data.code == 0){
+							that.agentList1 = res.data.data.list;															
+							that.navbar[0].num	=  res.data.data.one_count;
+							that.navbar[1].num	=  res.data.data.tow_count;
+						}
+						console.log(that.navbar)
+						
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
 			}
 		},
 		onLoad(opt) {
 			var that = this;
 			uni.request({
-				url: that.$api+'&access_token='+that.$access_token,
+				url: that.$api+'user/agent-list&access_token='+that.$access_token,
 				method: 'GET',
+				data:{level_id:0},
 				dataType: "json",
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					if(res.data.code == 1){
-								
-					}
+					if(res.data.code == 0){
+						that.agentList1 = res.data.data.list;	
+						that.navbar[0].num	=  res.data.data.one_count;
+						that.navbar[1].num	=  res.data.data.tow_count;
+					} 					
 				},
 				fail: () => {
 					uni.showToast({
@@ -82,7 +110,7 @@
 		position: fixed;
 		width: 100%;
 		left: 0;
-		top: 0;
+		top: 44px;
 		z-index: 5;
 		display: flex;
 		justify-content: space-between;

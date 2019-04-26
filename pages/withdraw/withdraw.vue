@@ -34,7 +34,7 @@
 			return{
 				name: "",
 				username: "",
-				over_money: "",
+				over_money: "0",
 				money: ""
 			}
 		},
@@ -49,54 +49,41 @@
 				this.money = e.detail.value;
 			},
 			formSubmit: function(e){
+				console.log(this.money);
 				var that = this;
-				if(that.name == ""){
-					uni.showToast({
-						title: "请输入姓名！",
-						icon: "none"
-					})
-					return false;
-				}
-				if(that.username == ""){
-					uni.showToast({
-						title: "请输入账号！",
-						icon: "none"
-					})
-					return false;
-				}
-				if(that.money == ""){
-					uni.showToast({
-						title: "请输入提现金额！",
-						icon: "none"
-					})
-					return false;
-				}
 				uni.request({
-					url: that.$api+'share/get-price&access_token='+that.$access_token,
+					url: that.$api+'share/apply&access_token='+that.$access_token,
 					method: 'POST',
 					data:{
 						name: that.name,
 						mobile: that.username,
 						cash: that.money,
 						pay_type: 0,
+						form_id:'the formId is a mock one',
 					},
 					dataType: "json",
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						// if(res.data.code == 1){
+						if(res.data.code == 0){
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
 								duration: 1000
 							});
 							setTimeout(function(){
-								that.name = "";
-								that.username = "";
-								that.money = "";
+								 uni.switchTab({
+								 	url: "/pages/person/person"
+								 })
 							},1000)
-						// }
+						}else{
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+								duration: 1000
+							});
+						}
 					},
 					fail: () => {
 						uni.showToast({
@@ -110,6 +97,7 @@
 		onLoad(opt) {
 			var that = this;
 			that.over_money = opt.money;
+			
 		}
 	}
 </script>

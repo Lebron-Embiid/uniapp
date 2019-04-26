@@ -77,18 +77,11 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: function(res) {
-						// if(res.data.code == 1){
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none',
 								duration: 1500
 							})
-							setTimeout(function(){
-								that.username = "";
-								that.message = "";
-								that.phone = "";
-							},1500)
-						// }
 					},
 					fail:function(err){
 						uni.showToast({

@@ -3,11 +3,11 @@
 		<view class="agent_item" v-for="(item,index) in agentList" :key="index">
 			<view class="ai_left">
 				<image :src="item.avatar" mode="widthFix"></image>
-				<text>{{item.name}}</text>
+				<text>{{item.nickname}}</text>
 			</view>
 			<view class="ai_right">
-				<view class="ar_time">加入时间：{{item.time}}</view>
-				<view class="ar_type">{{item.type}}</view>
+				<view class="ar_time">加入时间：{{item.addtime}}</view>
+				<view class="ar_type">{{item.level_name}}</view>
 			</view>
 		</view>
 	</view>

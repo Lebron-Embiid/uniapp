@@ -33,7 +33,10 @@
 				<view class="ac_right">
 					<view class="ac_title">{{item.goods_name}}</view>
 					<view class="ac_info"><text v-for="(attr,idx) in item.attr_list" :key="idx">{{attr.attr_group_name}}: {{attr.attr_name}}</text></view>
-					<view class="ac_type"><text>x{{item.num}}</text><text class="ac_price">￥{{item.price}}</text></view>
+					<view class="ac_type"><text>x{{item.num}}</text>
+				        <!-- <text class="ac_price">￥{{item.price}}</text> -->
+				        <text class="ac_price">￥{{item.level_price}}</text> 					    
+					</view>
 				</view>
 			</view>
 		</view>
@@ -46,7 +49,7 @@
 		</view>
 		<view class="acc_mess borbom">
 			<view class="txt">给买家留言</view>
-			<input type="text" placeholder="请备注" value="" />
+			<input type="text" placeholder="请备注" name="content" @input="getMess" :value="content" />
 		</view>
 		<view class="fixed_account">
 			<view class="fa_left">总计：￥{{all}}</view>
@@ -69,6 +72,8 @@
 					detail: "",
 					is_default: ""
 				},
+				content:'',
+				cat_list : [],
 				array: ['在线支付', '货到付款'],
 				index: 0,
 				express_price: 0,
@@ -92,7 +97,10 @@
 						price: 138
 					}
 				],
-				all: 118
+				all: 118,
+				level_price:0,
+				total_price:0,
+				mch_list:[],
 			}
 		},
 		methods:{
@@ -105,24 +113,59 @@
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
 			},
+			getMess:function(e){
+				this.content = e.detail.value;
+			},
 			toSubmit: function(e){
 				var that = this;
-				uni.request({
+ 				that.mch_list[0].show = false;
+ 				that.mch_list[0].show_length = 0;
+ 				that.mch_list[0].offline = 0;
+  				that.mch_list[0].content = that.content,
+ 				uni.request({
 					url: that.$api+'order/new-submit&access_token='+that.$access_token,
 					method: 'POST',
 					data: {
-						
+						payment:0,
+						use_integral:1,
+						formId:undefined,
+						mch_list:JSON.stringify(that.mch_list)
 					},
 					dataType: "json",
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						
+						uni.showToast({
+							title:'提交成功',
+							icon: 'none',
+							duration: 1500
+						})	
+						//订单提交成功跳转
+// 						setTimeout(function(){
+// 							uni.request({
+// 								url: that.$api+'order/pay-data&access_token='+that.$access_token,
+// 								method: 'POST',
+// 								data: {
+// 									order_id:0, 
+// 									pay_type:"WECHAT_PAY",
+// 									parent_user_id:0,
+// 									condition:2,
+//                                  cat_list:that.cat_list
+// 								},
+// 								dataType: "json",
+// 								header: {
+// 									'content-type': 'application/x-www-form-urlencoded'
+// 								},
+// 								success: res => {
+// 									console.log(res)
+// 									},
+// 							})
+// 						},1000)
 					},
 					fail: () => {
 						uni.showToast({
-							title: res.data.msg,
+							title:'提交失败',
 							icon: 'none',
 							duration: 1500
 						})					
@@ -133,10 +176,17 @@
 		onLoad(opt) {
 			var data = JSON.parse(opt.data);
 			var that = this;
+			that.cat_list = opt.cat_list; 
+			console.log(that.cat_list)
 			that.address = data.address;
 			that.accountList = data.mch_list[0].goods_list;
+			that.mch_list = data.mch_list; 
+				console.log(that.mch_list)
 			that.express_price = data.mch_list[0].express_price;
-// 			uni.request({
+			that.level_price = data.mch_list[0].level_price;
+			that.total_price = data.mch_list[0].total_price;
+			that.all  = parseFloat(that.level_price)+parseFloat(that.express_price)
+ // 			uni.request({
 // 				url: that.$api+'order/pay-data&order_id=3&access_token='+that.$access_token,
 // 				method: 'GET',
 // 				dataType: "json",

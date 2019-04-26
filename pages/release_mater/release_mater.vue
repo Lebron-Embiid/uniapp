@@ -53,6 +53,12 @@
 // 							});
 // 							that.photos.push(res.tempFilePaths[i])
 // 						}
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
 					}
 				});
 			},

@@ -111,7 +111,8 @@
 // 					}
 				],
 				mch_list: [],
-				attr: []
+				attr: [],
+				attr_id: []
 			}
 		},
 		components:{
@@ -163,6 +164,7 @@
 					url: that.$api+'cart/add-cart&access_token='+that.$access_token,
 					method: 'POST',
 					data: {
+						cat_list: JSON.stringify(that.attr_id),
 						goods_id: that.id,
 						attr: JSON.stringify(that.attr),
 						num: that.buy_num
@@ -228,8 +230,8 @@
 // 								mch_list: res.data.data.mch_list
 // 							})
 							setTimeout(function(){
-								uni.navigateTo({
-									url: "/pages/account/account?data="+JSON.stringify(res.data.data)
+								uni.navigateTo({ 
+									url: "/pages/account/account?data="+JSON.stringify(res.data.data)+"&cat_list="+JSON.stringify(that.attr_id)
 								})
 							},1000)
 						// }
@@ -244,19 +246,55 @@
 			},
 			selectFormat: function(id,sid,index,idx){
 				var that = this;
+				let arr_id = [];
 				that.attr[index] = {
 					attr_group_id: that.buy_format[index].id,
 					attr_group_name: that.buy_format[index].name,
 					attr_id: that.buy_format[index].list[idx].attr_id,
 					attr_name: that.buy_format[index].list[idx].attr_name,
 				}
-				
-				that.buy_format[index].current = [index,idx];
+				that.attr_id[index] = that.attr[index].attr_id;							 
+ 				that.buy_format[index].current = [index,idx];
 				var len = that.buy_format.length;
-				console.log(that.attr);
-				if(that.attr.length == len){
+ 				if(that.attr.length == len){
 					that.is_format = 0;
-				}
+				} 
+               if(that.attr_id.length != that.buy_format.length || that.attr_id[0] == undefined){
+				   return false;
+			   } 
+				uni.request({
+					url: that.$api+'default/goods-attr-info&access_token='+that.$access_token,
+					method: 'GET',
+					data: {
+						attr_list: JSON.stringify(that.attr_id),
+						goods_id: that.id,
+ 					},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						// if(res.data.code == 1){
+							var data = res.data.data;
+							that.buy_save = data.num
+							if(data.pic != ''){
+								that.buy_img = data.pic
+							}
+							
+// 							uni.showToast({
+// 								title: res.data.msg,
+// 								icon: "success",
+// 								duration:1000
+// 							})
+						// }
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
 			},
 			minus_num: function(e){
 				this.buy_num--;
@@ -305,7 +343,6 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					console.log(res.data);
 					let swiperList = [];
 					let formatList = [];
 					let list = [];
@@ -326,8 +363,8 @@
 					that.price = item.price;
 					that.buy_save = item.num;
 					that.buy_format = formatList;
-					console.log(that.buy_format)
-				},
+					that.buy_img = that.swiperList[0];
+  				},
 				fail: err => {
 					uni.showToast({
 						title: JSON.stringify(err),

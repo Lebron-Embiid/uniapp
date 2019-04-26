@@ -6,7 +6,7 @@
 		</view>
 		<!-- 全部订单 -->
 		<view class="order_list">
-			<commonOrder :orderList="orderList"></commonOrder>
+			<commonOrder :orderList="orderList" :current="currentTab"></commonOrder>
 		</view>
 		<!-- 待付款 -->
 		<!-- <view class="order_list" v-show="currentTab == 1">
@@ -100,8 +100,12 @@
 								status: !item.list[i].pay_type,
 								// statusText: "已完成",
 								goods: item.list[i].goods_list,
-								pay: item.list[i].total_price,
-								finish: item.list[i].pay_type
+								pay: item.list[i].pay_price,
+								is_pay: item.list[i].is_pay,
+								is_send: item.list[i].is_send,
+								is_confirm: item.list[i].is_confirm,
+								is_comment: item.list[i].is_comment,
+								apply_delete: item.list[i].apply_delete
 							})
 						}
 						that.orderList = orderList;
@@ -114,7 +118,7 @@
 		},
 		onLoad: function(opt){
 			let that = this;
-			that.currentTab = opt.id;
+			that.currentTab = parseInt(opt.id);
 			uni.request({
 				url: that.$api+'order/list&status='+opt.id+'&access_token='+that.$access_token,
 				method: 'GET',
@@ -143,10 +147,15 @@
 							order_no: item.list[i].order_no,
 							time: item.list[i].addtime,
 							status: !item.list[i].pay_type,
-							statusText: "已完成",
+							// statusText: "已完成",
 							goods: item.list[i].goods_list,
 							pay: item.list[i].total_price,
-							finish: item.list[i].pay_type
+							// finish: item.list[i].pay_type,
+							is_pay: item.list[i].is_pay,
+							is_send: item.list[i].is_send,
+							is_confirm: item.list[i].is_confirm,
+							is_comment: item.list[i].is_comment,
+							apply_delete: item.list[i].apply_delete
 						})
 					}
 					that.orderList = orderList;

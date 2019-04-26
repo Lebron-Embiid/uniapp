@@ -53,13 +53,13 @@
 				<!-- <button class="ok" @click="toConfirm(id)">确认收货</button> -->
 			</view>
 		</view>
-	</view>
+	</view> 
 </template>
 
 <script>
 	export default{
 		data(){
-			return{
+			return{     
 				id: 1,
 				orders:[
 					{

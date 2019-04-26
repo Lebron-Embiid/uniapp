@@ -39,26 +39,77 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: function (res) {
-						that.avatar = res.tempFilePaths[0];
+ 						uni.uploadFile({
+							url: that.$api+'default/upload-image', //图片接口
+							filePath: res.tempFilePaths[0],
+							name: 'image',
+							success: (uploadFileRes) => {
+									var data = JSON.parse(uploadFileRes.data);
+  								if(data.code == 0){
+									console.log(44654);
+									that.avatar = data.data.url;
+ 								}else{
+									uni.showToast({
+										title:data.msg,
+										icon:'none',
+										duration: 1000
+									});
+								}
+								
+							}
+						});
 					}
 				});
 			},
 			formSubmit: function(e){
-				console.log(this.username);
+				 var that = this;
+				 uni.request({
+				 	url: that.$api+'user/setting-edit/&access_token='+that.$access_token,
+					data:{
+						nickname:that.username,
+						avatar_url:that.avatar
+					},
+				 	dataType: "json",
+				 	method: 'GET',
+				 	header: {
+				 		'content-type': 'application/x-www-form-urlencoded'
+				 	},
+				 	success: res => {
+ 				 		uni.showToast({
+				 			title:res.data.msg,
+				 			icon:'none',
+				 		});
+						if(res.data.code = 1){
+							setTimeout(function(){
+								 uni.switchTab({
+								 	url: "/pages/person/person"
+								 })
+							},1000)
+						}
+				 	},
+				 	fail: () => {
+				 		uni.showToast({
+				 			title:res.data.msg,
+				 			icon:'none',
+				 		});
+				 	}
+				 });
 			}
 		},
 		onLoad(opt) {
 			var that = this;
 			uni.request({
-				url: that.$api+'&access_token='+that.$access_token,
+				url: that.$api+'user/setting/&access_token='+that.$access_token,
 				dataType: "json",
 				method: 'GET',
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					if(res.data.code == 1){
-						
+					var data = res.data.data
+					if(res.data.code == 0){
+						that.username = data.nickname
+						that.avatar = data.avatar_url
 					}
 				},
 				fail: () => {

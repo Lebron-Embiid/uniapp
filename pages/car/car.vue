@@ -17,18 +17,18 @@
 							<!-- 勾选 -->
 							<view style="width: 10%;height: 100%;background-color: #FFFFFF;">
 								<!-- 勾选 -->
-								<view class="glance-shop-cart-scrollx-items-item-sel" :class="[ item.id > 0 ? 'glance-shop-cart-itemselected-img':'glance-shop-cart-itemunselected-img']" @click="clickitemselected(item.id)"></view>
+								<view class="glance-shop-cart-scrollx-items-item-sel" :class="[ item.id > 0 ? 'glance-shop-cart-itemselected-img':'glance-shop-cart-itemunselected-img']" @click="clickitemselected(item.id,index)"></view>
 							</view>
 							<!-- 图片 -->
 							<view style="width: 25%;height: 100%;text-align:center;">
-								<image src="../../static/store_img1.jpg" mode="scaleToFill" style="height: 75px;width: 75px;line-height: 80px;padding-top: 5px;" @click="clickitemhref(item.id)"></image>
+								<image :src="item.imgsrc" mode="scaleToFill" style="height: 75px;width: 75px;line-height: 80px;padding-top: 5px;" @click="clickitemhref(item.goods_id)"></image>
 							</view>
 							<!-- 描述 -->
 							<view class="glance-shop-cart-items-item-des">
 								<!-- 名称 -->
-								<view class="sigle-line-text" style="color: #1f1f1f;font-size: 28upx;height: 33.33%;text-align: left;" @click="clickitemhref(item.id)">{{ item.name }}</view>
+								<view class="sigle-line-text" style="color: #1f1f1f;font-size: 28upx;height: 33.33%;text-align: left;" @click="clickitemhref(item.goods_id)">{{ item.name }}</view>
 								<!-- 属性 -->
-								<view class="sigle-line-text" style="color: #747474;font-size: 22upx;height: 33.33%;text-align: left;" @click="clickitemhref(item.id)">规格：{{ item.type }}</view>
+								<view class="sigle-line-text" style="color: #747474;font-size: 22upx;height: 33.33%;text-align: left;" @click="clickitemhref(item.goods_id)"><text style="margin-right: 10upx;" v-for="(attr,idx) in item.attr_list" :key="idx">{{attr.attr_group_name}}: {{attr.attr_name}}</text></view>
 								<!-- 价格 & 数量-->
 								<view class="glance-shop-cart-items-item-pq">
 									<view class="sigle-line-text1" style="color: #fa3930;font-size: 26upx;text-align: left;width: 50%;">￥{{item.price}}</view>
@@ -80,10 +80,14 @@
 				scrollposition:0,
 				// 实际项目中 购物车数据可从本地缓存中获取或从服务端获取
 				cart:[],
+				mch_list:[],
 				// 订单商品 购物车里已选择的商品生成订单
 				ordercart:[],
 				// 购买更多
 				buymore:[],
+				list:[],
+				goods_list:[],
+				index: [],
 				// 为您推荐的商品
 				itemrecommend:[],
 				// 合计金额
@@ -116,28 +120,38 @@
 				success: res => {
 					var carList = [];
 					var item = res.data.data.list;
+					that.list = res.data.data.list; 
+					for(let i in that.list){
+						that.list[i].checked = true
+					}
+					console.log(that.list)
 					for(let i in item){
 						carList.push({
 							id: item[i].cart_id,
+							goods_id: item[i].goods_id,
 							name: item[i].goods_name,
 							imgsrc: item[i].goods_pic,
 							// attributes:'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
 							quantity: item[i].num,
 							price: item[i].price,
-							type:'6.8ml'
+							attr_list:item[i].attr_list
 						})
 					}
 					that.cart = carList;
 					
-					// 默认勾选购物车所有商品 合计金额 合计数量
+ 					// 默认勾选购物车所有商品 合计金额 合计数量
 					for (let i = 0; i < that.cart.length; i++) {
 							// 总金额 
 							that.totalamount = that.totalamount + that.cart[i].price * that.cart[i].quantity
 							// 总数量
-							that.cntitems = that.cntitems + that.cart[i].quantity
+							that.cntitems = that.cntitems + that.cart[i].quantity;
+							that.index.push(i)
+							that.goods_list.push({
+								cart_id:that.cart[i].id
+							})
 					}
 					that.totalamount = that.fmamount(that.totalamount)
-					
+					console.log(that.goods_list)
 					if(that.cart.length == 0){
 						that.shownullcart = true;
 					}else{
@@ -241,13 +255,16 @@
 				}
 			},
 			// 点击勾选
-			clickitemselected(id){
-				if (this.cart){
+			clickitemselected(id,idx){
+				console.log(this.cart[idx]); 
+ 				if (this.cart){
 					for (var i = 0; i < this.cart.length; i++) {
 							if (this.cart[i].id == id){
 								this.cart[i].id = - this.cart[i].id
 								// 累计总金额和总数量 勾选时加
 								if (this.isselected(this.cart[i].id)){
+									
+									this.index.push(idx)
 									// 更新总数量
 									this.cntitems = this.cntitems + this.cart[i].quantity
 									// 更新总金额
@@ -257,8 +274,12 @@
 									if (this._isselectedall()){
 										this.isselectedall = true
 									}
-								}else{
-									// 取消勾选时减
+								}else{									
+									for(let i=0; i<this.index.length; i++) {
+										this.index.splice(i, 1);
+									}
+									console.log(this.index)
+ 									// 取消勾选时减
 									// 更新总数量
 									this.cntitems = this.cntitems - this.cart[i].quantity
 									// 更新总金额
@@ -341,6 +362,8 @@
 						if ((this.cart[i].id == itemid) && (this.cart[i].quantity > 0)) {
 							// 更新item数量
 							this.cart[i].quantity = this.cart[i].quantity - 1
+							this.list[i].num = this.cart[i].quantity
+							console.log(this.list[i].num)
 							// 勾选状态下更新数量和金额
 							if (this.isselected(this.cart[i].id)){
 								// 更新总数量
@@ -363,6 +386,8 @@
 						if ((this.cart[i].id == itemid) && (this.cart[i].quantity < 100)){
 							// 更新item数量
 							this.cart[i].quantity = this.cart[i].quantity +1
+							this.list[i].num = this.cart[i].quantity
+							console.log(this.list[i].num)
 							// 勾选状态下更新数量和金额
 							if (this.isselected(this.cart[i].id)){
 								// 更新总数量
@@ -454,6 +479,8 @@
 			// 生成订单
 			createorder(){
 				var that = this;
+				// console.log(that.list)
+				// console.log(JSON.parse(that.list[1]))
 				// 合计金额大于0 创建订单
 				if (that.totalamount == 0){
 					uni.showModal({
@@ -467,31 +494,63 @@
 								//这里的item 是下单的
 								
 							}
+					} 
+					 for (let i = 0; i < that.index.length; i++) {
+						 console.log(that.list[i])
+						 console.log(1111)
+						uni.request({
+							url: that.$api+'cart/cart-edit&access_token='+that.$access_token,
+							method: 'POST',
+							data: {
+								list: JSON.stringify([that.list[i]]),
+								mch_list:JSON.stringify([])
+							},
+							dataType: "json",
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							success: res => {
+								 console.log(res)
+								 if(res.data.code == 0){
+									  that.goods_list[i].cart_id = that.list[i].cart_id									  
+								 }
+								if(i == that.index.length-1){
+									that.mch_list.push({
+										mch_id: 0,
+										goods_list: that.goods_list, 
+									})
+ 									console.log(2222)
+ 									console.log(that.goods_list)
+ 									console.log(11111)
+ 									console.log(that.mch_list)
+									uni.request({
+										url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
+										method: 'POST',
+										data: {
+											mch_list:JSON.stringify(that.mch_list)
+										},
+										dataType: "json",
+										header: {
+											'content-type': 'application/x-www-form-urlencoded'
+										},
+										success: res => {
+											 console.log(res)
+											 	setTimeout(function(){
+											 		uni.navigateTo({ 
+											 			url: "/pages/account/account?data="+JSON.stringify(res.data.data)
+											 		})
+											 	},1000)					
+										},						
+									});	
+								}
+							},						
+						});	
 					}
-					uni.request({
-						url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
-						method: 'POST',
-						data: {
-							goods_list: that.cart
-						},
-						dataType: "json",
-						header: {
-							'content-type': 'application/x-www-form-urlencoded'
-						},
-						success: res => {
+					
 							
-						},
-						fail: () => {
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none',
-								duration: 1500
-							})					
-						}
-					});	
-					uni.navigateTo({
-						url: "/pages/account/account"
-					})
+// 					uni.navigateTo({
+// 						url: "/pages/account/account"
+// 					})
 					// 2、生成订单成功后 删除购物车内已生成订单的商品
 				}
 			}

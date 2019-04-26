@@ -12,7 +12,12 @@
 				code_bg: "../../static/tuiguang_bg.jpg",
 				code_img: "../../static/code_img.jpg"
 			}
-		}
+		},
+		
+		onLoad: function(opt){ 
+			this.code_img = opt.code
+			console.log(opt)
+ 		}
 	}
 </script>
 

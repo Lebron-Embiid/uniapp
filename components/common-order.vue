@@ -21,18 +21,15 @@
 			<view class="order_bottom">
 				<view class="ob_price"><view>商品实付：<text>￥{{item.pay}}</text></view></view>
 				<view class="ob_btn">
-					<block v-if="item.finish == 0">
+					<block v-if="item.is_pay == 0 && current == 0">
 						<button @click="toCancle(item.id)">取消订单</button>
 						<button @click="toPay(item.id)">去支付</button>
 					</block>
-					<block v-else-if="item.finish == 1">
-						<button @click="toOrderDetail(item.id)">产品详情</button>
-					</block>
-					<block v-else-if="item.finish == 2">
-						<button @click="toOrderDetail(item.id)">产品详情</button>
-					</block>
-					<block v-else-if="item.finish == 3">
+					<block v-if="item.is_send == 1 && current == 2">
 						<button @click="queryOrder(item.id)">确认收货</button>
+					</block>
+					<block v-if="item.is_comment == 0 && current == 3">
+						<button @click="toOrderDetail(item.id)">评价</button>
 					</block>
 				</view>
 			</view>
@@ -48,6 +45,7 @@
 			}
 		},
 		props:{
+			current: Number,
 			orderList: Array
 		},
 		methods:{
@@ -87,13 +85,19 @@
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
-						});
+						}); 
+						setTimeout(function(){
+							 uni.redirectTo({
+							 	url: "/pages/my_order/my_order?id="+that.current
+							 })
+						},1000)
 					},
 					fail: () => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
 						});
+						
 					}
 				});
 			},
@@ -104,7 +108,34 @@
 				})
 			},
 			queryOrder: function(e){
-				
+				var that = this;
+				console.log(e)
+				uni.request({
+					url: that.$api+'order/confirm&order_id='+e+'&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						}); 
+						setTimeout(function(){
+							 uni.redirectTo({
+							 	url: "/pages/my_order/my_order?id="+that.current
+							 })
+						},1000)
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+						
+					}
+				});
 			}
 		}
 	}

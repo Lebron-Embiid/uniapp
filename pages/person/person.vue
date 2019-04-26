@@ -13,28 +13,29 @@
 			</view>
 			<view class="person_layer">
 				<view class="settings" @click="toSettings"><image src="../../static/settings.png" mode="widthFix"></image></view>
-				<view class="person_avatar"><image src="../../static/person_avatar.png" mode="widthFix"></image></view>
-				<view class="person_name">Eason</view>
+				<view class="person_avatar"><image :src="avatar_url" mode="widthFix"></image></view>
+				<view class="person_name">{{nickname}}</view>
 			</view>
 		</view>
 		<view class="nav_box">
 			<view class="nav_item radius">
-				<navigator class="navigator" url="../my_order/my_order?id=-1">我的订单<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<view class="navigator">我的订单</view>
+				<!-- <navigator class="navigator" url="../my_order/my_order?id=-1">我的订单<image src="../../static/next.png" mode="widthFix"></image></navigator> -->
 			</view>
 			<view class="order_box">
-				<view class="order_item"><navigator url="../my_order/my_order?id=0"><image src="../../static/order_icon1.png" mode="widthFix"></image>待付款</navigator></view>
-				<view class="order_item"><navigator url="../my_order/my_order?id=1"><image src="../../static/order_icon2.png" mode="widthFix"></image>待发货</navigator></view>
-				<view class="order_item"><navigator url="../my_order/my_order?id=2"><image src="../../static/order_icon3.png" mode="widthFix"></image>待收货</navigator></view>
+				<view class="order_item"><navigator url="../my_order/my_order?id=0"><image src="../../static/order_icon1.png" mode="widthFix"></image>待付款<view v-if="status_0 != 0">{{status_0}}</view></navigator></view>
+				<view class="order_item"><navigator url="../my_order/my_order?id=1"><image src="../../static/order_icon2.png" mode="widthFix"></image>待发货<view v-if="status_1 != 0">{{status_1}}</view></navigator></view>
+				<view class="order_item"><navigator url="../my_order/my_order?id=2"><image src="../../static/order_icon3.png" mode="widthFix"></image>待收货<view v-if="status_2 != 0">{{status_2}}</view></navigator></view>
 				<view class="order_item"><navigator url="../my_order/my_order?id=3"><image src="../../static/order_icon4.png" mode="widthFix"></image>已完成</navigator></view>
 			</view>
 			<view class="nav_item">
-				<navigator class="navigator" url="/pages/wallet/wallet">我的钱包<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" :url="'/pages/wallet/wallet?money='+money">我的钱包<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/my_agent/my_agent">我的代理<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
-				<navigator class="navigator" url="/pages/my_promotion/my_promotion">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" :url="'/pages/my_promotion/my_promotion?code='+code">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/car/car">我的购物车<image src="../../static/next.png" mode="widthFix"></image></navigator>
@@ -56,7 +57,16 @@
 	export default{
 		data(){
 			return{
-				
+				code:'',
+				id:'',
+				avatar_url:'',
+				money:0,
+				nickname:'',
+				orders:[],
+				status_0:0,
+				status_1:0,
+				status_2:0,
+				status_3:0,
 			}
 		},
 		methods:{
@@ -76,7 +86,17 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					
+					var data = res.data.data;
+					that.code = data.user_info.code,
+					that.id = data.user_info.id,
+					that.avatar_url = data.user_info.avatar_url,
+					that.money = data.user_info.money,
+					that.nickname = data.user_info.nickname,
+					that.orders = data.orders,
+					that.status_0 = data.order_count.status_0,
+					that.status_1 = data.order_count.status_1,
+					that.status_2 = data.order_count.status_2,
+					that.status_3 = data.order_count.status_3
 				},
 				fail: () => {
 					uni.showToast({
@@ -199,6 +219,21 @@
 			display: block;
 			padding: 30upx;
 			box-sizing: border-box;
+			position: relative;
+			view{
+				position: absolute;
+				right: 20upx;
+				top: 20upx;
+				display: block;
+				width: 30upx;
+				height: 30upx;
+				line-height: 30upx;
+				background: #f00;
+				border-radius: 50%;
+				color: #fff;
+				font-size: 10upx;
+				text-align: center;
+			}
 			image{
 				display: block;
 				width: 50upx;
