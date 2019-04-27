@@ -7,10 +7,10 @@
 				<textarea @input="getProblem" :value="problem" name="problem" maxlength="-1" placeholder="请把您的问题留给我们，我们会提供让您满意的答复~~" />
 			</view>
 			<view class="section">
-				<input @input="getUsername" type="text" name="username" :value="username" placeholder="称呼" />
+				<input @input="getUsername" type="text" name="username" :value="username" placeholder="请输入你的称呼" />
 			</view>
 			<view class="section">
-				<input @input="getPhone" type="text" name="phone" maxlength="11" :value="phone" placeholder="联系方式" />
+				<input @input="getPhone" type="number" name="phone" maxlength="11" :value="phone" placeholder="请输入你的手机联系方式" />
 			</view>
 			<view class="btn-area">
 				<button formType="submit">提交留言</button>
@@ -56,7 +56,7 @@
 					})
 					return false;
 				}
-				if(that.phone == ""){
+				if(that.phone == "" || that.phone.length !=11){
 					uni.showToast({
 						title: "请填写联系方式！",
 						icon: 'none',
@@ -64,6 +64,8 @@
 					})
 					return false;
 				}
+				 
+				
 				uni.request({
 					url: that.$api+'default/article-message&access_token='+that.$access_token,
 					data: {
@@ -78,18 +80,18 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: function(res) {
-						// if(res.data.code == 1){
+						if(res.data.code == 0){
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none',
 								duration: 1500
 							})
 							setTimeout(function(){
-								that.username = "";
-								that.problem = "";
-								that.phone = "";
+								 uni.navigateTo({ 
+								 	url: "/pages/science/science"
+								 })
 							},1500)
-						// }
+						}
 					},
 					fail:function(err){
 						uni.showToast({

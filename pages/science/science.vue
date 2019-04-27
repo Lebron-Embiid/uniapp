@@ -3,7 +3,7 @@
 		<view class="page_bg"></view>
 		<view class="form_top">
 			<form @click="toSearch" class="form_box">
-				<input type="text" placeholder="请输入您要搜索的关键词" value="" />
+				<input @input="getKeyword" type="text" placeholder="请输入您要搜索的关键词" value="" />
 				<button><image src="../../static/search.png" mode=""></image></button>
 			</form>
 		</view>
@@ -13,10 +13,12 @@
 				<view class="si_answer"><text>答：</text><view>{{item.answer}}</view></view>
 			</view>
 		</view>
+		<!-- <block v-if="science_list != ''">
 		<view class="page_box">
 			<view class="page_btn prev">上一页</view>
 			<view class="page_btn next">上一页</view>
 		</view>
+		</block> -->
 	</view>
 </template>
 
@@ -24,19 +26,51 @@
 	export default{
 		data(){
 			return{
+				page_count:1,
+				page:1,
+				keyword:'',
 				science_list:[
 					
 				]
 			}
 		},
 		methods:{
+			getKeyword: function(e){
+				this.keyword = e.detail.value;
+			},
 			toDetail: function(res,idx){
 				uni.navigateTo({
 					url: "/pages/science_detail/science_detail?id="+res.id
 				})
 			},
 			toSearch: function(e){
-				
+				var that = this;
+				console.log(that.keyword)
+				uni.request({
+					url: that.$api+'default/article-list&page=1&cat_id=3',
+					method: 'GET',
+					data:{keyword:that.keyword},
+					dataType: "json",
+					success: res => {
+						var science_list = [];
+						for(var i in res.data.data.list){
+							var item = res.data.data.list;
+							science_list.push({
+								id: item[i].id,
+								question: item[i].title,
+								answer: item[i].describe
+							})
+						}
+						that.science_list = science_list;
+					},
+					fail: () => {
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})
+					}
+				});
 			}
 		},
 		onNavigationBarButtonTap: function(){
@@ -59,7 +93,46 @@
 							answer: item[i].describe
 						})
 					}
+					that.page_count = res.data.data.page_count;
 					that.science_list = science_list;
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+				}
+			});
+		},
+		//上拉触底
+		onReachBottom(){
+			let that = this;
+			if(that.page == that.page_count){
+			   uni.showToast({
+				title:"没有更多数据了",
+				icon:'none',
+			   });
+			   return false;
+			}
+			if(that.page)
+		   that.page = parseInt(that.page)+parseInt(1)	
+			uni.request({
+				url: that.$api+'default/article-list&cat_id=3',
+				method: 'GET',
+				data:{page:that.page,keyword:that.keyword},
+				success: res => {
+					let news_list = [];
+					for(let i in res.data.data.list){
+						let item = res.data.data.list;
+						news_list.push({
+							id: item[i].id,
+							question: item[i].title,
+							answer: item[i].describe							
+						})
+					}
+					that.science_list = that.science_list.concat(news_list)
+					  console.log(that.science_list) 
 				},
 				fail: () => {
 					uni.showToast({

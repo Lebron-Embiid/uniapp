@@ -20,6 +20,10 @@
 	export default{
 		data(){
 			return{
+				page_one:1,
+				page_one_count:1,
+				page_tow:1,
+				page_tow_count:1,
 				navbar:[{name:"一级代理",num: 0},{name:"二级代理",num: 5}],
 				currentTab:0,
 				agentList1: [
@@ -59,12 +63,16 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						if(res.data.code == 0){
-							that.agentList1 = res.data.data.list;															
-							that.navbar[0].num	=  res.data.data.one_count;
-							that.navbar[1].num	=  res.data.data.tow_count;
+						// if(res.data.code == 0){
+							that.agentList1 = res.data.data.data.list;		 
+						// }
+						if(that.currentTab == 0){						
+							that.page_one_count = res.data.data.data.page_count;	
+						}else{							
+							that.page_tow_count = res.data.data.data.page_count;	
 						}
-						console.log(that.navbar)
+						console.log(1111)
+						console.log(that.agentList1)
 						
 					},
 					fail: () => {
@@ -87,17 +95,72 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					if(res.data.code == 0){
-						that.agentList1 = res.data.data.list;	
+					// if(res.data.code == 0){
+						that.agentList1 = res.data.data.data.list;	
+						that.page_one_count = res.data.data.data.page_count;	
 						that.navbar[0].num	=  res.data.data.one_count;
 						that.navbar[1].num	=  res.data.data.tow_count;
-					} 					
+					// } 	
+						console.log(1111)
+						console.log(that.agentList1)
+						console.log(that.page_one_count)
+									
 				},
 				fail: () => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',
 					});
+				}
+			});
+		},
+		
+		//上拉触底
+		onReachBottom(){
+			let that = this;
+			if(that.currentTab == 0){
+				if(that.page_one == that.page_one_count){
+				   uni.showToast({
+					title:"没有更多数据了",
+					icon:'none',
+				   });
+				   return false;
+				}
+				 that.page_one = parseInt(that.page_one)+parseInt(1)	
+				 var page = that.page_one
+			}else{
+				if(that.page_tow == that.page_tow_count){
+				   uni.showToast({
+					title:"没有更多数据了",
+					icon:'none',
+				   });
+				   return false;
+				}
+				 that.page_tow = parseInt(that.page_tow)+parseInt(1)	
+				 var page = that.page_tow
+			} 
+			
+			 
+		  
+			uni.request({
+				url: that.$api+'user/agent-list&access_token='+that.$access_token,
+				method: 'GET',
+				data:{page:page,level_id:that.currentTab},
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					let agentList1 = res.data.data.data.list; 	 
+					that.agentList1 = that.agentList1.concat(agentList1)
+					  console.log(that.agentList1) 
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
 				}
 			});
 		}

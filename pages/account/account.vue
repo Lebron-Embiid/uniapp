@@ -104,11 +104,17 @@
 			}
 		},
 		methods:{
-			toAddress: function(e){
+			toAddress: function(){ 
+				console.log(JSON.stringify(this.mch_list))
 				uni.navigateTo({
-					url: "/pages/address_list/address_list"
+					url: "/pages/address_list/address_list?mch_list="+JSON.stringify(this.mch_list)
 				})
 			},
+// 			toAddress: function(e){
+// 				uni.navigateTo({
+// 					url: "/pages/address_list/address_list"
+// 				})
+// 			},
 			bindPickerChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
@@ -136,32 +142,44 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
+						console.log(res.data)
 						uni.showToast({
 							title:'提交成功',
 							icon: 'none',
 							duration: 1500
 						})	
-						//订单提交成功跳转
-// 						setTimeout(function(){
-// 							uni.request({
-// 								url: that.$api+'order/pay-data&access_token='+that.$access_token,
-// 								method: 'POST',
-// 								data: {
-// 									order_id:0, 
-// 									pay_type:"WECHAT_PAY",
-// 									parent_user_id:0,
-// 									condition:2,
-//                                  cat_list:that.cat_list
-// 								},
-// 								dataType: "json",
-// 								header: {
-// 									'content-type': 'application/x-www-form-urlencoded'
-// 								},
-// 								success: res => {
-// 									console.log(res)
-// 									},
-// 							})
-// 						},1000)
+						if(that.all < 10000){
+							//订单提交成功跳转
+							setTimeout(function(){
+								uni.request({
+									url: that.$api+'order/pay-data&access_token='+that.$access_token,
+									method: 'GET',
+									data: {
+										order_id:res.data.data.order_id, 
+										pay_type:'WECHAT_PAY',
+										parent_user_id:0,
+										condition:2,
+							            cat_list:that.cat_list
+									},
+									dataType: "json",
+									header: {
+										'content-type': 'application/x-www-form-urlencoded'
+									},
+									success: res => {
+										uni.showToast({
+											title:res.msg,
+											icon: 'none',
+											duration: 1500
+										})	
+									},
+								})
+							},1000)
+						}else{
+							 uni.navigateTo({ 
+							 	// url: "/pages/information/information"
+							 })
+						}
+						
 					},
 					fail: () => {
 						uni.showToast({
@@ -176,8 +194,7 @@
 		onLoad(opt) {
 			var data = JSON.parse(opt.data);
 			var that = this;
-			that.cat_list = opt.cat_list; 
-			console.log(that.cat_list)
+			that.cat_list = opt.cat_list;  
 			that.address = data.address;
 			that.accountList = data.mch_list[0].goods_list;
 			that.mch_list = data.mch_list; 

@@ -28,9 +28,16 @@
 				<input type="text" name="address" :value="detail" @input="getDetail" />
 			</view>
 		</view>
-		<view class="fixed_save" @click="saveAddress">
-			<button>保存</button>
-		</view>
+		<block v-if="id == 0">
+			<view class="fixed_save" @click="addAddress">
+				<button>保存</button>
+			</view>
+		</block>
+		<block v-else>
+			<view class="fixed_save" @click="editAddress">
+				<button>修改</button>
+			</view>			
+		</block>
 	</view>
 </template>
 
@@ -46,7 +53,8 @@
 				pic: [],
 				name: "",
 				phone: "",
-				detail: ""
+				detail: "",
+				id:0
 			}
 		},
 		components:{
@@ -87,7 +95,8 @@
 			getDetail(e){
 				this.detail = e.detail.value;				
 			},
-			saveAddress(e){
+			//添加
+			addAddress(e){
 				var that = this;
 				uni.request({
 					url: that.$api+'user/address-save&access_token='+that.$access_token,
@@ -108,7 +117,6 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						if(res.data.code == 1){
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none',
@@ -116,10 +124,54 @@
 							})
 							setTimeout(function(){
 								uni.navigateBack({
-									delta: 1
+								 delta:1
 								})
 							},1500)
-						}
+					},
+					fail: () => {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})
+					}
+				});
+			},
+			
+			//修改
+			editAddress(e){
+				var that = this;
+				uni.request({
+					url: that.$api+'user/address-edit&access_token='+that.$access_token,
+					method: 'POST',
+					data:{
+						id: that.id,
+						name: that.name,
+						mobile: that.phone,
+						province_id: that.arr[0],
+						province: that.pic[0],
+						city_id: that.arr[1],
+						city: that.pic[1],
+						district_id: that.arr[2],
+						district: that.pic[2],
+						detail: that.detail
+					},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+							uni.showToast({
+								title: res.data.msg,
+								icon: 'none',
+								duration: 1500
+							})
+							setTimeout(function(){
+								uni.navigateBack({
+								 delta:1
+								})
+							},1500)
+						
 					},
 					fail: () => {
 						uni.showToast({
@@ -131,19 +183,32 @@
 				});
 			}
 		},
-		onLoad() {
+		onLoad(opt) {
 			var that = this;
 			// console.log(that.$access_token)
 			uni.request({
-				url: that.$api+'user/address-save&access_token='+that.$access_token,
+				url: that.$api+'user/address-detail&access_token='+that.$access_token,
 				dataType: "json",
 				method: 'GET',
+				data: {id:opt.id},
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					
+					console.log(res)
+					that.id = res.data.data.address_id,
+					that.name = res.data.data.name,
+					that.phone = res.data.data.mobile,
+					that.arr[0] = res.data.data.district.province.id,
+					that.arr[1] =  res.data.data.district.city.id,
+					that.pic[0] =  res.data.data.district.province.name,
+					that.pic[1] = res.data.data.district.city.name,
+					that.pic[2] =  res.data.data.district.district.name,
+					that.arr[2] =  res.data.data.district.district.id,
+					that.detail =  res.data.data.detail 
 				},
+				
+				 
 				fail: () => {
 					uni.showToast({
 						title:res.data.msg,
@@ -167,10 +232,6 @@
 		onReachBottom(){
 			
 		},
-		// 下拉刷新
-		onPullDownRefresh(){
-			
-		}
 	}
 </script>
 

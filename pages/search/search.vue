@@ -28,6 +28,8 @@
 	export default{
 		data(){
 			return{
+				page:1,
+				page_count:1,
 				keyword: '',
 				searchList:[
 // 					{
@@ -81,10 +83,12 @@
 								title: item[i].name,
 								info: "",
 								price: item[i].price,
-								type: ""
+								type: item[i].weight,
 							})
 						}
+						that.page_count = res.data.data.page_count;
 						that.searchList = list;
+						console.log(that.searchList)
 					},
 					fail: () => {
 						uni.showToast({
@@ -98,6 +102,46 @@
 		},
 		onLoad(opt) {
 			
+		},
+		//上拉触底
+		onReachBottom(){	
+			var that = this;		
+			if(that.page == that.page_count){
+			   uni.showToast({
+				title:"没有更多数据了",
+				icon:'none',
+			   });
+			   return false;
+			}	
+			that.page = parseInt(that.page)+parseInt(1)	 											  
+			uni.request({
+				url: that.$api+'default/goods-list&keyword='+that.keyword+'&access_token='+that.$access_token,
+				method: 'GET',
+				data:{page:that.page},
+				success: res => {
+					var list = [];
+					for(let i in res.data.data.list){
+						var item = res.data.data.list;
+						list.push({
+							id: item[i].id,
+							src: item[i].pic_url,
+							title: item[i].name,
+							info: "",
+							price: item[i].price,
+							type: item[i].weight
+						})
+					} 
+					that.searchList = that.searchList.concat(list) 
+ 					console.log(that.searchList)
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+				}
+			});
 		}
 	}
 </script>

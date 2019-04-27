@@ -2,7 +2,7 @@
 	<view class="address-list">
 		<view class="page_bg"></view>
 		<view class="a-address" v-for="(item,index) in addressList" :key="index">
-			<view class="left-text" :class="item.isDefault == 0? 'active':''">
+			<view class="left-text" :class="item.isDefault == 0? 'active':''"  @tap="goodsAddess(item.id)">
 				<view class="name-tel">
 					收货人：{{item.linkMan}} <text>{{item.mobile}}</text>
 				</view>
@@ -28,6 +28,7 @@
 				value: 'default',
 				name: '默认地址',
 				current: 0,
+				mch_list:[],
 				addressList: [
 // 					{
 // 						id: 1,
@@ -54,6 +55,35 @@
 			}
 		},
 		methods:{
+			goodsAddess(id){
+				var that = this;
+				uni.request({
+				url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
+				method: 'POST',
+				data: {
+					address_id:id,
+					mch_list: JSON.stringify(that.mch_list)
+				},
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+						setTimeout(function(){
+							uni.navigateTo({ 
+								url: "/pages/account/account?data="+JSON.stringify(res.data.data)
+							})
+						},1000)
+					
+				},
+				fail: () => {
+					uni.showToast({
+						title:"",
+						icon:'none',
+					});
+				}
+			});				
+			},
 			selectTap(id,idx) {
 				var that = this;
 				that.current = idx;
@@ -86,7 +116,33 @@
 				})
 			},
 			delAddess(id) {
-				
+				 console.log(id)
+				 uni.request({
+				 	url: this.$api+'user/address-delete&address_id='+id+'&access_token='+this.$access_token,
+				 	dataType: "json",
+				 	method: 'GET',
+				 	header: {
+				 		'content-type': 'application/x-www-form-urlencoded'
+				 	},
+				 	success: res => {
+				 		uni.showToast({
+				 			title:res.data.msg,
+				 			icon:'none',
+							duration: 1500
+				 		});
+						setTimeout(function(){
+							 uni.navigateTo({ 
+								 delta:1
+							})
+						},1500)
+				 	},
+				 	fail: () => {
+				 		uni.showToast({
+				 			title:res.data.msg,
+				 			icon:'none',
+				 		});
+				 	}
+				 });
 			},
 			radioChange: function(evt) {
 				for (let i = 0; i < this.items.length; i++) {
@@ -103,6 +159,11 @@
 			})
 		},
 		onLoad(opt) {
+			var that = this;
+			that.mch_list = JSON.parse(opt.mch_list);
+			console.log(that.mch_list)
+		},
+		onShow() {
 			var that = this;
 			uni.request({
 				url: that.$api+'user/address-list&access_token='+that.$access_token,
@@ -133,6 +194,11 @@
 					})
 				}
 			});
+		},
+		
+		// 下拉刷新
+		onPullDownRefresh(){
+			
 		}
 	}
 </script>

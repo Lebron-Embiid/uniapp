@@ -31,11 +31,10 @@
             </view>
             <view class="scroll_box">
                 <scroll-view class="scroll-view_H" scroll-x="true">
-                    <view :id="item.ref" class="scroll-view-item_H" v-for="(item,index) in hot_products" @click="toProductDetail(item.id)" :key="index">
+                    <view :id="item.ref" class="scroll-view-item_H" v-for="(item,index) in hot_products" @click="toProductDetail(item.id,item.cat_id)" :key="index">
 						<div class="p_img"><image :src="item.src" mode="widthFix"></image></div>
 						<view class="product_content">
 							<view class="product_title">{{item.title}}</view>
-							<!-- <view class="product_info">{{item.info}}</view> -->
 							<view class="product_price">￥{{item.price}}<text>规格：{{item.format}}</text></view>
 						</view>
 					</view>
@@ -143,9 +142,16 @@
 					})
 				}
 			},
-			toProductDetail: function(e){
-				uni.navigateTo({
-					url: "/pages/store_detail/store_detail?id="+e
+			toProductDetail: function(id,cat_id){ 
+				if(cat_id != this.$level && cat_id != 3){
+					uni.showToast({
+						title:"你不是此商品的代理，没有权限购买",
+						icon:'none',
+					});
+				     return false
+				} 
+ 				uni.navigateTo({
+					url: "/pages/store_detail/store_detail?id="+id
 				})
 			},
 			toMaterDetail: function(e){
@@ -195,10 +201,11 @@
 						hot_products.push({
 							id: item.goods[i].id,
 							src: item.goods[i].cover_pic,
+							cat_id: item.goods[i].cat_id,
 							title: item.goods[i].name,
-							info: "清洁皮肤，长效保湿滋润",
+							// info: "清洁皮肤，长效保湿滋润",
 							price: item.goods[i].price,
-							format: "3.5g"
+							format: item.goods[i].gauge, 
 						})
 					}
 					for(let i in item.nav){

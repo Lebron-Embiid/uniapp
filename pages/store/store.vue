@@ -6,7 +6,7 @@
 		</view>
 		<view class="store_content">
 			<view class="store_nav">
-				<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
+				<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==item.id ? 'active' : '']" @click="navbarTap(item.id)">{{item.name}}</view>
 			</view>
 			<view class="store_list">
 				<commonStore :storeList="storeList"></commonStore>
@@ -27,6 +27,12 @@
 	export default{
 		data(){
 			return{
+				page_count1:1,
+				page1:1,
+				page_count2:1,
+				page2:1,
+				page_count3:1,
+				page3:1,
 				swiperList: [
 					"../../static/store_banner.jpg","../../static/store_banner.jpg","../../static/store_banner.jpg",
 				],
@@ -35,7 +41,8 @@
 				navbar: [
 					// { name: '艾璐卡' },{ name: '纽西之谜'},{ name: '特价商品'}
 				],
-				currentTab:0,
+				currentTab:1,
+                cat:[],
 				storeList:[
 // 					{
 // 						id: 1,
@@ -79,10 +86,9 @@
 		methods:{
 			navbarTap: function(e){
 				var that = this;
-				that.currentTab = e;
-				if(that.currentTab == 0){
+				that.currentTab = e; 
 					uni.request({
-						url: that.$api+'default/goods-list&cat_id=1&access_token='+that.$access_token,
+						url: that.$api+'default/goods-list&cat_id='+e+'&access_token='+that.$access_token,
 						method: 'GET',
 						dataType: "json",
 						header: {
@@ -96,6 +102,7 @@
 									storeList1.push({
 										id: item.list[i].id,
 										src: item.list[i].pic_url,
+										cat_id: item.list[i].cat_id,
 										title: item.list[i].name,
 										// info: "清洁皮肤，长效保湿滋润",
 										price: item.list[i].price,
@@ -103,6 +110,16 @@
 									})
 								}	
 								that.storeList = storeList1;
+								if(that.currentTab == 1){								
+									that.page_count1 = res.data.data.page_count;
+								}else if(that.currentTab == 2){
+									that.page_count2 = res.data.data.page_count;
+								}else if(that.currentTab == 3){
+									that.page_count3 = res.data.data.page_count;
+								}
+								console.log(that.page_count1)
+								console.log(that.page_count2)
+								console.log(that.page_count3)
 							// }
 						},
 						fail: () => {
@@ -112,71 +129,7 @@
 							});
 						}
 					});
-				}else if(that.currentTab == 1){
-					uni.request({
-						url: that.$api+'default/goods-list&cat_id=2&access_token='+that.$access_token,
-						method: 'GET',
-						dataType: "json",
-						header: {
-							'content-type': 'application/x-www-form-urlencoded'
-						},
-						success: res => {
-							// if(res.data.code == 1){
-								var storeList2 = [];
-								var item = res.data.data;
-								for(let i in item.list){
-									storeList2.push({
-										id: item.list[i].id,
-										src: item.list[i].pic_url,
-										title: item.list[i].name,
-										// info: "清洁皮肤，长效保湿滋润",
-										price: item.list[i].price,
-										type: item.list[i].weight
-									})
-								}	
-								that.storeList = storeList2;
-							// }
-						},
-						fail: () => {
-							uni.showToast({
-								title:res.data.msg,
-								icon:'none',
-							});
-						}
-					});
-				}else{
-					uni.request({
-						url: that.$api+'default/goods-list&cat_id=3&access_token='+that.$access_token,
-						method: 'GET',
-						dataType: "json",
-						header: {
-							'content-type': 'application/x-www-form-urlencoded'
-						},
-						success: res => {
-							// if(res.data.code == 1){
-								var storeList3 = [];
-								var item = res.data.data;
-								for(let i in item.list){
-									storeList3.push({
-										id: item.list[i].id,
-										src: item.list[i].pic_url,
-										title: item.list[i].name,
-										// info: "清洁皮肤，长效保湿滋润",
-										price: item.list[i].price,
-										type: item.list[i].weight
-									})
-								}	
-								that.storeList = storeList3;
-							// }
-						},
-						fail: () => {
-							uni.showToast({
-								title:res.data.msg,
-								icon:'none',
-							});
-						}
-					});
-				}
+				 
 			},
 			toSearch: function(e){
 				uni.navigateTo({
@@ -187,7 +140,7 @@
 		onLoad(opt) {
 			var that = this;
 			uni.request({
-				url: that.$api+'default/shop&access_token='+that.$access_token,
+				url: that.$api+'default/shop&cat_id=1&access_token='+that.$access_token,
 				dataType: "json",
 				method: 'GET',
 				header: {
@@ -200,6 +153,7 @@
 					var item = res.data.data;
 					for(let i in item.cat){
 						navbar.push({
+							id: item.cat[i].id,
 							name: item.cat[i].name
 						})
 					}
@@ -208,6 +162,7 @@
 							id: item.list[i].id,
 							src: item.list[i].pic_url,
 							title: item.list[i].name,
+							cat_id: item.list[i].cat_id,
 							// info: "清洁皮肤，长效保湿滋润",
 							price: item.list[i].price,
 							type: item.list[i].weight
@@ -215,7 +170,8 @@
 					}
 					for(let i in item.shop_banner){
 						swiperList.push(item.shop_banner[i].pic_url)
-					}
+					} 
+					that.page_count1 = res.data.data.page_count;
 					that.navbar = navbar;
 					that.storeList = storeList;
 					that.swiperList = swiperList;
@@ -225,6 +181,80 @@
 						title:res.data.msg,
 						icon:'none',
 					});
+				}
+			});
+		},
+			//上拉触底
+		onReachBottom(){
+			let that = this;
+			if(that.currentTab == 1){	
+				console.log(1111)
+				console.log(that.page_count1)
+				console.log(that.page1)
+				if(that.page1 == that.page_count1){
+				   uni.showToast({
+					title:"没有更多数据了",
+					icon:'none',
+				   });
+				   return false;
+				}	
+				that.page1 = parseInt(that.page1)+parseInt(1)							
+				var page = that.page1;
+			}else if(that.currentTab == 2){
+				console.log(2222)
+				console.log(that.page_count2)
+				console.log(that.page2)
+				if(that.page2 == that.page_count2){
+				   uni.showToast({
+					title:"没有更多数据了",
+					icon:'none',
+				   });
+				   return false;
+				}	
+				that.page2 = parseInt(that.page2)+parseInt(1)
+				var page = that.page2;
+			}else if(that.currentTab == 3){
+				console.log(33333)
+				console.log(that.page_count3)
+				console.log(that.page_count3)
+				if(that.page3 == that.page_count3){
+				   uni.showToast({
+					title:"没有更多数据了",
+					icon:'none',
+				   });
+				   return false;
+				}	
+				that.page3 = parseInt(that.page3)+parseInt(1)
+				var page = that.page3; 
+			} 
+						 
+			uni.request({
+				url: that.$api+'default/goods-list&cat_id='+that.currentTab+'&access_token='+that.$access_token,
+				method: 'GET',
+				data:{page:page},
+				success: res => {
+					let storeList = [];
+					let item = res.data.data.list;
+					for(let i in item){
+						storeList.push({
+							id: item[i].id,
+							src: item[i].pic_url,
+							title: item[i].name,
+							cat_id: item[i].cat_id,
+							// info: "清洁皮肤，长效保湿滋润",
+							price: item[i].price,
+							type: item[i].weight
+						})
+					}
+					that.storeList = that.storeList.concat(storeList) 
+					console.log(that.storeList)
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
 				}
 			});
 		}

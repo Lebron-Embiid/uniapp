@@ -39,6 +39,7 @@
 							success: (uploadFileRes) => {
 								var data = JSON.parse(uploadFileRes.data);
 								console.log(data.data.url);
+								
 								that.photos.push(data.data.url);
 								console.log(that.photos)
 							}
@@ -77,8 +78,7 @@
 						if(res.confirm){
 							this.photos.splice(e, 1);
 						}
-								console.log(this.photos)
-					}
+ 					}
 				})
 			}
 		},
@@ -98,28 +98,31 @@
 							return false;
 						}
 						uni.request({
-							url: that.$api+'default/source-edit&access_toke='+that.$access_token,
+							url: that.$api+'default/source-edit&access_token='+that.$access_token,
 							dataType: "json",
 							method: 'POST',
 							data: {
-								content: that.photos
+								user_id:0,
+								content: that.photos,
+								type:0,
+								browse_id:0
 							},
 							header: {
 								'content-type': 'application/x-www-form-urlencoded'
 							},
 							success: res => {
-								// if(res.data.code == 1){
+								if(res.data.code == 0){
 									uni.showToast({
 										title: res.data.msg,
 										icon: 'none',
 										duration: 1000
 									});
-// 									setTimeout(function(){
-// 										uni.navigateBack({
-// 											delta: 1
-// 										})
-// 									},1000)
-								// }
+										setTimeout(function(){
+										uni.navigateBack({
+											delta: 1
+										})
+									},1500)
+								}
 							},
 							fail: () => {
 								uni.showToast({

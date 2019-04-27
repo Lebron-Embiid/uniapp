@@ -2,7 +2,7 @@
 	<view class="withdraw_box">
 		<view class="page_bg"></view>
 		<form @submit="formSubmit">
-			<view class="over_till">账户剩余余额：<text>{{over_money}}</text>元</view>
+			<view class="over_till">账户剩余余额：<text>￥{{over_money}}</text></view>
 			<view class="section">
 				<view class="left_txt">姓名<text>*</text></view>
 				<input type="text" name="name" @input="setName" :value="name" />

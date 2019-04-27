@@ -12,6 +12,8 @@
 	export default{
 		data(){
 			return{
+				page_count:1,
+				page:1,
 				myMaterList: [
 // 					{
 // 						id: 1,
@@ -39,15 +41,46 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					if(res.data.code == 0){
-						that.myMaterList = res.data.data.list
- 					}
+					that.page_count = res.data.data.page_count;
+					that.myMaterList = res.data.data.list
+ 					
 				},
 				fail: () => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',
 					});
+				}
+			});
+		},
+		//上拉触底
+		onReachBottom(){
+			let that = this;
+			if(that.page == that.page_count){
+			   uni.showToast({
+				title:"没有更多数据了",
+				icon:'none',
+			   });
+			   return false;
+			}
+			 
+		   that.page = parseInt(that.page)+parseInt(1)	
+			uni.request({
+				url: that.$api+'user/topic-list&access_token='+that.$access_token,
+				method: 'GET',
+				data:{page:that.page},
+				success: res => {
+					let list = res.data.data.list;
+					// var list = res.data.data.list;
+					that.myMaterList = that.myMaterList.concat(list)
+					console.log(that.myMaterList) 
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
 				}
 			});
 		}

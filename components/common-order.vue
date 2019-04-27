@@ -29,7 +29,7 @@
 						<button @click="queryOrder(item.id)">确认收货</button>
 					</block>
 					<block v-if="item.is_comment == 0 && current == 3">
-						<button @click="toOrderDetail(item.id)">评价</button>
+						<button @click="toOrderComment(item.id)">评价</button>
 					</block>
 				</view>
 			</view>
@@ -105,6 +105,11 @@
 				console.log(e)
 				uni.navigateTo({
 					url: "/pages/order_detail/order_detail?id="+e
+				})
+			},
+			toOrderComment: function(e){
+				uni.navigateTo({
+					url: "/pages/order_comment/order_comment?id="+e
 				})
 			},
 			queryOrder: function(e){

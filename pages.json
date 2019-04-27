@@ -314,6 +314,12 @@
 			}
 		},
 		{
+			"path": "pages/order_comment/order_comment",
+			"style": {
+				"navigationBarTitleText": "评价"
+			}
+		},
+		{
 			"path": "pages/news/news",
 			"style": {
 				"navigationBarTitleText": "活动资讯"

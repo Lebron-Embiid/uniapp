@@ -3,17 +3,19 @@
 		<view class="page_bg"></view>
 		<view class="withdraw_box">
 			<view class="over_word">可用余额(元)</view>
-			<view class="over_money">{{over_money}}</view>
+			<view class="over_money">￥{{over_money}}</view>
 			<view class="withdraw_btn" @click="toWithdraw">提现</view>
 		</view>
 		<view class="record_box">
 			<view class="record_item" v-for="(item,index) in record_list" :key="index">
 				<view class="record_info">
-					<text class="ri_name">{{item.name}}</text>
-					<text class="ri_time">{{item.time}}</text>
-					<view class="ri_money">返利<text class="ri_red">{{item.money}}元</text></view>
+					<view class="ri_name">{{item.nickname}}<text class="ri_time">{{item.addtime}}</text></view>
+					<view class="ri_money_box">
+						<view class="ri_money">订单号<text class="ri_red" >{{item.order_no}}</text></view>
+						<view class="ri_money">订单金额<text class="ri_red">￥{{item.price}}</text></view>
+					</view>
 				</view>
-				<view class="record_content">
+				<!-- <view class="record_content" hidden>
 					<view class="rl_txt">购买</view>
 					<view class="record_list">
 						<view class="rl_item" v-for="(list,idx) in item.record" :key="idx">
@@ -21,7 +23,7 @@
 							<view class="ri_num">{{list.num}}箱</view>
 						</view>
 					</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 	</view>
@@ -31,66 +33,10 @@
 	export default{
 		data(){
 			return{
+				page:1,
+				page_count:1,
 				over_money: "",
-				record_list: [
-					{
-						id: 1,
-						name: "王志勇",
-						time: "2019-03-25",
-						money: 230,
-						record:[
-							{
-								title: "艾璐卡-山羊奶悦颜清透洁乳",
-								num: 100
-							},
-							{
-								title: "艾璐卡-山羊奶悦颜清透柔肤液",
-								num: 100
-							},
-							{
-								title: "艾璐卡-山羊奶悦颜清透精华乳",
-								num: 100
-							}
-						]
-					},{
-						id: 2,
-						name: "凌苗苗",
-						time: "2019-03-25",
-						money: 230,
-						record:[
-							{
-								title: "艾璐卡-蜗牛多效爆水霜",
-								num: 100
-							},
-							{
-								title: "艾璐卡-山羊奶悦颜清透精华乳",
-								num: 100
-							}
-						]
-					},{
-						id: 3,
-						name: "肖米",
-						time: "2019-03-25",
-						money: 230,
-						record:[
-							{
-								title: "艾璐卡-山羊奶悦颜清透精华乳",
-								num: 100
-							}
-						]
-					},{
-						id: 4,
-						name: "凌苗苗",
-						time: "2019-03-25",
-						money: 230,
-						record:[
-							{
-								title: "艾璐卡-蜗牛多效爆水霜",
-								num: 100
-							}
-						]
-					}
-				]
+				record_list: [],
 			}
 		},
 		methods:{
@@ -103,24 +49,58 @@
 		onLoad(opt) {
 			let that = this;
 			that.over_money = opt.money;
-// 			uni.request({
-// 				url: that.$api+'recharge/index&access_token='+that.$access_token,
-// 				method: 'GET',
-// 				dataType: "json",
-// 				header: {
-// 					'content-type': 'application/x-www-form-urlencoded'
-// 				},
-// 				success: res => {
-// 					that.over_money = res.data.data.money;
-// 				},
-// 				fail: err => {
-// 					uni.showToast({
-// 						title: JSON.stringify(err),
-// 						icon: 'none',
-// 						duration: 1500
-// 					})
-// 				}
-// 			});
+			uni.request({
+				url: that.$api+'recharge/index&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.over_money = res.data.data.money;
+					that.record_list = res.data.data.rebate.list;
+					that.page_count = res.data.data.rebate.page_count;
+					console.log(res.data.data.rebate.list)
+					console.log(that.record_list)
+					console.log(that.page_count)
+				},
+				fail: err => {
+					uni.showToast({
+						title: JSON.stringify(err),
+						icon: 'none',
+						duration: 1500
+					})
+				}
+			});
+		},
+		//上拉触底
+		onReachBottom(){
+			let that = this;
+			if(that.page == that.page_count){
+			   uni.showToast({
+				title:"没有更多数据了",
+				icon:'none',
+			   });
+			   return false;
+			}			 
+		   that.page = parseInt(that.page)+parseInt(1)	
+			uni.request({
+				url: that.$api+'recharge/index&access_token='+that.$access_token,
+				method: 'GET',
+				data:{page:that.page,keyword:that.keyword},
+				success: res => {
+					let list = res.data.data.rebate.list;   
+					that.record_list = that.record_list.concat(list)
+					  console.log(that.record_list) 
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+				}
+			});
 		}
 	}
 </script>
@@ -164,23 +144,18 @@
 					overflow: hidden;
 					color: #222;
 					.ri_name{
-						display: inline-block;
-						vertical-align: top;
+						display: block;
 						font-size: 24upx;
-						margin-right: 30upx;
-						max-width: 80upx;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						white-space: nowrap;
-					}
-					.ri_time{
-						display: inline-block;
-						vertical-align: top;
-						font-size: 20upx;
+						margin-bottom: 10upx;
+						.ri_time{
+							float: right;
+							font-size: 20upx;
+						}
 					}
 					.ri_money{
-						float: right;
+						// float: right;
 						font-size: 24upx;
+						margin-bottom: 10upx;
 						.ri_red{
 							color: #d70d0d;
 							margin-left: 10upx;

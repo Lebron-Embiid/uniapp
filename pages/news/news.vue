@@ -2,17 +2,19 @@
 	<view class="news_box">
 		<view class="search_box">
 			<form @click="toSearch" class="form_box">
-				<input type="text" placeholder="请输入您要搜索的关键词" value="" />
+				<input @input="getKeyword" type="text" placeholder="请输入您要搜索的关键词" name="keyword" value="" />
 				<button><image src="../../static/search.png" mode="widthFix"></image></button>
 			</form>
 		</view>
 		<view class="news_content">
 			<commonNews :news_list="news_list"></commonNews>
 		</view>
-		<view class="page_box">
-			<view class="page_btn prev">上一页</view>
-			<view class="page_btn next">上一页</view>
-		</view>
+		<!-- <block v-if="news_list != ''">
+			<view class="page_box">
+				<view class="page_btn prev">上一页</view>
+				<view class="page_btn next">上一页</view>
+			</view>
+		</block> -->
 	</view>
 </template>
 
@@ -22,6 +24,9 @@
 	export default{
 		data(){
 			return{
+				keyword:'',
+				page:1,
+				page_count:1,
 				news_list:[
 // 					{
 // 						id: 1,
@@ -61,9 +66,43 @@
 		components:{
 			commonNews
 		},
+		
 		methods:{
+			getKeyword: function(e){
+				this.keyword = e.detail.value;
+			},
 			toSearch: function(e){
-				
+				let that = this;
+				console.log(that.keyword)
+				uni.request({
+					url: that.$api+'default/article-list&page=1&cat_id=2',
+					method: 'GET',
+					data:{keyword:that.keyword},
+					dataType: "json",
+					success: res => {
+						let news_list = [];
+						for(let i in res.data.data.list){
+							let item = res.data.data.list;
+							news_list.push({
+								id: item[i].id,
+								title: item[i].title,
+								info: item[i].describe,
+								look: item[i].num,
+								date: util.formatDate(parseInt(item[i].addtime)),
+								src: item[i].cover_pic
+							})
+						}
+						that.page_count = res.data.data.page_count;
+						that.news_list = news_list;
+					},
+					fail: () => {
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})
+					}
+				});
 			}
 		},
 		onLoad(opt) {
@@ -84,7 +123,50 @@
 							src: item[i].cover_pic
 						})
 					}
+					that.page_count = res.data.data.page_count;
 					that.news_list = news_list;
+				},
+				fail: () => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+				}
+			});
+		},
+		
+		//上拉触底
+		onReachBottom(){
+			let that = this;
+			if(that.page == that.page_count){
+			   uni.showToast({
+				title:"没有更多数据了",
+				icon:'none',
+			   });
+			   return false;
+			}
+			 
+		   that.page = parseInt(that.page)+parseInt(1)	
+			uni.request({
+				url: that.$api+'default/article-list&cat_id=2',
+				method: 'GET',
+				data:{page:that.page,keyword:that.keyword},
+				success: res => {
+					let news_list = [];
+					for(let i in res.data.data.list){
+						let item = res.data.data.list;
+						news_list.push({
+							id: item[i].id,
+							title: item[i].title,
+							info: item[i].describe,
+							look: item[i].num,
+							date: util.formatDate(parseInt(item[i].addtime)),
+							src: item[i].cover_pic
+						})
+					}
+					that.news_list = that.news_list.concat(news_list)
+					  console.log(that.news_list) 
 				},
 				fail: () => {
 					uni.showToast({

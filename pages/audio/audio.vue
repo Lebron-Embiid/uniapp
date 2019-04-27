@@ -4,8 +4,8 @@
 		<view class="audio_list">
 			<view class="audio_item">
 				<view class="audio_img">
-					<image :class="isRotate == true?'rotate':''" class="cd_img" src="../../static/audio_cd.png" mode="widthFix"></image>
-					<image :src="audio_logo" class="logo_img" mode=""></image>
+					<image :class="isRotate == true?'rotate':''" class="cd_img" src="../../static/audio_cd1.png" mode="widthFix"></image>
+					<!-- <image :src="audio_logo" class="logo_img" mode=""></image> -->
 				</view>
 				<view class="ai_title">{{title}}</view>
 				<view class="ai_info">听众：{{look}}</view>

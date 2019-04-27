@@ -122,8 +122,7 @@
 // 							});
 // 							return false;
 // 						}
-                  that.poster = "http://gao2.demenk.com/shop/web/uploads/image/store_1/00889d53464da7ea91f5fc5c7438ec59df0ee997.jpg";
-                  that.video = "http://gao2.demenk.com/shop/web/uploads/video/test.mp3";
+                     that.video = "http://gao2.demenk.com/shop/web/uploads/video/test.mp3";
 						uni.request({
 							url: that.$api+'default/movies-edit&access_token='+that.$access_token,
 							dataType: "json",
@@ -137,18 +136,18 @@
 								'content-type': 'application/x-www-form-urlencoded'
 							},
 							success: res => {
-								// if(res.data.code == 1){
+								if(res.data.code == 0){
 									uni.showToast({
 										title: res.data.msg,
 										icon: 'none',
 										duration: 1000
 									});
-// 									setTimeout(function(){
-// 										uni.navigateBack({
-// 											delta: 1
-// 										})
-// 									},1000)
-								// }
+									setTimeout(function(){
+										uni.navigateBack({
+											delta: 1
+										})
+									},1000)
+								}
 							},
 							fail: () => {
 								uni.showToast({

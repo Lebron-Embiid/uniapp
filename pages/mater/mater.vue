@@ -46,61 +46,12 @@
 			return{
 				navbar:[{name:"图片"},{name:"视频"}],
 				currentTab:0,
-				photo_list:[
-					{
-						id: 1,
-						avatar: "../../static/avatar1.png",
-						name: "小黄鸭",
-						time: "2018-03-24",
-						num: 123,
-						sign: true,
-						maters: ["../../static/mater_img1.jpg","../../static/mater_img2.jpg","../../static/mater_img3.jpg"]
-					},
-					{
-						id: 2,
-						avatar: "../../static/avatar2.png",
-						name: "小黄鸭",
-						time: "2018-03-24",
-						num: 123,
-						sign: false,
-						maters: ["../../static/mater_img4.jpg","../../static/mater_img5.jpg"]
-					},
-					{
-						id: 3,
-						avatar: "../../static/avatar1.png",
-						name: "小黄鸭",
-						time: "2018-03-24",
-						num: 123,
-						sign: true,
-						maters: ["../../static/mater_img6.jpg","../../static/mater_img7.jpg","../../static/mater_img8.jpg"]
-					}
-				],
-				video_list:[
-					{
-						id: 1,
-						poster: "../../static/video_poster1.jpg",
-						avatar: "../../static/video_img.png",
-						title: "冬季水嫩肌肤养成法",
-						look: "1.5w",
-						video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-					},
-					{
-						id: 2,
-						poster: "../../static/video_poster2.jpg",
-						avatar: "../../static/video_img.png",
-						title: "问题性肌肤全解分析—说说色斑那点事",
-						look: "12w",
-						video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-					},
-					{
-						id: 3,
-						poster: "../../static/video_poster3.jpg",
-						avatar: "../../static/video_img.png",
-						title: "问题性肌肤全解分析—痘痘肌",
-						look: "1.7w",
-						video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-					}
-				]
+				photo_list:[],
+				video_list:[],
+				page:1,
+				page_id:1,
+				page_source_count:1,
+				page_movie_count:1,
 			}
 		},
 		components:{
@@ -132,6 +83,7 @@
 									maters: item.list[i].cover_pic[0]
 								})
 							}
+							that.page_source_count = res.data.data.page_count;
 							that.photo_list = photo_list;
 						},
 						fail: () => {
@@ -152,15 +104,18 @@
 						success: res => {
 							var video_list = [];
 							var item = res.data.data.list;
+							var page_count = res.data.data.page_count; 
 							for(let i in item){
 								video_list.push({
-									poster: item[i].pic_url,
-									avatar: item[i].avatar,
+									poster: item[i].cove_pic,
+									avatar: item[i].avatar_url,
 									title: item[i].title,
 									look: item[i].num,
 									video: item[i].url
 								})
 							}
+							that.page_movie_count = res.data.data.page_count;
+							that.video_list = video_list;
 						},
 						fail: () => {
 							uni.showToast({
@@ -216,6 +171,7 @@
 							maters: item.list[i].cover_pic[0]
 						})
 					}
+					that.page_source_count = res.data.data.page_count;
 					that.photo_list = photo_list;
 				},
 				fail: () => {
@@ -225,6 +181,101 @@
 					});
 				}
 			});
+		},
+		onPullDownRefresh(){
+			
+		},
+		//上拉触底
+		onReachBottom(){
+		    	var that = this; 
+				console.log(that.currentTab)
+				if(that.currentTab == 0){
+					if(that.page == that.page_source_count){
+					   uni.showToast({
+						title:"没有更多数据了",
+						icon:'none',
+					   });
+					   return false;
+					}
+				   that.page = parseInt(that.page)+parseInt(1)				   
+					uni.request({
+						url: that.$api+'default/source-list&access_token='+that.$access_token,
+						method: 'GET',
+						data:{page:that.page},
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => { 
+							var photo_list = []; 
+							that.page_count = res.data.data.page_count; 
+							var item_list = res.data.data.list; 
+							  for(let i in item_list){
+							  	photo_list.push({
+							  		id: item_list[i].id,
+							  		avatar: item_list[i].avatar_url,
+							  		name: item_list[i].nickname,
+							  		time: item_list[i].addtime,
+							  		num: item_list[i].read_count,
+							  		sign: item_list[i].type,
+							  		maters: item_list[i].cover_pic[0]
+							  	})
+							  } 
+							that.photo_list = that.photo_list.concat(photo_list)
+						      console.log(that.photo_list)
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}else{
+					console.log(that.page_id)
+					console.log(that.page_movie_count)
+					if(that.page_id == that.page_movie_count){
+					   uni.showToast({
+						title:"没有更多数据了",
+						icon:'none',
+					   });
+					   return false;
+					}
+					that.page_id = parseInt(that.page_id)+parseInt(1)	
+					uni.request({
+						url: that.$api+'default/movies-list&access_token='+that.$access_token,
+						method: 'GET',
+						data:{page:that.page_id},
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							var video_list = [];
+							var item = res.data.data.list;
+							var page_count = res.data.data.page_count; 
+							for(let i in item){
+								video_list.push({
+									poster: item[i].cove_pic,
+									avatar: item[i].avatar_url,
+									title: item[i].title,
+									look: item[i].num,
+									video: item[i].url
+								})
+							}
+							
+							that.video_list = that.video_list.concat(video_list) 
+							console.log(that.video_list)
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}	
+			
 		}
 	}
 </script>

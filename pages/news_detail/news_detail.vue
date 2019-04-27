@@ -12,8 +12,22 @@
 		</view>
 		<view class="page_ul">
 			<view class="page_left">
-				<view class="prev">上一篇：焦恩俊携手多位知名歌手现身呦蓝周年庆</view>
-				<view class="next">下一篇：走进艾璐卡工厂——见证护肤新革命</view>
+				<block v-if="last != null">
+					<view class="prev" @click="Prev(last.id)">上一篇：{{last.title}}</view>
+				</block>
+				<block v-else>
+					<view class="prev" >上一篇：无</view>
+				</block>
+				
+				
+				<block v-if="next != null">
+					<view class="next" @click="Next(next.id)">下一篇：{{next.title}}</view>
+				</block>
+				<block v-else>
+					<view class="next" >下一篇：无</view>
+				</block>
+				
+				
 			</view>
 			<view class="page_share" @click="toShare"><image src="../../static/share.png" mode="widthFix"></image></view>
 		</view>
@@ -26,16 +40,28 @@
 		data(){
 			return{
 				title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
-				look: "1.1w",
-				date: "04.28",
+				look: "0",
+				date: "",
 				content: "",
-				node_type: ""
+				node_type: "",
+				last:{},
+				next:{},
 			}
 		},
 		components:{
 			uParse
 		},
 		methods:{
+			Prev:function(e){
+				uni.navigateTo({
+					url: "/pages/news_detail/news_detail?id="+e
+				})
+			},
+			Next:function(e){
+				uni.navigateTo({
+					url: "/pages/news_detail/news_detail?id="+e
+				})
+			},
 			toShare: function(e){
 				// this.version = plus.runtime.version;
 // 				uni.getProvider({
@@ -78,7 +104,8 @@
 			uni.request({
 				url: that.$api+'default/article-detail&id=1',
 				data: {
-					id: opt.id
+					id: opt.id,
+					article_cat_id:2
 				},
 				method: 'GET',
 				dataType: "json",
@@ -86,10 +113,14 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					that.title = res.data.data.title;
-					that.look = res.data.data.num;
-					that.date = res.data.data.addtime;
-					that.content = res.data.data.content;
+					that.title = res.data.data.mode.title;
+					that.look = res.data.data.mode.num;
+					that.date = res.data.data.mode.addtime;
+					that.content = res.data.data.mode.content;
+					that.last = res.data.data.last;
+					that.next = res.data.data.next;
+					console.log(that.last)
+					console.log(that.next)
 				},
 				fail: () => {
 					uni.showToast({

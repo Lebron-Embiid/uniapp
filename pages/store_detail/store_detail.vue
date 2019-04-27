@@ -6,7 +6,7 @@
 		<view class="detail_info borbom">
 			<view class="di_title">{{title}}</view>
 			<!-- <view class="di_info">{{info}}</view> -->
-			<view class="di_price">￥{{price}}<text>规格：{{type}}</text></view>
+			<view class="di_price">￥{{max_price}}<text>规格：{{type}}</text></view>
 		</view>
 		<view class="auth_box borbom">
 			<view><image src="../../static/ok.jpg" mode="widthFix"></image>正品保障</view>
@@ -28,7 +28,34 @@
 		</view>
 		<!-- 评价 -->
 		<view class="store_content2 mb98" v-show="currentTab == 1">
-				
+			<view class="review_nav">
+				<navigator url="">全部<text>({{comment_count.score_all}})</text></navigator>
+				<navigator url="">好评<text>({{comment_count.score_3}})</text></navigator>
+				<navigator url="">中评<text>({{comment_count.score_2}})</text></navigator>
+				<navigator url="">差评<text>({{comment_count.score_1}})</text></navigator>
+			</view>
+			<view class="review_list">
+				<view class="review_item" v-for="(item,index) in comment_list" :key="index">
+					<view class="review_top">
+						<view class="rt_info">
+							<image :src="item.avatar_url" mode="widthFix"></image>
+							<text class="rt_name">{{item.nickname}}</text>
+						</view>
+						<text class="rt_time">{{item.addtime}}</text>
+					</view>
+					<view class="review_content">
+						<view class="rc_content">{{item.content}}</view>
+						<view class="rc_pic">
+							<block v-for="(pic,idx) in item.pic_list" :key="idx">
+								<image :src="pic" mode="widthFix"></image>
+							</block>
+						</view>
+					</view>
+					<view class="reply_content">
+						<text>商家：</text>{{item.reply_content}}
+					</view>
+				</view>
+			</view>
 		</view>
 		<view class="fixed_bottom">
 			<view class="fb_left" @click="toIndex"><image src="../../static/back_home.png" mode="widthFix"></image>首页</view>
@@ -41,7 +68,7 @@
 			<view class="fixed_top">
 				<view class="ft_img"><image :src="buy_img" mode="widthFix"></image></view>
 				<view class="ft_info">
-					<view class="fi_price">￥{{price}}</view>
+					<view class="fi_price">￥{{max_price}}</view>
 					<view class="fi_save">库存{{buy_save}}</view>
 					<view class="fi_close" @click="hideFixed"><image src="../../static/close.png" mode="widthFix"></image></view>
 				</view>
@@ -83,6 +110,7 @@
 				title: "",
 				info: "深层清洁皮肤，长效保湿滋润",
 				price: "",
+				max_price:'',
 				type: "120g",
 				content: "",
 				fixed_show: 1,
@@ -112,7 +140,15 @@
 				],
 				mch_list: [],
 				attr: [],
-				attr_id: []
+				attr_id: [],
+				score_1:0,
+				score_2:0,
+				score_3:0,
+				score_all:0,
+				page:1,
+				page_count:1,
+				comment_count:{},
+				comment_list:[]
 			}
 		},
 		components:{
@@ -124,14 +160,21 @@
 				that.currentTab = e;
 				if(that.currentTab == 1){
 					uni.request({
-						url: that.$api+'order/comment-preview&order_id='+that.id+'&access_token='+that.$access_token,
+						url: that.$api+'default/comment-list&goods_id='+that.id+'&access_token='+that.$access_token,
 						method: 'GET',
 						dataType: "json",
 						header: {
 							'content-type': 'application/x-www-form-urlencoded'
 						},
 						success: res => {
-							
+							console.log(res.data.data);
+							that.comment_list = res.data.data.list;
+							that.comment_count = res.data.data.comment_count;
+							// that.score_1 = res.data.data.comment_count.score_1;
+							// that.score_2 = res.data.data.comment_count.score_2;
+							// that.score_3 = res.data.data.comment_count.score_3;
+							// that.score_all = res.data.data.comment_count.score_all;
+							// that.page_count = res.data.data.page_count; 
 						},
 						fail: () => {
 							uni.showToast({
@@ -174,16 +217,21 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						// if(res.data.code == 1){
+						if(res.data.code == 0){
 							uni.showToast({
 								title: "添加购物车成功！",
 								icon: "success"
 							})
-						// }
+						}else{
+							uni.showToast({
+								title: "添加购物车失败！",
+								icon: "success"
+							})
+						}
 					},
 					fail: () => {
 						uni.showToast({
-							title:res.data.msg,
+							title:"添加购物车失败",
 							icon:'none',
 						});
 					}
@@ -206,7 +254,7 @@
 					goods_list: goods_list
 				})
 				console.log(that.mch_list);
-				uni.request({
+ 				uni.request({
 					url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
 					method: 'POST',
 					data: {
@@ -217,28 +265,27 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						// if(res.data.code == 1){
-							uni.showToast({
-								title: res.data.msg,
-								icon: "success",
-								duration:1000
-							})
-// 							var data = [];
-// 							data.push({
-// 								address: res.data.data.address,
-// 								level: res.data.data.level,
-// 								mch_list: res.data.data.mch_list
-// 							})
+						if(res.data.code == 0){
+// 							uni.showToast({
+// 								title: "",
+// 								icon: "success",
+// 								duration:1000
+// 							}) 
 							setTimeout(function(){
 								uni.navigateTo({ 
 									url: "/pages/account/account?data="+JSON.stringify(res.data.data)+"&cat_list="+JSON.stringify(that.attr_id)
 								})
 							},1000)
-						// }
+						}else{
+							uni.showToast({
+								title:"立即购买失败",
+								icon:'none',
+							});
+						}
 					},
 					fail: () => {
 						uni.showToast({
-							title:res.data.msg,
+							title:"立即购买失败",
 							icon:'none',
 						});
 					}
@@ -361,6 +408,7 @@
 					that.swiperList = swiperList;
 					that.title = item.name;
 					that.price = item.price;
+					that.max_price = item.max_price;//显示价格
 					that.buy_save = item.num;
 					that.buy_format = formatList;
 					that.buy_img = that.swiperList[0];
@@ -371,6 +419,38 @@
 						icon: 'none',
 						duration: 1500
 					})
+				}
+			});
+		},
+		
+		//上拉触底
+		onReachBottom(){
+			let that = this;
+			if(that.page == that.page_count){
+			   uni.showToast({
+				title:"没有更多数据了",
+				icon:'none',
+			   });
+			   return false;
+			}			 
+		   that.page = parseInt(that.page)+parseInt(1)	
+			uni.request({
+				url: that.$api+'default/comment-list&goods_id='+that.id+'&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					var comment_list = res.data.data.list;
+					that.comment_list = that.comment_list.concat(comment_list)
+					  console.log(that.comment_list)
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
 				}
 			});
 		}
@@ -474,6 +554,9 @@
 			display: block;
 			width: 100%;
 		}
+	}
+	.store_content2{
+		padding: 0;
 	}
 	.fixed_bottom{
 		position: fixed;
@@ -627,6 +710,88 @@
 					width: 120upx;
 					font-size: 28upx;
 				}
+			}
+		}
+	}
+	.review_nav{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 20upx solid #EFEFF4;
+	}
+	.review_nav navigator{
+		display: block;
+		padding: 20upx 0;
+		width: 25%;
+		text-align: center;
+		font-size: 24upx;
+	}
+	.review_list{
+		overflow: hidden;
+	}
+	.review_item{
+		padding: 32upx 24upx;
+		border-bottom: 1px solid #e3e3e3;
+	}
+	.review_top{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		overflow: hidden;
+		margin-bottom: 10upx;
+		.rt_info{
+			width: 50%;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			image{
+				display: inline-block;
+				width: 38px;
+				height: 38px !important;
+				border-radius: 50%;
+				margin-right: 10upx;
+			}
+			.rt_name{
+				font-size: 26upx;
+				display: inline-block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+		.rt_time{
+			font-size: 26upx;
+			color: #888;
+		}
+	}
+	.review_content,.reply_content{
+		padding-left: 38px;
+		font-size: 28upx;
+	}
+	.reply_content{
+		margin-left: 38px;
+		padding: 22upx 30upx;
+		border-radius: 10upx;
+		background: #f7f7f7;
+		text{
+			color: #FF4544;
+		}
+	}
+	.review_content{
+		.rc_content{
+			margin-bottom: 10upx;
+		}
+		.rc_pic{
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+			flex-wrap: wrap;
+			margin: 10upx 0;
+			image{
+				display: block;
+				width: 200upx;
+				height: 200upx !important;
+				margin: 0 8upx 8upx 0;
 			}
 		}
 	}

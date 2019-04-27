@@ -13,10 +13,10 @@
 		</view>
 		<!-- 音频 -->
 		<view class="audio_list" v-show="currentTab == 1">
-			<view class="audio_item" v-for="(item,index) in auto_list" :key="index" @click="toAudioDetail(item)">
+			<view class="audio_item" v-for="(item,index) in video_list" :key="index" @click="toAudioDetail(item)">
 				<view class="audio_img">
-					<image src="../../static/audio_cd.png" class="cd_img" mode="widthFix"></image>
-					<image :src="item.logo" class="logo_img" mode=""></image>
+					<image src="../../static/audio_cd1.png" class="cd_img" mode="widthFix"></image>
+					<!-- <image :src="item.logo" class="logo_img" mode=""></image> -->
 				</view>
 				<view class="ai_title">{{item.title}}</view>
 				<view class="ai_info">听众：{{item.look}}</view>
@@ -32,6 +32,10 @@ import commonVideo from "@/components/common-video.vue"
 export default{
 	data(){
 		return{
+			page_video:1,
+			page_video_count:1,
+			page_movie:1,
+			page_movie_count:1,
 			navbar:[{name:"视频"},{name:"音频"}],
 			currentTab:0,
 			video_list:[
@@ -92,9 +96,8 @@ export default{
 		navbarTap: function(e){
 			var that = this;
 			that.currentTab = e;
-			if(that.currentTab == 0){
 				uni.request({
-					url: that.$api+'default/video-list&type=0&access_token='+that.$access_token,
+					url: that.$api+'default/video-list&type='+that.currentTab+'&access_token='+that.$access_token,
 					method: 'GET',
 					dataType: "json",
 					header: {
@@ -114,6 +117,11 @@ export default{
 								video: item[i].url
 							})
 						}
+						if(that.currentTab == 0){							
+							that.page_video_count = res.data.data.page_count;
+						}else{							
+							that.page_movie_count = res.data.data.page_count;
+						}
 						that.video_list = video_list1;
 					},
 					fail: () => {
@@ -122,38 +130,7 @@ export default{
 							icon:'none',
 						});
 					}
-				});
-			}else{
-				uni.request({
-					url: that.$api+'default/video-list&type=1&access_token='+that.$access_token,
-					method: 'GET',
-					dataType: "json",
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: res => {
-						var auto_list = [];
-						var item = res.data.data.list;
-						for(let i in item){
-							auto_list.push({
-								id: item[i].id,
-								title: item[i].title,
-								look: item[i].num,
-								src: item[i].url,
-								logo: item[i].pic_url,
-								duration: item[i].audio_num
-							})
-						}
-						that.auto_list = auto_list;
-					},
-					fail: () => {
-						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						});
-					}
-				});
-			}
+				});								
 		},
 		toAudioDetail: function(e){
 			uni.navigateTo({
@@ -175,6 +152,7 @@ export default{
 				var item = res.data.data.list;
 				for(let i in item){
 					video_list.push({
+						id: item[i].id,
 						poster: item[i].pic_url,
 						// avatar: item[i].avatar,
 						avatar: "../../static/video_img.png",
@@ -183,6 +161,7 @@ export default{
 						video: item[i].url
 					})
 				}
+				that.page_video_count = res.data.data.page_count;
 				that.video_list = video_list;
 			},
 			fail: () => {
@@ -190,6 +169,60 @@ export default{
 					title:res.data.msg,
 					icon:'none',
 				});
+			}
+		});
+	},
+	//上拉触底
+	onReachBottom(){
+		let that = this;
+		if(that.currentTab == 0){
+			if(that.page_video == that.page_video_count){
+			   uni.showToast({
+				title:"没有更多数据了",
+				icon:'none',
+			   });
+			   return false;
+			}		
+			that.page_video = parseInt(that.page_video)+parseInt(1)
+			var page = that.page_video	
+		}else{
+			if(that.page_movie == that.page_movie_count){
+			   uni.showToast({
+				title:"没有更多数据了",
+				icon:'none',
+			   });
+			   return false;
+			}		
+			that.page_movie = parseInt(that.page_movie)+parseInt(1)
+			var page = that.page_movie	 
+		} 
+		
+		uni.request({
+			url: that.$api+'default/video-list&type='+that.currentTab+'&access_token='+that.$access_token,
+			method: 'GET',
+			data:{page:page},
+			success: res => {
+				let video_list = [];
+				let item = res.data.data.list;
+				for(let i in item){ 
+					video_list.push({
+						id: item[i].id,
+						poster: item[i].pic_url,
+						// avatar: item[i].avatar,
+						avatar: "../../static/video_img.png",
+						title: item[i].title,
+						look: item[i].num,
+						video: item[i].url							
+					})
+				}
+				that.video_list = that.video_list.concat(video_list)
+ 			},
+			fail: () => {
+				uni.showToast({
+					icon: 'none',
+					title: res.data.msg,
+					duration: 2000
+				})
 			}
 		});
 	}
