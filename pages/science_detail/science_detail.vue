@@ -2,7 +2,11 @@
 	<view class="science_detail">
 		<view class="page_bg"></view>
 		<view class="si_question">{{question}}</view>
-		<view class="si_answer"><u-parse :content="answer"></u-parse></view>
+		<view class="si_answer">
+			<block v-if="answer!=''">
+				<u-parse :content="answer"></u-parse>
+			</block>
+		</view>
 	</view>
 </template>
 

@@ -90,7 +90,7 @@
 		position: fixed;
 		width: 100%;
 		left: 0;
-		top: 44px;
+		top: 0;
 		z-index: 20;
 		background: #fff;
 		color: #00001f;

@@ -268,7 +268,7 @@
 		position: fixed;
 		width: 100%;
 		left: 0;
-		top: 44px;
+		top: 0;
 		z-index: 30;
 		// margin: 35upx 0 25upx;
 		padding: 0 30upx;

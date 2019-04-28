@@ -211,6 +211,7 @@
 		margin-right: 24upx;
 	}
 	.content-row textarea{
+		width: 275px;
 		font-size: 28upx;
 		padding: 5upx;
 		box-sizing: border-box;

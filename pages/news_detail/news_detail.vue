@@ -7,8 +7,9 @@
 			<view><image src="../../static/news_icon2.png" mode="widthFix"></image>{{date}}</view>
 		</view>
 		<view class="detail_content">
-			<u-parse :content="content"></u-parse>
-			<!-- {{content}} -->
+			<block v-if="content!=''">
+				<u-parse :content="content"></u-parse>
+			</block>
 		</view>
 		<view class="page_ul">
 			<view class="page_left">

@@ -1,12 +1,12 @@
-	{
+{
     "name" : "呦蓝",
-    "appid" : "__UNI__4B173B4",
+    "appid" : "__UNI__8F511E9",
     "description" : "uni-app",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
     "app-plus" : {
-		"usingComponents": true,
+        "usingComponents" : true,
         /* 5+App特有相关 */
         "modules" : {
             "VideoPlayer" : {},
