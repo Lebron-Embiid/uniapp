@@ -42,8 +42,7 @@
 				},
 				success: res => {
 					that.page_count = res.data.data.page_count;
-					that.myMaterList = res.data.data.list
- 					
+					that.myMaterList = res.data.data.list 					
 				},
 				fail: () => {
 					uni.showToast({
@@ -100,15 +99,16 @@
 		align-items: center;
 		flex-wrap: wrap;
 		.my_item{
+			width: 32%;
 			overflow: hidden;
-			margin-right: 20upx;
+			margin-right: 2%;
 			margin-bottom: 25upx;
 			&:nth-of-type(3n){
 				margin-right: 0;
 			}
 			image{
 				display: block;
-				width: 224upx;
+				width: 100%;
 				height: 275upx !important;
 				border-top-left-radius: 5upx;
 				border-top-right-radius: 5upx;

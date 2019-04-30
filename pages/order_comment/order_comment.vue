@@ -67,6 +67,7 @@
 					console.log(res.data.data.goods_list)
 					for(let i in res.data.data.goods_list){
 						goods_list.push({
+							order_detail_id:res.data.data.goods_list[i].order_detail_id,
 							goods_id: res.data.data.goods_list[i].goods_id,
 							goods_pic: res.data.data.goods_list[i].goods_pic,
 							score: 3,
@@ -75,6 +76,7 @@
 							uploaded_pic_list: []
 						})
 					}
+					that.order_id  = res.data.data.order_id
 					that.goods_list = goods_list;
 				}
 			});
@@ -146,7 +148,34 @@
 						return false;
 					}
 				}
-				console.log(that.goods_list)
+				console.log(JSON.stringify(that.goods_list));
+				// return false;
+				uni.request({
+					url: that.$api+'order/comment&access_token='+that.$access_token,
+					method: 'POST',
+					data: {
+						goods_list: JSON.stringify(that.goods_list),
+						order_id: that.order_id,
+						type:"mall",
+					},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => { 
+						setTimeout(function(){
+							uni.navigateTo({ 
+								url: "/pages/my_order/my_order?id=3"
+							})
+						},1000)
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				}); 
 			}
 		}
 	}
@@ -211,7 +240,6 @@
 		margin-right: 24upx;
 	}
 	.content-row textarea{
-		width: 275px;
 		font-size: 28upx;
 		padding: 5upx;
 		box-sizing: border-box;

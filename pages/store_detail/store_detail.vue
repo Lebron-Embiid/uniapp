@@ -51,9 +51,12 @@
 							</block>
 						</view>
 					</view>
-					<view class="reply_content">
-						<text>商家：</text>{{item.reply_content}}
-					</view>
+					<block v-if="item.reply_content">
+						<view class="reply_content">
+							<text>商家：</text>{{item.reply_content}}
+						</view>
+					</block>
+					
 				</view>
 			</view>
 		</view>
@@ -424,8 +427,11 @@
 		},
 		
 		//上拉触底
-		onReachBottom(){
+		onReachBottom(){			
 			let that = this;
+			if(that.currentTab == 0){
+				return false;
+			}
 			if(that.page == that.page_count){
 			   uni.showToast({
 				title:"没有更多数据了",
