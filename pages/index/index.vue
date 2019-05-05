@@ -69,7 +69,7 @@
 <script>
 	import commonSwiper from "@/components/common-swiper.vue"
 	import commonNews from "@/components/common-news.vue"
-	import {date} from "@/common/util.js"
+	import date from "@/common/util.js"
 	export default{
 		data(){
 			return{

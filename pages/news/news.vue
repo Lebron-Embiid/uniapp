@@ -19,7 +19,7 @@
 </template>
 
 <script>
-	import {date} from "@/common/util.js"
+	import util from "@/common/util.js"
 	import commonNews from "@/components/common-news.vue"
 	export default{
 		data(){
@@ -66,6 +66,7 @@
 		components:{
 			commonNews
 		},
+		
 		methods:{
 			getKeyword: function(e){
 				this.keyword = e.detail.value;
@@ -87,7 +88,7 @@
 								title: item[i].title,
 								info: item[i].describe,
 								look: item[i].num,
-								date: date.formatDate(parseInt(item[i].addtime)),
+								date: util.formatDate(parseInt(item[i].addtime)),
 								src: item[i].cover_pic
 							})
 						}
@@ -118,7 +119,7 @@
 							title: item[i].title,
 							info: item[i].describe,
 							look: item[i].num,
-							date: date.formatDate(parseInt(item[i].addtime)),
+							date: util.formatDate(parseInt(item[i].addtime)),
 							src: item[i].cover_pic
 						})
 					}
@@ -160,7 +161,7 @@
 							title: item[i].title,
 							info: item[i].describe,
 							look: item[i].num,
-							date: date.formatDate(parseInt(item[i].addtime)),
+							date: util.formatDate(parseInt(item[i].addtime)),
 							src: item[i].cover_pic
 						})
 					}
