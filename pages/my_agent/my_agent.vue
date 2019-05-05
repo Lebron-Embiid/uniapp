@@ -64,12 +64,12 @@
 					},
 					success: res => {
 						// if(res.data.code == 0){
-							that.agentList1 = res.data.data.data.list;		 
+							that.agentList1 = res.data.data.list;		 
 						// }
 						if(that.currentTab == 0){						
-							that.page_one_count = res.data.data.data.page_count;	
+							that.page_one_count = res.data.data.page_count;	
 						}else{							
-							that.page_tow_count = res.data.data.data.page_count;	
+							that.page_tow_count = res.data.data.page_count;	
 						}
 						console.log(1111)
 						console.log(that.agentList1)
@@ -96,8 +96,8 @@
 				},
 				success: res => {
 					// if(res.data.code == 0){
-						that.agentList1 = res.data.data.data.list;	
-						that.page_one_count = res.data.data.data.page_count;	
+						that.agentList1 = res.data.data.list;	
+						that.page_one_count = res.data.data.page_count;	
 						that.navbar[0].num	=  res.data.data.one_count;
 						that.navbar[1].num	=  res.data.data.tow_count;
 					// } 	
@@ -151,7 +151,7 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					let agentList1 = res.data.data.data.list; 	 
+					let agentList1 = res.data.data.list; 	 
 					that.agentList1 = that.agentList1.concat(agentList1)
 					  console.log(that.agentList1) 
 				},
