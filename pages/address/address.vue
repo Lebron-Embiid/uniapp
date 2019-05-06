@@ -15,10 +15,11 @@
 		</view>
 		<view class="add_item">
 			<text>所在地区</text>
-			<cityPicker :themeColor="themeColor" ref="cityPicker" :pickerValueDefault="cityPickerValueDefault"
-			@onCancel="onCancel" @onConfirm="onConfirm"></cityPicker>
-			<view class="acc_right" @click="showMulLinkageThreePicker">
-				<view>{{pickerText}}</view>
+			<!-- <cityPicker :themeColor="themeColor" ref="cityPicker" :pickerValueDefault="cityPickerValueDefault"
+			@onCancel="onCancel" @onConfirm="onConfirm"></cityPicker> -->
+			
+			<view class="acc_right">
+				<view><addressd @changes="childClick"></addressd><!-- {{pickerText}} --></view>
 				<image src="../../static/next.png" mode="widthFix"></image>
 			</view>
 		</view>
@@ -43,6 +44,7 @@
 
 <script>
 	import cityPicker from '@/components/citypicker/cityPicker.vue'
+	import addressd from "@/components/jm-address/jm-address.vue"
 	export default{
 		data(){
 			return{
@@ -54,13 +56,23 @@
 				name: "",
 				phone: "",
 				detail: "",
-				id:0
+				id:0,
+				province_id: "",
+				city_id: "",
+				district_id: ""
 			}
 		},
 		components:{
-			cityPicker
+			cityPicker,
+			addressd
 		},
 		methods:{
+			childClick(e) {
+				this.province_id = e.province_id;
+				this.city_id = e.city_id;
+				this.district_id = e.district_id;
+				console.log(this.province_id,this.city_id,this.district_id)
+            },
 			onCancel(e) {
                 this.$refs.cityPicker.pickerCancel();
             },

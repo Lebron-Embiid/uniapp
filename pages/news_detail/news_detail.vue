@@ -10,6 +10,7 @@
 			<block v-if="content!=''">
 				<u-parse :content="content"></u-parse>
 			</block>
+			<!-- {{content}} -->
 		</view>
 		<view class="page_ul">
 			<view class="page_left">
@@ -40,7 +41,7 @@
 	export default{
 		data(){
 			return{
-				title: "艾璐卡“初见巴士”亮相法国巴黎街头，唤醒初见之美！",
+				title: "",
 				look: "0",
 				date: "",
 				content: "",

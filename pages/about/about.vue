@@ -4,7 +4,9 @@
 		<image :src="logo" mode="widthFix"></image>
 		<view class="about_title">{{title}}</view>
 		<view class="about_content">
-			<u-parse :content="content"></u-parse>
+			<block v-if="content!=''">
+				<u-parse :content="content"></u-parse>
+			</block>
 		</view>
 	</view>
 </template>
@@ -14,7 +16,7 @@
 	export default{
 		data(){
 			return{
-				title: "呦蓝YOULAN",
+				title: "",
 				logo: "",
 				content: ""
 			}

@@ -39,23 +39,15 @@
 		methods:{
 			downloadMater: function(e){
 				let that = this;
-				// console.log(that.maters[e])
-				uni.downloadFile({
-					url: that.maters[e],
-					success: (res) => {
-						if (res.statusCode === 200) {
-							// console.log('下载成功');
-							uni.saveImageToPhotosAlbum({
-								filePath: res.tempFilePath,
-								success: function () {
-									uni.showToast({
-										title: '下载成功！',
-										icon: 'none',
-										duration: 1500
-									})
-								}
-							});
-						}
+				console.log(that.maters[e].cover_pic)
+				uni.saveImageToPhotosAlbum({
+					filePath: that.maters[e].cover_pic,
+					success: function () {
+						uni.showToast({
+							title: '下载成功！',
+							icon: 'none',
+							duration: 1500
+						})
 					},
 					fail: () => {
 						uni.showToast({
@@ -65,6 +57,57 @@
 						})
 					}
 				});
+// 				var downloadTask = uni.downloadFile({
+// 					url: JSON.stringify(that.maters[e].cover_pic),
+// 					success: (res) => {
+// 						console.log(111)
+// 						console.log(res)
+// 						if (res.statusCode === 200) {
+// 						console.log(111)
+// 						console.log(res.tempFilePath)
+// 							console.log('下载成功');
+// 							uni.showToast({
+// 								title: '下载成功！',
+// 								icon: 'none',
+// 								duration: 1500
+// 							})
+// 							// uni.saveFile({
+// 							//   tempFilePath: res.tempFilePath,
+// 							//   success: function (res) {
+// 							// 	var savedFilePath = res.savedFilePath;
+// 							// 	console.log(savedFilePath)
+// 							//   }
+// 							// });
+// 							// uni.saveImageToPhotosAlbum({
+// 							// 	filePath: res.tempFilePath,
+// 							// 	success: function () {
+// 							// 		uni.showToast({
+// 							// 			title: '下载成功！',
+// 							// 			icon: 'none',
+// 							// 			duration: 1500
+// 							// 		})
+// 							// 	}
+// 							// });
+// 						}
+// 					},
+// 					fail: () => {
+// 						uni.showToast({
+// 							title: '下载失败！',
+// 							icon: 'none',
+// 							duration: 1500
+// 						})
+// 					}
+// 				});
+// 				downloadTask.onProgressUpdate((res) => {
+// 					console.log('下载进度' + res.progress);
+// 					console.log('已经下载的数据长度' + res.totalBytesWritten);
+// 					console.log('预期需要下载的数据总长度' + res.totalBytesExpectedToWrite);
+// 
+// 					// 测试条件，取消下载任务。
+// 					// if (res.progress > 50) {
+// 					// 	downloadTask.abort();
+// 					// }
+// 				});
 			}
 		},
 		onNavigationBarButtonTap: function(){

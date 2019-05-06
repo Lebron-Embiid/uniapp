@@ -34,7 +34,7 @@
 				page_count3:1,
 				page3:1,
 				swiperList: [
-					"../../static/store_banner.jpg","../../static/store_banner.jpg","../../static/store_banner.jpg",
+					// "../../static/store_banner.jpg","../../static/store_banner.jpg","../../static/store_banner.jpg",
 				],
 				scrollLeft: 0,
 				tabIndex: 0,
