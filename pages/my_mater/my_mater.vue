@@ -1,10 +1,22 @@
 <template>
-	<view class="my_mater">
-		<view class="my_item" v-for="(item,index) in myMaterList" :key="index">
-			<image :src="item.cover_pic" mode="widthFix"></image>
-			<view class="my_down">{{item.lower}}</view>
-		</view>
+	<view class="my_mater_box">
 		<view class="page_bg"></view>
+		<view class="list_nav" >
+			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
+		</view>
+		<!-- 我发布的素材 -->
+		<view class="my_mater" v-show="currentTab == 0">
+			<view class="my_item" v-for="(item,index) in myMaterList" :key="index">
+				<image :src="item.cover_pic" mode="widthFix"></image>
+				<view class="my_down">{{item.lower}}</view>
+			</view>
+		</view>
+		<!-- 我下载的素材 -->
+		<view class="my_mater my_down_mater" v-show="currentTab == 1">
+			<view class="my_item" v-for="(item,index) in downList" :key="index">
+				<image :src="item.url" mode="widthFix"></image> 				 
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -12,8 +24,12 @@
 	export default{
 		data(){
 			return{
+				navbar:[{name:"我发布的素材"},{name:"我下载的素材"}],
+				currentTab:0,
 				page_count:1,
+				page_down_count:1,
 				page:1,
+				page_down:1,
 				myMaterList: [
 // 					{
 // 						id: 1,
@@ -21,10 +37,54 @@
 // 						num: 59
 // 					},
 					
-				]
+				],
+				downList:[]
 			}
 		},
 		methods:{
+			navbarTap: function(e){ 
+				var that = this;
+				that.currentTab = e;
+				if(e == 0){
+					uni.request({
+						url: that.$api+'user/topic-list&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							that.page_count = res.data.data.page_count;
+							that.myMaterList = res.data.data.list 					
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}else{
+					uni.request({
+						url: that.$api+'user/order-source-list&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							that.page_down_count = res.data.data.page_count;
+							that.downList = res.data.data.list 					
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}
+			},
 			toMaterDetail: function(e){
 				uni.navigateTo({
 					url: "/pages/mater_detail/mater_detail?id="+e
@@ -55,33 +115,62 @@
 		//上拉触底
 		onReachBottom(){
 			let that = this;
-			if(that.page == that.page_count){
-			   uni.showToast({
-				title:"没有更多数据了",
-				icon:'none',
-			   });
-			   return false;
-			}
-			 
-		   that.page = parseInt(that.page)+parseInt(1)	
-			uni.request({
-				url: that.$api+'user/topic-list&access_token='+that.$access_token,
-				method: 'GET',
-				data:{page:that.page},
-				success: res => {
-					let list = res.data.data.list;
-					// var list = res.data.data.list;
-					that.myMaterList = that.myMaterList.concat(list)
-					console.log(that.myMaterList) 
-				},
-				fail: () => {
-					uni.showToast({
-						icon: 'none',
-						title: res.data.msg,
-						duration: 2000
-					})
+			console.log(that.currentTab)
+			if(that.currentTab == 0){
+				if(that.page == that.page_count){
+				   uni.showToast({
+					title:"没有更多数据了",
+					icon:'none',
+				   });
+				   return false;
 				}
-			});
+				 
+			   that.page = parseInt(that.page)+parseInt(1)	
+				uni.request({
+					url: that.$api+'user/topic-list&access_token='+that.$access_token,
+					method: 'GET',
+					data:{page:that.page},
+					success: res => {
+						let list = res.data.data.list;
+						// var list = res.data.data.list;
+						that.myMaterList = that.myMaterList.concat(list)
+						console.log(that.myMaterList) 
+					},
+					fail: () => {
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})
+					}
+				});
+			}else{
+				if(that.page_down == that.page_down_count){
+				   uni.showToast({
+					title:"没有更多数据了",
+					icon:'none',
+				   });
+				   return false;
+				} 
+				that.page_down = parseInt(that.page_down)+parseInt(1)	
+				uni.request({
+					url: that.$api+'user/order-source-list&access_token='+that.$access_token,
+					method: 'GET',
+					data:{page:that.page_down},
+					success: res => {
+						let list = res.data.data.list;
+ 						that.downList = that.downList.concat(list)
+						console.log(that.downList) 
+					}, 
+					fail: () => {
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})
+					}
+				});
+			}
 		}
 	}
 </script>
@@ -126,5 +215,8 @@
 				white-space: nowrap;
 			}
 		}
+	}
+	.my_down_mater .my_item{
+		margin-bottom: 30upx;
 	}
 </style>

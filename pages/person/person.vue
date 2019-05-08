@@ -47,7 +47,7 @@
 				<navigator class="navigator" url="/pages/feedback/feedback">意见反馈<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
-				<view class="navigator">退出登录</view>
+				<view class="navigator" @click="logOut">退出登录</view>
 			</view>
 		</view>
 	</view>
@@ -74,10 +74,24 @@
 				uni.navigateTo({
 					url: "/pages/settings/settings"
 				})
+			},
+			logOut:function(){
+			var that = this;
+				uni.setStorageSync('access_token','');
+				uni.setStorageSync('level','');
+ 				that.$access_token = uni.getStorageSync('access_token');
+				that.$level = uni.getStorageSync('level');
+				console.log(that.$access_token)
+				console.log(that.$level)
+				setTimeout(function(){
+					uni.reLaunch({
+						url: "/pages/login/login"
+					})
+				},1500)
 			}
 		},
 		onLoad(opt) {
-			var that = this;
+			var that = this; 
 			uni.request({
 				url: that.$api+'user/user-info&access_token='+that.$access_token,
 				dataType: "json",

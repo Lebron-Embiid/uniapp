@@ -142,6 +142,12 @@
 				}
 			},
 			toProductDetail: function(id,cat_id){ 
+				if(this.$level == 4){
+					uni.navigateTo({
+						url: "/pages/store_detail/store_detail?id="+id
+					})
+					return false
+				}
 				if(cat_id != this.$level && cat_id != 3){
 					uni.showToast({
 						title:"你不是此商品的代理，没有权限购买",

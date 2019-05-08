@@ -332,6 +332,18 @@
 			}
 		},
 		{
+			"path": "pages/complete_mater/complete_mater",
+			"style": {
+				"navigationBarTitleText": "完善代理商资料"
+			}
+		},
+		{
+			"path": "pages/message_list/message_list",
+			"style": {
+				"navigationBarTitleText": "在线留言列表"
+			}
+		},
+		{
 			"path": "pages/list/list",
 			"style": {
 				

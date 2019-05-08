@@ -82,6 +82,11 @@
 								icon: 'none',
 								duration: 1500
 							})
+							setTimeout(function(){
+								uni.navigateBack({
+								 delta:1
+								})
+							},1500)
 					},
 					fail:function(err){
 						uni.showToast({

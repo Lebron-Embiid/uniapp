@@ -38,10 +38,16 @@
 							name: 'image',
 							success: (uploadFileRes) => {
 								var data = JSON.parse(uploadFileRes.data);
-								console.log(data.data.url);
-								
-								that.photos.push(data.data.url);
-								console.log(that.photos)
+																
+								if(data.code == 0){
+									that.photos.push(data.data.url);
+								}else{
+									uni.showToast({
+										title:data.msg,
+										icon:'none',
+									});
+								}
+								 
 							}
 						});
 // 						var len = res.tempFilePaths.length;

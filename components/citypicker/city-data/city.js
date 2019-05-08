@@ -1,11 +1,11 @@
 /* eslint-disable */
 var cityData = [
   [{
-    "label": "市辖区",
+    "label": "直辖市",
     "value": "1101"
   }],
   [{
-    "label": "市辖区",
+    "label": "直辖市",
     "value": "1201"
   }],
   [{

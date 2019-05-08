@@ -39,75 +39,85 @@
 		methods:{
 			downloadMater: function(e){
 				let that = this;
-				console.log(that.maters[e].cover_pic)
-				uni.saveImageToPhotosAlbum({
-					filePath: that.maters[e].cover_pic,
-					success: function () {
-						uni.showToast({
-							title: '下载成功！',
-							icon: 'none',
-							duration: 1500
-						})
+				console.log(that.maters[e])
+				
+				
+				uni.request({
+					url: that.$api+'user/order-source&access_token='+that.$access_token,
+					method: 'POST',
+					data:{
+						tip:that.maters[e].id,
+						url:that.maters[e].cover_pic,
+						status:0,  
+						},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						var data = res.data 
+						if(data.code == 0){
+							uni.saveImageToPhotosAlbum({					
+								filePath: that.maters[e].cover_pic,				                
+								success: function () { 
+									uni.showToast({
+										title: '下载成功',
+										icon: 'none',
+										duration: 1500
+									})
+								},
+								fail: () => {
+									uni.showToast({
+										title: '下载失败！',
+										icon: 'none',
+										duration: 1500
+									})
+								}
+							});
+						}else{
+							uni.showToast({
+								title:data.msg,
+								icon:'none',
+							});
+						} 
 					},
 					fail: () => {
 						uni.showToast({
-							title: '下载失败！',
-							icon: 'none',
-							duration: 1500
-						})
+							title:res.data.msg,
+							icon:'none',
+						});
 					}
 				});
-// 				var downloadTask = uni.downloadFile({
-// 					url: JSON.stringify(that.maters[e].cover_pic),
-// 					success: (res) => {
-// 						console.log(111)
-// 						console.log(res)
-// 						if (res.statusCode === 200) {
-// 						console.log(111)
-// 						console.log(res.tempFilePath)
-// 							console.log('下载成功');
-// 							uni.showToast({
-// 								title: '下载成功！',
-// 								icon: 'none',
-// 								duration: 1500
-// 							})
-// 							// uni.saveFile({
-// 							//   tempFilePath: res.tempFilePath,
-// 							//   success: function (res) {
-// 							// 	var savedFilePath = res.savedFilePath;
-// 							// 	console.log(savedFilePath)
-// 							//   }
-// 							// });
-// 							// uni.saveImageToPhotosAlbum({
-// 							// 	filePath: res.tempFilePath,
-// 							// 	success: function () {
-// 							// 		uni.showToast({
-// 							// 			title: '下载成功！',
-// 							// 			icon: 'none',
-// 							// 			duration: 1500
-// 							// 		})
-// 							// 	}
-// 							// });
-// 						}
-// 					},
-// 					fail: () => {
-// 						uni.showToast({
-// 							title: '下载失败！',
-// 							icon: 'none',
-// 							duration: 1500
-// 						})
-// 					}
-// 				});
-// 				downloadTask.onProgressUpdate((res) => {
-// 					console.log('下载进度' + res.progress);
-// 					console.log('已经下载的数据长度' + res.totalBytesWritten);
-// 					console.log('预期需要下载的数据总长度' + res.totalBytesExpectedToWrite);
-// 
-// 					// 测试条件，取消下载任务。
-// 					// if (res.progress > 50) {
-// 					// 	downloadTask.abort();
-// 					// }
-// 				});
+				
+				// uni.downloadFile({
+				// 	url: JSON.stringify(that.maters[e].cover_pic),
+				// 	success: (res) => {
+				// 		console.log(111)
+				// 		console.log(res)
+				// 		if (res.statusCode === 200) {
+				// 		console.log(111)
+				// 		console.log(res.tempFilePath)
+				// 			// console.log('下载成功');
+				// 			uni.saveImageToPhotosAlbum({
+				// 				filePath: res.tempFilePath,
+				// 				success: function () {
+				// 					uni.showToast({
+				// 						title: '下载成功！',
+				// 						icon: 'none',
+				// 						duration: 1500
+				// 					})
+				// 				}
+				// 			});
+				// 		}
+				// 	},
+				// 	fail: () => {
+				// 		uni.showToast({
+				// 			title: '下载失败！',
+				// 			icon: 'none',
+				// 			duration: 1500
+				// 		})
+				// 	}
+				// });
 			}
 		},
 		onNavigationBarButtonTap: function(){

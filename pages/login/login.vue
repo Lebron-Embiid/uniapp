@@ -57,7 +57,7 @@
 // 		            return;
 // 		        }
 				uni.request({
-				    url: that.$api+'passport/login-log',
+				    url: that.$api+'passport/mobile-login',
 				    data: {
 						contact_way:this.phoneno,
 						password:this.password
@@ -69,11 +69,15 @@
 					},
 				    success: (res) => {
 						if(res.data.code!=1){
-							uni.showToast({title:res.data.msg,icon:'none'});
+							uni.showToast({title:res.data.data.msg,icon:'none'});
 						}else{
 							uni.setStorageSync('access_token',res.data.data.access_token);
-							uni.showToast({title:res.data.msg,icon:'none',duration:1500});
+							uni.setStorageSync('level',res.data.data.level);
+							uni.showToast({title:res.data.data.msg,icon:'none',duration:1500});
 							that.$access_token = uni.getStorageSync('access_token');
+							that.$level = uni.getStorageSync('level');
+							console.log(that.$access_token)
+							console.log(that.$level)
 							setTimeout(function(){
 								uni.reLaunch({
 									url: "/pages/index/index"

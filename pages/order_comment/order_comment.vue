@@ -29,11 +29,11 @@
 					</view>
 				</view>
 				<view class="pic-list">
-					<view class="image-preview" v-for="(items,pic_index) in item.pic_list" :key="item.id">
+					<view class="image-preview" v-for="(items,pic_index) in item.uploaded_pic_list" :key="item.id">
 						<text @click="deleteImage" :data-index="index" :data-pic_index="pic_index" class="image-del">×</text>
 						<image mode="aspectFill" :src="items" style="width: 160upx;height: 160upx"></image>
 					</view>
-					<view @click="chooseImage" :data-index="index" class="image-picker" v-if="!item.pic_list||item.pic_list.length<6">
+					<view @click="chooseImage" :data-index="index" class="image-picker" v-if="!item.uploaded_pic_list||item.uploaded_pic_list.length<6">
 						<image src="../../static/icon-image-picker.png" style="width: 160upx;height: 160upx"></image>
 					</view>
 				</view>
@@ -110,6 +110,13 @@
 								name: 'image',
 								success: (uploadFileRes) => {
 									var data = JSON.parse(uploadFileRes.data);
+									if(data.code ==1 ){
+										uni.showToast({
+											title: data.msg,
+											icon: "none"
+										})
+										return false;
+									}
 									console.log(data.data.url)
 									that.goods_list[index].uploaded_pic_list.push(data.data.url);
 								}
@@ -163,6 +170,10 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => { 
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
 						setTimeout(function(){
 							uni.navigateTo({ 
 								url: "/pages/my_order/my_order?id=3"

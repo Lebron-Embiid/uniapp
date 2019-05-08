@@ -4,7 +4,7 @@
 			<image src="../../static/order_bg.jpg" class="order_bg" mode="widthFix"></image>
 			<view class="ot_layer">
 				<view class="ot_word">
-					<view>订单状态：已发货</view>
+					<view>订单状态：{{orders.status}}</view>
 					<view>订单号：{{orders.order_no}}</view>
 					<view>下单时间：{{orders.addtime}}</view>
 				</view>

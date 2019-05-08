@@ -52,9 +52,15 @@
 			toPay: function(e){
 				var that = this;
 				uni.request({
-					url: that.$api+'order/pay-data&order_id='+e+'&access_token='+that.$access_token,
+					url: that.$api+'order/pay-data&access_token='+that.$access_token,
 					method: 'GET',
 					dataType: "json",
+					data: {
+						order_id:e, 
+						pay_type:'WECHAT_PAY',
+						parent_user_id:0,
+						condition:2, 
+					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},

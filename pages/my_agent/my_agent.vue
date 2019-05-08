@@ -1,7 +1,7 @@
 <template>
 	<view class="my_agent_box">
 		<view class="page_bg"></view>
-		<view class="agent_nav">
+		<view class="agent_nav" style="display: none;">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}({{item.num}}人)</view>
 		</view>
 		<!-- 一级代理 -->
@@ -95,8 +95,9 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
+						console.log(res)
 					// if(res.data.code == 0){
-						that.agentList1 = res.data.data.list;	
+						that.agentList1 = res.data.data.data.list;	
 						that.page_one_count = res.data.data.page_count;	
 						that.navbar[0].num	=  res.data.data.one_count;
 						that.navbar[1].num	=  res.data.data.tow_count;

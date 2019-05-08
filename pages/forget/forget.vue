@@ -80,7 +80,7 @@
 // 				    }
 // 				});
 			},
-			bindLogin() {
+			bindLogin() { 
 // 				if (this.phoneno.length != 11) {
 // 				     uni.showToast({
 // 				        icon: 'none',
@@ -101,27 +101,35 @@
 // 				        title: '验证码不正确'
 // 				    });
 // 				    return;
-// 				}
-				uni.request({
-				    url: 'http://***/forget.html',
-				    data: {
-						phoneno:this.phoneno,
-						password:this.password,
-						code:this.code
-					},
-					method: 'POST',
-					dataType:'json',
-				    success: (res) => {
-						if(res.data.code!=1){
-							uni.showToast({title:res.data.msg,icon:'none'});
-						}else{
-							uni.showToast({title:res.data.msg});
-							setTimeout(function(){
-								uni.navigateBack();
-							},1500) 
-						}
-				    }
-				});
+// 				} 
+ 				uni.request({
+ 				    url: this.$api+'passport/forget',
+ 				    data: {
+ 						contact_way:this.phoneno,
+ 						password:this.password
+ 					},
+ 					method: 'POST',
+ 					dataType:'json',
+ 					header: {
+ 						'content-type': 'application/x-www-form-urlencoded'
+ 					},
+ 				    success: (res) => {
+ 						if(res.data.code!=1){
+ 							uni.showToast({title:res.data.msg,icon:'none'});
+ 						}else{
+ 						 
+ 							uni.showToast({title:res.data.msg,icon:'none',duration:1500});  
+ 							setTimeout(function(){
+ 								uni.reLaunch({
+ 									// url: "/pages/index/index"
+ 								})
+ 							},1500)
+ 						}
+ 				    },
+ 					fail: () => {
+ 						uni.showToast({title:res.data.msg,icon:'none'});
+ 					}
+ 				});
 				
 			}
 		}

@@ -17,7 +17,6 @@
 			<text>所在地区</text>
 			<!-- <cityPicker :themeColor="themeColor" ref="cityPicker" :pickerValueDefault="cityPickerValueDefault"
 			@onCancel="onCancel" @onConfirm="onConfirm"></cityPicker> -->
-			
 			<view class="acc_right">
 				<view><addressd @changes="childClick"></addressd><!-- {{pickerText}} --></view>
 				<image src="../../static/next.png" mode="widthFix"></image>
@@ -56,10 +55,7 @@
 				name: "",
 				phone: "",
 				detail: "",
-				id:0,
-				province_id: "",
-				city_id: "",
-				district_id: ""
+				id:0
 			}
 		},
 		components:{
@@ -73,6 +69,7 @@
 				this.district_id = e.district_id;
 				console.log(this.province_id,this.city_id,this.district_id)
             },
+
 			onCancel(e) {
                 this.$refs.cityPicker.pickerCancel();
             },
@@ -116,12 +113,9 @@
 					data:{
 						name: that.name,
 						mobile: that.phone,
-						province_id: that.arr[0],
-						province: that.pic[0],
-						city_id: that.arr[1],
-						city: that.pic[1],
-						district_id: that.arr[2],
-						district: that.pic[2],
+						province_id: that.province_id, 
+						city_id: that.city_id, 
+						district_id: that.district_id, 
 						detail: that.detail
 					},
 					dataType: "json",
@@ -160,12 +154,9 @@
 						id: that.id,
 						name: that.name,
 						mobile: that.phone,
-						province_id: that.arr[0],
-						province: that.pic[0],
-						city_id: that.arr[1],
-						city: that.pic[1],
-						district_id: that.arr[2],
-						district: that.pic[2],
+						province_id: that.province_id, 
+						city_id: that.city_id, 
+						district_id: that.district_id, 
 						detail: that.detail
 					},
 					dataType: "json",
