@@ -46,6 +46,11 @@
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/feedback/feedback">意见反馈<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
+			
+			<view class="nav_item">
+				<navigator class="navigator" url="/pages/message_list/message_list">在线列表<image src="../../static/next.png" mode="widthFix"></image></navigator>
+			</view>
+			
 			<view class="nav_item">
 				<view class="navigator" @click="logOut">退出登录</view>
 			</view>
@@ -72,15 +77,16 @@
 		methods:{
 			toSettings: function(e){
 				uni.navigateTo({
-					url: "/pages/settings/settings"
+					url: "/pages/complete_mater/complete_mater"
 				})
 			},
 			logOut:function(){
-			var that = this;
-				uni.setStorageSync('access_token','');
-				uni.setStorageSync('level','');
- 				that.$access_token = uni.getStorageSync('access_token');
-				that.$level = uni.getStorageSync('level');
+				var that = this;
+				uni.removeStorageSync('access_token');
+				uni.removeStorageSync('level');
+				uni.clearStorageSync();
+ 				that.$access_token = "";
+				that.$level = "";
 				console.log(that.$access_token)
 				console.log(that.$level)
 				setTimeout(function(){
@@ -90,8 +96,10 @@
 				},1500)
 			}
 		},
-		onLoad(opt) {
+		onShow() {
+			console.log(this.$access_token);
 			var that = this; 
+			console.log(that.$access_token);
 			uni.request({
 				url: that.$api+'user/user-info&access_token='+that.$access_token,
 				dataType: "json",
@@ -119,6 +127,9 @@
 					});
 				}
 			});
+		},
+		onLoad(opt) {
+			 
 		}
 	}
 </script>

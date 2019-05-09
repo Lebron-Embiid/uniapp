@@ -21,7 +21,7 @@
 						<view class="section_title">性别</view>
 						<view class="section_right">
 							<radio-group name="radio-group" @change="sexChange">
-								<label v-for="(item, index) in radio_sex" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="index === sex_current" />{{item.name}}</label>
+								<label v-for="(item, index) in radio_sex" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value === sex_current" />{{item.name}}</label>
 							</radio-group>
 						</view>
 					</view>
@@ -29,7 +29,7 @@
 						<view class="section_title">婚否</view>
 						<view class="section_right">
 							<radio-group name="radio-group" @change="marryChange">
-								<label v-for="(item, index) in radio_marry" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="index === marry_current" />{{item.name}}</label>
+								<label v-for="(item, index) in radio_marry" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value === marry_current" />{{item.name}}</label>
 							</radio-group>
 						</view>
 					</view>
@@ -37,17 +37,17 @@
 						<view class="section_title">育否</view>
 						<view class="section_right">
 							<radio-group name="radio-group" @change="bearChange">
-								<label v-for="(item, index) in radio_bear" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="index === bear_current" />{{item.name}}</label>
+								<label v-for="(item, index) in radio_bear" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value === bear_current" />{{item.name}}</label>
 							</radio-group>
 						</view>
 					</view>
 					<view class="section">
-						<view class="section_title">孩子数量</view>
+						<view class="section_title">孩子数</view>
 						<view class="section_right">
-							<input type="text" name="children" @input="getChildren" placeholder="请输入您的孩子数量" :value="children" />
+							<input type="text" name="children" @input="getChildren" placeholder="请输入您的孩子数" :value="children" />
 						</view>
 					</view>
-				</view>
+				</view> 
 				<view class="auth_name_box">
 					<view class="cui_title"><text>*</text>实名认证</view>
 					<view class="auth_ul">
@@ -66,12 +66,7 @@
 							<text>身份证反面</text>
 						</view>
 					</view>
-					<view class="section">
-						<view class="section_title">身份证号</view>
-						<view class="section_right">
-							<input type="text" name="id_card" @input="getIdcard" placeholder="请输入您的身份证号" :value="id_card" />
-						</view>
-					</view>
+					 
 				</view>
 				<view class="btn-area">
 					<button formType="submit" class="submit_btn">保存并绑定微信</button>
@@ -117,7 +112,8 @@
 				marry_current: 0,
 				bear_current: 0,
 				idcard_up: "",
-				idcard_down: ""
+				idcard_down: "",
+				user_real:0,
 			}
 		},
 		methods:{
@@ -208,9 +204,129 @@
 					}
 				});				
 			},
-			formSubmit: function(){
-				
+			formSubmit: function(){ 
+				let that = this;
+				console.log(that.username)
+				console.log(that.age)
+				console.log(that.sex_current)
+				console.log(that.marry_current)
+				console.log(that.bear_current)
+				console.log(that.children)
+				console.log(that.idcard_up)
+				console.log(that.idcard_down)
+				uni.request({
+					url: that.$api+'user/setting-edit&access_token='+that.$access_token,
+					method: 'POST',
+					data:{
+						user_name: that.username,
+						user_age: that.age,
+						user_sex: that.sex_current,
+						user_marry: that.marry_current,
+						user_rear: that.bear_current,
+						user_child: that.children,
+						user_just: that.idcard_up,
+						user_back: that.idcard_down,
+					},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {				
+						uni.login({
+							provider: 'weixin',
+							success: function (loginRes) {
+								console.log(loginRes.authResult);
+								uni.getUserInfo({
+									provider: 'weixin',
+									success: function (infoRes) {
+										console.log('用户昵称为：' + infoRes.userInfo.nickName);
+									}
+								});
+							}
+						});		
+						var data = res.data.data 
+						if(res.data.code == 0){
+							//绑定微信
+							 uni.request({
+							 	url: that.$api+'user/agent-information/&access_token='+that.$access_token,
+							 	dataType: "json",
+							 	method: 'POST',
+							 	header: {
+							 		'content-type': 'application/x-www-form-urlencoded'
+							 	},
+							 	success: res => {
+							 		var data = res.data.data
+							 		if(res.data.code == 0){
+										console.log(data)
+										uni.setStorageSync('access_token',data.access_token);
+										uni.setStorageSync('level',data.level);
+										uni.showToast({title:data.msg,icon:'none',duration:1500});
+										that.$access_token = uni.getStorageSync('access_token');
+										that.$level = uni.getStorageSync('level');
+							 		}else{
+							 			uni.showToast({
+							 				title:res.data.msg,
+							 				icon:'none',
+							 			});
+							 		}  
+							 	}, 
+							 });
+							
+						}else{
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+								duration: 1000
+							});
+						}
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
 			}
+		},
+		onShow: function(){
+			var that = this;
+			uni.request({
+				url: that.$api+'user/setting/&access_token='+that.$access_token,
+				dataType: "json",
+				method: 'GET',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					var data = res.data.data
+					if(res.data.code == 0){
+						that.username = data.user_name;
+						that.age = data.user_age;
+						that.sex_current = data.user_sex;
+						that.marry_current = data.user_marry;
+						that.bear_current = data.user_rear;
+						that.children = data.user_child;
+						that.idcard_up = data.user_just;
+						that.idcard_down = data.user_back;
+						that.user_real = data.user_real;
+					}else{
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}  
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
+			});
+		},
+		onLoad(opt) {
+			
 		}
 	}
 </script>

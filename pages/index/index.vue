@@ -170,9 +170,11 @@
 				})
 			}
 		},
+		onShow() {
+			console.log(this.$access_token);
+		},
 		onLoad() {
 			var that = this;
-			console.log(that.$access_token);
 			uni.request({
 				url: that.$api+'default/index',
 				method: 'GET',
