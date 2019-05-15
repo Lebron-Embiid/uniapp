@@ -1,16 +1,10 @@
 <template>
 	<view class="science_box">
-		<view class="page_bg"></view>
-		<view class="form_top">
-			<form @click="toSearch" class="form_box">
-				<input @input="getKeyword" type="text" placeholder="请输入您要搜索的关键词" value="" />
-				<button><image src="../../static/search.png" mode=""></image></button>
-			</form>
-		</view>
+		<view class="page_bg"></view> 
 		<view class="science_ul">
 			<view class="science_item" :class="[item.show == 'true'?'':'active']" v-for="(item,index) in science_list" :key="index">
-				<view class="si_question">{{item.question}}</view>
-				<view class="si_answer"><text>答：</text><view>{{item.answer}}</view></view>
+				<view class="si_question">{{item.content}}</view>
+				<view class="si_answer"><text>答：</text><view>{{item.reply_content}}</view></view>
 				<view class="si_showAll" @click="toShowAll(index)"><image src="../../static/next.png" mode=""></image><block v-if="item.show == 'true'">隐藏</block><block v-else>展开</block></view>
 			</view>
 		</view>
@@ -45,59 +39,15 @@
 			},
 			getKeyword: function(e){
 				this.keyword = e.detail.value;
-			},
-			toSearch: function(e){
-				var that = this;
-				console.log(that.keyword)
-				uni.request({
-					url: that.$api+'default/article-list&page=1&cat_id=3',
-					method: 'GET',
-					data:{keyword:that.keyword},
-					dataType: "json",
-					success: res => {
-						var science_list = [];
-						for(var i in res.data.data.list){
-							var item = res.data.data.list;
-							science_list.push({
-								show: false,
-								id: item[i].id,
-								question: item[i].title,
-								answer: item[i].describe
-							})
-						}
-						that.science_list = science_list;
-					},
-					fail: () => {
-						uni.showToast({
-							icon: 'none',
-							title: res.data.msg,
-							duration: 2000
-						})
-					}
-				});
 			}
-		},
-		onNavigationBarButtonTap: function(){
-			uni.navigateTo({
-				url: "/pages/message/message"
-			})
 		},
 		onLoad(){
 			var that = this;
 			uni.request({
-				url: that.$api+'default/article-list&page=1&cat_id=3',
+				url: that.$api+'default/article-message-list&access_token='+that.$access_token,
 				method: 'GET',
 				success: res => {
-					var science_list = [];
-					for(var i in res.data.data.list){
-						var item = res.data.data.list;
-						science_list.push({
-							show: false,
-							id: item[i].id,
-							question: item[i].title,
-							answer: item[i].describe
-						})
-					}
+					var science_list = res.data.data.list;					
 					that.page_count = res.data.data.page_count;
 					that.science_list = science_list;
 				},
@@ -123,20 +73,11 @@
 			if(that.page)
 		   that.page = parseInt(that.page)+parseInt(1)	
 			uni.request({
-				url: that.$api+'default/article-list&cat_id=3',
+				url: that.$api+'default/article-message-list&access_token='+that.$access_token,
 				method: 'GET',
-				data:{page:that.page,keyword:that.keyword},
+				data:{page:that.page},
 				success: res => {
-					let news_list = [];
-					for(let i in res.data.data.list){
-						let item = res.data.data.list;
-						news_list.push({
-							show: false,
-							id: item[i].id,
-							question: item[i].title,
-							answer: item[i].describe							
-						})
-					}
+					let news_list =  res.data.data.list;						
 					that.science_list = that.science_list.concat(news_list)
 				},
 				fail: () => {
@@ -182,7 +123,7 @@
 				width: 90%;
 			}
 		}
-		.si_showAll{
+		.si_showAll,.si_showTitle{
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
@@ -197,6 +138,11 @@
 			}
 		}
 		&.active{
+			.si_question{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 			.si_answer{
 				view{
 					overflow : hidden;
@@ -208,7 +154,7 @@
 					word-break: break-all;
 				}
 			}
-			.si_showAll{
+			.si_showAll,.si_showTitle{
 				image{
 					transform: rotate(90deg)
 				}

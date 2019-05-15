@@ -19,7 +19,16 @@
 			</view>
 			<view class="section">
 				<view class="left_txt">提现方式</view>
-				<view class="txt">微信</view>
+				<view class="txt">
+					<picker class="pic_box" @change="bindPickerChange" :value="index" :range="array">
+                        <view class="uni-input">{{array[index]}}</view>
+						<image src="../../static/next.png" mode="widthFix"></image>
+                    </picker>
+				</view>
+			</view>
+			<view class="section section_img">
+				<view class="left_txt">二维码</view>
+				<view class="img" @click="selectCode"><image :src="code_img" mode=""></image></view>
 			</view>
 			<view class="btn-area">
 				<button formType="submit" class="submit_btn">提现</button>
@@ -35,7 +44,10 @@
 				name: "",
 				username: "",
 				over_money: "0",
-				money: ""
+				money: "",
+				code_img: "",
+				array: ['微信提现', '支付宝提现'],
+				index: 0
 			}
 		},
 		methods:{
@@ -48,9 +60,70 @@
 			setMoney: function(e){
 				this.money = e.detail.value;
 			},
+			selectCode: function(e){
+				var that = this;
+				uni.chooseImage({
+					count: 1, //默认9
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: function (res) {
+						// console.log(JSON.stringify(res.tempFilePaths));
+						uni.uploadFile({
+							url: that.$api+'default/upload-image', //图片接口
+							filePath: res.tempFilePaths[0],
+							name: 'image',
+							success: (uploadFileRes) => {
+								var data = JSON.parse(uploadFileRes.data);
+								// console.log(data.data.url);
+								if(data.code == 1){
+									uni.showToast({
+										title:data.msg,
+										icon:'none', 
+									});
+									return false;
+								}
+								that.code_img = data.data.url;
+								console.log(that.code_img)
+							}
+						});
+					}
+				});
+			},
+			bindPickerChange: function(e){
+				this.index = e.target.value;
+			},
 			formSubmit: function(e){
 				console.log(this.money);
 				var that = this;
+				if(that.name == ''){
+					uni.showToast({
+						title:"姓名不为空",
+						icon:'none', 
+					});
+					return false;
+				} 
+				console.log(that.username)
+				if(that.username == ''){
+					uni.showToast({
+						title:"账号不为空",
+						icon:'none', 
+					});
+					return false;
+				}
+				if(that.money == ''){
+					uni.showToast({
+						title:"提现金额不为空",
+						icon:'none', 
+					});
+					return false;
+				}
+				if(that.code_img == ''){
+					uni.showToast({
+						title:"提现二维码不为空",
+						icon:'none', 
+					});
+					return false;
+				}
 				uni.request({
 					url: that.$api+'share/apply&access_token='+that.$access_token,
 					method: 'POST',
@@ -58,8 +131,9 @@
 						name: that.name,
 						mobile: that.username,
 						cash: that.money,
-						pay_type: 0,
+						pay_type: that.index,
 						form_id:'the formId is a mock one',
+						cover_pic:that.code_img
 					},
 					dataType: "json",
 					header: {
@@ -136,11 +210,55 @@
 			.txt{
 				color: #333;
 				font-size: 20upx;
+				width: 80%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				.pic_box{
+					width: 100%;
+					view{
+						display: inline-block;
+					}
+					image{
+						display: block;
+						float: right;
+						width: 20upx;
+						height: 34upx !important;
+					}
+				}
+			}
+			.img{
+				width: 180upx;
+				height: 180upx;
+				border: 1px solid #eee;
+				position: relative;
+				&:after{
+					content: "+";
+					color: #999;
+					font-size: 100upx;
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%,-50%);
+					z-index: 0;
+				}
+				image{
+					display: block;
+					width: 100%;
+					height: 100% !important;
+					position: relative;
+					z-index: 5;
+				}
 			}
 			input{
 				color: #333;
 				font-size: 22upx;
 			}
+		}
+		.section_img{
+			height: auto;
+			line-height: auto;
+			padding: 30upx 20upx;
 		}
 		.submit_btn{
 			width: 80%;

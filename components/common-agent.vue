@@ -2,12 +2,29 @@
 	<view class="agent_box">
 		<view class="agent_item" v-for="(item,index) in agentList" :key="index">
 			<view class="ai_left">
-				<image :src="item.avatar" mode="widthFix"></image>
-				<text>{{item.nickname}}</text>
+				<view class="ai_img">
+					<image :src="item.avatar" mode="widthFix"></image>
+					<span>{{item.user_step}}</span>
+				</view>
+				<view class="ai_info">
+					<text>{{item.nickname}}</text>
+					<view>{{item.username}}</view> 
+				</view>
 			</view>
 			<view class="ai_right">
 				<view class="ar_time">加入时间：{{item.addtime}}</view>
-				<view class="ar_type">{{item.level_name}}</view>
+				<view class="ar_type" style="color: #FF4544;">
+					<block v-if="item.brand_id == 1">
+						<text>A{{item.level}}</text>
+					</block>					
+					<block v-if="item.brand_id == 2">
+						<text>N{{item.west}}</text>
+					</block>					
+					<block v-if="item.brand_id == 4">
+						<text>A{{item.level}}</text>
+						<text>N{{item.west}}</text>
+					</block>					 
+				</view>
 			</view>
 		</view>
 	</view>
@@ -42,13 +59,35 @@
 			.ai_left{
 				color: #1a1a1a;
 				font-size: 26upx;
-				image{
+				width: 60%;
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+				.ai_img{
 					display: inline-block;
-					vertical-align: middle;
 					width: 57upx;
-					height: 57upx !important;
-					border-radius: 50%;
-					margin: 0 15upx 8upx 0;
+					height: 57upx;
+					margin-right: 30upx;
+					position: relative;
+					span{
+						position: absolute;
+						width: 30upx;
+						height: 30upx;
+						right: -5upx;
+						bottom: -5upx;
+						border-radius: 50%;
+						color: #fff;
+						font-size: 18upx;
+						background: #f00;
+					}
+					image{
+						display: inline-block;
+						vertical-align: middle;
+						width: 100%;
+						height: 100% !important;
+						border-radius: 50%;
+						margin: 0 15upx 8upx 0;
+					}
 				}
 			}
 			.ai_right{
@@ -61,6 +100,9 @@
 				.ar_type{
 					color: #1a1a1a;
 					font-size: 20upx;
+					text{
+						margin-left: 10upx;
+					}
 				}
 			}
 		}

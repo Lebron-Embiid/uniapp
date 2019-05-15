@@ -30,12 +30,13 @@
 		},
 		props:{
 			isDownload: Number,
-			video_list: Array
+			video_list: Array,
+			istype: Number,
 		},
 		methods:{
 			toVideoDetail: function(e){
 				uni.navigateTo({
-					url: "/pages/video/video?id="+e
+					url: "/pages/video/video?id="+e+"&istype="+this.istype
 				})
 			},
 			toDownload: function(e){
@@ -49,7 +50,7 @@
 					}
 				});
 			}
-		}
+		}, 
 	}
 </script>
 

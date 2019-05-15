@@ -4,15 +4,18 @@
 		<view class="withdraw_box">
 			<view class="over_word">可用余额(元)</view>
 			<view class="over_money">￥{{over_money}}</view>
-			<view class="withdraw_btn" @click="toWithdraw">提现</view>
+			<view class="over_btn_box">
+				<view class="withdraw_btn" @click="toWithdraw">提现</view>
+				<view class="withdraw_btn" @click="toRecharge">充值</view>
+			</view>
 		</view>
 		<view class="record_box">
 			<view class="record_item" v-for="(item,index) in record_list" :key="index">
 				<view class="record_info">
 					<view class="ri_name">{{item.nickname}}<text class="ri_time">{{item.addtime}}</text></view>
 					<view class="ri_money_box">
-						<view class="ri_money">订单号<text class="ri_red" >{{item.order_no}}</text></view>
-						<view class="ri_money">订单金额<text class="ri_red">￥{{item.price}}</text></view>
+						<view class="ri_money"><!-- <text class="ri_title">商品</text> --><text class="ri_red">{{item.content}}</text><text class="ri_num">×{{item.num}}</text></view>
+						<view class="ri_money">可得积分<text class="rt_red">￥{{item.price}}</text></view>
 					</view>
 				</view>
 				<!-- <view class="record_content" hidden>
@@ -43,6 +46,11 @@
 			toWithdraw: function(e){
 				uni.navigateTo({
 					url: "/pages/withdraw/withdraw?money="+this.over_money
+				})
+			},
+			toRecharge: function(e){
+				uni.navigateTo({
+					url: "/pages/recharge/recharge?money="+this.over_money
 				})
 			}
 		},
@@ -123,14 +131,20 @@
 				font-size: 60upx;
 				margin: 0 0 60upx;
 			}
-			.withdraw_btn{
+			.over_btn_box{
 				width: 80%;
 				margin: 0 auto;
-				color: #fff;
-				font-size: 24upx;
-				background: #00001f;
-				padding: 20upx 0;
-				border-radius: 5upx;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				.withdraw_btn{
+					width: 45%;
+					color: #fff;
+					font-size: 24upx;
+					background: #00001f;
+					padding: 20upx 0;
+					border-radius: 5upx;
+				}
 			}
 		}
 		.record_box{
@@ -153,10 +167,19 @@
 						}
 					}
 					.ri_money{
+						display: flex;
+						justify-content: space-between;
+						align-items: flex-start;
 						// float: right;
 						font-size: 24upx;
 						margin-bottom: 10upx;
+						.rt_red{
+							width: 84%;
+							color: #d70d0d;
+							margin-left: 10upx;
+						}
 						.ri_red{
+							width: 80%;
 							color: #d70d0d;
 							margin-left: 10upx;
 						}
@@ -187,6 +210,7 @@
 								// white-space: nowrap;
 							}
 							.ri_num{
+							    color: #d70d0d;
 								float: left;
 							}
 						}

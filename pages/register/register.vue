@@ -138,7 +138,7 @@
 				    data: {
 						contact_way:that.phoneno,
 						password:that.password
-// 						code:this.code,
+// 						uid:this.code,
 // 						invitation:this.invitation
 					},
 					method: 'POST',
@@ -153,10 +153,12 @@
 						}else{
 							uni.showToast({title:res.data.msg});
 							uni.setStorageSync('access_token',res.data.data.access_token);
-							that.$access_token = uni.getStorageSync('access_token');
+							uni.setStorageSync('level',res.data.data.level);
+							that.$access_token = uni.getStorageSync('access_token'); 
+							that.$level = uni.getStorageSync('level');
 							setTimeout(function(){
 								uni.reLaunch({
-									url: "/pages/login/login"
+									url: "/pages/complete_mater/complete_mater"
 								})
 							},1500) 
 						}

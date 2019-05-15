@@ -1,9 +1,9 @@
 <template>
 	<view class="my_agent_box">
 		<view class="page_bg"></view>
-		<view class="agent_nav" style="display: none;">
+		<!-- <view class="agent_nav" style="display: none;">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}({{item.num}}人)</view>
-		</view>
+		</view> -->
 		<!-- 一级代理 -->
 		<view class="agent_list" v-show="currentTab == 0">
 			<commonAgent :agentList="agentList1"></commonAgent>
@@ -27,22 +27,22 @@
 				navbar:[{name:"一级代理",num: 0},{name:"二级代理",num: 5}],
 				currentTab:0,
 				agentList1: [
-					{
+					// {
 // 						id: 1,
 // 						avatar: "../../static/avatar1.png",
 // 						name: "小黄鸭",
 // 						time: "2019-03-26",
 // 						type: "天使代理"
-					}
+					// }
 				],
 				agentList2: [
-					{
+					// {
 // 						id: 2,
 // 						avatar: "../../static/avatar2.png",
 // 						name: "小黄鸭",
 // 						time: "2019-03-26",
 // 						type: "天使代理"
-					}
+					// }
 				]
 			}
 		},
@@ -194,7 +194,7 @@
 		}
 	}
 	.agent_list{
-		padding-top: 60px;
+		// padding-top: 60px;
 		box-sizing: border-box;
 	}
 </style>

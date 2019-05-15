@@ -1,11 +1,12 @@
 <template>
 	<view class="order_box">
+	<block v-if="orderList.length > 0">
 		<view class="order_item" v-for="(item,index) in orderList" :key="index">
 			<view class="order_top">
 				<view>订单号：{{item.order_no}}</view>
 				<view><image src="../../static/clock.png" mode="widthFix"></image>{{item.time}}</view>
 				<!-- <text :class="[item.status?'active':'']">{{item.statusText}}</text> -->
-			</view>
+			</view> 
 			<view class="order_info" @click="toOrderDetail(item.id)" v-for="(goods,idx) in item.goods" :key="idx">
 				<view class="oi_left"><image :src="goods.goods_pic" mode="widthFix"></image></view>
 				<view class="oi_center">
@@ -23,9 +24,12 @@
 				<view class="ob_btn">
 					<block v-if="item.is_pay == 0 && current == 0">
 						<button @click="toCancle(item.id)">取消订单</button>
-						<button @click="toPay(item.id)">去支付</button>
+						<button @click="toPay(item.id,item.pay)">去支付</button>
 					</block>
-					<block v-if="item.is_send == 1 && current == 2">
+					<block v-if="item.is_send == 1 && current == 2">			
+						<block v-if="item.express != ''">
+						   <button @click="logisticsOrder(item.id)">查看物流</button>
+						</block>
 						<button @click="queryOrder(item.id)">确认收货</button>
 					</block>
 					<block v-if="item.is_comment == 0 && current == 3">
@@ -34,6 +38,10 @@
 				</view>
 			</view>
 		</view>
+	  </block>
+	  <block v-else>
+		  <view class="not_have">暂无相关订单</view>
+	  </block>
 	</view>
 </template>
 
@@ -49,14 +57,21 @@
 			orderList: Array
 		},
 		methods:{
-			toPay: function(e){
-				var that = this;
+			toPay: function(id,all){
+				var that = this; 
+				if(all >= 10000){
+					uni.showToast({
+						title:'联系平台下单',
+						icon: 'none', 
+					})	
+					return false;
+				} 
 				uni.request({
 					url: that.$api+'order/pay-data&access_token='+that.$access_token,
 					method: 'GET',
 					dataType: "json",
 					data: {
-						order_id:e, 
+						order_id:id, 
 						pay_type:'WECHAT_PAY',
 						parent_user_id:0,
 						condition:2, 
@@ -118,6 +133,11 @@
 					url: "/pages/order_comment/order_comment?id="+e
 				})
 			},
+			logisticsOrder:function(e){
+				uni.navigateTo({
+					url: "/pages/logistics/logistics?id="+e
+				})
+			},
 			queryOrder: function(e){
 				var that = this;
 				console.log(e)
@@ -153,6 +173,12 @@
 </script>
 
 <style scoped lang="scss">
+	.not_have{
+		text-align: center;
+		margin: 300upx 0 0;
+		font-size: 28upx;
+		color: #999;
+	} 
 	.order_item{
 		background: #fff;
 		padding: 25upx;

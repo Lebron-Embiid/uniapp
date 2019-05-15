@@ -17,15 +17,15 @@
 			</view>
 		</view>
 		<view class="acc_item borbom">
-			<text>支付方式</text>
-			<view class="acc_right pr45">
-				在线支付
+			<!-- <text>支付方式</text acc_right> -->
+			<view class="pr45">
+				支付方式
 				<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
 			</view>
-			<!-- <picker class="acc_right" @change="bindPickerChange" :value="index" :range="array">
+			<picker class="acc_right" @change="bindPickerChange" :value="index" :range="array">
 				<view class="uni-input">{{array[index]}}</view>
 				<image src="../../static/next.png" mode="widthFix"></image>
-			</picker> -->
+			</picker>
 		</view>
 		<view class="acc_content borbom">
 			<view class="content_item" v-for="(item,index) in accountList" :key="index">
@@ -74,7 +74,7 @@
 				},
 				content:'',
 				cat_list : [],
-				array: ['在线支付', '货到付款'],
+				array: ['在线支付', '余额支付'],
 				index: 0,
 				express_price: 0,
 				accountList:[
@@ -101,6 +101,8 @@
 				level_price:0,
 				total_price:0,
 				mch_list:[],
+				payment:0,
+				pay_type:'WECHAT_PAY'				
 			}
 		},
 		methods:{
@@ -118,6 +120,14 @@
 			bindPickerChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
+				if(this.index == 0){
+					this.payment = 0,
+					this.pay_type = 'WECHAT_PAY'
+				}else{
+					this.payment = 3
+					this.pay_type = 'BALANCE_PAY'
+				}
+				console.log(this.index)
 			},
 			getMess:function(e){
 				this.content = e.detail.value;
@@ -127,12 +137,19 @@
  				that.mch_list[0].show = false;
  				that.mch_list[0].show_length = 0;
  				that.mch_list[0].offline = 0;
-  				that.mch_list[0].content = that.content,
+  				that.mch_list[0].content = that.content;
+				if(that.all > 10000){
+					uni.showToast({
+						title:"联系平台下单",
+						icon: 'none'
+					})	
+					return false;
+				}
  				uni.request({
 					url: that.$api+'order/new-submit&access_token='+that.$access_token,
 					method: 'POST',
 					data: {
-						payment:0,
+						payment:that.payment,
 						use_integral:1,
 						formId:undefined,
 						mch_list:JSON.stringify(that.mch_list)
@@ -156,7 +173,7 @@
 									method: 'GET',
 									data: {
 										order_id:res.data.data.order_id, 
-										pay_type:'WECHAT_PAY',
+										pay_type:that.pay_type,
 										parent_user_id:0,
 										condition:2,
 							            cat_list:that.cat_list
@@ -165,7 +182,22 @@
 									header: {
 										'content-type': 'application/x-www-form-urlencoded'
 									},
-									success: res => {
+									success: res => { 
+										uni.requestPayment({
+											provider: 'wxpay',
+											timeStamp: res.data.data.timeStamp,
+											nonceStr: res.data.data.nonceStr,
+											package: res.data.data.package,
+											signType: res.data.data.signType,
+											paySign: res.data.data.paySign,
+											success: function (res) {
+												console.log(res)
+												console.log('success:' + JSON.stringify(res));
+											},
+											fail: function (err) {
+												console.log('fail:' + JSON.stringify(err));
+											}
+										});
 										uni.showToast({
 											title:res.msg,
 											icon: 'none',
@@ -175,9 +207,15 @@
 								})
 							},1000)
 						}else{
-							 uni.navigateTo({ 
-							 	// url: "/pages/information/information"
-							 })
+							uni.showToast({
+								title:'金额大于一万请需通过其他渠道支付货款',
+								icon: 'none', 
+							})	
+							setTimeout(function(){
+								uni.navigateTo({ 
+									url: "/pages/my_order/my_order?id=0"
+								})
+							},1500)							 
 						}
 						
 					},

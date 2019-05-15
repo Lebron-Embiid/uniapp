@@ -2,9 +2,9 @@
 <template name="glanceShopcart">
 	<view class="glance-shop-cart" style="background-color: #F5F5F5;" @touchmove ="scrollhoming" @touchend="scrollhomed">
 		<!-- 空购物车背景 -->
-		<view v-if="shownullcart" style="width: 100%;height: 250px;background: #fff;padding-top: 300upx;" >
+		<view v-if="shownullcart" style="width: 100%;height: 250px;background: #fff;padding-top: 300upx;" @click="toStore">
 			<view class="glance-shop-cart-nullcart"></view>
-			<view style="height: 30px;width: 100%;font-size: 15px;line-height: 30px;text-align: center;" @click="toStore">您的购物车为空，快去商城添加商品吧！</view>
+			<view style="height: 30px;width: 100%;font-size: 15px;line-height: 30px;text-align: center;color:#025aa5;" >您的购物车为空，快去商城添加商品吧！</view>
 		</view>
 		
 		<!-- 购物车商品 -->

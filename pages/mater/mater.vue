@@ -1,7 +1,7 @@
 <template>
 	<view class="mater_box">
 		<view class="page_bg"></view>
-		<view class="list_nav" >
+		<view class="list_nav" style="top:45px;">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
 		<view class="mt44"></view>
@@ -33,7 +33,7 @@
 				<button><image src="../../static/search.png" mode=""></image></button>
 			</form> -->
 			<view class="video_content">
-				<commonVideo :video_list="video_list" :isDownload="0"></commonVideo>
+				<commonVideo :video_list="video_list" :istype="1" :isDownload="0"></commonVideo>
 			</view>
 		</view>
 	</view>
@@ -107,6 +107,7 @@
 							var page_count = res.data.data.page_count; 
 							for(let i in item){
 								video_list.push({
+									id: item[i].id,
 									poster: item[i].cove_pic,
 									avatar: item[i].avatar_url,
 									title: item[i].title,

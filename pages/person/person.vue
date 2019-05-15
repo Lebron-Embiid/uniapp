@@ -81,14 +81,15 @@
 				})
 			},
 			logOut:function(){
-				var that = this;
-				uni.removeStorageSync('access_token');
-				uni.removeStorageSync('level');
-				uni.clearStorageSync();
- 				that.$access_token = "";
-				that.$level = "";
-				console.log(that.$access_token)
-				console.log(that.$level)
+			var that = this;
+				uni.setStorageSync('access_token','');
+				uni.setStorageSync('level','');
+ 				that.$access_token = uni.getStorageSync('access_token');
+				that.$level = uni.getStorageSync('level');
+				 uni.showToast({
+				 	title:"退出成功",
+				 	icon:'none',
+				 });
 				setTimeout(function(){
 					uni.reLaunch({
 						url: "/pages/login/login"
@@ -96,10 +97,8 @@
 				},1500)
 			}
 		},
-		onShow() {
-			console.log(this.$access_token);
+		onShow:function() {
 			var that = this; 
-			console.log(that.$access_token);
 			uni.request({
 				url: that.$api+'user/user-info&access_token='+that.$access_token,
 				dataType: "json",

@@ -1,7 +1,7 @@
 <template>
 	<view class="my_order_box">
 		<view class="page_bg"></view>
-		<view class="order_nav">
+		<view class="order_nav" style="top:45px;">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
 		<!-- 全部订单 -->
@@ -103,6 +103,7 @@
 // 							}
 							orderList.push({
 								id: item.list[i].order_id,
+								express: item.list[i].express,
 								order_no: item.list[i].order_no,
 								time: item.list[i].addtime,
 								status: !item.list[i].pay_type,
@@ -150,6 +151,7 @@
 					for(let i in item.list){ 
 						orderList.push({
 							id: item.list[i].order_id,
+							express: item.list[i].express,
 							order_no: item.list[i].order_no,
 							time: item.list[i].addtime,
 							status: !item.list[i].pay_type,

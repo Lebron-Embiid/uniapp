@@ -21,7 +21,7 @@
 						<view class="section_title">性别</view>
 						<view class="section_right">
 							<radio-group name="radio-group" @change="sexChange">
-								<label v-for="(item, index) in radio_sex" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value === sex_current" />{{item.name}}</label>
+								<label v-for="(item, index) in radio_sex" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value == sex_current" />{{item.name}}</label>
 							</radio-group>
 						</view>
 					</view>
@@ -29,7 +29,7 @@
 						<view class="section_title">婚否</view>
 						<view class="section_right">
 							<radio-group name="radio-group" @change="marryChange">
-								<label v-for="(item, index) in radio_marry" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value === marry_current" />{{item.name}}</label>
+								<label v-for="(item, index) in radio_marry" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value == marry_current" />{{item.name}}</label>
 							</radio-group>
 						</view>
 					</view>
@@ -37,7 +37,7 @@
 						<view class="section_title">育否</view>
 						<view class="section_right">
 							<radio-group name="radio-group" @change="bearChange">
-								<label v-for="(item, index) in radio_bear" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value === bear_current" />{{item.name}}</label>
+								<label v-for="(item, index) in radio_bear" :key="item.value"><radio :value="item.value" color="#12bc0a" :checked="item.value == bear_current" />{{item.name}}</label>
 							</radio-group>
 						</view>
 					</view>
@@ -174,9 +174,14 @@
 							name: 'image',
 							success: (uploadFileRes) => {
 								var data = JSON.parse(uploadFileRes.data);
-								console.log(data.data.url);
-								that.idcard_up = data.data.url;
-								console.log(that.idcard_up)
+								if(data.code == 0){
+									that.idcard_up = data.data.url;
+								}else{
+									uni.showToast({
+										title:data.msg,
+										icon:'none',
+									});
+								} 
 							}
 						});
 					}
@@ -196,24 +201,22 @@
 							name: 'image',
 							success: (uploadFileRes) => {
 								var data = JSON.parse(uploadFileRes.data);
-								console.log(data.data.url);
-								that.idcard_down = data.data.url;
-								console.log(that.idcard_up)
+ 								that.idcard_down = data.data.url;
+								if(data.code == 0){
+									that.idcard_down = data.data.url;
+								}else{
+									uni.showToast({
+										title:data.msg,
+										icon:'none',
+									});
+								}  
 							}
 						});
 					}
 				});				
 			},
 			formSubmit: function(){ 
-				let that = this;
-				console.log(that.username)
-				console.log(that.age)
-				console.log(that.sex_current)
-				console.log(that.marry_current)
-				console.log(that.bear_current)
-				console.log(that.children)
-				console.log(that.idcard_up)
-				console.log(that.idcard_down)
+				let that = this; 
 				uni.request({
 					url: that.$api+'user/setting-edit&access_token='+that.$access_token,
 					method: 'POST',
@@ -231,19 +234,7 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: res => {				
-						uni.login({
-							provider: 'weixin',
-							success: function (loginRes) {
-								console.log(loginRes.authResult);
-								uni.getUserInfo({
-									provider: 'weixin',
-									success: function (infoRes) {
-										console.log('用户昵称为：' + infoRes.userInfo.nickName);
-									}
-								});
-							}
-						});		
+					success: res => {						
 						var data = res.data.data 
 						if(res.data.code == 0){
 							//绑定微信
@@ -291,6 +282,7 @@
 		},
 		onShow: function(){
 			var that = this;
+			
 			uni.request({
 				url: that.$api+'user/setting/&access_token='+that.$access_token,
 				dataType: "json",

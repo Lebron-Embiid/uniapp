@@ -12,14 +12,14 @@
 			</view>
 		</view>
 		<view class="order_info bb12">
-			<!-- <view class="order_next" @click="toLogistics(id)"> -->
-			<view class="order_next" v-if="orders.express_no != ''">
+			<view class="order_next" @click="toLogistics(id)" v-if="orders.express_no != ''">
+			<!-- <view class="order_next" v-if="orders.express_no != ''"> -->
 				<image src="../../static/car_icon1.png" class="icon" mode="widthFix"></image>
 				<view class="on_center">
 					<view class="oc_title">物流公司:{{orders.express}}</view>
 					<view class="oc_time">物流单号:{{orders.express_no}}</view>
 				</view>
-				<!-- <image src="../../static/next.png" class="next" mode="widthFix"></image> -->
+				<image src="../../static/next.png" class="next" mode="widthFix"></image>
 			</view>
 			<view class="oi_name">{{orders.name}} <text>{{orders.mobile}} </text></view>
 			<view class="oi_address"><image src="../../static/car_icon2.png" mode="widthFix"></image>{{orders.address}} </view>
@@ -62,20 +62,20 @@
 			return{     
 				id: 1,
 				orders:[
-					{
-						id: 1,
-						time: "2019-03-20 15:21",
-						status: true,
-						statusText: "等待您的付款",
-						img: "../../static/order_img1.jpg",
-						title: "艾璐卡柔雾丝绒唇釉",
-						info: "持久滋润·饱满显色·细腻亮泽·抚平唇纹",
-						type: "6.8ml",
-						price: 168,
-						num: 1,
-						pay: 168,
-						finish: false
-					}
+					// {
+					// 	id: 1,
+					// 	time: "2019-03-20 15:21",
+					// 	status: true,
+					// 	statusText: "等待您的付款",
+					// 	img: "../../static/order_img1.jpg",
+					// 	title: "艾璐卡柔雾丝绒唇釉",
+					// 	info: "持久滋润·饱满显色·细腻亮泽·抚平唇纹",
+					// 	type: "6.8ml",
+					// 	price: 168,
+					// 	num: 1,
+					// 	pay: 168,
+					// 	finish: false
+					// }
 				]
 			}
 		},

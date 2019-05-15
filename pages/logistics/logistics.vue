@@ -1,10 +1,13 @@
 <template>
 	<view class="logistics_box">
 		<view class="logist_top">
-			<view class="lt_img"><image :src="goods_pic" mode="widthFix"></image></view>
+			<!-- <view class="lt_img"><image :src="goods_pic" mode="widthFix"></image></view> -->
 			<view class="lt_word">
-				<view>快递公司<text>{{express}}</text></view>
-				<view>快递单号<text>{{express_no}}</text></view>
+				<view class="log_erpss">快递信息</view>
+				<block>
+					<view>{{express}}<text class="blue" @click="logerpssTap(order_id)">查看</text></view>	
+					<view v-for="(item,index) in exprss_content" :key="index">{{item}}<text class="blue" @click="navbarTap(index)">查看</text></view>				
+				</block>
 				<!-- <view>官方电话<text class="red">{{phone}}</text></view> -->
 			</view>
 		</view>
@@ -13,8 +16,8 @@
 			<view class="logist_box">
 				<view class="logist_item" v-for="(item,index) in logists" :key="index">
 					<view class="li_box">
-						<view class="li_title">{{item.title}}</view>
-						<view class="li_time">{{item.time}}</view>
+						<view class="li_title">{{item.AcceptStation}}</view>
+						<view class="li_time">{{item.AcceptTime}}</view>
 					</view>
 				</view>
 			</view>
@@ -26,71 +29,67 @@
 	export default{
 		data(){
 			return{
+				order_id:'',
 				express: "",
 				express_no: "",
 				phone: "",
 				goods_pic: "",
-				logists:[
-// 					{
-// 						title: "【深圳市】快件已送到代收点，感谢使用中通快递，期待再次为您服务！",
-// 						time: "2018-11-23 19:28:12"
-// 					},
-// 					{
-// 						title: "【深圳市】快件已到达 【深圳爱联】",
-// 						time: "2018-11-23 19:28:12"
-// 					},
-// 					{
-// 						title: "【深圳市】 快件离开 【深圳中心】 发往 【深圳爱联】",
-// 						time: "2018-11-23 19:28:12"
-// 					},
-// 					{
-// 						title: "【深圳市】 快件到达 【深圳中心】",
-// 						time: "2018-11-23 19:28:12"
-// 					},
-// 					{
-// 						title: "【嘉兴市】 快件离开 【杭州中转部】 发往 【深圳中心】",
-// 						time: "2018-11-23 19:28:12"
-// 					},
-// 					{
-// 						title: "【嘉兴市】 快件到达 【杭州中转部】",
-// 						time: "2018-11-23 19:28:12"
-// 					},
-// 					{
-// 						title: "【杭州市】 快件离开 【杭州临平区】 发往 【深圳中心】",
-// 						time: "2018-11-23 19:28:12"
-// 					},
-// 					{
-// 						title: "已发货",
-// 						time: "2018-11-23 19:28:12"
-// 					},
-// 					{
-// 						title: "已下单",
-// 						time: "2018-11-23 19:28:12"
-// 					}
-				]
+				exprss_content:[],
+				logists:[]
 			}
+		},
+		methods:{
+			navbarTap: function(e){
+				//快递单号查询 
+				var that = this;
+				console.log(e)
+				uni.request({
+					url: that.$api+'order/express-other&order_id='+that.order_id+'&status='+e+'&type=mall&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						that.express = res.data.data.exprss_name; 
+						that.express_no = res.data.data.express_no;
+						that.goods_pic = res.data.data.goods_pic;
+						that.exprss_content = res.data.data.exprss_content
+						 
+						that.logists = res.data.data.list
+					},
+					fail: () => {
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})					
+					}
+				});
+			},
+			logerpssTap:function(e){
+				uni.navigateTo({
+					url: "/pages/logistics/logistics?id="+e
+				})
+			},
+			
 		},
 		onLoad(opt) {
 			var that = this;
+			that.order_id = opt.id;
 			uni.request({
-				url: that.$api+'order/express-detail&order_id=5&access_token='+that.$access_token,
+				url: that.$api+'order/express-detail&order_id='+opt.id+'&type=mall&access_token='+that.$access_token,
 				method: 'GET',
 				dataType: "json",
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					that.express = res.data.data.express;
+					that.express = res.data.data.exprss_name; 
 					that.express_no = res.data.data.express_no;
 					that.goods_pic = res.data.data.goods_pic;
-					for(let i in res.data.data.list){
-						var list = [];
-						list.push({
-							title: res.data.data.list[i].detail,
-							time: res.data.data.list[i].datetime,
-						})
-					}
-					that.logists = list
+					that.exprss_content = res.data.data.exprss_content 
+					that.logists = res.data.data.list 
 				},
 				fail: () => {
 					uni.showToast({
@@ -146,6 +145,12 @@
 					&.red{
 						color: #fa3d34;
 					}
+					&.blue{
+						color: #00a0e9;
+					}
+				}
+				&.log_erpss{
+					font-size: 32upx;
 				}
 			}
 		}

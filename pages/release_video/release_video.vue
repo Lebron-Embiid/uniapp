@@ -54,6 +54,7 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: function (res) {
+						console.log(res)
 						uni.uploadFile({
 							url: that.$api+'default/upload-image', //图片接口
 							filePath: res.tempFilePaths[0],
@@ -66,14 +67,39 @@
 						});
 					}
 				});
-			},
+			}, 
 			selectVideo: function(e){
-				var that = this;
+				var that = this; 
 				uni.chooseVideo({
 					count: 1,
 					sourceType: ['album', 'camera'],
-					success: function (res) {
-						that.video = res.tempFilePath;
+					success: function (res) { 
+						console.log(res)
+// 						uni.request({
+// 							url: "http://localhost/youlanphp/web/index.php?r=upload/video",
+// 							dataType: "json",
+// 							method: 'GET',
+// 							data: { 
+// 								store_id:1,
+// 								name: res.tempFilePath
+// 							},
+// 							header: {
+// 								'content-type': 'application/x-www-form-urlencoded'
+// 							},
+// 							success: res => {
+// 								 console.log(res);
+// 							},							 
+// 						});
+                            uni.uploadFile({
+                            	url: that.$api+'default/upload-video', //图片接口
+                            	filePath: res.tempFilePath,
+                            	name: 'video',
+                            	success: (uploadFileRes) => {
+                            		var data = JSON.parse(uploadFileRes.data);                            		
+                            		that.video = data.data.url;
+                            		console.log(that.video);
+                            	}
+                            });
 					}
 				});
 			},
@@ -95,7 +121,7 @@
 				title: "提示",
 				content: "确定发布？",
 				success: (res) => {
-					if(res.confirm){
+					// if(res.confirm){
 						var that = this;
 						if(that.title == ""){
 							uni.showToast({
@@ -122,12 +148,14 @@
 // 							});
 // 							return false;
 // 						}
-                     that.video = "http://gao2.demenk.com/shop/web/uploads/video/test.mp3";
+                        // that.video = "http://gao2.demenk.com/shop/web/uploads/video/test.mp3";
+						console.log(that.video)
+						// return false;
 						uni.request({
 							url: that.$api+'default/movies-edit&access_token='+that.$access_token,
 							dataType: "json",
 							method: 'POST',
-							data: {
+							data: { 
 								title: that.title,
 								cove_pic: that.poster,
 								url: that.video
@@ -156,7 +184,7 @@
 								});
 							}
 						});
-					}
+					// }
 				},
 				fail: (err) => {
 					console.log(err)

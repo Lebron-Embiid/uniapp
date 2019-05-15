@@ -9,7 +9,7 @@
 		<!-- 视频 -->
 		<view class="mt44"></view>
 		<view class="video_list" v-show="currentTab == 0">
-			<commonVideo :video_list="video_list" :isDownload="0"></commonVideo>
+			<commonVideo :video_list="video_list" :istype="0" :isDownload="0"></commonVideo>
 		</view>
 		<!-- 音频 -->
 		<view class="audio_list" v-show="currentTab == 1">
