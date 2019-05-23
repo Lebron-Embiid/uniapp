@@ -80,7 +80,7 @@
 				scrollposition:0,
 				// 实际项目中 购物车数据可从本地缓存中获取或从服务端获取
 				cart:[],
-				mch_list:[],
+				mch_list:[{mch_id:'',goods_list:[]}],
 				// 订单商品 购物车里已选择的商品生成订单
 				ordercart:[],
 				// 购买更多
@@ -100,6 +100,8 @@
 		},
 		onLoad:function() {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			// 从缓存或服务端获取到购物车商品 这里示例数据如下：
 			// var objcart = [
 // 				{
@@ -113,7 +115,7 @@
 // 					'type':'6.8ml'
 // 				}
 			// ]
-			
+			setTimeout(function () {
 			uni.request({
 				url: that.$api+'cart/list&access_token='+that.$access_token,
 				method: 'GET',
@@ -133,7 +135,7 @@
 							imgsrc: item[i].goods_pic,
 							// attributes:'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
 							quantity: item[i].num,
-							price: item[i].price,
+							price: item[i].unitPrice,
 							attr_list:item[i].attr_list
 						})
 					}
@@ -150,7 +152,7 @@
 								cart_id:that.cart[i].id
 							})
 					}
-					that.totalamount = that.fmamount(that.totalamount)
+					that.totalamount = that.fmamount(that.totalamount) 
 					console.log(that.goods_list)
 					if(that.cart.length == 0){
 						that.shownullcart = true;
@@ -160,7 +162,8 @@
 				},
 				fail: () => {}
 			});
-			
+			}, 1000);
+			uni.startPullDownRefresh(this.cart)
 
 			// 这里示例数据对象存入缓存
 // 			try {
@@ -181,16 +184,58 @@
 			
 			// console.log(this.cart)
 		},
-		// 下拉刷新
-		onPullDownRefresh(){
-			uni.startPullDownRefresh(this.cart)
-		},
 		// 停止刷新
 		onPullDownRefresh() {
+			var that = this;
 			setTimeout(function () {
+				uni.request({
+					url: that.$api+'cart/list&access_token='+that.$access_token,
+					method: 'GET',
+					success: res => {
+						var carList = [];
+						var item = res.data.data.list;
+						that.list = res.data.data.list; 
+						for(let i in that.list){
+							that.list[i].checked = true
+						}
+						console.log(that.list)
+						for(let i in item){
+							carList.push({
+								id: item[i].cart_id,
+								goods_id: item[i].goods_id,
+								name: item[i].goods_name,
+								imgsrc: item[i].goods_pic,
+								// attributes:'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
+								quantity: item[i].num,
+								price: item[i].unitPrice,
+								attr_list:item[i].attr_list
+							})
+						}
+						that.cart = carList;
+						
+						// 默认勾选购物车所有商品 合计金额 合计数量
+// 						for (let i = 0; i < that.cart.length; i++) {
+// 								// 总金额 
+// 								that.totalamount = that.totalamount + that.cart[i].price * that.cart[i].quantity
+// 								// 总数量
+// 								that.cntitems = that.cntitems + that.cart[i].quantity;
+// 								that.index.push(i)
+// 								that.goods_list.push({
+// 									cart_id:that.cart[i].id
+// 								})
+// 						}
+// 						that.totalamount = that.fmamount(that.totalamount)
+// 						console.log(that.goods_list)
+// 						if(that.cart.length == 0){
+// 							that.shownullcart = true;
+// 						}else{
+// 							that.shownullcart = false;
+// 						}
+					},
+					fail: () => {}
+				});
 				uni.stopPullDownRefresh();
 			}, 1000);
-		
 		},
 		computed:{},
 			// 关闭购物车前 存入缓存
@@ -255,16 +300,14 @@
 				}
 			},
 			// 点击勾选
-			clickitemselected(id,idx){
-				console.log(this.cart[idx]); 
+			clickitemselected(id,idx){ 
  				if (this.cart){
-					for (var i = 0; i < this.cart.length; i++) {
+					for (var i = 0; i < this.cart.length; i++) {						
 							if (this.cart[i].id == id){
-								this.cart[i].id = - this.cart[i].id
+								this.cart[i].id = - this.cart[i].id 
 								// 累计总金额和总数量 勾选时加
-								if (this.isselected(this.cart[i].id)){
-									
-									this.index.push(idx)
+								if (this.isselected(this.cart[i].id)){								
+									// this.index.push(idx)
 									// 更新总数量
 									this.cntitems = this.cntitems + this.cart[i].quantity
 									// 更新总金额
@@ -274,11 +317,10 @@
 									if (this._isselectedall()){
 										this.isselectedall = true
 									}
-								}else{									
-									for(let i=0; i<this.index.length; i++) {
-										this.index.splice(i, 1);
-									}
-									console.log(this.index)
+								}else{	 
+// 									if(this.cart[idx] == this.cart[i]){		
+// 										this.index.splice(idx, 1);
+// 									}
  									// 取消勾选时减
 									// 更新总数量
 									this.cntitems = this.cntitems - this.cart[i].quantity
@@ -287,7 +329,7 @@
 									this.totalamount = this.fmamount(this.totalamount)
 									this.isselectedall = false
 								}
-								return
+								return false;
 							}
 					}
 				}
@@ -386,6 +428,7 @@
 						if ((this.cart[i].id == itemid) && (this.cart[i].quantity < 100)){
 							// 更新item数量
 							this.cart[i].quantity = this.cart[i].quantity +1
+							this.list[i].num = this.cart[i].quantity
 							this.list[i].num = this.cart[i].quantity
 							console.log(this.list[i].num)
 							// 勾选状态下更新数量和金额
@@ -488,16 +531,19 @@
 					})
 				}else{
 					// 1、处理购物车内已选择的订单生成商品
+					var s_cart = [];
+					var s_index = [];
 					for (let i = 0; i < that.cart.length; i++) {
 							// item id 大于0 的是勾选的
-							if (that.cart[i].items > 0){
+							if (that.cart[i].id > 0){
 								//这里的item 是下单的
-								
+								s_cart.push(that.cart[i].id) 
+								s_index.push(i)
 							}
-					} 
-					 for (let i = 0; i < that.index.length; i++) {
-						 console.log(that.list[i])
-						 console.log(1111)
+					}  
+								 console.log(s_cart)
+								 console.log(s_index.length)
+					 for (let i = 0; i < s_index.length; i++) { 
 						uni.request({
 							url: that.$api+'cart/cart-edit&access_token='+that.$access_token,
 							method: 'POST',
@@ -509,43 +555,50 @@
 							header: {
 								'content-type': 'application/x-www-form-urlencoded'
 							},
-							success: res => {
-								 console.log(res)
+							success: res => { 
 								 if(res.data.code == 0){
-									  that.goods_list[i].cart_id = that.list[i].cart_id									  
-								 }
-								if(i == that.index.length-1){
-									that.mch_list.push({
-										mch_id: 0,
-										goods_list: that.goods_list, 
-									})
- 									console.log(2222)
- 									console.log(that.goods_list)
- 									console.log(11111)
- 									console.log(that.mch_list)
-									uni.request({
-										url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
-										method: 'POST',
-										data: {
-											mch_list:JSON.stringify(that.mch_list)
-										},
-										dataType: "json",
-										header: {
-											'content-type': 'application/x-www-form-urlencoded'
-										},
-										success: res => {
-											 console.log(res)
-											 	setTimeout(function(){
-											 		uni.navigateTo({ 
-											 			url: "/pages/account/account?data="+JSON.stringify(res.data.data)
-											 		})
-											 	},1000)					
-										},						
-									});	
-								}
+									 var ss_list = [];
+								    console.log(s_cart.length)
+									 for (let j = 0; j < s_cart.length; j++) { 
+										  ss_list.push({
+											  cart_id:s_cart[j]
+										  })	
+										}		
+										that.mch_list[0].mch_id = 0;
+										that.mch_list[0].goods_list = ss_list;  	
+										if(i == s_index.length-1){
+											 console.log(i)
+										 uni.request({
+											url: that.$api+'order/new-submit-preview&access_token='+that.$access_token,
+											method: 'POST',
+											data: {
+												mch_list:JSON.stringify(that.mch_list)
+											},
+											dataType: "json",
+											header: {
+												'content-type': 'application/x-www-form-urlencoded'
+											},
+											success: res => { 
+													setTimeout(function(){
+														uni.navigateTo({ 
+															url: "/pages/account/account?data="+JSON.stringify(res.data.data)
+														})
+													},1000)					
+											},						
+										 });
+										}	
+								 }else{
+									 uni.showToast({
+									 	title: res.data.msg,
+									 	icon: 'none',
+									 	duration: 1500
+									 })	
+								 }  
+								   									
 							},						
 						});	
-					}
+					} 
+					
 					
 							
 // 					uni.navigateTo({

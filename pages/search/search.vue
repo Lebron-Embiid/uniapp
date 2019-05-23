@@ -101,7 +101,9 @@
 			}
 		},
 		onLoad(opt) {
-			
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 		},
 		//上拉触底
 		onReachBottom(){	

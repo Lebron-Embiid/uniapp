@@ -49,7 +49,7 @@
 		        <scroll-view class="scroll-view" scroll-x="true">
 		            <view class="mater_item" v-for="(item,index) in mater_products" @click="toMaterDetail(item.id)" :key="index">
 		            	<view class="m_img">
-		            		<image :src="item.src" mode="widthFix"></image>
+		            		<image :src="item.src" mode="aspectFill"></image>
 		            	</view>
 		            </view>
 		        </scroll-view>
@@ -170,9 +170,31 @@
 				})
 			}
 		},
+		onShow:function(){
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			if(that.$access_token == ""){
+				uni.showToast({
+					title: "请先登录！",
+					icon: "none",
+					duration: 2000
+				})
+				setTimeout(function(){
+					uni.reLaunch({
+						url: "/pages/login/login"
+					})
+				},2000)
+			}
+		},
 		onLoad() {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+		
 			console.log(that.$access_token);
+			console.log(that.$level);
+			// setTimeout(function () {	
 			uni.request({
 				url: that.$api+'default/index',
 				method: 'GET',
@@ -225,7 +247,67 @@
 					uni.showToast({title:res.data.msg,icon:'none'});
 				}
 			})
-		}
+			// }, 1000);
+			// uni.startPullDownRefresh(); 
+		},
+		// onPullDownRefresh() {
+		// 	var that = this;
+		// 	setTimeout(function () {
+		// 		uni.request({
+		// 			url: that.$api+'default/index',
+		// 			method: 'GET',
+		// 			dataType: "json",
+		// 			header: {
+		// 				'content-type': 'application/x-www-form-urlencoded'
+		// 			},
+		// 			success: res => {
+		// 				var article = [];
+		// 				var mater_products = [];
+		// 				var hot_products = [];
+		// 				var swiperList = [];
+		// 				var item = res.data.data;
+		// 				for(let i in item.article){
+		// 					article.push({
+		// 						id: item.article[i].id,
+		// 						title: item.article[i].title,
+		// 						info: item.article[i].describe,
+		// 						look: item.article[i].num,
+		// 						date: date.formatDate(parseInt(item.article[i].addtime)),
+		// 						src: item.article[i].cover_pic
+		// 					})
+		// 				}
+		// 				for(let i in item.list){
+		// 					mater_products.push({
+		// 						id: item.list[i].id,
+		// 						src: item.list[i].cover_pic
+		// 					})
+		// 				}
+		// 				for(let i in item.goods){
+		// 					hot_products.push({
+		// 						id: item.goods[i].id,
+		// 						src: item.goods[i].cover_pic,
+		// 						cat_id: item.goods[i].cat_id,
+		// 						title: item.goods[i].name,
+		// 						// info: "清洁皮肤，长效保湿滋润",
+		// 						price: item.goods[i].price,
+		// 						format: item.goods[i].gauge, 
+		// 					})
+		// 				}
+		// 				for(let i in item.nav){
+		// 					swiperList.push(item.nav[i].pic_url)
+		// 				}
+		// 				that.news_list = article;
+		// 				that.mater_products = mater_products;
+		// 				that.hot_products = hot_products;
+		// 				that.swiperList = swiperList;
+		// 			},
+		// 			fail: () => {
+		// 				uni.showToast({title:res.data.msg,icon:'none'});
+		// 			}
+		// 		})
+		// 		uni.stopPullDownRefresh();
+		// 	}, 1000);
+		// }
 	}
 </script>
 
@@ -350,8 +432,10 @@
 			overflow: hidden;
 			image{
 				display: block;
-				width: 318upx;
-				height: 252upx;
+				width: 224upx;
+				height: 340upx !important;
+				// width: 318upx;
+				// height: 252upx;
 			}
 		}
 	}

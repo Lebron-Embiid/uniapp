@@ -16,7 +16,7 @@
 			</view>
 		</view>
 		<view class="photo_bottom">
-			<view class="pb_share"><image src="../../static/share.png" mode="widthFix"></image>一键转发</view>
+			<view class="pb_share" @click="toShare"><image src="../../static/share.png" mode="widthFix"></image>一键转发</view>
 			<view class="pb_num">浏览：{{num}}</view>
 		</view>
 	</view>
@@ -37,87 +37,84 @@
 			}
 		},
 		methods:{
+			toShare: function(e){
+				uni.share({
+					provider: "weixin",
+					scene: "WXSenceTimeline",
+					type: 2,
+					href: "http://uniapp.dcloud.io/",
+					title: "uni-app分享",
+					summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+					imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
+					success: function (res) {
+						console.log("success:" + JSON.stringify(res));
+					},
+					fail: function (err) {
+						console.log("fail:" + JSON.stringify(err));
+					}
+				});
+			},
 			downloadMater: function(e){
 				let that = this;
 				console.log(that.maters[e])
-				
-				
-				uni.request({
-					url: that.$api+'user/order-source&access_token='+that.$access_token,
-					method: 'POST',
-					data:{
-						tip:that.maters[e].id,
-						url:that.maters[e].cover_pic,
-						status:0,  
-						},
-					dataType: "json",
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: res => {
-						var data = res.data 
-						if(data.code == 0){
-							uni.saveImageToPhotosAlbum({					
-								filePath: that.maters[e].cover_pic,				                
-								success: function () { 
-									uni.showToast({
-										title: '下载成功',
-										icon: 'none',
-										duration: 1500
-									})
+				uni.showModal({
+					title: "提示",
+					content: "确定下载该图片？",
+					success: (res) => {
+						if(res.confirm){
+							uni.request({
+								url: that.$api+'user/order-source&access_token='+that.$access_token,
+								method: 'POST',
+								data:{
+									tip:that.maters[e].id,
+									url:that.maters[e].cover_pic,
+									status:0,  
+									},
+								dataType: "json",
+								header: {
+									'content-type': 'application/x-www-form-urlencoded'
+								},
+								success: res => {
+									var data = res.data 
+									if(data.code == 0){
+										console.log(111)
+										uni.saveImageToPhotosAlbum({					
+											filePath: that.maters[e].cover_pic,				                
+											success: function () { 
+												uni.showToast({
+													title: '下载成功',
+													icon: 'none',
+													duration: 1500
+												})
+											},
+											fail: () => {
+												uni.showToast({
+													title: '下载失败！',
+													icon: 'none',
+													duration: 1500
+												})
+											}
+										});
+									}else{ 
+										uni.showToast({
+											title:data.msg,
+											icon:'none',
+										});
+									} 
 								},
 								fail: () => {
 									uni.showToast({
-										title: '下载失败！',
-										icon: 'none',
-										duration: 1500
-									})
+										title:res.data.msg,
+										icon:'none',
+									});
 								}
 							});
-						}else{
-							uni.showToast({
-								title:data.msg,
-								icon:'none',
-							});
-						} 
+						}
 					},
-					fail: () => {
-						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						});
+					fail: (err) => {
+						console.log(err)
 					}
-				});
-				
-				// uni.downloadFile({
-				// 	url: JSON.stringify(that.maters[e].cover_pic),
-				// 	success: (res) => {
-				// 		console.log(111)
-				// 		console.log(res)
-				// 		if (res.statusCode === 200) {
-				// 		console.log(111)
-				// 		console.log(res.tempFilePath)
-				// 			// console.log('下载成功');
-				// 			uni.saveImageToPhotosAlbum({
-				// 				filePath: res.tempFilePath,
-				// 				success: function () {
-				// 					uni.showToast({
-				// 						title: '下载成功！',
-				// 						icon: 'none',
-				// 						duration: 1500
-				// 					})
-				// 				}
-				// 			});
-				// 		}
-				// 	},
-				// 	fail: () => {
-				// 		uni.showToast({
-				// 			title: '下载失败！',
-				// 			icon: 'none',
-				// 			duration: 1500
-				// 		})
-				// 	}
-				// });
+				})
 			}
 		},
 		onNavigationBarButtonTap: function(){
@@ -127,6 +124,8 @@
 		},
 		onLoad(opt) {
 			let that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			uni.request({
 				url: that.$api+'default/source-detail&access_token='+that.$access_token+'&id='+opt.id,
 				method: 'GET',
@@ -177,6 +176,7 @@
 			vertical-align: middle;
 			width: 41upx;
 			height: 41upx !important;
+			border-radius: 50%;
 			margin: 0 10upx 6upx 0;
 		}
 		.ph_name{
@@ -209,8 +209,8 @@
 		flex-wrap: wrap;
 		align-items: center;
 		.pc_item{
-			width: 32%;
-			margin-right: 2%;
+			// width: 32%;
+			// margin-right: 2%;
 			margin-bottom: 20upx;
 			position: relative;
 			&:nth-of-type(3n){
@@ -218,8 +218,8 @@
 			}
 			.c_img{
 				display: block;
-				width: 224upx;
-				height: 340upx !important;
+				// width: 224upx;
+				// height: 340upx !important;
 			}
 			.download_icon{
 				position: absolute;

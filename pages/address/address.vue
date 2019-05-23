@@ -70,31 +70,31 @@
 				console.log(this.province_id,this.city_id,this.district_id)
             },
 
-			onCancel(e) {
-                this.$refs.cityPicker.pickerCancel();
-            },
-			onConfirm(e) {
-				this.arr = [];
-				console.log(e.label,e.cityCode);
-				var str = e.cityCode;
-                this.pickerText = e.label;
-				this.pic = e.label.split("-");
-				console.log(this.pic);
-				var str1 = "";
-				var arr = [str.length/2];
-				for(let i=0;i<str.length;i++){
-					str1+=str.charAt(i);
-					if((i+1)%2==0){
-						arr[i/2] = str1;
-						this.arr.push(arr[i/2]);
-						str1 = "";
-					}
-				}
-				console.log(this.arr);
-            },
-			showMulLinkageThreePicker(e){
-				this.$refs.cityPicker.showPickerView();
-			},
+			// onCancel(e) {
+   //              this.$refs.cityPicker.pickerCancel();
+   //          },
+			// onConfirm(e) {
+			// 	this.arr = [];
+			// 	console.log(e.label,e.cityCode);
+			// 	var str = e.cityCode;
+   //              this.pickerText = e.label;
+			// 	this.pic = e.label.split("-");
+			// 	console.log(this.pic);
+			// 	var str1 = "";
+			// 	var arr = [str.length/2];
+			// 	for(let i=0;i<str.length;i++){
+			// 		str1+=str.charAt(i);
+			// 		if((i+1)%2==0){
+			// 			arr[i/2] = str1;
+			// 			this.arr.push(arr[i/2]);
+			// 			str1 = "";
+			// 		}
+			// 	}
+			// 	console.log(this.arr);
+   //          },
+			// showMulLinkageThreePicker(e){
+			// 	this.$refs.cityPicker.showPickerView();
+			// },
 			getName(e){
 				this.name = e.detail.value;
 			},
@@ -188,6 +188,8 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			// console.log(that.$access_token)
 			uni.request({
 				url: that.$api+'user/address-detail&access_token='+that.$access_token,
@@ -220,17 +222,17 @@
 				},
 			})
 		},
-        onBackPress() {
-          if (this.$refs.cityPicker.showPicker) {
-            this.$refs.cityPicker.pickerCancel();
-            return true;
-          }
-        },
-        onUnload() {
-            if (this.$refs.cityPicker.showPicker) {
-                this.$refs.cityPicker.pickerCancel();
-            }
-        },
+        // onBackPress() {
+        //   if (this.$refs.cityPicker.showPicker) {
+        //     this.$refs.cityPicker.pickerCancel();
+        //     return true;
+        //   }
+        // },
+        // onUnload() {
+        //     if (this.$refs.cityPicker.showPicker) {
+        //         this.$refs.cityPicker.pickerCancel();
+        //     }
+        // },
 		// 上拉加载
 		onReachBottom(){
 			

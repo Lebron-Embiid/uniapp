@@ -56,6 +56,9 @@
 		},
 		onLoad(opt) {
 			let that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function () {
 			that.over_money = opt.money;
 			uni.request({
 				url: that.$api+'recharge/index&access_token='+that.$access_token,
@@ -80,6 +83,37 @@
 					})
 				}
 			});
+			}, 1000);
+			uni.startPullDownRefresh(); 
+		},
+		onPullDownRefresh() {
+			var that = this;
+			setTimeout(function () {
+				uni.request({
+					url: that.$api+'recharge/index&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						that.over_money = res.data.data.money;
+						that.record_list = res.data.data.rebate.list;
+						that.page_count = res.data.data.rebate.page_count;
+						console.log(res.data.data.rebate.list)
+						console.log(that.record_list)
+						console.log(that.page_count)
+					},
+					fail: err => {
+						uni.showToast({
+							title: JSON.stringify(err),
+							icon: 'none',
+							duration: 1500
+						})
+					}
+				});
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		//上拉触底
 		onReachBottom(){

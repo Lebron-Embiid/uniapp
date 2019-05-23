@@ -1,19 +1,34 @@
 <template>
 	<view class="video_box">
-		<video id="myVideo" autoplay="true" direction="90" :src="video"></video>
+		<video id="myVideo" autoplay="true" direction="0" :show-fullscreen-btn="full" :show-play-btn="play" :show-center-play-btn="play" :src="video"></video>
+		<view class="video_title">
+			<block v-if="content!=''">
+				<u-parse :content="content"></u-parse>
+			</block>
+		</view>
 	</view>
 </template>
 
 <script>
+	import uParse from '@/components/u-parse/u-parse.vue'
 	export default{
 		data(){
 			return{
+				controls: true,
+				play: true,
+				full: false,
 				id: "",
-				video: ""
+				video: "",
+				content: ""
 			}
+		},
+		components:{
+			uParse
 		},
 		onLoad(opt) {
 			let that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			that.id = opt.id;
 			var istype = opt.istype;
 			console.log(istype)
@@ -26,7 +41,8 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						that.video = res.data.data.url
+						that.video = res.data.data.url,
+						that.content = res.data.data.content
 					},
 					fail: () => {
 						uni.showToast({
@@ -66,6 +82,14 @@
 	}
 	#myVideo{
 		display: block;
+		position: fixed;
+		left: 0;
+		top: 0;
 		width: 100%;
+		height: 100%;
+	}
+	.video_title{
+		font-size: 28upx;
+		margin-top: 10upx;
 	}
 </style>

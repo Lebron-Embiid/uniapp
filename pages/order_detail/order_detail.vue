@@ -113,6 +113,8 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			that.id = opt.id; 
 			uni.request({
 				url: that.$api+'order/detail&order_id='+that.id+'&access_token='+that.$access_token,

@@ -86,6 +86,9 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function () {
 			uni.request({
 				url: that.$api+'user/agent-list&access_token='+that.$access_token,
 				method: 'GET',
@@ -114,6 +117,13 @@
 					});
 				}
 			});
+			}, 1000);
+			uni.startPullDownRefresh(); 
+		},
+		onPullDownRefresh() {
+			setTimeout(function () {
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		
 		//上拉触底

@@ -107,6 +107,8 @@
 		},
 		onLoad(opt) {
 			let that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			uni.request({
 				url: that.$api+'default/article-list&page=1&cat_id=2',
 				method: 'GET',

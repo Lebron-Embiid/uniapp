@@ -1,7 +1,7 @@
 <template>
 	<view class="my_order_box">
 		<view class="page_bg"></view>
-		<view class="order_nav" style="top:45px;">
+		<view class="order_nav">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
 		<!-- 全部订单 -->
@@ -78,6 +78,7 @@
 			navbarTap: function(e){
 				var that = this;
 				that.currentTab = e;
+				uni.startPullDownRefresh(); 
 				uni.request({
 					url: that.$api+'order/list&status='+that.currentTab+'&access_token='+that.$access_token,
 					method: 'GET',
@@ -136,6 +137,9 @@
 		},
 		onLoad: function(opt){
 			let that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function () {
 			that.currentTab = parseInt(opt.id);
 			uni.request({
 				url: that.$api+'order/list&status='+opt.id+'&access_token='+that.$access_token,
@@ -173,6 +177,50 @@
 					
 				}
 			})
+			}, 1000);
+			uni.startPullDownRefresh(); 
+		},
+		onPullDownRefresh() {
+			var that = this;
+			setTimeout(function () {
+				uni.request({
+					url: that.$api+'order/list&status='+that.currentTab+'&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: res => {
+						var orderList = [];
+						var goods = [];
+						var item = res.data.data;
+						for(let i in item.list){ 
+							orderList.push({
+								id: item.list[i].order_id,
+								express: item.list[i].express,
+								order_no: item.list[i].order_no,
+								time: item.list[i].addtime,
+								status: !item.list[i].pay_type,
+								// statusText: "已完成",
+								goods: item.list[i].goods_list,
+								pay: item.list[i].total_price,
+								// finish: item.list[i].pay_type,
+								is_pay: item.list[i].is_pay,
+								is_send: item.list[i].is_send,
+								is_confirm: item.list[i].is_confirm,
+								is_comment: item.list[i].is_comment,
+								apply_delete: item.list[i].apply_delete
+							})
+						}
+						that.page_count0 = res.data.data.page_count;
+						that.orderList = orderList;
+					},
+					fail: () => {
+						
+					}
+				})
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		//上拉触底
 		onReachBottom(){

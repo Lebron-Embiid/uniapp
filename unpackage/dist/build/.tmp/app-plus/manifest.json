@@ -4,13 +4,13 @@
     "iPhone",
     "iPad"
   ],
-  "id": "__UNI__4B173B4",
+  "id": "__UNI__764106F",
   "name": "呦蓝",
   "version": {
     "name": "1.0.0",
     "code": "100"
   },
-  "description": "uni-app",
+  "description": "基于uni-app开发的商城APP",
   "launch_path": "__uniapptabbar.html",
   "developer": {
     "name": "",
@@ -18,12 +18,11 @@
     "url": ""
   },
   "permissions": {
-    "VideoPlayer": {},
-    "Messaging": {},
-    "Maps": {
-      "coordType": "gcj02"
-    },
     "Share": {},
+    "VideoPlayer": {},
+    "Payment": {},
+    "Push": {},
+    "OAuth": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -34,8 +33,10 @@
       "concatenate": true
     },
     "splashscreen": {
-      "autoclose": false,
-      "waiting": false
+      "target": "id:1",
+      "autoclose": true,
+      "waiting": true,
+      "delay": 0
     },
     "popGesture": "close",
     "launchwebview": {
@@ -50,7 +51,7 @@
     "distribute": {
       "icons": {
         "ios": {
-          "appstore": "static/video_img.png",
+          "appstore": "static/logo1.png",
           "ipad": {
             "app": "unpackage/res/icons/76x76.png",
             "app@2x": "unpackage/res/icons/152x152.png",
@@ -82,31 +83,16 @@
           "xxxhdpi": "unpackage/res/icons/192x192.png"
         }
       },
-      "splashscreen": {
-        "ios": {
-          "iphone": {
-            "retina35": ""
-          }
-        },
-        "android": {
-          "hdpi": ""
-        }
-      },
       "google": {
         "permissions": [
           "<uses-feature android:name=\"android.hardware.camera\"/>",
           "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
           "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
           "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
-          "<uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\"/>",
-          "<uses-permission android:name=\"android.permission.ACCESS_MOCK_LOCATION\"/>",
           "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
           "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
           "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
           "<uses-permission android:name=\"android.permission.CAMERA\"/>",
-          "<uses-permission android:name=\"android.permission.CAPTURE_AUDIO_OUTPUT\"/>",
-          "<uses-permission android:name=\"android.permission.CAPTURE_SECURE_VIDEO_OUTPUT\"/>",
-          "<uses-permission android:name=\"android.permission.CAPTURE_VIDEO_OUTPUT\"/>",
           "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
           "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
           "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
@@ -117,21 +103,34 @@
           "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
           "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
           "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-          "<uses-permission android:name=\"android.permission.READ_SMS\"/>",
           "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
-          "<uses-permission android:name=\"android.permission.SEND_SMS\"/>",
           "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
           "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
           "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
           "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
-          "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
-          "<uses-permission android:name=\"android.permission.WRITE_SMS\"/>"
+          "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
         ]
       },
       "apple": {},
       "plugins": {
-        "maps": {},
-        "oauth": {},
+        "oauth": {
+          "weixin": {
+            "appid": "wx95c98926c0ad4cae",
+            "appsecret": "b7e8222fc19a550f74057703cdefed23"
+          }
+        },
+        "payment": {
+          "weixin": {
+            "appid": "wx95c98926c0ad4cae"
+          }
+        },
+        "share": {
+          "weixin": {
+            "appid": "wx95c98926c0ad4cae",
+            "appsecret": "b7e8222fc19a550f74057703cdefed23"
+          }
+        },
+        "push": {},
         "audio": {
           "mp3": {
             "description": "Android平台录音支持MP3格式文件"
@@ -147,12 +146,13 @@
       }
     },
     "uni-app": {
-      "compilerVersion": "1.9.1",
+      "compilerVersion": "1.9.8",
       "control": "v8"
     },
     "secondwebview": {
       "id": "1",
       "launch_path": "__uniappview.html",
+      "kernel": "WKWebview",
       "mode": "child",
       "top": 0,
       "bottom": 56

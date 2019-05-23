@@ -17,6 +17,7 @@
 </template>
 
 <script>
+	import uploadFile from "@/components/cos-wx-sdk-v5-master/demo/demo-no-sdk.js"
 	export default{
 		data(){
 			return{
@@ -38,9 +39,13 @@
 							name: 'image',
 							success: (uploadFileRes) => {
 								var data = JSON.parse(uploadFileRes.data);
-																
 								if(data.code == 0){
-									that.photos.push(data.data.url);
+										var url = data.data.url;
+										// var type=/\.[^\.]+$/.exec(url)[0]; //获取后缀
+										// var type = "."+data.data.extension;
+										// getApp().globalData.pic_type = type;
+										// uploadFile(res.tempFilePaths[0]);
+									that.photos.push(url);
 								}else{
 									uni.showToast({
 										title:data.msg,
@@ -87,6 +92,18 @@
  					}
 				})
 			}
+		},
+		onLoad(opt) {
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			getApp().globalData.url = "";
+			// uni.startPullDownRefresh();
+		},
+		onPullDownRefresh() {
+			setTimeout(function () {
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		onNavigationBarButtonTap: function(){
 			uni.showModal({

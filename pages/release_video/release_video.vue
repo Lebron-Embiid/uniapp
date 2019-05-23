@@ -3,8 +3,7 @@
 		<view class="page_bg"></view>
 		<view class="edit_video_info">
 			<view class="left_info">
-				<view class="input_box"><input type="text" @input="getTitle" placeholder="输入标题" :value="title" /></view>
-				<!-- <textarea :value="info" maxlength="300" @input="getInfo" placeholder="介绍一下你的视频吧!" /> -->
+				<view class="input_box"><input type="text" @input="getTitle" placeholder="输入标题" :value="title" /></view> 
 			</view>
 			<view class="right_photo" @click="toEditPoster">
 				<view class="poster_box" v-if="poster != ''"><image :src="poster" mode="widthFix"></image></view>
@@ -25,10 +24,12 @@
 				</view>
 			</view>
 		</view>
+		<text style="color: #f00;font-size: 24upx;padding: 10upx 30upx;">视频格式：mp4</text>
 	</view>
 </template>
 
 <script>
+	import uploadFile from "@/components/cos-wx-sdk-v5-master/demo/demo-no-sdk.js"
 	export default{
 		data(){
 			return{
@@ -69,35 +70,39 @@
 				});
 			}, 
 			selectVideo: function(e){
-				var that = this; 
+				var that = this; 		
+// 				  uni.chooseVideo({
+// 				  		count: 1,
+// 				  		sourceType: ['album', 'camera'],
+// 				  		success: function (res) {
+// 				  			var path = res.tempFilePath;
+// 							getApp().globalData.pic_type = ".mp4";
+// 				  			uploadFile(path);
+// 				  	},
+// 				})
 				uni.chooseVideo({
 					count: 1,
 					sourceType: ['album', 'camera'],
-					success: function (res) { 
+					success: function (res) {
 						console.log(res)
-// 						uni.request({
-// 							url: "http://localhost/youlanphp/web/index.php?r=upload/video",
-// 							dataType: "json",
-// 							method: 'GET',
-// 							data: { 
-// 								store_id:1,
-// 								name: res.tempFilePath
-// 							},
-// 							header: {
-// 								'content-type': 'application/x-www-form-urlencoded'
-// 							},
-// 							success: res => {
-// 								 console.log(res);
-// 							},							 
-// 						});
+						uni.showLoading({
+							title: '上传中...'
+						});
+						var path = res.tempFilePath;
                             uni.uploadFile({
                             	url: that.$api+'default/upload-video', //图片接口
                             	filePath: res.tempFilePath,
-                            	name: 'video',
+                            	name: 'file',
+								 formData: {
+									'name': "123.mp4"
+								},
                             	success: (uploadFileRes) => {
-                            		var data = JSON.parse(uploadFileRes.data);                            		
-                            		that.video = data.data.url;
-                            		console.log(that.video);
+                            		var data = JSON.parse(uploadFileRes.data);
+										that.video = data.data.url
+									uni.hideLoading();
+										// var url = "http://gao2.demenk.com/youlanphp/web/uploads/video/store_1/a32f727f1d5b311daeef57fea87f7120e51ca415.mp3"
+						             // uploadFile(that.video);
+								      console.log(that.video)
                             	}
                             });
 					}
@@ -116,6 +121,21 @@
 				})
 			}
 		},
+		onLoad(opt) {
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			getApp().globalData.url = "";
+			uni.startPullDownRefresh();
+		},
+		onPullDownRefresh() {
+			var that = this;
+			setTimeout(function () {
+				that.video = getApp().globalData.url;
+				console.log(that.video);
+				uni.stopPullDownRefresh();
+			}, 1000);
+		},
 		onNavigationBarButtonTap: function(){
 			uni.showModal({
 				title: "提示",
@@ -132,22 +152,22 @@
 							return false;
 						}
 						
-// 						if(that.poster == ""){
-// 							uni.showToast({
-// 								title: "请上传封面图！",
-// 								icon: 'none',
-// 								duration: 1000
-// 							});
-// 							return false;
-// 						}
-// 						if(that.video == ""){
-// 							uni.showToast({
-// 								title: "请上传视频！",
-// 								icon: 'none',
-// 								duration: 1000
-// 							});
-// 							return false;
-// 						}
+						if(that.poster == ""){
+							uni.showToast({
+								title: "请上传封面图！",
+								icon: 'none',
+								duration: 1000
+							});
+							return false;
+						}
+						if(that.video == ""){
+							uni.showToast({
+								title: "请上传视频！",
+								icon: 'none',
+								duration: 1000
+							});
+							return false;
+						}
                         // that.video = "http://gao2.demenk.com/shop/web/uploads/video/test.mp3";
 						console.log(that.video)
 						// return false;

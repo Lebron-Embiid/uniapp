@@ -24,6 +24,8 @@
 		},
 		onLoad(opt) {
 			let that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			console.log(opt.id)
 			uni.request({
 				url: that.$api+'default/article-detail&id=1',

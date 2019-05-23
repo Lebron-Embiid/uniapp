@@ -1,1 +1,1 @@
-<view class="my_promotion_box data-v-e878c5b4" bind:__l="__l"><image class="code_bg data-v-e878c5b4" src="{{code_bg}}" mode="widthFix"></image><image class="code_img data-v-e878c5b4" src="{{code_img}}" mode="widthFix"></image></view>
+<view class="my_promotion_box data-v-e30fc84a" bind:__l="__l"><image class="code_bg data-v-e30fc84a" src="{{code_bg}}" mode="widthFix"></image><image class="code_img data-v-e30fc84a" src="{{code_img}}" mode="widthFix"></image></view>

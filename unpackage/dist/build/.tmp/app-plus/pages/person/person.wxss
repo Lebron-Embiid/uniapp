@@ -155,6 +155,21 @@
     padding: 30rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+    position: relative;
+}
+.order_box navigator view {
+      position: absolute;
+      right: 20rpx;
+      top: 20rpx;
+      display: block;
+      width: 30rpx;
+      height: 30rpx;
+      line-height: 30rpx;
+      background: #f00;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 10rpx;
+      text-align: center;
 }
 .order_box navigator image {
       display: block;

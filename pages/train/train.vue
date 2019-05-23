@@ -9,10 +9,22 @@
 		<!-- 视频 -->
 		<view class="mt44"></view>
 		<view class="video_list" v-show="currentTab == 0">
+			<view class="form_top">
+				<form @click="toSearch" class="form_box">
+					<input @input="getVideoword" type="text" placeholder="请输入您要搜索的关键词" value="" />
+					<button><image src="../../static/search.png" mode=""></image></button>
+				</form>
+			</view>
 			<commonVideo :video_list="video_list" :istype="0" :isDownload="0"></commonVideo>
 		</view>
 		<!-- 音频 -->
 		<view class="audio_list" v-show="currentTab == 1">
+			<view class="form_top">
+				<form @click="toSearch" class="form_box">
+					<input @input="getAudioword" type="text" placeholder="请输入您要搜索的关键词" value="" />
+					<button><image src="../../static/search.png" mode=""></image></button>
+				</form>
+			</view>
 			<view class="audio_item" v-for="(item,index) in video_list" :key="index" @click="toAudioDetail(item)">
 				<view class="audio_img">
 					<image src="../../static/audio_cd1.png" class="cd_img" mode="widthFix"></image>
@@ -38,64 +50,26 @@ export default{
 			page_movie_count:1,
 			navbar:[{name:"视频"},{name:"音频"}],
 			currentTab:0,
-			video_list:[
-// 				{
-// 					id: 1,
-// 					poster: "../../static/video_poster1.jpg",
-// 					avatar: "../../static/video_img.png",
-// 					title: "冬季水嫩肌肤养成法",
-// 					look: "1.2w",
-// 					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-// 				},
-// 				{
-// 					id: 2,
-// 					poster: "../../static/video_poster2.jpg",
-// 					avatar: "../../static/video_img.png",
-// 					title: "问题性肌肤全解分析—说说色斑那点事",
-// 					look: "10w",
-// 					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-// 				},
-// 				{
-// 					id: 3,
-// 					poster: "../../static/video_poster3.jpg",
-// 					avatar: "../../static/video_img.png",
-// 					title: "问题性肌肤全解分析—痘痘肌",
-// 					look: "10w",
-// 					video: "https://vd.yinyuetai.com/sh.yinyuetai.com/uploads/videos/common/359E01658525D368F4C5CD4C60C9D479.mp4"
-// 				}
-			],
-			auto_list:[
-// 				{
-// 					id: 1,
-// 					title: "如何快速找到精准粉丝",
-// 					look: "1.0w",
-// 					src: "http://other.web.nf01.sycdn.kuwo.cn/resource/n2/23/43/994306111.mp3",
-// 					duration: 229
-// 				},
-// 				{
-// 					id: 2,
-// 					title: "如何快速找到精准粉丝",
-// 					look: "1.2w",
-// 					src: "http://mouyizhan.com/4.mp3",
-// 					duration: 205
-// 				},
-// 				{
-// 					id: 3,
-// 					title: "如何快速找到精准粉丝",
-// 					look: "1.0w",
-// 					src: "http://mouyizhan.com/5.mp3",
-// 					duration: 228
-// 				}
-			]
+			video_list:[],
+			auto_list:[],
+			keyword1: "",
+			keyword2: ""
 		}
 	},
 	components:{
 		commonVideo
 	},
 	methods:{
+		getVideoword: function(e){
+			this.keyword1 = e.detail.value;
+		},
+		getAudioword: function(e){
+			this.keyword2 = e.detail.value;
+		},
 		navbarTap: function(e){
 			var that = this;
 			that.currentTab = e;
+				uni.startPullDownRefresh(); 
 				uni.request({
 					url: that.$api+'default/video-list&type='+that.currentTab+'&access_token='+that.$access_token,
 					method: 'GET',
@@ -130,7 +104,7 @@ export default{
 							icon:'none',
 						});
 					}
-				});								
+				});		
 		},
 		toAudioDetail: function(e){
 			uni.navigateTo({
@@ -140,6 +114,9 @@ export default{
 	},
 	onLoad(opt) {
 		var that = this;
+		that.$access_token = uni.getStorageSync("access_token");
+		that.$level = uni.getStorageSync("level");
+		setTimeout(function () {
 		uni.request({
 			url: that.$api+'default/video-list&type=0&access_token='+that.$access_token,
 			method: 'GET',
@@ -171,6 +148,49 @@ export default{
 				});
 			}
 		});
+		}, 1000);
+		uni.startPullDownRefresh(); 
+	},
+	onPullDownRefresh() {
+		var that = this;
+		setTimeout(function () {
+			uni.request({
+				url: that.$api+'default/video-list&type='+that.currentTab+'&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					var video_list1 = [];
+					var item = res.data.data.list;
+					for(let i in item){
+						video_list1.push({
+							id: item[i].id,
+							poster: item[i].pic_url,
+							// avatar: item[i].avatar,
+							avatar: "../../static/video_img.png",
+							title: item[i].title,
+							look: item[i].num,
+							video: item[i].url
+						})
+					}
+					if(that.currentTab == 0){							
+						that.page_video_count = res.data.data.page_count;
+					}else{							
+						that.page_movie_count = res.data.data.page_count;
+					}
+					that.video_list = video_list1;
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
+			});
+			uni.stopPullDownRefresh();
+		}, 1000);
 	},
 	//上拉触底
 	onReachBottom(){
@@ -232,6 +252,16 @@ export default{
 <style scoped lang="scss">
 	page{
 		background: #f5f5f7 !important;
+	}
+	.form_top{
+		padding: 0 0 20upx;
+		overflow: hidden;
+		box-sizing: border-box;
+		.form_box{
+			float: none;
+			width: 100%;
+			margin-top: 0;
+		}
 	}
 	.video_list{
 		padding: 30upx 20upx;

@@ -1,11 +1,15 @@
 {
   "navigationStyle": "custom",
   "navigationBarTitleText": "",
+  "pullToRefresh": {
+    "support": true,
+    "color": "#00001f",
+    "style": "circle"
+  },
   "titleNView": false,
   "softinputNavBar": "none",
   "usingComponents": {
     "common-swiper": "/components/common-swiper",
-    "common-news": "/components/common-news",
-    "date": "/common/util"
+    "common-news": "/components/common-news"
   }
 }

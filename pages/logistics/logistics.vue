@@ -76,6 +76,8 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			that.order_id = opt.id;
 			uni.request({
 				url: that.$api+'order/express-detail&order_id='+opt.id+'&type=mall&access_token='+that.$access_token,

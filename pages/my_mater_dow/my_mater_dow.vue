@@ -5,19 +5,12 @@
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
 		<view class="mt44"></view>
-		<!-- 我发布的素材 -->
-		<view class="my_mater" v-show="currentTab == 0">
-			<view class="my_item" v-for="(item,index) in myMaterList" :key="index">
-				<image :src="item.cover_pic" mode="widthFix"></image>
-				<view class="my_down">{{item.lower}}</view>
-			</view>
-		</view>
 		<!-- 我下载的素材 -->
-		<!-- <view class="my_mater my_down_mater" v-show="currentTab == 1">
+		<view class="my_mater my_down_mater" v-show="currentTab == 1">
 			<view class="my_item" v-for="(item,index) in downList" :key="index">
 				<image :src="item.url" mode="widthFix"></image> 				 
 			</view>
-		</view> -->
+		</view>
 	</view>
 </template>
 
@@ -26,7 +19,7 @@
 		data(){
 			return{
 				navbar:[{id: 0,name:"我发布的素材"},{id: 1,name:"我下载的素材"}],
-				currentTab:0,
+				currentTab:1,
 				page_count:1,
 				page_down_count:1,
 				page:1,
@@ -48,16 +41,20 @@
 				that.currentTab = e;
 				console.log(that.currentTab)
 				if(that.currentTab == 0){
+					uni.redirectTo({
+						url: "/pages/my_mater/my_mater"
+					})
+				}else{
 					uni.request({
-						url: that.$api+'user/topic-list&access_token='+that.$access_token,
+						url: that.$api+'user/order-source-list&access_token='+that.$access_token,
 						method: 'GET',
 						dataType: "json",
 						header: {
 							'content-type': 'application/x-www-form-urlencoded'
 						},
 						success: res => {
-							that.page_count = res.data.data.page_count;
-							that.myMaterList = res.data.data.list 					
+							that.page_down_count = res.data.data.page_count;
+							that.downList = res.data.data.list 					
 						},
 						fail: () => {
 							uni.showToast({
@@ -66,10 +63,6 @@
 							});
 						}
 					});
-				}else{
-					uni.redirectTo({
-						url: "/pages/my_mater_dow/my_mater_dow"
-					})
 				}
 			},
 			toMaterDetail: function(e){
@@ -84,15 +77,15 @@
 			that.$level = uni.getStorageSync("level");
 			setTimeout(function () {
 				uni.request({
-					url: that.$api+'user/topic-list&access_token='+that.$access_token,
+					url: that.$api+'user/order-source-list&access_token='+that.$access_token,
 					method: 'GET',
 					dataType: "json",
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-						that.page_count = res.data.data.page_count;
-						that.myMaterList = res.data.data.list 					
+						that.page_down_count = res.data.data.page_count;
+						that.downList = res.data.data.list 					
 					},
 					fail: () => {
 						uni.showToast({
@@ -100,7 +93,7 @@
 							icon:'none',
 						});
 					}
-				});	
+				});
 			}, 1000);
 			uni.startPullDownRefresh(); 
 		},

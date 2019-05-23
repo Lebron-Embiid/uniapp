@@ -1,7 +1,7 @@
 <template>
 	<view class="mater_box">
 		<view class="page_bg"></view>
-		<view class="list_nav" style="top:45px;">
+		<view class="list_nav">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
 		<view class="mt44"></view>
@@ -16,11 +16,12 @@
 						<block v-if="item.sign == 1">
 							<text class="ph_sign">精选</text>
 						</block>
+						<!-- <text class="ph_download">前往下载&gt;</text> -->
 						<!-- <image src="../../static/share.png" class="share_img" mode="widthFix"></image> -->
 					</view>
 					<view class="photo_content">
 						<view class="pc_item" v-for="(mater,idx) in item.maters" :key="idx">
-							<image :src="mater.cover_pic" class="c_img" mode="widthFix"></image>
+							<image :src="mater.cover_pic" class="c_img" mode="aspectFill"></image>
 							<!-- <image src="../../static/download.png" class="download_icon" mode="widthFix"></image> -->
 						</view>
 					</view>
@@ -61,6 +62,7 @@
 			navbarTap: function(e){
 				var that = this;
 				that.currentTab = e;
+				uni.startPullDownRefresh(); 
 				if(that.currentTab == 0){
 					uni.request({
 						url: that.$api+'default/source-list&access_token='+that.$access_token,
@@ -127,6 +129,18 @@
 					});
 				}
 			},
+			toPreviewMater: function(e,idx){
+				var that = this;
+				var mater_list = [];
+				for(let i in that.photo_list[e].maters){
+					mater_list.push(that.photo_list[e].maters[i].cover_pic);
+				}
+				uni.previewImage({
+					urls: mater_list,
+					current: mater_list[idx],
+					indicator: 'number'
+				});
+			},
 			toMaterDetail: function(res){
 				uni.navigateTo({
 					url: "/pages/mater_detail/mater_detail?id="+res.id+"&sign="+res.sign
@@ -151,6 +165,9 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function () {
 			uni.request({
 				url: that.$api+'default/source-list&access_token='+that.$access_token,
 				method: 'GET',
@@ -182,9 +199,79 @@
 					});
 				}
 			});
+			}, 1000);
+			uni.startPullDownRefresh(); 
 		},
 		onPullDownRefresh(){
-			
+			var that = this;
+			setTimeout(function () {
+				if(that.currentTab == 0){
+					uni.request({
+						url: that.$api+'default/source-list&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							var photo_list = [];
+							var item = res.data.data;
+							for(let i in item.list){
+								photo_list.push({
+									id: item.list[i].id,
+									avatar: item.list[i].avatar_url,
+									name: item.list[i].nickname,
+									time: item.list[i].addtime,
+									num: item.list[i].read_count,
+									sign: item.list[i].type,
+									maters: item.list[i].cover_pic[0]
+								})
+							}
+							that.page_source_count = res.data.data.page_count;
+							that.photo_list = photo_list;
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}else{
+					uni.request({
+						url: that.$api+'default/movies-list&access_token='+that.$access_token,
+						method: 'GET',
+						dataType: "json",
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							var video_list = [];
+							var item = res.data.data.list;
+							var page_count = res.data.data.page_count; 
+							for(let i in item){
+								video_list.push({
+									id: item[i].id,
+									poster: item[i].cove_pic,
+									avatar: item[i].avatar_url,
+									title: item[i].title,
+									look: item[i].num,
+									video: item[i].url
+								})
+							}
+							that.page_movie_count = res.data.data.page_count;
+							that.video_list = video_list;
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+				}
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		//上拉触底
 		onReachBottom(){
@@ -308,13 +395,14 @@
 					vertical-align: middle;
 					width: 41upx;
 					height: 41upx !important;
+					border-radius: 50%;
 					margin: 0 10upx 6upx 0;
 				}
 				.ph_name{
 					display: inline-block;
 					vertical-align: middle;
-					margin: 0 10upx 8upx 0;
-					width: 130upx;
+					margin: 0 10upx 6upx 0;
+					width: 100upx;
 					max-width: 130upx;
 					overflow: hidden;
 					text-overflow: ellipsis;
@@ -331,6 +419,13 @@
 					background: #f00;
 					border-radius: 5upx;
 					padding: 5upx 10upx 6upx;
+				}
+				.ph_download{
+					color: #f00;
+					display: block;
+					float: right;
+					margin-top: 10upx;
+					font-size: 22upx;
 				}
 				.share_img{
 					display: block;

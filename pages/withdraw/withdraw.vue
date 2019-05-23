@@ -2,7 +2,7 @@
 	<view class="withdraw_box">
 		<view class="page_bg"></view>
 		<form @submit="formSubmit">
-			<view class="over_till">账户剩余余额：<text>￥{{over_money}}</text></view>
+			<view class="over_till">账户余额：<text>￥{{over_money}}</text></view>
 			<view class="section">
 				<view class="left_txt">姓名<text>*</text></view>
 				<input type="text" name="name" @input="setName" :value="name" />
@@ -170,8 +170,9 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			that.over_money = opt.money;
-			
 		}
 	}
 </script>

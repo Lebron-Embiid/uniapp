@@ -57,18 +57,27 @@
 				if(this.second>0){
 					return;
 				}
-				
-// 				uni.request({
-// 				    url: 'http://***/getcode.html', //仅为示例，并非真实接口地址。
-// 				    data: {phoneno:this.phoneno,code_type:'reg'},
-// 					method: 'POST',
-// 					dataType:'json',
-// 				    success: (res) => {
-// 						if(res.data.code!=200){
-// 							uni.showToast({title:res.data.msg,icon:'none'});
-// 							tha.second = 0;
-// 						}else{
-// 							uni.showToast({title:res.data.msg});
+				if(this.phoneno.length != 11){
+					uni.showToast({
+						title:"请填写正确的号码",
+						icon: 'none'
+					})	
+					return false;
+				}
+				uni.request({
+				    url: this.$api+'default/user-hand-binding', //仅为示例，并非真实接口地址。
+				    data: {content:this.phoneno,code_type:'reg'},
+					method: 'POST',
+					dataType:'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+				    success: (res) => {
+						if(res.data.code == 1){
+							uni.showToast({title:res.data.msg,icon:'none'});
+							tha.second = 0;
+						}else{
+							uni.showToast({title:res.data.msg});
 							tha.second = 60;
 							js = setInterval(function(){
 								tha.second--;
@@ -76,32 +85,18 @@
 									clearInterval(js)
 								}
 							},1000)
-// 						}
-// 				    }
-// 				});
+						}
+				    }
+				});
 			},
 			bindLogin() { 
-// 				if (this.phoneno.length != 11) {
-// 				     uni.showToast({
-// 				        icon: 'none',
-// 				        title: '手机号不正确'
-// 				    });
-// 				    return;
-// 				}
-// 			    if (this.password.length < 6) {
-// 			        uni.showToast({
-// 			            icon: 'none',
-// 			            title: '密码不正确'
-// 			        });
-// 			        return;
-// 			    }
-// 				if (this.code.length != 4) {
-// 				    uni.showToast({
-// 				        icon: 'none',
-// 				        title: '验证码不正确'
-// 				    });
-// 				    return;
-// 				} 
+				if (this.phoneno.length != 11) {
+				     uni.showToast({
+				        icon: 'none',
+				        title: '手机号不正确'
+				    });
+				    return;
+				} 
  				uni.request({
  				    url: this.$api+'passport/forget',
  				    data: {
@@ -121,7 +116,7 @@
  							uni.showToast({title:res.data.msg,icon:'none',duration:1500});  
  							setTimeout(function(){
  								uni.reLaunch({
- 									// url: "/pages/index/index"
+ 									url: "/pages/login/login"
  								})
  							},1500)
  						}

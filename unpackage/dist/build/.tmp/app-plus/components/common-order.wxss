@@ -24,7 +24,13 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.order_item.data-v-44004d60 {
+.not_have.data-v-37d735ed {
+  text-align: center;
+  margin: 300rpx 0 0;
+  font-size: 28rpx;
+  color: #999;
+}
+.order_item.data-v-37d735ed {
   background: #fff;
   padding: 25rpx;
   -webkit-box-sizing: border-box;
@@ -32,7 +38,7 @@
   overflow: hidden;
   margin-bottom: 20rpx;
 }
-.order_item .order_top.data-v-44004d60 {
+.order_item .order_top.data-v-37d735ed {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -48,45 +54,45 @@
     border-bottom: 1px solid #F7F7F9;
     padding-bottom: 20rpx;
 }
-.order_item .order_top view.data-v-44004d60 {
+.order_item .order_top view.data-v-37d735ed {
       color: #797979;
       font-size: 22rpx;
 }
-.order_item .order_top view image.data-v-44004d60 {
+.order_item .order_top view image.data-v-37d735ed {
         display: inline-block;
         vertical-align: middle;
         margin: 0 10rpx 5rpx 0;
         width: 26rpx;
         height: 26rpx !important;
 }
-.order_item .order_top text.data-v-44004d60 {
+.order_item .order_top text.data-v-37d735ed {
       font-size: 22rpx;
 }
-.order_item .order_top text.active.data-v-44004d60 {
+.order_item .order_top text.active.data-v-37d735ed {
         color: #fa3930;
 }
-.order_item .order_info.data-v-44004d60 {
+.order_item .order_info.data-v-37d735ed {
     overflow: hidden;
     padding: 20rpx 0 25rpx;
     border-bottom: 1px solid #F7F7F9;
 }
-.order_item .order_info .oi_left.data-v-44004d60 {
+.order_item .order_info .oi_left.data-v-37d735ed {
       float: left;
       margin-right: 30rpx;
       width: 140rpx;
       height: 140rpx;
       border: 1px solid #EAEAEA;
 }
-.order_item .order_info .oi_left image.data-v-44004d60 {
+.order_item .order_info .oi_left image.data-v-37d735ed {
         display: block;
         width: 139rpx;
         height: 139rpx !important;
 }
-.order_item .order_info .oi_center.data-v-44004d60 {
+.order_item .order_info .oi_center.data-v-37d735ed {
       float: left;
       width: 420rpx;
 }
-.order_item .order_info .oi_center .oi_title.data-v-44004d60 {
+.order_item .order_info .oi_center .oi_title.data-v-37d735ed {
         color: #1f1f1f;
         font-size: 28rpx;
         margin: 10rpx 0 5rpx;
@@ -95,7 +101,7 @@
            text-overflow: ellipsis;
         white-space: nowrap;
 }
-.order_item .order_info .oi_center .oi_info.data-v-44004d60, .order_item .order_info .oi_center .oi_type.data-v-44004d60 {
+.order_item .order_info .oi_center .oi_info.data-v-37d735ed, .order_item .order_info .oi_center .oi_type.data-v-37d735ed {
         color: #747474;
         font-size: 22rpx;
         margin-bottom: 20rpx;
@@ -104,23 +110,23 @@
            text-overflow: ellipsis;
         white-space: nowrap;
 }
-.order_item .order_info .oi_center .oi_type.data-v-44004d60 {
+.order_item .order_info .oi_center .oi_type.data-v-37d735ed {
         margin-bottom: 0;
 }
-.order_item .order_info .oi_right.data-v-44004d60 {
+.order_item .order_info .oi_right.data-v-37d735ed {
       float: right;
       text-align: right;
 }
-.order_item .order_info .oi_right .oi_price.data-v-44004d60 {
+.order_item .order_info .oi_right .oi_price.data-v-37d735ed {
         color: #797979;
         font-size: 24rpx;
         margin: 10rpx 0 6rpx;
 }
-.order_item .order_info .oi_right .oi_num.data-v-44004d60 {
+.order_item .order_info .oi_right .oi_num.data-v-37d735ed {
         color: #868686;
         font-size: 20rpx;
 }
-.order_item .order_bottom.data-v-44004d60 {
+.order_item .order_bottom.data-v-37d735ed {
     overflow: hidden;
     display: -webkit-box;
     display: -webkit-flex;
@@ -136,18 +142,18 @@
             align-items: center;
     margin-top: 20rpx;
 }
-.order_item .order_bottom .ob_price.data-v-44004d60 {
+.order_item .order_bottom .ob_price.data-v-37d735ed {
       color: #797979;
       font-size: 22rpx;
 }
-.order_item .order_bottom .ob_price text.data-v-44004d60 {
+.order_item .order_bottom .ob_price text.data-v-37d735ed {
         color: #fa3930;
         font-size: 26rpx;
 }
-.order_item .order_bottom .ob_btn.data-v-44004d60 {
+.order_item .order_bottom .ob_btn.data-v-37d735ed {
       overflow: hidden;
 }
-.order_item .order_bottom .ob_btn button.data-v-44004d60 {
+.order_item .order_bottom .ob_btn button.data-v-37d735ed {
         float: left;
         color: #333;
         font-size: 24rpx;
@@ -155,11 +161,11 @@
         border: 1px solid #9B9B9B;
         margin-left: 25rpx;
 }
-.order_item .order_bottom .ob_btn button.data-v-44004d60:active {
+.order_item .order_bottom .ob_btn button.data-v-37d735ed:active {
           color: #fa3930;
           border: 1px solid #fa3930;
 }
-.order_item .order_bottom .ob_btn button.data-v-44004d60:after {
+.order_item .order_bottom .ob_btn button.data-v-37d735ed:after {
           border: 0;
 }
 

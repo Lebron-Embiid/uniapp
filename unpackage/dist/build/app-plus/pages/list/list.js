@@ -83,29 +83,35 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "../../../phpStudy_new/WWW/uni_app/pages/list/list.nvue?entry");
+/******/ 	return __webpack_require__(__webpack_require__.s = "../../../phpStudy_new/WWW/youlan/pages/list/list.nvue?entry");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "../../../phpStudy_new/WWW/uni_app/common/util.js":
-/*!**************************************************!*\
-  !*** D:/phpStudy_new/WWW/uni_app/common/util.js ***!
-  \**************************************************/
+/***/ "../../../phpStudy_new/WWW/youlan/common/util.js":
+/*!*************************************************!*\
+  !*** D:/phpStudy_new/WWW/youlan/common/util.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function friendlyDate(timestamp) {
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function friendlyDate(timestamp) {
   var formats = {
     'year': '%n% 年前',
     'month': '%n% 月前',
     'day': '%n% 天前',
     'hour': '%n% 小时前',
     'minute': '%n% 分钟前',
-    'second': '%n% 秒前' };
-
-
+    'second': '%n% 秒前'
+  };
   var now = Date.now();
   var seconds = Math.floor((now - timestamp) / 1000);
   var minutes = Math.floor(seconds / 60);
@@ -113,9 +119,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   var days = Math.floor(hours / 24);
   var months = Math.floor(days / 30);
   var years = Math.floor(months / 12);
-
   var diffType = '';
   var diffValue = 0;
+
   if (years > 0) {
     diffType = 'year';
     diffValue = years;
@@ -143,10 +149,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       }
     }
   }
-  return formats[diffType].replace('%n%', diffValue);
-}
 
-// 时间戳转年月日 时分秒
+  return formats[diffType].replace('%n%', diffValue);
+} // 时间戳转年月日 时分秒
+
+
 var formatTime = function formatTime(date) {
   date = new Date(date);
   var year = date.getFullYear();
@@ -155,11 +162,10 @@ var formatTime = function formatTime(date) {
   var hour = date.getHours();
   var minute = date.getMinutes();
   var second = date.getSeconds();
-
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':');
-};
+}; // 时间戳转年月日
 
-// 时间戳转年月日
+
 var formatDate = function formatDate(date) {
   date = new Date(date);
   var year = date.getFullYear();
@@ -167,29 +173,29 @@ var formatDate = function formatDate(date) {
   var day = date.getDate();
   var hour = date.getHours();
   var minute = date.getMinutes();
-  var second = date.getSeconds();
+  var second = date.getSeconds(); // return [year, month, day].map(formatNumber).join('.');
 
-  // return [year, month, day].map(formatNumber).join('.');
   return [month, day].map(formatNumber).join('.');
 };
 
 var formatNumber = function formatNumber(n) {
   n = n.toString();
   return n[1] ? n : '0' + n;
-};var _default =
+};
 
-
-{
+var _default = {
   friendlyDate: friendlyDate,
   formatTime: formatTime,
-  formatDate: formatDate };exports.default = _default;
+  formatDate: formatDate
+};
+exports.default = _default;
 
 /***/ }),
 
-/***/ "../../../phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue":
-/*!*********************************************************************************!*\
-  !*** D:/phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue ***!
-  \*********************************************************************************/
+/***/ "../../../phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue":
+/*!********************************************************************************!*\
+  !*** D:/phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -197,14 +203,14 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/style-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/style-rewriter?id=data-v-7f83409d!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=styles&index=0!./uni-media-list.nvue */ "./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-7f83409d!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue")
+__vue_styles__.push(__webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/style-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/style-rewriter?id=data-v-00a5ae97!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=styles&index=0!./uni-media-list.nvue */ "./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-00a5ae97!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!../../../phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue")
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./uni-media-list.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue")
+__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./uni-media-list.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue")
 
 /* template */
-var __vue_template__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/template-compiler?id=data-v-7f83409d!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=template&index=0!./uni-media-list.nvue */ "./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-7f83409d!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue")
+var __vue_template__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/template-compiler?id=data-v-00a5ae97!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=template&index=0!./uni-media-list.nvue */ "./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-00a5ae97!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!../../../phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue")
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -218,7 +224,7 @@ if (typeof __vue_options__ === "function") {
 
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-7f83409d"
+__vue_options__._scopeId = "data-v-00a5ae97"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -234,10 +240,10 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ "../../../phpStudy_new/WWW/uni_app/components/uni-tab-bar/uni-tab-bar.nvue":
-/*!***************************************************************************!*\
-  !*** D:/phpStudy_new/WWW/uni_app/components/uni-tab-bar/uni-tab-bar.nvue ***!
-  \***************************************************************************/
+/***/ "../../../phpStudy_new/WWW/youlan/components/uni-tab-bar/uni-tab-bar.nvue":
+/*!**************************************************************************!*\
+  !*** D:/phpStudy_new/WWW/youlan/components/uni-tab-bar/uni-tab-bar.nvue ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -245,7 +251,7 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./uni-tab-bar.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-tab-bar/uni-tab-bar.nvue")
+__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./uni-tab-bar.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/components/uni-tab-bar/uni-tab-bar.nvue")
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -272,10 +278,10 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ "../../../phpStudy_new/WWW/uni_app/components/uni-tab-content/uni-tab-content.nvue":
-/*!***********************************************************************************!*\
-  !*** D:/phpStudy_new/WWW/uni_app/components/uni-tab-content/uni-tab-content.nvue ***!
-  \***********************************************************************************/
+/***/ "../../../phpStudy_new/WWW/youlan/components/uni-tab-content/uni-tab-content.nvue":
+/*!**********************************************************************************!*\
+  !*** D:/phpStudy_new/WWW/youlan/components/uni-tab-content/uni-tab-content.nvue ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -283,7 +289,7 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./uni-tab-content.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-tab-content/uni-tab-content.nvue")
+__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./uni-tab-content.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/components/uni-tab-content/uni-tab-content.nvue")
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -310,10 +316,10 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ "../../../phpStudy_new/WWW/uni_app/components/uni-tabs/uni-tabs.nvue":
-/*!*********************************************************************!*\
-  !*** D:/phpStudy_new/WWW/uni_app/components/uni-tabs/uni-tabs.nvue ***!
-  \*********************************************************************/
+/***/ "../../../phpStudy_new/WWW/youlan/components/uni-tabs/uni-tabs.nvue":
+/*!********************************************************************!*\
+  !*** D:/phpStudy_new/WWW/youlan/components/uni-tabs/uni-tabs.nvue ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -321,7 +327,7 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* script */
-__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./uni-tabs.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-tabs/uni-tabs.nvue")
+__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./uni-tabs.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/components/uni-tabs/uni-tabs.nvue")
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -348,10 +354,10 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ "../../../phpStudy_new/WWW/uni_app/pages/list/list.nvue?entry":
-/*!**************************************************************!*\
-  !*** D:/phpStudy_new/WWW/uni_app/pages/list/list.nvue?entry ***!
-  \**************************************************************/
+/***/ "../../../phpStudy_new/WWW/youlan/pages/list/list.nvue?entry":
+/*!*************************************************************!*\
+  !*** D:/phpStudy_new/WWW/youlan/pages/list/list.nvue?entry ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -359,14 +365,14 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = []
 
 /* styles */
-__vue_styles__.push(__webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/style-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/style-rewriter?id=data-v-06d30675!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=styles&index=0!./list.nvue */ "./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-06d30675!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!../../../phpStudy_new/WWW/uni_app/pages/list/list.nvue")
+__vue_styles__.push(__webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/style-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/style-rewriter?id=data-v-5d06633b!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=styles&index=0!./list.nvue */ "./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-5d06633b!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!../../../phpStudy_new/WWW/youlan/pages/list/list.nvue")
 )
 
 /* script */
-__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./list.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/pages/list/list.nvue")
+__vue_exports__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/script-loader!babel-loader!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=script&index=0!./list.nvue */ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/pages/list/list.nvue")
 
 /* template */
-var __vue_template__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/template-compiler?id=data-v-06d30675!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=template&index=0!./list.nvue */ "./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-06d30675!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!../../../phpStudy_new/WWW/uni_app/pages/list/list.nvue")
+var __vue_template__ = __webpack_require__(/*! !../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/template-compiler?id=data-v-5d06633b!../../../../../HBuilderX/plugins/uniapp-cli/node_modules/weex-vue-loader/lib/selector?type=template&index=0!./list.nvue */ "./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-5d06633b!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!../../../phpStudy_new/WWW/youlan/pages/list/list.nvue")
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -380,7 +386,7 @@ if (typeof __vue_options__ === "function") {
 
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-06d30675"
+__vue_options__._scopeId = "data-v-5d06633b"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -414,11 +420,12 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 /*!*****************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue-v8/dist/index.js ***!
   \*****************************************************************************************************/
-/*! exports provided: default */
+/*! exports provided: default, weexPlus */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "weexPlus", function() { return weexPlus; });
 var isFn = function isFn(v) {
   return typeof v === 'function';
 };
@@ -432,7 +439,7 @@ var handlePromise = function handlePromise(promise) {
 };
 
 var REGEX = /^on|^create|Sync$|Manager$|^pause/;
-var API_NORMAL_LIST = ['os', 'stopRecord', 'stopVoice', 'stopBackgroundAudio', 'stopPullDownRefresh', 'hideKeyboard', 'hideToast', 'hideLoading', 'showNavigationBarLoading', 'hideNavigationBarLoading', 'canIUse', 'navigateBack', 'closeSocket', 'pageScrollTo', 'drawCanvas'];
+var API_NORMAL_LIST = ['os', 'subNVue', 'stopRecord', 'stopVoice', 'stopBackgroundAudio', 'stopPullDownRefresh', 'hideKeyboard', 'hideToast', 'hideLoading', 'showNavigationBarLoading', 'hideNavigationBarLoading', 'canIUse', 'navigateBack', 'closeSocket', 'pageScrollTo', 'drawCanvas'];
 
 var shouldPromise = function shouldPromise(name) {
   if (REGEX.test(name) && name !== 'createBLEConnection') {
@@ -477,6 +484,96 @@ var promisify = function promisify(api) {
   };
 };
 
+var weexPlus = new WeexPlus(weex);
+
+var onMessageCallbacks = [];
+
+var origin = void 0;
+
+function onSubNVueMessage(data, _ref) {
+    var id = _ref.id;
+
+    onMessageCallbacks.forEach(function (callback) {
+        return callback({
+            origin: origin,
+            data: data
+        });
+    });
+}
+
+function wrapper(webview) {
+    webview.$processed = true;
+    if (!webview.__uniapp_mask_id) {
+        return;
+    }
+    origin = webview.__uniapp_host;
+    var maskColor = webview.__uniapp_mask;
+    var maskWebview = weexPlus.webview.getWebviewById(webview.__uniapp_mask_id);
+    var oldShow = webview.show;
+    var oldHide = webview.hide;
+    var oldClose = webview.close;
+
+    var showMask = function showMask() {
+        maskWebview.setStyle({
+            mask: maskColor
+        });
+    };
+    var closeMask = function closeMask() {
+        maskWebview.setStyle({
+            mask: 'none'
+        });
+    };
+    webview.show = function () {
+        showMask();
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return oldShow.apply(webview, args);
+    };
+    webview.hide = function () {
+        closeMask();
+
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        return oldHide.apply(webview, args);
+    };
+    webview.close = function () {
+        closeMask();
+
+        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            args[_key3] = arguments[_key3];
+        }
+
+        return oldClose.apply(webview, args);
+    };
+    webview.postMessage = function (data) {
+        postMessage({
+            type: 'UniAppSubNVue',
+            data: data,
+            options: {
+                id: webview.id
+            }
+        });
+    };
+    webview.onMessage = function (callback) {
+        onMessageCallbacks.push(callback);
+    };
+}
+
+var subNVue = {
+    getSubNVueById: function getSubNVueById(id) {
+        var webview = weexPlus.webview.getWebviewById(id);
+        if (webview && !webview.$processed) {
+            wrapper(webview);
+        }
+        return webview;
+    }
+};
+
 var plus = weex.requireModule('plus');
 var globalEvent = weex.requireModule('globalEvent');
 
@@ -486,76 +583,102 @@ var callbacks = {};
 var UNIAPP_SERVICE_NVUE_ID = '__uniapp__service';
 
 globalEvent.addEventListener('plusMessage', function (e) {
-  if (e.data.type === 'UniAppJsApi') {
-    invoke(e.data.id, e.data.data);
-  } else if (e.data.type === 'onNavigationBarButtonTap') {
-    if (typeof onNavigationBarButtonTapCallback === 'function') {
-      onNavigationBarButtonTapCallback(e.data.data);
+    if (e.data.type === 'UniAppJsApi') {
+        invoke(e.data.id, e.data.data);
+    } else if (e.data.type === 'UniAppSubNVue') {
+        onSubNVueMessage(e.data.data, e.data.options);
+    } else if (e.data.type === 'onNavigationBarButtonTap') {
+        if (typeof onNavigationBarButtonTapCallback === 'function') {
+            onNavigationBarButtonTapCallback(e.data.data);
+        }
+    } else if (e.data.type === 'onNavigationBarSearchInputChanged') {
+        if (typeof onNavigationBarSearchInputChangedCallback === 'function') {
+            onNavigationBarSearchInputChangedCallback(e.data.data);
+        }
+    } else if (e.data.type === 'onNavigationBarSearchInputConfirmed') {
+        if (typeof onNavigationBarSearchInputConfirmedCallback === 'function') {
+            onNavigationBarSearchInputConfirmedCallback(e.data.data);
+        }
+    } else if (e.data.type === 'onNavigationBarSearchInputClicked') {
+        if (typeof onNavigationBarSearchInputClickedCallback === 'function') {
+            onNavigationBarSearchInputClickedCallback(e.data.data);
+        }
     }
-  }
 });
 
 var createCallback = function createCallback(args, type) {
-  var callback = function callback(res) {
-    if (isFn(args)) {
-      args(res);
-    } else if (args) {
-      if (~res.errMsg.indexOf(':ok')) {
-        isFn(args.success) && args.success(res);
-      } else if (~res.errMsg.indexOf(':fail')) {
-        isFn(args.fail) && args.fail(res);
-      }
-      isFn(args.complete) && args.complete(res);
+    var callback = function callback(res) {
+        if (isFn(args)) {
+            args(res);
+        } else if (args) {
+            if (~res.errMsg.indexOf(':ok')) {
+                isFn(args.success) && args.success(res);
+            } else if (~res.errMsg.indexOf(':fail')) {
+                isFn(args.fail) && args.fail(res);
+            }
+            isFn(args.complete) && args.complete(res);
+        }
+    };
+    if (isFn(args) || args && isFn(args.callback)) {
+        callback.keepAlive = true;
     }
-  };
-  if (isFn(args) || args && isFn(args.callback)) {
-    callback.keepAlive = true;
-  }
-  return callback;
+    return callback;
 };
 
 var invoke = function invoke(callbackId, data) {
-  var callback = callbacks[callbackId];
-  if (callback) {
-    callback(data);
-    if (!callback.keepAlive) {
-      delete callbacks[callbackId];
+    var callback = callbacks[callbackId];
+    if (callback) {
+        callback(data);
+        if (!callback.keepAlive) {
+            delete callbacks[callbackId];
+        }
+    } else {
+        console.error('callback[' + callbackId + '] is undefined');
     }
-  } else {
-    console.error('callback[' + callbackId + '] is undefined');
-  }
 };
 
 var publish = function publish(_ref) {
-  var id = _ref.id,
-      type = _ref.type,
-      params = _ref.params;
+    var id = _ref.id,
+        type = _ref.type,
+        params = _ref.params;
 
-  callbacks[id] = createCallback(params, type);
-  plus.postMessage({
-    id: id,
-    type: type,
-    params: params
-  }, UNIAPP_SERVICE_NVUE_ID);
+    callbacks[id] = createCallback(params, type);
+    plus.postMessage({
+        id: id,
+        type: type,
+        params: params
+    }, UNIAPP_SERVICE_NVUE_ID);
 };
 
 function postMessage(data) {
-  plus.postMessage(data, UNIAPP_SERVICE_NVUE_ID);
+    plus.postMessage(data, UNIAPP_SERVICE_NVUE_ID);
 }
 
 var createPublish = function createPublish(name) {
-  return function (args) {
-    publish({
-      id: id++,
-      type: name,
-      params: args
-    });
-  };
+    return function (args) {
+        publish({
+            id: id++,
+            type: name,
+            params: args
+        });
+    };
 };
 
 var onNavigationBarButtonTapCallback = void 0;
+var onNavigationBarSearchInputChangedCallback = void 0;
+var onNavigationBarSearchInputConfirmedCallback = void 0;
+var onNavigationBarSearchInputClickedCallback = void 0;
 function onNavigationBarButtonTap(callback) {
-  onNavigationBarButtonTapCallback = callback;
+    onNavigationBarButtonTapCallback = callback;
+}
+function onNavigationBarSearchInputChanged(callback) {
+    onNavigationBarSearchInputChangedCallback = callback;
+}
+function onNavigationBarSearchInputConfirmed(callback) {
+    onNavigationBarSearchInputConfirmedCallback = callback;
+}
+function onNavigationBarSearchInputClicked(callback) {
+    onNavigationBarSearchInputClickedCallback = callback;
 }
 
 function requireNativePlugin(pluginName) {
@@ -850,7 +973,9 @@ var api = /*#__PURE__*/Object.freeze({
   removeStorage: removeStorage,
   clearStorage: clearStorage,
   getClipboardData: getClipboardData,
-  setClipboardData: setClipboardData
+  setClipboardData: setClipboardData,
+  onSubNVueMessage: onSubNVueMessage,
+  subNVue: subNVue
 });
 
 var wx = {
@@ -934,6 +1059,15 @@ if (typeof Proxy !== 'undefined') {
       if (name === 'onNavigationBarButtonTap') {
         return onNavigationBarButtonTap;
       }
+      if (name === 'onNavigationBarSearchInputChanged') {
+        return onNavigationBarSearchInputChanged;
+      }
+      if (name === 'onNavigationBarSearchInputConfirmed') {
+        return onNavigationBarSearchInputConfirmed;
+      }
+      if (name === 'onNavigationBarSearchInputClicked') {
+        return onNavigationBarSearchInputClicked;
+      }
       var method = api[name];
       if (!method) {
         method = createPublish(name);
@@ -955,6 +1089,12 @@ if (typeof Proxy !== 'undefined') {
 
   uni.onNavigationBarButtonTap = onNavigationBarButtonTap;
 
+  uni.onNavigationBarSearchInputChanged = onNavigationBarSearchInputChanged;
+
+  uni.onNavigationBarSearchInputConfirmed = onNavigationBarSearchInputConfirmed;
+
+  uni.onNavigationBarSearchInputClicked = onNavigationBarSearchInputClicked;
+
   Object.keys(wx).forEach(function (name) {
     var method = api[name];
     if (!method) {
@@ -971,6 +1111,7 @@ if (typeof Proxy !== 'undefined') {
 var uni$1 = uni;
 
 /* harmony default export */ __webpack_exports__["default"] = (uni$1);
+
 
 
 /***/ }),
@@ -1755,15 +1896,20 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue":
-/*!****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue ***!
-  \****************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue ***!
+  \***************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 //
 //
 //
@@ -1791,16 +1937,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-var _default2 =
-{
+//
+var _default2 = {
   props: {
     data: {
       type: Object,
       default: function _default(e) {
         return {};
-      } } },
-
-
+      }
+    }
+  },
   computed: {
     isImgRight: function isImgRight() {
       return this.data.article_type === 2;
@@ -1810,8 +1956,8 @@ var _default2 =
     },
     showImg: function showImg() {
       return this.data.image_list || this.data.image_url;
-    } },
-
+    }
+  },
   methods: {
     close: function close(e) {
       this.$emit('close');
@@ -1819,171 +1965,216 @@ var _default2 =
     },
     bindClick: function bindClick() {
       this.$emit('click');
-    } } };exports.default = _default2;
+    }
+  }
+};
+exports.default = _default2;
 
 /***/ }),
 
-/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-tab-bar/uni-tab-bar.nvue":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/uni_app/components/uni-tab-bar/uni-tab-bar.nvue ***!
-  \**********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/components/uni-tab-bar/uni-tab-bar.nvue":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/youlan/components/uni-tab-bar/uni-tab-bar.nvue ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-{
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   render: function render(createElement) {
     var vnodes = this.$slots.default;
+
     if (vnodes && vnodes.length) {
       for (var i = 0; i < vnodes.length; i++) {
         var vnode = vnodes[i];
+
         if (!vnode.data) {
           vnode.data = Object.create(null);
         }
+
         if (!vnode.data.on) {
           vnode.data.on = Object.create(null);
         }
+
         vnode.data.on.click = this._change;
       }
     }
-    return createElement('div', { //如果需要左右滑动用scroller，不需要的话用div就行,添加个属性需要时将scroller添加 children
+
+    return createElement('div', {
+      //如果需要左右滑动用scroller，不需要的话用div就行,添加个属性需要时将scroller添加 children
       style: {
         height: '100px',
         width: '750px',
         flexDirection: 'row',
         borderBottomWidth: "1px",
         borderColor: "#c8c7cc",
-        borderBottomStyle: "solid" } },
-
-    [
-    createElement('scroller', {
+        borderBottomStyle: "solid"
+      }
+    }, [createElement('scroller', {
       attrs: {
         scrollDirection: 'horizontal',
-        showScrollbar: 'false' },
-
+        showScrollbar: 'false'
+      },
       style: {
         height: '100px',
         width: '750px',
-        flexDirection: 'row' } },
-
-    this.$slots.default)]);
-
+        flexDirection: 'row'
+      }
+    }, this.$slots.default)]);
   },
   methods: {
     _change: function _change(e) {
       var ret = {
-        index: e.index };
+        index: e.index
+      };
 
       if (e.type === 'click') {
         var target = e.target;
-        ret.index = target.parentNode.children.findIndex(function (node) {return node === target;});
+        ret.index = target.parentNode.children.findIndex(function (node) {
+          return node === target;
+        });
       }
+
       this.$emit('_tabBarClick', ret);
-    } } };exports.default = _default;
+    }
+  }
+};
+exports.default = _default;
 
 /***/ }),
 
-/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-tab-content/uni-tab-content.nvue":
-/*!******************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/uni_app/components/uni-tab-content/uni-tab-content.nvue ***!
-  \******************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/components/uni-tab-content/uni-tab-content.nvue":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/youlan/components/uni-tab-content/uni-tab-content.nvue ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
-{
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   render: function render(createElement) {
     return createElement('slider', {
       style: {
-        flex: 1 },
-
+        flex: 1
+      },
       attrs: {
         index: 0,
-        infinite: false } },
-
-    this.$slots.default);
-  } };exports.default = _default;
+        infinite: false
+      }
+    }, this.$slots.default);
+  }
+};
+exports.default = _default;
 
 /***/ }),
 
-/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-tabs/uni-tabs.nvue":
-/*!****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/uni_app/components/uni-tabs/uni-tabs.nvue ***!
-  \****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/components/uni-tabs/uni-tabs.nvue":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/youlan/components/uni-tabs/uni-tabs.nvue ***!
+  \***************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-var _uniTabContent = _interopRequireDefault(__webpack_require__(/*! ../uni-tab-content/uni-tab-content.nvue */ "../../../phpStudy_new/WWW/uni_app/components/uni-tab-content/uni-tab-content.nvue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
-{
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _uniTabContent = _interopRequireDefault(__webpack_require__(/*! ../uni-tab-content/uni-tab-content.nvue */ "../../../phpStudy_new/WWW/youlan/components/uni-tab-content/uni-tab-content.nvue"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = {
   props: {
     index: {
       type: Number,
-      default: 0 } },
-
-
+      default: 0
+    }
+  },
   data: function data() {
     return {
-      tabIndex: this.index };
-
+      tabIndex: this.index
+    };
   },
   components: {
-    uniTabContent: _uniTabContent.default },
-
+    uniTabContent: _uniTabContent.default
+  },
   render: function render(createElement) {
     var vnodes = this.$slots.default;
     var newVNodes = [];
+
     if (vnodes && vnodes.length) {
       for (var i = 0; i < vnodes.length; i++) {
         var vnode = vnodes[i];
+
         if (!vnode || !vnode.componentOptions) {
           continue;
         }
-        if (vnode.componentOptions.tag === 'uni-tab-content') {
 
+        if (vnode.componentOptions.tag === 'uni-tab-content') {
           var newVNode = createElement('uni-tab-content', {
             staticClass: vnode.data.staticClass,
             'class': vnode.data['class'],
-            style: vnode.data.style },
-          vnode.componentOptions.children);
+            style: vnode.data.style
+          }, vnode.componentOptions.children);
 
           if (!newVNode.data) {
             newVNode.data = Object.create(null);
           }
+
           if (!newVNode.data.attrs) {
             newVNode.data.attrs = Object.create(null);
           }
+
           if (!newVNode.data.props) {
             newVNode.data.props = Object.create(null);
           }
+
           if (!newVNode.data.on) {
             newVNode.data.on = Object.create(null);
           }
+
           newVNode.data.attrs.index = this.index;
           newVNode.data.on.change = this._change;
           newVNodes.push(newVNode);
         }
+
         if (vnode.componentOptions.tag === 'uni-tab-bar') {
-          if (!vnode.componentOptions.listeners) {//监听子元素传递过来的事件
+          if (!vnode.componentOptions.listeners) {
+            //监听子元素传递过来的事件
             vnode.componentOptions.listeners = Object.create(null);
           }
+
           vnode.componentOptions.listeners._tabBarClick = this._tabBarClick;
           newVNodes.push(vnode);
         }
       }
     }
+
     var newNode = createElement('div', {
       style: {
         flex: 1,
-        flexDirection: 'column' },
-
+        flexDirection: 'column'
+      },
       on: {
-        change2: this._change2 } },
-
-    newVNodes);
+        change2: this._change2
+      }
+    }, newVNodes);
     return newNode;
   },
   methods: {
@@ -1995,61 +2186,53 @@ var _uniTabContent = _interopRequireDefault(__webpack_require__(/*! ../uni-tab-c
       if (this.tabIndex === e.index) {
         return;
       }
+
       this.tabIndex = e.index;
       this.$emit('change', {
-        index: e.index });
-
-    } } };exports.default = _default;
+        index: e.index
+      });
+    }
+  }
+};
+exports.default = _default;
 
 /***/ }),
 
-/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/uni_app/pages/list/list.nvue":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/uni_app/pages/list/list.nvue ***!
-  \***************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib/index.js!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!../../../phpStudy_new/WWW/youlan/pages/list/list.nvue":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/script-loader.js!./node_modules/babel-loader/lib!./node_modules/weex-vue-loader/lib/selector.js?type=script&index=0!D:/phpStudy_new/WWW/youlan/pages/list/list.nvue ***!
+  \**************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
+/* WEBPACK VAR INJECTION */(function(uni) {
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));
 
+var _uniTabContent = _interopRequireDefault(__webpack_require__(/*! @/components/uni-tab-content/uni-tab-content.nvue */ "../../../phpStudy_new/WWW/youlan/components/uni-tab-content/uni-tab-content.nvue"));
 
+var _uniTabBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni-tab-bar/uni-tab-bar.nvue */ "../../../phpStudy_new/WWW/youlan/components/uni-tab-bar/uni-tab-bar.nvue"));
 
+var _uniTabs = _interopRequireDefault(__webpack_require__(/*! @/components/uni-tabs/uni-tabs.nvue */ "../../../phpStudy_new/WWW/youlan/components/uni-tabs/uni-tabs.nvue"));
 
+var _uniMediaList = _interopRequireDefault(__webpack_require__(/*! @/components/uni-media-list/uni-media-list.nvue */ "../../../phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue"));
 
+var _util = __webpack_require__(/*! @/common/util.js */ "../../../phpStudy_new/WWW/youlan/common/util.js");
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var _uniTabContent = _interopRequireDefault(__webpack_require__(/*! @/components/uni-tab-content/uni-tab-content.nvue */ "../../../phpStudy_new/WWW/uni_app/components/uni-tab-content/uni-tab-content.nvue"));
-var _uniTabBar = _interopRequireDefault(__webpack_require__(/*! @/components/uni-tab-bar/uni-tab-bar.nvue */ "../../../phpStudy_new/WWW/uni_app/components/uni-tab-bar/uni-tab-bar.nvue"));
-var _uniTabs = _interopRequireDefault(__webpack_require__(/*! @/components/uni-tabs/uni-tabs.nvue */ "../../../phpStudy_new/WWW/uni_app/components/uni-tabs/uni-tabs.nvue"));
-var _uniMediaList = _interopRequireDefault(__webpack_require__(/*! @/components/uni-media-list/uni-media-list.nvue */ "../../../phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue"));
-
-var _util = __webpack_require__(/*! @/common/util.js */ "../../../phpStudy_new/WWW/uni_app/common/util.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
-
-
-
-var dom = weex.requireModule('dom');var _default =
-
-{
+var dom = weex.requireModule('dom');
+var _default = {
   data: function data() {
     return {
       refreshing: false,
@@ -2058,32 +2241,34 @@ var dom = weex.requireModule('dom');var _default =
       tabIndex: 0,
       tabBars: [{
         name: '最新',
-        id: 0 },
-      {
+        id: 0
+      }, {
         name: '大公司',
-        id: 23 },
-      {
+        id: 23
+      }, {
         name: '内容',
-        id: 223 },
-      {
+        id: 223
+      }, {
         name: '消费',
-        id: 221 },
-      {
+        id: 221
+      }, {
         name: '娱乐',
-        id: 225 },
-      {
+        id: 225
+      }, {
         name: '区块链',
-        id: 208 }] };
-
-
+        id: 208
+      }]
+    };
   },
   components: {
     uniTabContent: _uniTabContent.default,
     uniTabBar: _uniTabBar.default,
     uniTabs: _uniTabs.default,
-    uniMediaList: _uniMediaList.default },
+    uniMediaList: _uniMediaList.default
+  },
+  created: function created() {
+    var _this = this;
 
-  created: function created() {var _this = this;
     // 初始化列表信息
     this.tabBars.forEach(function (tabBar) {
       _this.newsList.push({
@@ -2092,20 +2277,25 @@ var dom = weex.requireModule('dom');var _default =
           columnId: tabBar.id,
           minId: 0,
           pageSize: 10,
-          column: 'id,post_id,title,author_name,cover,published_at,comments_count' },
-
-        loadingText: '加载中...' });
-
+          column: 'id,post_id,title,author_name,cover,published_at,comments_count'
+        },
+        loadingText: '加载中...'
+      });
     });
     this.getList();
   },
   methods: {
-    getList: function getList() {var _this2 = this;var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+    getList: function getList() {
+      var _this2 = this;
+
+      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       var activeTab = this.newsList[this.tabIndex];
       activeTab.requestParams.time = new Date().getTime() + '';
+
       if (action === 1) {
         activeTab.requestParams.minId = 0;
       }
+
       uni.request({
         url: 'https://unidemo.dcloud.net.cn/api/news',
         data: activeTab.requestParams,
@@ -2120,9 +2310,10 @@ var dom = weex.requireModule('dom');var _default =
                 image_url: news.cover,
                 source: news.author_name,
                 comment_count: news.comments_count,
-                post_id: news.post_id };
-
+                post_id: news.post_id
+              };
             });
+
             if (action === 1) {
               activeTab.data = data;
               _this2.refreshing = false;
@@ -2131,46 +2322,78 @@ var dom = weex.requireModule('dom');var _default =
                 activeTab.data.push(news);
               });
             }
+
             activeTab.requestParams.minId = data[data.length - 1].id;
           }
-        } });
-
+        }
+      });
     },
     goDetail: function goDetail(detail) {
       uni.navigateTo({
-        url: '/pages/detail/detail?query=' + encodeURIComponent(JSON.stringify(detail)) });
-
+        url: '/pages/detail/detail?query=' + encodeURIComponent(JSON.stringify(detail))
+      });
     },
-    dislike: function dislike(tabIndex, newsIndex) {var _this3 = this;
+    dislike: function dislike(tabIndex, newsIndex) {
+      var _this3 = this;
+
       uni.showModal({
         content: '不感兴趣？',
         success: function success(res) {
           if (res.confirm) {
             _this3.newsList[tabIndex].data.splice(newsIndex, 1);
           }
-        } });
-
+        }
+      });
     },
     loadMore: function loadMore() {
       this.getList(2);
     },
-    changeTab: function () {var _changeTab = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(event) {var activeNode, nodeSize, index, targetNode, activeTab;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+    changeTab: function () {
+      var _changeTab = _asyncToGenerator(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee(event) {
+        var activeNode, nodeSize, index, targetNode, activeTab;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
                 this.tabIndex = event.index;
-                activeNode = this.$refs[this.tabBars[event.index].id + event.index][0];_context.next = 4;return (
-                  this.getNodeSize(activeNode));case 4:nodeSize = _context.sent;
+                activeNode = this.$refs[this.tabBars[event.index].id + event.index][0];
+                _context.next = 4;
+                return this.getNodeSize(activeNode);
+
+              case 4:
+                nodeSize = _context.sent;
+
                 if (nodeSize.left + nodeSize.width > 750) {
                   index = event.index - 4;
                   targetNode = this.$refs[this.tabBars[index].id + index][0];
                   dom.scrollToElement(targetNode, {});
                 } else if (nodeSize.left < 0) {
                   dom.scrollToElement(activeNode, {});
-                }
-                // 首次切换后加载数据
+                } // 首次切换后加载数据
+
+
                 activeTab = this.newsList[this.tabIndex];
+
                 if (activeTab.data.length === 0) {
                   this.getList();
-                }case 8:case "end":return _context.stop();}}}, _callee, this);}));function changeTab(_x) {return _changeTab.apply(this, arguments);}return changeTab;}(),
+                }
 
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function changeTab(_x) {
+        return _changeTab.apply(this, arguments);
+      }
+
+      return changeTab;
+    }(),
     getNodeSize: function getNodeSize(node) {
       return new Promise(function (resolve, reject) {
         dom.getComponentRect(node, function (result) {
@@ -2187,71 +2410,24 @@ var dom = weex.requireModule('dom');var _default =
       if (this.refreshing) {
         return;
       }
+
       if (Math.abs(event.pullingDistance) > Math.abs(event.viewHeight)) {
         this.refreshText = "释放立即刷新";
       } else {
         this.refreshText = "下拉可以刷新";
       }
-    } } };exports.default = _default;
+    }
+  }
+};
+exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue-v8/dist/index.js */ "./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/uni-app-plus-nvue-v8/dist/index.js")["default"]))
 
 /***/ }),
 
-/***/ "./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-06d30675!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!../../../phpStudy_new/WWW/uni_app/pages/list/list.nvue":
-/*!******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-06d30675!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!D:/phpStudy_new/WWW/uni_app/pages/list/list.nvue ***!
-  \******************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = {
-  "tab-bar-item": {
-    "width": "150",
-    "height": "100",
-    "flexDirection": "column",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "tab-bar-title": {
-    "height": "100",
-    "lineHeight": "100",
-    "fontSize": "30",
-    "color": "#555555"
-  },
-  "active": {
-    "color": "#007AFF"
-  },
-  "loadmore": {
-    "height": "70",
-    "width": "750",
-    "flexDirection": "column",
-    "justifyContent": "center"
-  },
-  "loadmore-text": {
-    "fontSize": "30",
-    "textAlign": "center",
-    "color": "#999999"
-  },
-  "refresh": {
-    "width": "750",
-    "height": "70",
-    "flexDirection": "row",
-    "alignItems": "center",
-    "justifyContent": "center"
-  },
-  "refresh-text": {
-    "textAlign": "center",
-    "fontSize": "28",
-    "color": "#999999"
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-7f83409d!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-7f83409d!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!D:/phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-00a5ae97!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!../../../phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue":
+/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-00a5ae97!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!D:/phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2361,10 +2537,121 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-06d30675!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!../../../phpStudy_new/WWW/uni_app/pages/list/list.nvue":
-/*!********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-06d30675!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!D:/phpStudy_new/WWW/uni_app/pages/list/list.nvue ***!
-  \********************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-5d06633b!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!../../../phpStudy_new/WWW/youlan/pages/list/list.nvue":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/style-loader.js!./node_modules/weex-vue-loader/lib/style-rewriter.js?id=data-v-5d06633b!./node_modules/weex-vue-loader/lib/selector.js?type=styles&index=0!D:/phpStudy_new/WWW/youlan/pages/list/list.nvue ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  "tab-bar-item": {
+    "width": "150",
+    "height": "100",
+    "flexDirection": "column",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "tab-bar-title": {
+    "height": "100",
+    "lineHeight": "100",
+    "fontSize": "30",
+    "color": "#555555"
+  },
+  "active": {
+    "color": "#007AFF"
+  },
+  "loadmore": {
+    "height": "70",
+    "width": "750",
+    "flexDirection": "column",
+    "justifyContent": "center"
+  },
+  "loadmore-text": {
+    "fontSize": "30",
+    "textAlign": "center",
+    "color": "#999999"
+  },
+  "refresh": {
+    "width": "750",
+    "height": "70",
+    "flexDirection": "row",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  "refresh-text": {
+    "textAlign": "center",
+    "fontSize": "28",
+    "color": "#999999"
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-00a5ae97!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!../../../phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-00a5ae97!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!D:/phpStudy_new/WWW/youlan/components/uni-media-list/uni-media-list.nvue ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: ["list-cell"],
+    on: {
+      "click": _vm.bindClick
+    }
+  }, [(_vm.data.title) ? _c('div', {
+    staticClass: ["media-list"]
+  }, [_c('div', {
+    class: [_vm.isImgRight ? 'media-image-right' : '', _vm.isImgLeft ? 'media-image-left' : '']
+  }, [_c('text', {
+    class: ['media-title', _vm.isImgRight || _vm.isImgLeft ? 'media-title2' : '']
+  }, [_vm._v(_vm._s(_vm.data.title))]), (_vm.showImg) ? _c('div', {
+    class: ['image-section', _vm.isImgRight ? 'image-section-right' : '', _vm.isImgLeft ? 'image-section-left' : '']
+  }, [(_vm.data.image_url) ? _c('image', {
+    class: ['image-list1', _vm.isImgRight || _vm.isImgLeft ? 'image-list2' : ''],
+    attrs: {
+      "src": _vm.data.image_url
+    }
+  }) : _vm._e(), _vm._l((_vm.data.image_list), function(source, i) {
+    return (_vm.data.image_list) ? _c('image', {
+      key: i,
+      staticClass: ["image-list3"],
+      attrs: {
+        "src": source.url
+      }
+    }) : _vm._e()
+  })], 2) : _vm._e()]), _c('div', {
+    staticClass: ["media-foot"]
+  }, [_c('div', {
+    staticClass: ["media-info"]
+  }, [_c('text', {
+    staticClass: ["info-text"]
+  }, [_vm._v(_vm._s(_vm.data.source))]), _c('text', {
+    staticClass: ["info-text"]
+  }, [_vm._v(_vm._s(_vm.data.comment_count) + "条评论")]), _c('text', {
+    staticClass: ["info-text"]
+  }, [_vm._v(_vm._s(_vm.data.datetime))])]), _c('div', {
+    staticClass: ["max-close-view"],
+    on: {
+      "click": _vm.close
+    }
+  }, [_vm._m(0)])])]) : _vm._e()])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["close-view"]
+  }, [_c('text', {
+    staticClass: ["close"]
+  }, [_vm._v("×")])])
+}]}
+
+/***/ }),
+
+/***/ "./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-5d06633b!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!../../../phpStudy_new/WWW/youlan/pages/list/list.nvue":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-5d06633b!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!D:/phpStudy_new/WWW/youlan/pages/list/list.nvue ***!
+  \*******************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2440,66 +2727,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v(_vm._s(tabItem.loadingText))])])], 2)
   }))], 1)], 1)
 },staticRenderFns: []}
-
-/***/ }),
-
-/***/ "./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-7f83409d!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!../../../phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/weex-vue-loader/lib/template-compiler.js?id=data-v-7f83409d!./node_modules/weex-vue-loader/lib/selector.js?type=template&index=0!D:/phpStudy_new/WWW/uni_app/components/uni-media-list/uni-media-list.nvue ***!
-  \*********************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
-    staticClass: ["list-cell"],
-    on: {
-      "click": _vm.bindClick
-    }
-  }, [(_vm.data.title) ? _c('div', {
-    staticClass: ["media-list"]
-  }, [_c('div', {
-    class: [_vm.isImgRight ? 'media-image-right' : '', _vm.isImgLeft ? 'media-image-left' : '']
-  }, [_c('text', {
-    class: ['media-title', _vm.isImgRight || _vm.isImgLeft ? 'media-title2' : '']
-  }, [_vm._v(_vm._s(_vm.data.title))]), (_vm.showImg) ? _c('div', {
-    class: ['image-section', _vm.isImgRight ? 'image-section-right' : '', _vm.isImgLeft ? 'image-section-left' : '']
-  }, [(_vm.data.image_url) ? _c('image', {
-    class: ['image-list1', _vm.isImgRight || _vm.isImgLeft ? 'image-list2' : ''],
-    attrs: {
-      "src": _vm.data.image_url
-    }
-  }) : _vm._e(), _vm._l((_vm.data.image_list), function(source, i) {
-    return (_vm.data.image_list) ? _c('image', {
-      key: i,
-      staticClass: ["image-list3"],
-      attrs: {
-        "src": source.url
-      }
-    }) : _vm._e()
-  })], 2) : _vm._e()]), _c('div', {
-    staticClass: ["media-foot"]
-  }, [_c('div', {
-    staticClass: ["media-info"]
-  }, [_c('text', {
-    staticClass: ["info-text"]
-  }, [_vm._v(_vm._s(_vm.data.source))]), _c('text', {
-    staticClass: ["info-text"]
-  }, [_vm._v(_vm._s(_vm.data.comment_count) + "条评论")]), _c('text', {
-    staticClass: ["info-text"]
-  }, [_vm._v(_vm._s(_vm.data.datetime))])]), _c('div', {
-    staticClass: ["max-close-view"],
-    on: {
-      "click": _vm.close
-    }
-  }, [_vm._m(0)])])]) : _vm._e()])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: ["close-view"]
-  }, [_c('text', {
-    staticClass: ["close"]
-  }, [_vm._v("×")])])
-}]}
 
 /***/ })
 

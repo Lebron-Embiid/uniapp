@@ -87,6 +87,7 @@
 			navbarTap: function(e){
 				var that = this;
 				that.currentTab = e; 
+				uni.startPullDownRefresh(); 
 					uni.request({
 						url: that.$api+'default/goods-list&cat_id='+e+'&access_token='+that.$access_token,
 						method: 'GET',
@@ -139,6 +140,9 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function () {
 			uni.request({
 				url: that.$api+'default/shop&cat_id=1&access_token='+that.$access_token,
 				dataType: "json",
@@ -183,6 +187,56 @@
 					});
 				}
 			});
+			}, 1000);
+			uni.startPullDownRefresh(); 
+		},
+		onPullDownRefresh() {
+			var that = this;
+			setTimeout(function () {
+				uni.request({
+					url: that.$api+'default/goods-list&cat_id='+that.currentTab+'&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						// if(res.data.code == 1){
+							var storeList1 = [];
+							var item = res.data.data;
+							for(let i in item.list){
+								storeList1.push({
+									id: item.list[i].id,
+									src: item.list[i].pic_url,
+									cat_id: item.list[i].cat_id,
+									title: item.list[i].name,
+									// info: "清洁皮肤，长效保湿滋润",
+									price: item.list[i].price,
+									type: item.list[i].weight
+								})
+							}	
+							that.storeList = storeList1;
+							if(that.currentTab == 1){								
+								that.page_count1 = res.data.data.page_count;
+							}else if(that.currentTab == 2){
+								that.page_count2 = res.data.data.page_count;
+							}else if(that.currentTab == 3){
+								that.page_count3 = res.data.data.page_count;
+							}
+							console.log(that.page_count1)
+							console.log(that.page_count2)
+							console.log(that.page_count3)
+						// }
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 			//上拉触底
 		onReachBottom(){

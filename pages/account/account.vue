@@ -74,7 +74,7 @@
 				},
 				content:'',
 				cat_list : [],
-				array: ['在线支付', '余额支付'],
+				array: ['微信支付', '支付宝支付','余额支付'],
 				index: 0,
 				express_price: 0,
 				accountList:[
@@ -123,6 +123,9 @@
 				if(this.index == 0){
 					this.payment = 0,
 					this.pay_type = 'WECHAT_PAY'
+				}else if(this.index == 1){
+					this.payment = 1
+					this.pay_type = 'ALIPAY'
 				}else{
 					this.payment = 3
 					this.pay_type = 'BALANCE_PAY'
@@ -145,6 +148,18 @@
 					})	
 					return false;
 				}
+				if(that.payment == 3){
+					uni.showToast({
+						title: "在线支付暂未完成",
+						icon: 'none',
+						duration: 1500
+					})	
+					setTimeout(function(){
+						uni.navigateTo({ 
+							url: "/pages/my_order/my_order?id=0"
+						})
+					},1500)
+				}
  				uni.request({
 					url: that.$api+'order/new-submit&access_token='+that.$access_token,
 					method: 'POST',
@@ -158,8 +173,7 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: res => {
-						console.log(res.data)
+					success: res => { 
 						uni.showToast({
 							title:'提交成功',
 							icon: 'none',
@@ -182,28 +196,41 @@
 									header: {
 										'content-type': 'application/x-www-form-urlencoded'
 									},
-									success: res => { 
-										uni.requestPayment({
-											provider: 'wxpay',
-											timeStamp: res.data.data.timeStamp,
-											nonceStr: res.data.data.nonceStr,
-											package: res.data.data.package,
-											signType: res.data.data.signType,
-											paySign: res.data.data.paySign,
-											success: function (res) {
-												console.log(res)
-												console.log('success:' + JSON.stringify(res));
-											},
-											fail: function (err) {
-												console.log('fail:' + JSON.stringify(err));
-											}
-										});
-										uni.showToast({
-											title:res.msg,
-											icon: 'none',
-											duration: 1500
-										})	
-									},
+									success: res => {  
+										if(that.payment == 3){
+											uni.showToast({
+												title: res.data.msg,
+												icon: 'none',
+												duration: 1500
+											})	
+											if(res.data.code == 0){
+												 console.log(1111)
+												setTimeout(function(){
+													uni.navigateTo({ 
+														url: "/pages/my_order/my_order?id=1"
+													})
+												},1500)
+											}else{
+												 console.log(222)
+												setTimeout(function(){
+													uni.navigateTo({ 
+														url: "/pages/my_order/my_order?id=0"
+													})
+												},1500)
+											}																					
+										}else{
+											uni.showToast({
+												title: "在线支付暂未完成",
+												icon: 'none',
+												duration: 1500
+											})	
+											setTimeout(function(){
+												uni.navigateTo({ 
+													url: "/pages/my_order/my_order?id=0"
+												})
+											},1500)
+										}																			
+									 }
 								})
 							},1000)
 						}else{
@@ -230,8 +257,11 @@
 			}
 		},
 		onLoad(opt) {
-			var data = JSON.parse(opt.data);
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			console.log(opt)
+			var data = JSON.parse(opt.data);
 			that.cat_list = opt.cat_list;  
 			that.address = data.address;
 			that.accountList = data.mch_list[0].goods_list;
@@ -241,6 +271,7 @@
 			that.level_price = data.mch_list[0].level_price;
 			that.total_price = data.mch_list[0].total_price;
 			that.all  = parseFloat(that.level_price)+parseFloat(that.express_price)
+			
  // 			uni.request({
 // 				url: that.$api+'order/pay-data&order_id=3&access_token='+that.$access_token,
 // 				method: 'GET',
@@ -260,6 +291,12 @@
 // 				}
 // 			});			
 		}
+		// onPullDownRefresh() {
+		// 	var that = this;
+		// 	setTimeout(function () {
+		// 		uni.stopPullDownRefresh();
+		// 	}, 1000);
+		// }
 	}
 </script>
 

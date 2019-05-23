@@ -1,7 +1,7 @@
 <template>
 	<view class="about_box">
 		<view class="page_bg"></view>
-		<image :src="logo" mode="widthFix"></image>
+		<image :src="logo" class="logo_img" mode="widthFix"></image>
 		<view class="about_title">{{title}}</view>
 		<view class="about_content">
 			<block v-if="content!=''">
@@ -58,7 +58,7 @@
 		padding: 40upx 20upx;
 		box-sizing: border-box;
 		background: #fff;
-		image{
+		.logo_img{
 			display: block;
 			width: 250upx;
 			height: 145upx;

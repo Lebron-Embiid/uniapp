@@ -86,6 +86,10 @@
 			},
 			selectTap(id,idx) {
 				var that = this;
+				for(let i in that.addressList){
+					that.addressList[i].is_default = 0;
+				}
+				that.addressList[idx].is_default = 1;
 				that.current = idx;
 				uni.request({
 					url: that.$api+'user/address-set-default&access_token='+that.$access_token+'&address_id='+id,
@@ -160,8 +164,18 @@
 		},
 		onLoad(opt) {
 			var that = this;
-			that.mch_list = JSON.parse(opt.mch_list);
-			console.log(that.mch_list)
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function () {
+				that.mch_list = JSON.parse(opt.mch_list);
+				console.log(that.mch_list)
+			}, 1000);
+			uni.startPullDownRefresh(); 
+		},
+		onPullDownRefresh(){
+			setTimeout(function () {
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		onShow() {
 			var that = this;

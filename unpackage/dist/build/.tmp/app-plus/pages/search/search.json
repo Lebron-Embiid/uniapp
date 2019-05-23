@@ -1,6 +1,11 @@
 {
   "navigationStyle": "custom",
   "navigationBarTitleText": "",
+  "pullToRefresh": {
+    "support": true,
+    "color": "#00001f",
+    "style": "circle"
+  },
   "titleNView": false,
   "usingComponents": {
     "uni-load-more": "/components/uni-load-more/uni-load-more"

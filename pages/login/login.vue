@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="header">
-			<image src="../../static/logo.png"></image>
+			<image src="../../static/video_img.png"></image>
 		</view>
 		
 		<view class="list">
@@ -31,7 +31,8 @@
 <script>
 	export default {
 		onLoad(){
-			console.log(this.$access_token)
+			// uni.setStorageSync('access_token',this.$access_token);
+			// uni.setStorageSync('level',this.$level);
 		},
 		data() {
 			return {
@@ -71,6 +72,8 @@
 						if(res.data.code!=1){
 							uni.showToast({title:res.data.data.msg,icon:'none'});
 						}else{
+
+							uni.clearStorageSync(); 
 							uni.setStorageSync('access_token',res.data.data.access_token);
 							uni.setStorageSync('level',res.data.data.level);
 							uni.showToast({title:res.data.data.msg,icon:'none',duration:1500});
@@ -105,7 +108,7 @@
 		width:161upx;
 		height:161upx;
 		background:rgba(63,205,235,1);
-		box-shadow:0upx 12upx 13upx 0upx rgba(63,205,235,0.47);
+		/* box-shadow:0upx 12upx 13upx 0upx rgba(63,205,235,0.47); */
 		border-radius:50%;
 		margin-top: 50upx;
 		margin-left: auto;

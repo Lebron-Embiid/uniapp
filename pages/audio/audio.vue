@@ -11,12 +11,18 @@
 				<view class="ai_info">听众：{{look}}</view>
 				<imt-audio continue :control="false" :autoplay="true" :src="src" :duration="duration" @click="changeRotate"></imt-audio>
 			</view>
+			<view class="audio_title">
+				<block v-if="content!=''">
+					<u-parse :content="content"></u-parse>
+				</block>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 import imtAudio from "@/components/imt-audio/imt-audio.vue"
+import uParse from '@/components/u-parse/u-parse.vue'
 export default{
 	data(){
 		return{
@@ -25,11 +31,13 @@ export default{
 			look: "",
 			src: "",
 			duration: 0,
-			audio_logo: "../../static/audio_logo.png"
+			audio_logo: "../../static/audio_logo.png",
+			content: ""
 		}
 	},
 	components: {
-		imtAudio
+		imtAudio,
+		uParse
 	},
 	methods:{
 		changeRotate: function(e){
@@ -44,6 +52,8 @@ export default{
 	},
 	onLoad(opt) {
 		var that = this;
+		that.$access_token = uni.getStorageSync("access_token");
+		that.$level = uni.getStorageSync("level");
 		uni.request({
 			url: that.$api+'default/video-detail&access_token='+that.$access_token+'&id='+opt.id,
 			method: 'GET',
@@ -57,6 +67,7 @@ export default{
 				that.src = res.data.data.url;
 				that.audio_logo = res.data.data.pic_url;
 				that.duration = parseInt(res.data.data.audio_num);
+				that.content = res.data.data.content
 			},
 			fail: () => {
 				uni.showToast({
@@ -75,5 +86,8 @@ export default{
 		font-size: 20upx;
 		margin: 10upx 0 20upx;
 		text-align: right;
+	}
+	.audio_title{
+		font-size: 28upx;
 	}
 </style>

@@ -98,6 +98,8 @@
 		},
 		onLoad(opt) {
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			uni.request({
 				url: that.$api+'user/setting/&access_token='+that.$access_token,
 				dataType: "json",

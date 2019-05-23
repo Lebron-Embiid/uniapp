@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="header">
-			<image src="../../static/logo.png"></image>
+			<image src="../../static/video_img.png"></image>
 		</view>
 		
 		<view class="list">
@@ -42,9 +42,8 @@
 	var tha,js;
 	export default {
 		onLoad(t){
-			console.log(t)
-			var uid = t.uid;
-			console.log(uid)
+			tha = this; 
+			var uid = t.uid; 
 		},
 		onUnload(){
 			clearInterval(js)
@@ -81,27 +80,39 @@
 			getcode(){
 				if(this.second>0){
 					return;
+				} 
+				if(this.phoneno.length != 11){
+					uni.showToast({
+						title:"请填写正确的号码",
+						icon: 'none'
+					})	
+					return false;
 				}
-				this.second = 60;
-// 				uni.request({
-// 				    url: this.$api+'user/user-hand-binding', //仅为示例，并非真实接口地址。
-// 				    data: {content:this.phoneno,access_token:1},
-// 					method: 'POST',
-// 					dataType:'json',
-// 				    success: (res) => {
-// 						if(res.data.code!=200){
-// 							uni.showToast({title:res.data.msg,icon:'none'});
-// 						}else{
-// 							uni.showToast({title:res.data.msg});
+				uni.request({
+				    url: this.$api+'default/user-hand-binding', //仅为示例，并非真实接口地址。
+				    data: {content:this.phoneno,code_type:'reg'},
+					method: 'GET',
+					dataType:'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+				    success: (res) => {  
+						console.log(res)
+						if(res.data.code == 1){
+							uni.showToast({title:res.data.msg,icon:'none'});
+							tha.second = 0;
+						}else{
+							uni.showToast({title:res.data.msg});
+							tha.second = 60;
 							js = setInterval(function(){
 								tha.second--;
 								if(tha.second==0){
 									clearInterval(js)
 								}
 							},1000)
-// 						}
-// 				    }
-// 				});
+						}
+				    }
+				});
 			},
 		    bindLogin() {
 				var that = this;
@@ -118,27 +129,14 @@
 				        title: '手机号不正确'
 				    });
 				    return;
-				}
-// 		        if (this.password.length < 6) {
-// 		            uni.showToast({
-// 		                icon: 'none',
-// 		                title: '密码不正确'
-// 		            });
-// 		            return;
-// 		        }
-// 				if (this.code.length != 4) {
-// 				    uni.showToast({
-// 				        icon: 'none',
-// 				        title: '验证码不正确'
-// 				    });
-// 				    return;
-// 				}
+				} 
+ 
 				uni.request({
 				    url: that.$api+'passport/register',
 				    data: {
 						contact_way:that.phoneno,
-						password:that.password
-// 						uid:this.code,
+						password:that.password,
+						code:that.code,
 // 						invitation:this.invitation
 					},
 					method: 'POST',
@@ -156,9 +154,9 @@
 							uni.setStorageSync('level',res.data.data.level);
 							that.$access_token = uni.getStorageSync('access_token'); 
 							that.$level = uni.getStorageSync('level');
-							setTimeout(function(){
+							setTimeout(function(){ 
 								uni.reLaunch({
-									url: "/pages/complete_mater/complete_mater"
+									url: "/pages/login/login"
 								})
 							},1500) 
 						}
@@ -180,7 +178,7 @@
 		width:161upx;
 		height:161upx;
 		background:rgba(63,205,235,1);
-		box-shadow:0upx 12upx 13upx 0upx rgba(63,205,235,0.47);
+		/* box-shadow:0upx 12upx 13upx 0upx rgba(63,205,235,0.47); */
 		border-radius:50%;
 		margin-top: 50upx;
 		margin-left: auto;

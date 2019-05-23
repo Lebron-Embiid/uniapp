@@ -43,6 +43,9 @@
 		},
 		onLoad(){
 			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function () {
 			uni.request({
 				url: that.$api+'default/article-message-list&access_token='+that.$access_token,
 				method: 'GET',
@@ -59,6 +62,30 @@
 					})
 				}
 			});
+			}, 1000);
+			uni.startPullDownRefresh(); 
+		},
+		onPullDownRefresh() {
+			var that = this;
+			setTimeout(function () {
+				uni.request({
+					url: that.$api+'default/article-message-list&access_token='+that.$access_token,
+					method: 'GET',
+					success: res => {
+						var science_list = res.data.data.list;					
+						that.page_count = res.data.data.page_count;
+						that.science_list = science_list;
+					},
+					fail: () => {
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})
+					}
+				});
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		//上拉触底
 		onReachBottom(){

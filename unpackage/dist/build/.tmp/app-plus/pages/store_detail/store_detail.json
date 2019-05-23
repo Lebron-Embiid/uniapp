@@ -1,5 +1,11 @@
 {
   "navigationBarTitleText": "产品详情",
+  "enablePullDownRefresh": true,
+  "pullToRefresh": {
+    "support": true,
+    "color": "#00001f",
+    "style": "circle"
+  },
   "titleNView": {
     "type": "transparent"
   },

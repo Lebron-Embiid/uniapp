@@ -1,5 +1,11 @@
 {
   "navigationBarTitleText": "发布图片",
+  "enablePullDownRefresh": true,
+  "pullToRefresh": {
+    "support": true,
+    "color": "#00001f",
+    "style": "circle"
+  },
   "titleNView": {
     "buttons": [
       {

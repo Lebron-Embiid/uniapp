@@ -28,6 +28,11 @@
 				phone: ""
 			}
 		},
+		onLoad:function(){
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+		},
 		methods:{
 			getProblem: function(e){
 				this.problem = e.detail.value;

@@ -61,15 +61,18 @@
 						<view class="auth_item">
 							<view class="ai_image" @click="selectCardDown">
 								<image src="../../static/id_card_img1.jpg" class="bg_img" mode="widthFix"></image>
-								<image :src="idcard_down" class="card_img" mode="widthFix"></image>
+								<div class="card_img bs" :style="'background: url('+idcard_down+');'"></div>
+								<!-- <image :src="idcard_down" class="card_img" mode="widthFix"></image> -->
 							</view>
 							<text>身份证反面</text>
 						</view>
 					</view>
-					 
+					<button @click="appLogin" hidden>微信授权登录</button>
+					 <view>{{code}}</view>
 				</view>
 				<view class="btn-area">
-					<button formType="submit" class="submit_btn">保存并绑定微信</button>
+					<!-- <button formType="submit" class="submit_btn">保存并绑定微信</button> -->
+					<button formType="submit" class="submit_btn">保存</button>
 				</view>
 			</form>
 		</view>
@@ -114,6 +117,8 @@
 				idcard_up: "",
 				idcard_down: "",
 				user_real:0,
+				code: "",
+				userinfo: ""
 			}
 		},
 		methods:{
@@ -161,18 +166,19 @@
 				console.log(this.bear_current)
 			},
 			selectCardUp: function(){
-				let that = this;
+				var that = this;
 				uni.chooseImage({
 					count: 1,
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: function (res) {
 						console.log(JSON.stringify(res.tempFilePaths));
-						uni.uploadFile({
+						var uploadCard1 =  uni.uploadFile({
 							url: that.$api+'default/upload-image', //图片接口
 							filePath: res.tempFilePaths[0],
 							name: 'image',
 							success: (uploadFileRes) => {
+								console.log(uploadFileRes.data)
 								var data = JSON.parse(uploadFileRes.data);
 								if(data.code == 0){
 									that.idcard_up = data.data.url;
@@ -188,7 +194,7 @@
 				});
 			},
 			selectCardDown: function(){
-				let that = this;
+				var that = this;
 				uni.chooseImage({
 					count: 1,
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -200,8 +206,9 @@
 							filePath: res.tempFilePaths[0],
 							name: 'image',
 							success: (uploadFileRes) => {
+								console.log(uploadFileRes.data)
 								var data = JSON.parse(uploadFileRes.data);
- 								that.idcard_down = data.data.url;
+ 								// that.idcard_down = data.data.url;
 								if(data.code == 0){
 									that.idcard_down = data.data.url;
 								}else{
@@ -215,8 +222,71 @@
 					}
 				});				
 			},
+			appLogin: function(e){
+				var that = this;
+				// uni.getProvider({
+				// 	service: 'oauth',
+				// 	success: function (res) {
+				// 		console.log(res.provider)
+				// 		if (~res.provider.indexOf('weixin')) {
+				// 			uni.login({
+				// 				provider: 'weixin',
+				// 				success: function (loginRes) {
+				// 					console.log(JSON.stringify(loginRes));
+				// 				}
+				// 			});
+				// 		}
+				// 	},
+				// 	fail:function(res){
+				// 		uni.showToast({
+				// 			title: res.errMsg,
+				// 			icon: 'none',
+				// 			duration: 1500
+				// 		})	
+				// 	}
+				// });
+				uni.login({
+					provider: 'weixin',
+					success: function (loginRes) {
+						console.log(JSON.stringify(loginRes));
+						that.code = JSON.stringify(loginRes.code);
+						// 获取用户信息
+						uni.getUserInfo({
+							provider: 'weixin',
+							success: function(infoRes) {
+								console.log(JSON.stringify(infoRes.userInfo));
+								that.userinfo = JSON.stringify(infoRes.userInfo);
+							},
+							fail:function(res){
+								uni.showToast({
+									title: res.errMsg,
+									icon: 'none',
+									duration: 1500
+								})	
+							}
+						});
+					},
+					fail:function(res){
+						uni.showToast({
+							title: res.errMsg,
+							icon: 'none',
+							duration: 1500
+						})	
+					}
+				})
+				// uni.getProvider({
+				// 	service: 'oauth',
+				// 	success: function (res) {
+				// 		console.log(res.provider)
+				// 		if (~res.provider.indexOf('weixin')) {
+				// 			
+				// 		}
+				// 	}
+				// });
+			},
 			formSubmit: function(){ 
 				let that = this; 
+				
 				uni.request({
 					url: that.$api+'user/setting-edit&access_token='+that.$access_token,
 					method: 'POST',
@@ -237,31 +307,44 @@
 					success: res => {						
 						var data = res.data.data 
 						if(res.data.code == 0){
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+								duration: 1000
+							});
+							setTimeout(function(){
+								uni.navigateTo({ 
+									url: "/pages/person/person"
+								})
+							},1500)
 							//绑定微信
-							 uni.request({
-							 	url: that.$api+'user/agent-information/&access_token='+that.$access_token,
-							 	dataType: "json",
-							 	method: 'POST',
-							 	header: {
-							 		'content-type': 'application/x-www-form-urlencoded'
-							 	},
-							 	success: res => {
-							 		var data = res.data.data
-							 		if(res.data.code == 0){
-										console.log(data)
-										uni.setStorageSync('access_token',data.access_token);
-										uni.setStorageSync('level',data.level);
-										uni.showToast({title:data.msg,icon:'none',duration:1500});
-										that.$access_token = uni.getStorageSync('access_token');
-										that.$level = uni.getStorageSync('level');
-							 		}else{
-							 			uni.showToast({
-							 				title:res.data.msg,
-							 				icon:'none',
-							 			});
-							 		}  
-							 	}, 
-							 });
+// 							 uni.request({
+// 							 	url: that.$api+'user/agent-information/&access_token='+that.$access_token,
+// 							 	dataType: "json",
+// 							 	method: 'POST',
+// 								data:{
+// 									code: that.code
+// 								},
+// 							 	header: {
+// 							 		'content-type': 'application/x-www-form-urlencoded'
+// 							 	},
+// 							 	success: res => {
+// 							 		var data = res.data.data
+// 							 		if(res.data.code == 0){
+// 										console.log(data)
+// 										uni.setStorageSync('access_token',data.access_token);
+// 										uni.setStorageSync('level',data.level);
+// 										uni.showToast({title:data.msg,icon:'none',duration:1500});
+// 										that.$access_token = uni.getStorageSync('access_token');
+// 										that.$level = uni.getStorageSync('level');
+// 							 		}else{
+// 							 			uni.showToast({
+// 							 				title:res.data.msg,
+// 							 				icon:'none',
+// 							 			});
+// 							 		}  
+// 							 	}, 
+// 							 });
 							
 						}else{
 							uni.showToast({
@@ -281,8 +364,11 @@
 			}
 		},
 		onShow: function(){
+		},
+		onLoad(opt) {
 			var that = this;
-			
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			uni.request({
 				url: that.$api+'user/setting/&access_token='+that.$access_token,
 				dataType: "json",
@@ -316,9 +402,6 @@
 					});
 				}
 			});
-		},
-		onLoad(opt) {
-			
 		}
 	}
 </script>
@@ -404,6 +487,10 @@
 							height: 230upx !important;
 							left: 0;
 							top: 0;
+							z-index: 2;
+							&.bs{
+								background-size: 100% 100% !important;
+							}
 						}
 						.bg_img{
 							display: block;

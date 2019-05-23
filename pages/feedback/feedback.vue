@@ -27,6 +27,11 @@
 				phone: ""
 			}
 		},
+		onLoad:function(){
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+		},
 		methods:{
 			getMessage: function(e){
 				this.message = e.detail.value;

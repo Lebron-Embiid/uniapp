@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.agent_box .agent_item.data-v-265e0d7a {
+.agent_box .agent_item.data-v-01b3be58 {
   background: #fff;
   padding: 25rpx 20rpx;
   -webkit-box-sizing: border-box;
@@ -43,31 +43,66 @@
       -ms-flex-align: center;
           align-items: center;
 }
-.agent_box .agent_item.data-v-265e0d7a:first-of-type {
+.agent_box .agent_item.data-v-01b3be58:first-of-type {
     border-top: 1px solid #EBEBEB;
 }
-.agent_box .agent_item .ai_left.data-v-265e0d7a {
+.agent_box .agent_item .ai_left.data-v-01b3be58 {
     color: #1a1a1a;
     font-size: 26rpx;
+    width: 60%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
-.agent_box .agent_item .ai_left image.data-v-265e0d7a {
+.agent_box .agent_item .ai_left .ai_img.data-v-01b3be58 {
       display: inline-block;
-      vertical-align: middle;
       width: 57rpx;
-      height: 57rpx !important;
-      border-radius: 50%;
-      margin: 0 15rpx 8rpx 0;
+      height: 57rpx;
+      margin-right: 30rpx;
+      position: relative;
 }
-.agent_box .agent_item .ai_right.data-v-265e0d7a {
+.agent_box .agent_item .ai_left .ai_img ._span.data-v-01b3be58 {
+        position: absolute;
+        width: 30rpx;
+        height: 30rpx;
+        right: -5rpx;
+        bottom: -5rpx;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 18rpx;
+        background: #f00;
+        text-align: center;
+}
+.agent_box .agent_item .ai_left .ai_img image.data-v-01b3be58 {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        height: 100% !important;
+        border-radius: 50%;
+        margin: 0 15rpx 8rpx 0;
+}
+.agent_box .agent_item .ai_right.data-v-01b3be58 {
     text-align: right;
 }
-.agent_box .agent_item .ai_right .ar_time.data-v-265e0d7a {
+.agent_box .agent_item .ai_right .ar_time.data-v-01b3be58 {
       color: #494949;
       font-size: 20rpx;
       margin-bottom: 5rpx;
 }
-.agent_box .agent_item .ai_right .ar_type.data-v-265e0d7a {
+.agent_box .agent_item .ai_right .ar_type.data-v-01b3be58 {
       color: #1a1a1a;
       font-size: 20rpx;
+}
+.agent_box .agent_item .ai_right .ar_type text.data-v-01b3be58 {
+        margin-left: 10rpx;
 }
 

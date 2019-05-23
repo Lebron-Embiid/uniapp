@@ -4,7 +4,7 @@
 			<view class="ai_left">
 				<view class="ai_img">
 					<image :src="item.avatar" mode="widthFix"></image>
-					<span>{{item.user_step}}</span>
+					<span>{{item.user_team}}</span>
 				</view>
 				<view class="ai_info">
 					<text>{{item.nickname}}</text>
@@ -13,17 +13,9 @@
 			</view>
 			<view class="ai_right">
 				<view class="ar_time">加入时间：{{item.addtime}}</view>
-				<view class="ar_type" style="color: #FF4544;">
-					<block v-if="item.brand_id == 1">
+				<view class="ar_type" style="color: #FF4544;">					
 						<text>A{{item.level}}</text>
-					</block>					
-					<block v-if="item.brand_id == 2">
-						<text>N{{item.west}}</text>
-					</block>					
-					<block v-if="item.brand_id == 4">
-						<text>A{{item.level}}</text>
-						<text>N{{item.west}}</text>
-					</block>					 
+						<text>N{{item.west}}</text> 			 
 				</view>
 			</view>
 		</view>
@@ -79,6 +71,7 @@
 						color: #fff;
 						font-size: 18upx;
 						background: #f00;
+						text-align: center;
 					}
 					image{
 						display: inline-block;

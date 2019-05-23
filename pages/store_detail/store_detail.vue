@@ -204,6 +204,9 @@
 				var that = this;
 				if(that.is_format != 0){
 					that.fixed_show = 0;
+					uni.showToast({
+						title: "请选择规格"
+					})
 					return false;
 				}
 				uni.request({
@@ -244,6 +247,9 @@
 				var that = this;
 				if(that.is_format != 0){
 					that.fixed_show = 0;
+					uni.showToast({
+						title: "请选择规格"
+					})
 					return false;
 				}
 				var goods_list = [];
@@ -381,6 +387,9 @@
 		},
 		onLoad(opt) {
 			let that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function () {
 			that.id = opt.id;
 			uni.request({
 				url: that.$api+'default/goods&id=1&access_token='+that.$access_token,
@@ -424,6 +433,13 @@
 					})
 				}
 			});
+			}, 1000);
+			uni.startPullDownRefresh(); 
+		},
+		onPullDownRefresh() {
+			setTimeout(function () {
+				uni.stopPullDownRefresh();
+			}, 1000);
 		},
 		
 		//上拉触底

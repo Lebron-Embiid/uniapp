@@ -32,7 +32,7 @@
 				<navigator class="navigator" :url="'/pages/wallet/wallet?money='+money">我的钱包<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
-				<navigator class="navigator" url="/pages/my_agent/my_agent">我的代理<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" url="/pages/my_agent/my_agent">我的会员<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
 				<navigator class="navigator" :url="'/pages/my_promotion/my_promotion?code='+code">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
@@ -50,6 +50,11 @@
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/message_list/message_list">在线列表<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
+			
+			
+			<!-- <view class="nav_item">
+				<view class="navigator" @click="clearSave">清除缓存</view>
+			</view> -->
 			
 			<view class="nav_item">
 				<view class="navigator" @click="logOut">退出登录</view>
@@ -80,12 +85,24 @@
 					url: "/pages/complete_mater/complete_mater"
 				})
 			},
+			// clearSave: function(e){
+			// 	var that = this;
+			// 	that.$access_token = uni.setStorageSync('access_token','');
+			// 	that.$level = uni.setStorageSync('level','');
+			// 	uni.removeStorageSync('access_token');
+			// 	uni.removeStorageSync('level');
+			// 	uni.showToast({
+			// 		title:"清除成功！",
+			// 		icon:'none',
+			// 	});
+			// },
 			logOut:function(){
-			var that = this;
-				uni.setStorageSync('access_token','');
-				uni.setStorageSync('level','');
- 				that.$access_token = uni.getStorageSync('access_token');
-				that.$level = uni.getStorageSync('level');
+				var that = this;  
+ 				that.$access_token = uni.setStorageSync('access_token','');
+				that.$level = uni.setStorageSync('level','');
+				uni.removeStorageSync('access_token');
+				uni.removeStorageSync('level');
+				uni.clearStorageSync();
 				 uni.showToast({
 				 	title:"退出成功",
 				 	icon:'none',
@@ -97,8 +114,20 @@
 				},1500)
 			}
 		},
-		onShow:function() {
-			var that = this; 
+		// onShow:function(){
+		// 	var that = this;
+		// 	that.$access_token = uni.getStorageSync("access_token");
+		// 	that.$level = uni.getStorageSync("level");
+		// 	if(that.$access_token == ""){
+		// 		uni.reLaunch({
+		// 			url: "/pages/login/login"
+		// 		})
+		// 	}
+		// },
+		onLoad(opt) {
+			var that = this;  
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			uni.request({
 				url: that.$api+'user/user-info&access_token='+that.$access_token,
 				dataType: "json",
@@ -126,9 +155,40 @@
 					});
 				}
 			});
+			uni.startPullDownRefresh(); 
 		},
-		onLoad(opt) {
-			 
+		onPullDownRefresh() {
+			var that = this;
+			setTimeout(function () {
+				uni.request({
+					url: that.$api+'user/user-info&access_token='+that.$access_token,
+					dataType: "json",
+					method: 'GET',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						var data = res.data.data;
+						that.code = data.user_info.code,
+						that.id = data.user_info.id,
+						that.avatar_url = data.user_info.avatar_url,
+						that.money = data.user_info.money,
+						that.nickname = data.user_info.nickname,
+						that.orders = data.orders,
+						that.status_0 = data.order_count.status_0,
+						that.status_1 = data.order_count.status_1,
+						that.status_2 = data.order_count.status_2,
+						that.status_3 = data.order_count.status_3
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
+				uni.stopPullDownRefresh();
+			}, 1000);
 		}
 	}
 </script>

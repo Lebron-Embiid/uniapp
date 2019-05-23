@@ -10,7 +10,6 @@
 			<block v-if="content!=''">
 				<u-parse :content="content"></u-parse>
 			</block>
-			<!-- {{content}} -->
 		</view>
 		<view class="page_ul">
 			<view class="page_left">
@@ -102,6 +101,8 @@
 		},
 		onLoad(opt) {
 			let that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			console.log(opt.id)
 			uni.request({
 				url: that.$api+'default/article-detail&id=1',
@@ -169,9 +170,17 @@
 	.detail_content{
 		color: #252525;
 		font-size: 24upx !important;
-		image{
-			display: block;
-			max-width: 100%;
+		.wxParse{
+			.img{
+				display: block;
+				width: 100% !important;
+				max-width: 100% !important;
+			}	
+			image{
+				display: block;
+				width: 100% !important;
+				max-width: 100% !important;
+			}			
 		}
 	}
 	.page_ul{
