@@ -1,4 +1,8 @@
 .idea
 .git
-/main.js
-/unpackage
+main.js
+unpackage
+App.vue
+manifest.json
+uni.scss
+pages.json

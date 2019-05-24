@@ -10,8 +10,8 @@
 		<view class="mt44"></view>
 		<view class="video_list" v-show="currentTab == 0">
 			<view class="form_top">
-				<form @click="toSearch" class="form_box">
-					<input @input="getVideoword" type="text" placeholder="请输入您要搜索的关键词" value="" />
+				<form class="form_box">
+					<input @input="getAudioword" type="text" placeholder="请输入您要搜索的内容" value="" />
 					<button><image src="../../static/search.png" mode=""></image></button>
 				</form>
 			</view>
@@ -20,8 +20,8 @@
 		<!-- 音频 -->
 		<view class="audio_list" v-show="currentTab == 1">
 			<view class="form_top">
-				<form @click="toSearch" class="form_box">
-					<input @input="getAudioword" type="text" placeholder="请输入您要搜索的关键词" value="" />
+				<form class="form_box">
+					<input @input="getAudioword" type="text" placeholder="请输入您要搜索的内容" value="" />
 					<button><image src="../../static/search.png" mode=""></image></button>
 				</form>
 			</view>
@@ -52,19 +52,51 @@ export default{
 			currentTab:0,
 			video_list:[],
 			auto_list:[],
-			keyword1: "",
-			keyword2: ""
+			keyword: ""
 		}
 	},
 	components:{
 		commonVideo
 	},
-	methods:{
-		getVideoword: function(e){
-			this.keyword1 = e.detail.value;
-		},
+	methods:{ 
 		getAudioword: function(e){
-			this.keyword2 = e.detail.value;
+			var that = this;
+			that.keyword = e.detail.value; 
+			uni.request({
+				url: that.$api+'default/video-list&type='+that.currentTab+'&keyword='+that.keyword+'&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					var video_list1 = [];
+					var item = res.data.data.list;
+					for(let i in item){
+						video_list1.push({
+							id: item[i].id,
+							poster: item[i].pic_url,
+							// avatar: item[i].avatar,
+							avatar: "../../static/video_img.png",
+							title: item[i].title,
+							look: item[i].num,
+							video: item[i].url
+						})
+					}
+					if(that.currentTab == 0){							
+						that.page_video_count = res.data.data.page_count;
+					}else{							
+						that.page_movie_count = res.data.data.page_count;
+					}
+					that.video_list = video_list1;
+				},
+				fail: () => {
+					uni.showToast({
+						title:res.data.msg,
+						icon:'none',
+					});
+				}
+			});	
 		},
 		navbarTap: function(e){
 			var that = this;

@@ -5,34 +5,62 @@
 			url: ""
 		},
 		onLaunch: function () {
-			//#ifdef APP-PLUS  
+			//#ifdef APP-PLUS
+			console.log(plus.runtime.appid)
+			console.log(plus.runtime.version)
+			var server = "https://www.example.com/update"; //检查更新地址
+			//升级检测数据
+			var req = {
+				"appid": plus.runtime.appid,
+				"version": plus.runtime.version
+			};
+			uni.request({
+				url: server,
+				data: req,
+				success: (res) => {
+					if (res.statusCode == 200 && res.data.status === 1) {
+						 //提醒用户更新
+						uni.showModal({
+							title: "更新提示",
+							content: res.data.note,
+							success: (res) => {
+								if (res.confirm) {
+									plus.runtime.openURL(res.data.url);
+								}
+							}
+						})
+					}
+				}
+			})
+			//#endif
+			//#ifdef APP-PLUS
 			// console.log(plus.runtime.appid)
 			// console.log(plus.runtime.version)
-			// var server = "https://www.example.com/update"; //检查更新地址  
-			// //升级检测数据 
-			// var req = { 
-			// 	"appid": plus.runtime.appid,  
-			// 	"version": plus.runtime.version  
-			// };  
-			// uni.request({  
-			// 	url: server,  
-			// 	data: req,  
-			// 	success: (res) => {  
-			// 		if (res.statusCode == 200 && res.data.status === 1) {  
-			// 			 //提醒用户更新  
+			// var server = "https://www.example.com/update"; //检查更新地址
+			// //升级检测数据
+			// var req = {
+			// 	"appid": plus.runtime.appid,
+			// 	"version": plus.runtime.version
+			// };
+			// uni.request({
+			// 	url: server,
+			// 	data: req,
+			// 	success: (res) => {
+			// 		if (res.statusCode == 200 && res.data.status === 1) {
+			// 			 //提醒用户更新
 			// 			uni.showModal({
-			// 				title: "更新提示",  
-			// 				content: res.data.note,  
-			// 				success: (res) => {  
-			// 					if (res.confirm) {  
-			// 						plus.runtime.openURL(res.data.url);  
-			// 					}  
-			// 				}  
-			// 			})  
-			// 		}  
-			// 	}  
-			// })  
-			//#endif  
+			// 				title: "更新提示",
+			// 				content: res.data.note,
+			// 				success: (res) => {
+			// 					if (res.confirm) {
+			// 						plus.runtime.openURL(res.data.url);
+			// 					}
+			// 				}
+			// 			})
+			// 		}
+			// 	}
+			// })
+			//#endif
 			console.log('App Launch');
 			//app启动时打开启动广告页
 // 			var w = plus.webview.open(

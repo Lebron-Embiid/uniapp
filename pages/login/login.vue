@@ -43,20 +43,13 @@
 		methods: {
 		    bindLogin() {
 				var that = this;
-// 				if (this.phoneno.length != 11) {
-// 				     uni.showToast({
-// 				        icon: 'none',
-// 				        title: '手机号不正确'
-// 				    });
-// 				    return;
-// 				}
-// 		        if (this.password.length < 6) {
-// 		            uni.showToast({
-// 		                icon: 'none',
-// 		                title: '密码不正确'
-// 		            });
-// 		            return;
-// 		        }
+				if (this.phoneno.length != 11) {
+				     uni.showToast({
+				        icon: 'none',
+				        title: '手机号不正确'
+				    });
+				    return;
+				}
 				uni.request({
 				    url: that.$api+'passport/mobile-login',
 				    data: {

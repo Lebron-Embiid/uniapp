@@ -9,12 +9,10 @@
 				</view>
 				<view class="ai_title">{{title}}</view>
 				<view class="ai_info">听众：{{look}}</view>
-				<imt-audio continue :control="false" :autoplay="true" :src="src" :duration="duration" @click="changeRotate"></imt-audio>
+				<imt-audio continue :control="control" :autoplay="auto" :src="src" :duration="duration" @click="changeRotate"></imt-audio>
 			</view>
-			<view class="audio_title">
-				<block v-if="content!=''">
-					<u-parse :content="content"></u-parse>
-				</block>
+			<view class="audio_title">  
+				<image :src="audio_logo" class="logo_img" mode="widthFix"></image>
 			</view>
 		</view>
 	</view>
@@ -23,6 +21,7 @@
 <script>
 import imtAudio from "@/components/imt-audio/imt-audio.vue"
 import uParse from '@/components/u-parse/u-parse.vue'
+const innerAudioContext = uni.createInnerAudioContext();
 export default{
 	data(){
 		return{
@@ -32,7 +31,9 @@ export default{
 			src: "",
 			duration: 0,
 			audio_logo: "../../static/audio_logo.png",
-			content: ""
+			pic_url: "",
+			control: false,
+			auto: true
 		}
 	},
 	components: {
@@ -64,10 +65,12 @@ export default{
 			success: res => {
 				that.title = res.data.data.title;
 				that.look = res.data.data.num;
-				that.src = res.data.data.url;
+				that.src = 'http://'+res.data.data.url;
+				innerAudioContext.src = 'http://'+res.data.data.url;
+				innerAudioContext.onCanplay(function(){
+					that.duration = parseInt(innerAudioContext.duration);
+				})
 				that.audio_logo = res.data.data.pic_url;
-				that.duration = parseInt(res.data.data.audio_num);
-				that.content = res.data.data.content
 			},
 			fail: () => {
 				uni.showToast({
@@ -76,6 +79,10 @@ export default{
 				});
 			}
 		});
+		
+		setTimeout(function(){
+			console.log(that.src)
+		},1000)
 	}
 }
 </script>
@@ -89,5 +96,9 @@ export default{
 	}
 	.audio_title{
 		font-size: 28upx;
+		image{
+			display: block;
+			max-width: 100%;
+		}
 	}
 </style>
