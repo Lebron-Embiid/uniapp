@@ -35,9 +35,15 @@
 		},
 		methods:{
 			toVideoDetail: function(e){
-				uni.navigateTo({
-					url: "/pages/video/video?id="+e+"&istype="+this.istype
-				})
+				if(this.istype == 0){
+					uni.navigateTo({
+						url: "/pages/video/video?id="+e+"&istype="+this.istype
+					})
+				}else{
+					uni.navigateTo({
+						url: "/pages/video1/video1?id="+e+"&istype="+this.istype
+					})					
+				}
 			},
 			toDownload: function(e){
 				uni.saveVideoToPhotosAlbum({

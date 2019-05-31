@@ -1,6 +1,6 @@
 <template>
 	<view class="video_box">
-		<video id="myVideo" autoplay="true" direction="-90" :show-fullscreen-btn="full" :show-play-btn="play" :show-center-play-btn="play" :src="video"></video>
+		<video id="myVideo" autoplay="true" direction="0" :show-fullscreen-btn="full" :show-play-btn="play" :show-center-play-btn="play" :src="video"></video>
 		<view class="video_title">
 			<block v-if="content!=''">
 				<u-parse :content="content"></u-parse>
@@ -16,7 +16,7 @@
 			return{
 				controls: true,
 				play: true,
-				full: true,
+				full: false,
 				id: "",
 				video: "",
 				content: ""
@@ -26,7 +26,6 @@
 			uParse
 		},
 		onLoad(opt) {
-			this.videoContext = uni.createVideoContext('myVideo')
 			let that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
@@ -62,7 +61,6 @@
 					},
 					success: res => {
 						that.video = res.data.data.url;
-						this.videoContext.requestFullScreen(0);
 					},
 					fail: () => {
 						uni.showToast({
@@ -84,11 +82,11 @@
 	}
 	#myVideo{
 		display: block;
-		/* position: fixed;
+		position: fixed;
 		left: 0;
-		top: 0; */
+		top: 0;
 		width: 100%;
-		/* height: 100%; */
+		height: 100%;
 	}
 	.video_title{
 		font-size: 28upx;

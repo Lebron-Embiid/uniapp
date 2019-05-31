@@ -381,8 +381,8 @@
 					margin: 0 auto 20upx;
 					image{
 						display: block;
-						width: 240upx;
-						height: 240upx;
+						width: 250upx;
+						height: 230upx;
 						margin: 0 auto;
 					}
 				}

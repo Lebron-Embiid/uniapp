@@ -354,10 +354,14 @@
 		}
 	}
 	
-	.wxParse image,.wxParse .img {
-	  max-width: 100% !important;
+	.wxParse image,.wxParse .img,.wxParse image>img{
+		display: block !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		opacity: 1 !important;
 	}
-	.uni-video-fullscreen{
-		display: none !important;
-	}
+	// .uni-video-fullscreen{
+	// 	display: none !important;
+	// }
 </style>

@@ -8,7 +8,7 @@
 		</view>
 		<view class="audio-control-wrapper" :style="{color:color}">
 			<view class="audio-control audio-control-prev" v-if="control" :style="{borderColor:color}" @click="prev">&#xe61b;</view>
-			<view class="audio-control audio-control-switch" :class="{audioLoading:loading}" :style="{borderColor:color}" @click="operation">{{loading?'&#xe606;':(paused?'&#xe619;':'&#xe611;')}}</view>
+			<view class="audio-control audio-control-switch" :style="{borderColor:color}" @click="operation">{{paused?'&#xe619;':'&#xe611;'}}</view>
 			<view class="audio-control audio-control-next" v-if="control" :style="{borderColor:color}" @click="next">&#xe61b;</view>
 		</view>
 	</view>
@@ -57,33 +57,42 @@
 			},
 			//播放/暂停操作
 			operation() {
-				if (audio.paused) {
+				if (this.paused) {
 					audio.play()
+					this.paused = true
 					this.loading = true
 				} else {
 					audio.pause()
+					this.paused = false
 				}
 			},
 			//完成拖动事件
 			change(e) {
 				audio.seek(e.detail.value)
+				this.currentTime = this.format(e.detail.value)
+				this.paused = false
+				audio.play()
 			}
 		},
 		onUnload(){
 			audio.pause();
+			this.paused = true;
 			this.current = 0;
+		},
+		onHide(){
+			audio.pause();
+			this.paused = true;
 		},
 		created() {
 			audio.src = this.src
 			this.current = 0
 			this.durationTime = this.format(this.duration)
-			audio.obeyMuteSwitch = false
 			audio.autoplay = this.autoplay
 			//音频进度更新事件
 			audio.onTimeUpdate(() => {
-				if (!this.seek) {
+				// if (!this.seek) {
 					this.current = audio.currentTime
-				}
+				// }
 			})
 			//音频播放事件
 			audio.onPlay(() => {
@@ -101,11 +110,15 @@
 				} else {
 					this.paused = true
 					this.current = 0
+					if(this.currentTime >= this.durationTime){
+						this.currentTime = this.format(0)
+					}
 				}
 			})
 			//音频完成更改进度事件
 			audio.onSeeked(() => {
 				this.seek = false
+				// this.current = audio.currentTime
 			})
 		},
 		watch: {

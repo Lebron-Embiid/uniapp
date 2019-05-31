@@ -1,12 +1,21 @@
 <template>
 	<view class="store_detail">
 		<view class="detail_banner">
-			<commonSwiper :swiperList="swiperList" @preview="previewImgs"></commonSwiper>
+			<swiper class="swiper" :indicator-dots="indicatorDots" circular="true" :autoplay="autoplay" :interval="interval" :duration="duration">
+				<swiper-item v-for="(item,index) in swiperList" :key="index" @click="previewImgs(index)">
+					<view class="swiper-item"><image :src="item" mode="widthFix"></image></view>
+				</swiper-item>
+			</swiper>
+			<!-- <commonSwiper :swiperList="swiperList"></commonSwiper> -->
 		</view>
 		<view class="detail_info borbom">
 			<view class="di_title">{{title}}</view>
 			<!-- <view class="di_info">{{info}}</view> -->
-			<view class="di_price">￥{{max_price}}<text>规格：{{type}}</text></view>
+			<view class="di_price">￥{{max_price}}
+				<block v-if="gauge != '' || gauge != 0">
+					<text>规格：{{gauge}}{{unit}}</text>
+				</block>
+			</view>
 		</view>
 		<view class="auth_box borbom">
 			<view><image src="../../static/ok.jpg" mode="widthFix"></image>正品保障</view>
@@ -23,8 +32,10 @@
 		</view>
 		<!-- 商品详情 -->
 		<view class="store_content1 mb98" v-show="currentTab == 0">
-			{{content}}
-			<image src="../../static/detail_img.jpg" mode="aspectFill"></image>
+			<block v-if="content!=''">
+				<u-parse :content="content"></u-parse>
+			</block>
+			<!-- <image src="../../static/detail_img.jpg" mode="aspectFill"></image> -->
 		</view>
 		<!-- 评价 -->
 		<view class="store_content2 mb98" v-show="currentTab == 1">
@@ -100,10 +111,15 @@
 </template>
 
 <script>
+	import uParse from '@/components/u-parse/u-parse.vue'
 	import commonSwiper from "@/components/common-swiper.vue"
 	export default{
 		data(){
 			return{
+				indicatorDots: true,
+				autoplay: true,
+				interval: 3000,
+				duration: 800,
 				swiperList: [
 					// "../../static/detail_banner.jpg","../../static/detail_banner.jpg","../../static/detail_banner.jpg"
 				],
@@ -114,7 +130,8 @@
 				info: "深层清洁皮肤，长效保湿滋润",
 				price: "",
 				max_price:'',
-				type: "120g",
+				gauge: "",
+				unit: "",
 				content: "",
 				fixed_show: 1,
 				animationData: {},
@@ -155,6 +172,7 @@
 			}
 		},
 		components:{
+			uParse,
 			commonSwiper
 		},
 		methods:{
@@ -386,7 +404,7 @@
 			}
 		},
 		onLoad(opt) {
-			let that = this;
+			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
 			setTimeout(function () {
@@ -424,6 +442,9 @@
 					that.buy_save = item.num;
 					that.buy_format = formatList;
 					that.buy_img = that.swiperList[0];
+					that.content = item.detail;
+					that.gauge = item.gauge;
+					that.unit = item.unit
   				},
 				fail: err => {
 					uni.showToast({
@@ -437,7 +458,55 @@
 			uni.startPullDownRefresh(); 
 		},
 		onPullDownRefresh() {
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
 			setTimeout(function () {
+				uni.request({
+					url: that.$api+'default/goods&id=1&access_token='+that.$access_token,
+					method: 'GET',
+					data: {
+						id: that.id
+					},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						let swiperList = [];
+						let formatList = [];
+						let list = [];
+						var item = res.data.data;
+						for(let i in item.pic_list){
+							swiperList.push(item.pic_list[i].pic_url);
+						}
+						for(let i in item.attr_group_list){
+							formatList.push({
+								id: item.attr_group_list[i].attr_group_id,
+								name: item.attr_group_list[i].attr_group_name,
+								list: item.attr_group_list[i].attr_list,
+								current: [-1,-1]
+							});
+						}
+						that.swiperList = swiperList;
+						that.title = item.name;
+						that.price = item.price;
+						that.max_price = item.max_price;//显示价格
+						that.buy_save = item.num;
+						that.buy_format = formatList;
+						that.buy_img = that.swiperList[0];
+						that.content = item.detail;
+						that.gauge = item.gauge;
+						that.unit = item.unit
+					},
+					fail: err => {
+						uni.showToast({
+							title: JSON.stringify(err),
+							icon: 'none',
+							duration: 1500
+						})
+					}
+				});
 				uni.stopPullDownRefresh();
 			}, 1000);
 		},
@@ -480,6 +549,13 @@
 </script>
 
 <style scoped lang="scss">
+	.swiper{
+		height: 726upx;
+		.swiper-item image{
+			display: block;
+			width: 100%;
+		}
+	}
 	.borbom{
 		border-bottom: 20upx solid #f7f7f7;
 	}

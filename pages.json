@@ -78,6 +78,16 @@
 			}
 		},
 		{
+			"path": "pages/video1/video1",
+			"style": {
+				"navigationBarTitleText": "视频",
+				"app-plus": {
+					"animationType": "fade-in",
+					"animationDuration": 300
+				}
+			}
+		},
+		{
 			"path": "pages/audio/audio",
 			"style": {
 				"navigationBarTitleText": "音频"

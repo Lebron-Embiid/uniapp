@@ -9,10 +9,13 @@
 				</view>
 				<view class="ai_title">{{title}}</view>
 				<view class="ai_info">听众：{{look}}</view>
-				<imt-audio continue :control="control" :autoplay="auto" :src="src" :duration="duration" @click="changeRotate"></imt-audio>
+				<imt-audio :control="control" :autoplay="auto" :src="src" :duration="duration" @click="changeRotate"></imt-audio>
 			</view>
-			<view class="audio_title">  
-				<image :src="audio_logo" class="logo_img" mode="widthFix"></image>
+			<view class="audio_title">
+				<block v-if="content!=''">
+					<u-parse :content="content"></u-parse>
+				</block>
+				<!-- <image :src="audio_logo" class="logo_img" mode="widthFix"></image> -->
 			</view>
 		</view>
 	</view>
@@ -33,7 +36,8 @@ export default{
 			audio_logo: "../../static/audio_logo.png",
 			pic_url: "",
 			control: false,
-			auto: true
+			auto: true,
+			content: ""
 		}
 	},
 	components: {
@@ -65,12 +69,14 @@ export default{
 			success: res => {
 				that.title = res.data.data.title;
 				that.look = res.data.data.num;
-				that.src = 'http://'+res.data.data.url;
-				innerAudioContext.src = 'http://'+res.data.data.url;
+				that.src = res.data.data.url;
+				innerAudioContext.src = res.data.data.url;
+				console.log(innerAudioContext.src)
 				innerAudioContext.onCanplay(function(){
-					that.duration = parseInt(innerAudioContext.duration);
-				})
+					that.duration = parseInt(Math.ceil(innerAudioContext.duration));
+				}) 
 				that.audio_logo = res.data.data.pic_url;
+				that.content = res.data.data.content;
 			},
 			fail: () => {
 				uni.showToast({
@@ -79,10 +85,11 @@ export default{
 				});
 			}
 		});
-		
-		setTimeout(function(){
-			console.log(that.src)
-		},1000)
+	},
+	destroyed(){
+		console.log(123);
+		this.src = "";
+		this.duration = 0
 	}
 }
 </script>
