@@ -2,6 +2,9 @@
 	<view class="release_mater">
 		<view class="page_bg"></view>
 		<view class="release_box">
+			<view class="left_info">
+				<view class="input_box"><input type="text" v-model="title" placeholder="输入标题" :value="title" /></view> 
+			</view>
 			<view class="release_item item_box" v-for="(item,index) in photos" :key="index">
 				<image :src="item" class="photo_img" @click="previewPhoto(index)" mode="widthFix"></image>
 				<image src="../../static/close.png" class="close_img" @click="deletePhoto(index)" mode="widthFix"></image>
@@ -21,6 +24,7 @@
 	export default{
 		data(){
 			return{
+				title: "",
 				photos: []
 			}
 		},
@@ -120,6 +124,14 @@
 							});
 							return false;
 						}
+						if(that.title == ''){
+							uni.showToast({
+								title: "请输入标题！",
+								icon: 'none',
+								duration: 1000
+							});
+							return false;
+						}
 						uni.request({
 							url: that.$api+'default/source-edit&access_token='+that.$access_token,
 							dataType: "json",
@@ -127,6 +139,7 @@
 							data: {
 								user_id:0,
 								content: that.photos,
+								title: that.title,
 								type:0,
 								browse_id:0
 							},
@@ -175,6 +188,19 @@
 		padding: 40upx 20upx;
 		box-sizing: border-box;
 		overflow: hidden;
+		.left_info{
+			// float: left;
+			// width: 480upx;
+			.input_box{
+				padding-bottom: 10upx;
+				border-bottom: 1px solid #E3E3E3;
+				margin-bottom: 20upx;
+				input{
+					color: #595959;
+					font-size: 24upx;
+				}
+			}
+		}
 	}
 	.release_item{
 		float: left;

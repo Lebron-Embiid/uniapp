@@ -35,7 +35,7 @@
 				<navigator class="navigator" url="/pages/my_agent/my_agent">我的会员<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
-				<navigator class="navigator" :url="'/pages/my_promotion/my_promotion?code='+code">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" :url="'/pages/my_promotion/my_promotion?code='+code+'&mobile='+mobile">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/car/car">我的购物车<image src="../../static/next.png" mode="widthFix"></image></navigator>
@@ -60,6 +60,7 @@
 				<view class="navigator" @click="logOut">退出登录</view>
 			</view>
 		</view>
+		<view class="copy_txt">Copyright©2017-2022 呦蓝</view>
 	</view>
 </template>
 
@@ -77,6 +78,7 @@
 				status_1:0,
 				status_2:0,
 				status_3:0,
+				mobile: ""
 			}
 		},
 		methods:{
@@ -114,16 +116,23 @@
 				},1500)
 			}
 		},
-		// onShow:function(){
-		// 	var that = this;
-		// 	that.$access_token = uni.getStorageSync("access_token");
-		// 	that.$level = uni.getStorageSync("level");
-		// 	if(that.$access_token == ""){
-		// 		uni.reLaunch({
-		// 			url: "/pages/login/login"
-		// 		})
-		// 	}
-		// },
+		onShow:function(){
+			var that = this;
+			that.$user_name = uni.getStorageSync("user_name");
+			if(that.$user_name == ""){
+				uni.showToast({
+					title: "请完善代理商资料！",
+					icon: "none",
+					duration: 2000
+				})
+				setTimeout(function(){
+					uni.navigateTo({
+						url: "/pages/complete_mater/complete_mater"
+					})
+				},2000)
+				return false;
+			}			
+		},
 		onLoad(opt) {
 			var that = this;  
 			that.$access_token = uni.getStorageSync("access_token");
@@ -137,16 +146,21 @@
 				},
 				success: res => {
 					var data = res.data.data;
-					that.code = data.user_info.code,
-					that.id = data.user_info.id,
-					that.avatar_url = data.user_info.avatar_url,
-					that.money = data.user_info.money,
-					that.nickname = data.user_info.nickname,
-					that.orders = data.orders,
-					that.status_0 = data.order_count.status_0,
-					that.status_1 = data.order_count.status_1,
-					that.status_2 = data.order_count.status_2,
-					that.status_3 = data.order_count.status_3
+					that.code = data.user_info.code;
+					that.id = data.user_info.id;
+					that.avatar_url = data.user_info.avatar_url;
+					that.money = data.user_info.money;
+					that.nickname = data.user_info.nickname;
+					that.orders = data.orders;
+					that.status_0 = data.order_count.status_0;
+					that.status_1 = data.order_count.status_1;
+					that.status_2 = data.order_count.status_2;
+					that.status_3 = data.order_count.status_3;
+					that.mobile = data.user_info.mobile;
+					var level = data.user_info.brand_id;
+					uni.setStorageSync('level',level);
+					that.$level = uni.getStorageSync("level");
+					console.log(that.$level)
 				},
 				fail: () => {
 					uni.showToast({
@@ -169,16 +183,20 @@
 					},
 					success: res => {
 						var data = res.data.data;
-						that.code = data.user_info.code,
-						that.id = data.user_info.id,
-						that.avatar_url = data.user_info.avatar_url,
-						that.money = data.user_info.money,
-						that.nickname = data.user_info.nickname,
-						that.orders = data.orders,
-						that.status_0 = data.order_count.status_0,
-						that.status_1 = data.order_count.status_1,
-						that.status_2 = data.order_count.status_2,
-						that.status_3 = data.order_count.status_3
+						that.code = data.user_info.code;
+						that.id = data.user_info.id;
+						that.avatar_url = data.user_info.avatar_url;
+						that.money = data.user_info.money;
+						that.nickname = data.user_info.nickname;
+						that.orders = data.orders;
+						that.status_0 = data.order_count.status_0;
+						that.status_1 = data.order_count.status_1;
+						that.status_2 = data.order_count.status_2;
+						that.status_3 = data.order_count.status_3;					
+						var level = data.user_info.brand_id;
+						uni.setStorageSync('level',level);
+						that.$level = uni.getStorageSync("level");
+						console.log(that.$level)
 					},
 					fail: () => {
 						uni.showToast({
@@ -325,5 +343,11 @@
 				margin: 0 auto 10upx;
 			}
 		}
+	}
+	.copy_txt{
+		color: #999;
+		font-size: 24upx;
+		text-align: center;
+		transform: translateY(-40upx);
 	}
 </style>

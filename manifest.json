@@ -1,9 +1,9 @@
 {
     "name" : "呦蓝",
-    "appid" : "__UNI__764106F",
-    "description" : "基于uni-app开发的商城APP",
+    "appid" : "__UNI__com.youlan.youlanapp",
+    "description" : "呦蓝手机客户端是一款集线上商城、线上培训、素材分享、企业资讯等服务功能于一体的App",
     "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionCode" : 100,
     "transformPx" : false,
     "app-plus" : {
         "usingComponents" : true,
@@ -11,9 +11,12 @@
         "modules" : {
             "Share" : {},
             "VideoPlayer" : {},
-            "Payment" : {},
-            "Push" : {},
-            "OAuth" : {}
+            "OAuth" : {},
+            "Payment" : {}
+        },
+        /* 忽略运行版本与编译版本不一致提示 */
+        "compatible" : {
+            "ignoreVersion" : true
         },
         /* 模块配置 */
         "distribute" : {
@@ -52,19 +55,19 @@
             "sdkConfigs" : {
                 "oauth" : {
                     "weixin" : {
-                        "appid" : "wx95c98926c0ad4cae",
-                        "appsecret" : "b7e8222fc19a550f74057703cdefed23"
+                        "appid" : "wxd53ecc0e9b1a9938",
+                        "appsecret" : "6cdcb743d2063194e6dc6a95031ce939"
                     }
                 },
                 "payment" : {
                     "weixin" : {
-                        "appid" : "wx95c98926c0ad4cae"
+                        "appid" : "wxd53ecc0e9b1a9938"
                     }
                 },
                 "share" : {
                     "weixin" : {
-                        "appid" : "wx95c98926c0ad4cae",
-                        "appsecret" : "b7e8222fc19a550f74057703cdefed23"
+                        "appid" : "wxd53ecc0e9b1a9938",
+                        "appsecret" : "6cdcb743d2063194e6dc6a95031ce939"
                     }
                 },
                 "push" : {}

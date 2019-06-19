@@ -6,6 +6,10 @@
 		</view>
 		<view class="mt44"></view>
 		<view class="photo_mater" v-show="currentTab == 0">
+			<form  class="form_box">
+				<input type="text"  placeholder="请输入您要搜索的关键词" v-model="keywords" :value="keywords" />
+				<button @click="toSearch"><image src="../../static/search.png" mode=""></image></button>
+			</form>
 			<view class="photo_box">
 				<view class="photo_item" @click="toMaterDetail(item)" v-for="(item,index) in photo_list" :key="index">
 					<view class="photo_head">
@@ -19,6 +23,7 @@
 						<!-- <text class="ph_download">前往下载&gt;</text> -->
 						<!-- <image src="../../static/share.png" class="share_img" mode="widthFix"></image> -->
 					</view>
+					<view class="pc_title">{{item.title}}</view>
 					<view class="photo_content">
 						<view class="pc_item" v-for="(mater,idx) in item.maters" :key="idx">
 							<image :src="mater.cover_pic" class="c_img" mode="aspectFill"></image>
@@ -29,12 +34,12 @@
 			</view>
 		</view>
 		<view class="video_mater" v-show="currentTab == 1">
-			<!-- <form @click="toSearch" class="form_box">
-				<input type="text" disabled placeholder="请输入您要搜索的关键词" value="" />
-				<button><image src="../../static/search.png" mode=""></image></button>
-			</form> -->
+			<form   class="form_box">
+				<input type="text"  placeholder="请输入您要搜索的关键词" v-model="keywords_video" :value="keywords_video" />
+				<button @click="toSearch_video"><image src="../../static/search.png" mode=""></image></button>
+			</form>
 			<view class="video_content">
-				<commonVideo :video_list="video_list" :istype="1" :isDownload="0"></commonVideo>
+				<commonVideo :video_list="video_list" :istype="1" :isDownload="1"></commonVideo>
 			</view>
 		</view>
 	</view>
@@ -53,6 +58,8 @@
 				page_id:1,
 				page_source_count:1,
 				page_movie_count:1,
+				keywords: "",
+				keywords_video: ""
 			}
 		},
 		components:{
@@ -79,6 +86,7 @@
 									id: item.list[i].id,
 									avatar: item.list[i].avatar_url,
 									name: item.list[i].nickname,
+									title: item.list[i].title,
 									time: item.list[i].addtime,
 									num: item.list[i].read_count,
 									sign: item.list[i].type,
@@ -146,10 +154,77 @@
 					url: "/pages/mater_detail/mater_detail?id="+res.id+"&sign="+res.sign
 				})
 			},
-			toSearch: function(e){
-				uni.navigateTo({
-					url: "/pages/search/search"
-				})
+			toSearch: function(e){				
+				var that = this;
+				 that.page = 1;
+				uni.request({
+					url: that.$api+'default/source-list&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					data:{keyword:that.keywords},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						var photo_list = [];
+						var item = res.data.data;
+						for(let i in item.list){
+							photo_list.push({
+								id: item.list[i].id,
+								avatar: item.list[i].avatar_url,
+								name: item.list[i].nickname,
+								time: item.list[i].addtime,
+								num: item.list[i].read_count,
+								sign: item.list[i].type,
+								maters: item.list[i].cover_pic[0]
+							})
+						}
+						that.page_source_count = res.data.data.page_count;
+						that.photo_list = photo_list;
+					},
+					fail: () => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				}); 
+			},
+	        toSearch_video:function(e){
+				var that = this;
+				 that.page_id = 1;				
+			    uni.request({
+				 		url: that.$api+'default/movies-list&access_token='+that.$access_token,
+				 		method: 'GET',
+				 		dataType: "json",
+					    data:{keyword:that.keywords_video},
+				 		header: {
+				 			'content-type': 'application/x-www-form-urlencoded'
+				 		},
+				 		success: res => {
+				 			var video_list = [];
+				 			var item = res.data.data.list;
+				 			var page_count = res.data.data.page_count; 
+				 			for(let i in item){
+				 				video_list.push({
+				 					id: item[i].id,
+				 					poster: item[i].cove_pic,
+				 					avatar: item[i].avatar_url,
+				 					title: item[i].title,
+				 					look: item[i].num,
+				 					video: item[i].url
+				 				})
+				 			}
+				 			that.page_movie_count = res.data.data.page_count;
+				 			that.video_list = video_list;
+				 		},
+				 		fail: () => {
+				 			uni.showToast({
+				 				title:res.data.msg,
+				 				icon:'none',
+				 			});
+				 		}
+				 	});
 			}
 		},
 		onNavigationBarButtonTap: function(){
@@ -162,6 +237,23 @@
 					url: "/pages/release_video/release_video"
 				})
 			}
+		},
+		onShow:function(){
+			var that = this;
+			that.$user_name = uni.getStorageSync("user_name");
+			if(that.$user_name == ""){
+				uni.showToast({
+					title: "请完善代理商资料！",
+					icon: "none",
+					duration: 2000
+				})
+				setTimeout(function(){
+					uni.navigateTo({
+						url: "/pages/complete_mater/complete_mater"
+					})
+				},2000)
+				return false;
+			}			
 		},
 		onLoad(opt) {
 			var that = this;
@@ -183,6 +275,7 @@
 							id: item.list[i].id,
 							avatar: item.list[i].avatar_url,
 							name: item.list[i].nickname,
+							title: item.list[i].title,
 							time: item.list[i].addtime,
 							num: item.list[i].read_count,
 							sign: item.list[i].type,
@@ -204,6 +297,10 @@
 		},
 		onPullDownRefresh(){
 			var that = this;
+			that.page = 1;
+			that.page_id = 1;
+			that.keywords = "";
+			that.keywords_video = "";
 			setTimeout(function () {
 				if(that.currentTab == 0){
 					uni.request({
@@ -221,6 +318,7 @@
 									id: item.list[i].id,
 									avatar: item.list[i].avatar_url,
 									name: item.list[i].nickname,
+									title: item.list[i].title,
 									time: item.list[i].addtime,
 									num: item.list[i].read_count,
 									sign: item.list[i].type,
@@ -275,8 +373,7 @@
 		},
 		//上拉触底
 		onReachBottom(){
-		    	var that = this; 
-				console.log(that.currentTab)
+		    	var that = this;  
 				if(that.currentTab == 0){
 					if(that.page == that.page_source_count){
 					   uni.showToast({
@@ -289,7 +386,7 @@
 					uni.request({
 						url: that.$api+'default/source-list&access_token='+that.$access_token,
 						method: 'GET',
-						data:{page:that.page},
+						data:{page:that.page,keywords:that.keywords},
 						dataType: "json",
 						header: {
 							'content-type': 'application/x-www-form-urlencoded'
@@ -303,6 +400,7 @@
 							  		id: item_list[i].id,
 							  		avatar: item_list[i].avatar_url,
 							  		name: item_list[i].nickname,
+									title: item.list[i].title,
 							  		time: item_list[i].addtime,
 							  		num: item_list[i].read_count,
 							  		sign: item_list[i].type,
@@ -333,7 +431,7 @@
 					uni.request({
 						url: that.$api+'default/movies-list&access_token='+that.$access_token,
 						method: 'GET',
-						data:{page:that.page_id},
+						data:{page:that.page_id,keywords:that.keywords_video},
 						dataType: "json",
 						header: {
 							'content-type': 'application/x-www-form-urlencoded'
@@ -375,6 +473,17 @@
 		width: 100%;
 		margin-top: 0;
 		margin-bottom: 30upx;
+	}
+	.form_top{
+		padding: 0 20upx;
+		overflow: hidden;
+		box-sizing: border-box;
+		.form_box{
+			float: none;
+			width: 100%;
+			margin: 0;
+			margin-top: 20upx;
+		}
 	}
 	.photo_mater,.video_mater{
 		padding: 30upx 20upx;
@@ -434,6 +543,14 @@
 					float: right;
 					margin-top: 8upx;
 				}
+			}
+			.pc_title{
+				font-size: 28upx;
+				margin-bottom: 20upx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				color: #6d6d6d;
 			}
 			.photo_content{
 				display: flex;

@@ -24,7 +24,7 @@
 				<view class="ob_btn">
 					<block v-if="item.is_pay == 0 && current == 0">
 						<button @click="toCancle(item.id)">取消订单</button>
-						<button @click="toPay(item.id,item.pay)">去支付</button>
+						<button @click="toPay(item.id,item.pay,index)">去支付</button>
 					</block>
 					<block v-if="item.is_send == 1 && current == 2">			
 						<block v-if="item.express != ''">
@@ -56,9 +56,18 @@
 			current: Number,
 			orderList: Array
 		},
+		onLoad() {
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+		},
 		methods:{
-			toPay: function(id,all){
+			toPay: function(id,all,index){
 				var that = this; 
+				var order_no = that.orderList[index].order_no
+				var goods_name = that.orderList[index].goods[0].goods_name;
+				var order_id = that.orderList[index].id;
+				console.log(id,order_no,goods_name,all,order_id)
 				if(all >= 10000){
 					uni.showToast({
 						title:'联系平台下单',
@@ -67,29 +76,69 @@
 					return false;
 				} 
 				uni.request({
-					url: that.$api+'order/pay-data&access_token='+that.$access_token,
+					// url: that.$api+'order/pay-data&access_token='+that.$access_token,
+					url: "http://yl.demenk.com/wxpayv3/index.php",
 					method: 'GET',
 					dataType: "json",
-					data: {
-						order_id:id, 
-						pay_type:'WECHAT_PAY',
-						parent_user_id:0,
-						condition:2, 
+					data: {				
+						price:all,
+						goods_name:goods_name,
+						order_no:order_no, 
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: res => {
-						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						});
+					success: res => {					
+						var list = res.data;
+						console.log(list)
+						var order_info = JSON.stringify({
+								appid:list.appid,
+								noncestr:list.noncestr,  
+								package:"Sign=WXPay",
+								partnerid:list.partnerid,
+								prepayid:list.prepayid,
+								timestamp: list.timestamp,
+								sign:list.sign
+						})
+						console.log(order_info)
+						uni.getProvider({
+							service: "payment",
+							success: function(res){
+								uni.requestPayment({
+									provider: 'wxpay',
+									orderInfo: order_info,
+									success: function (res) {
+										uni.showToast({
+											title: "支付成功！"
+										})
+										uni.request({
+											url: that.$api+'order/wx-pay&order_id='+order_id+'&access_token='+that.$access_token,
+											method: 'GET',
+											dataType: "json", 
+											header: {
+												'content-type': 'application/x-www-form-urlencoded'
+											},
+											success: res => {
+
+											}, 
+										});
+										
+									},
+									fail: function (err) {
+										uni.showToast({
+											title: "支付失败！",
+											icon: "none"
+										})  
+									}
+								});
+							}
+						})
 					},
 					fail: () => {
 						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						});
+							title: "支付失败！",
+							icon: "none"
+						})  
 					}
 				});
 			},

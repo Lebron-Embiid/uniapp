@@ -22,10 +22,12 @@
 				支付方式
 				<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
 			</view>
-			<picker class="acc_right" @change="bindPickerChange" :value="index" :range="array">
+			<view class="acc_right">
+			<!-- <picker class="acc_right" @change="bindPickerChange" :value="index" :range="array"> -->
 				<view class="uni-input">{{array[index]}}</view>
-				<image src="../../static/next.png" mode="widthFix"></image>
-			</picker>
+				<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
+			<!-- </picker> -->
+			</view>
 		</view>
 		<view class="acc_content borbom">
 			<view class="content_item" v-for="(item,index) in accountList" :key="index">
@@ -74,7 +76,7 @@
 				},
 				content:'',
 				cat_list : [],
-				array: ['微信支付', '支付宝支付','余额支付'],
+				array: ['微信支付','余额支付'],				// , '支付宝支付'
 				index: 0,
 				express_price: 0,
 				accountList:[
@@ -120,16 +122,17 @@
 			bindPickerChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
-				if(this.index == 0){
+				// if(this.index == 0){
 					this.payment = 0,
-					this.pay_type = 'WECHAT_PAY'
-				}else if(this.index == 1){
-					this.payment = 1
-					this.pay_type = 'ALIPAY'
-				}else{
-					this.payment = 3
-					this.pay_type = 'BALANCE_PAY'
-				}
+					this.pay_type = 'WECHAT_PAY'	//微信支付
+				// }else if(this.index == 1){
+				// 	this.payment = 1
+				// 	// this.pay_type = 'ALIPAY'
+				// 	this.pay_type = 'BALANCE_PAY'	//余额支付
+				// }else{
+				// 	this.payment = 3
+				// 	this.pay_type = 'BALANCE_PAY'	//余额支付
+				// }
 				console.log(this.index)
 			},
 			getMess:function(e){
@@ -148,18 +151,18 @@
 					})	
 					return false;
 				}
-				if(that.payment == 3){
-					uni.showToast({
-						title: "在线支付暂未完成",
-						icon: 'none',
-						duration: 1500
-					})	
-					setTimeout(function(){
-						uni.navigateTo({ 
-							url: "/pages/my_order/my_order?id=0"
-						})
-					},1500)
-				}
+				// if(that.payment == 3){
+				// 	uni.showToast({
+				// 		title: "在线支付暂未完成",
+				// 		icon: 'none',
+				// 		duration: 1500
+				// 	})	
+				// 	setTimeout(function(){
+				// 		uni.navigateTo({ 
+				// 			url: "/pages/my_order/my_order?id=0"
+				// 		})
+				// 	},1500)
+				// }  
  				uni.request({
 					url: that.$api+'order/new-submit&access_token='+that.$access_token,
 					method: 'POST',
@@ -179,60 +182,142 @@
 							icon: 'none',
 							duration: 1500
 						})	
+						var order_id = res.data.data.order_id;
 						if(that.all < 10000){
 							//订单提交成功跳转
-							setTimeout(function(){
-								uni.request({
-									url: that.$api+'order/pay-data&access_token='+that.$access_token,
-									method: 'GET',
-									data: {
-										order_id:res.data.data.order_id, 
-										pay_type:that.pay_type,
-										parent_user_id:0,
-										condition:2,
-							            cat_list:that.cat_list
-									},
-									dataType: "json",
-									header: {
-										'content-type': 'application/x-www-form-urlencoded'
-									},
-									success: res => {  
-										if(that.payment == 3){
-											uni.showToast({
-												title: res.data.msg,
-												icon: 'none',
-												duration: 1500
-											})	
-											if(res.data.code == 0){
-												 console.log(1111)
-												setTimeout(function(){
-													uni.navigateTo({ 
-														url: "/pages/my_order/my_order?id=1"
+							if(that.payment != 0){ 
+								setTimeout(function(){
+									uni.request({
+										url: that.$api+'order/pay-data&access_token='+that.$access_token,
+										method: 'GET',
+										data: {
+											order_id:res.data.data.order_id, 
+											pay_type:that.pay_type,
+											parent_user_id:0,
+											condition:2,
+											cat_list:that.cat_list
+										},
+										dataType: "json",
+										header: {
+											'content-type': 'application/x-www-form-urlencoded'
+										},
+										success: res => {
+											var list = res.data 
+												uni.showToast({
+													title: res.data.msg,
+													icon: 'none',
+													duration: 1500
+												})	
+												if(res.data.code == 0){ 
+													setTimeout(function(){
+														uni.navigateTo({ 
+															url: "/pages/my_order/my_order?id=1"
+														})
+													},1500)
+												}else{ 
+													setTimeout(function(){
+														uni.navigateTo({ 
+															url: "/pages/my_order/my_order?id=0"
+														})
+													},1500)
+												}	 																		
+										 }
+									})
+								},1000)
+							  }else{	
+								  console.log(res)
+									uni.request({
+										// url: that.$api+'order/pay-data&access_token='+that.$access_token,
+										url: "http://yl.demenk.com/wxpayv3/index.php",
+										method: 'GET',
+										dataType: "json",
+										data: { 
+											price:res.data.data.total_price,
+											goods_name:that.accountList[0].goods_name,
+											order_no:res.data.data.order_no, 
+										},
+										header: {
+											'content-type': 'application/x-www-form-urlencoded'
+										},
+										success: res => {		
+											console.log(res);
+											var list = res.data;
+											console.log(list)
+											var order_info = JSON.stringify({
+												appid:list.appid,
+												noncestr:list.noncestr,  
+												package:"Sign=WXPay",
+												partnerid:list.partnerid,
+												prepayid:list.prepayid,
+												timestamp: list.timestamp,
+												sign:list.sign
+											})
+											console.log(order_info)
+											uni.getProvider({
+												service: "payment",
+												success: function(res){
+													uni.requestPayment({
+														provider: 'wxpay',
+														orderInfo: order_info,
+														success: function (res) {
+															setTimeout(function(){																
+																uni.request({
+																	url: that.$api+'order/wx-pay&order_id='+order_id+'&access_token='+that.$access_token,
+																	method: 'GET',
+																	dataType: "json", 
+																	header: {
+																		'content-type': 'application/x-www-form-urlencoded'
+																	},
+																	success: res => {																	
+																		uni.showToast({		
+																			title: "支付成功！"
+																		})		
+																		uni.navigateTo({ 
+																			url: "/pages/my_order/my_order?id=1"
+																		})
+																	}, 
+																	fail: function (err) {		
+																		uni.navigateTo({ 
+																			url: "/pages/my_order/my_order?id=0"
+																		})
+																	}
+																});																
+															},1500)
+														},
+														fail: function (err) {
+															uni.showToast({
+																title: "支付失败！",
+																icon: "none"
+															})
+															setTimeout(function(){
+																uni.navigateTo({ 
+																	url: "/pages/my_order/my_order?id=0"
+																})
+															},1500)
+														}
+													});
+												},
+												fail: function (err) {
+													uni.showToast({
+														title: "支付失败！",
+														icon: "none"
 													})
-												},1500)
-											}else{
-												 console.log(222)
-												setTimeout(function(){
-													uni.navigateTo({ 
-														url: "/pages/my_order/my_order?id=0"
-													})
-												},1500)
-											}																					
-										}else{
+													setTimeout(function(){
+														uni.navigateTo({ 
+															url: "/pages/my_order/my_order?id=0"
+														})
+													},1500)
+												}
+											})
+										},
+										fail: () => {
 											uni.showToast({
-												title: "在线支付暂未完成",
-												icon: 'none',
-												duration: 1500
-											})	
-											setTimeout(function(){
-												uni.navigateTo({ 
-													url: "/pages/my_order/my_order?id=0"
-												})
-											},1500)
-										}																			
-									 }
-								})
-							},1000)
+												title: "支付失败！",
+												icon: "none"
+											})
+										}
+									});
+							   } 
 						}else{
 							uni.showToast({
 								title:'金额大于一万请需通过其他渠道支付货款',

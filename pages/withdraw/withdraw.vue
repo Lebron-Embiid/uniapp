@@ -20,10 +20,13 @@
 			<view class="section">
 				<view class="left_txt">提现方式</view>
 				<view class="txt">
-					<picker class="pic_box" @change="bindPickerChange" :value="index" :range="array">
+					<view class="pic_box">
+					<!-- <picker class="pic_box" @change="bindPickerChange" :value="index" :range="array"> -->
                         <view class="uni-input">{{array[index]}}</view>
-						<image src="../../static/next.png" mode="widthFix"></image>
-                    </picker>
+						<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
+						
+					</view>
+                    <!-- </picker> -->
 				</view>
 			</view>
 			<view class="section section_img">

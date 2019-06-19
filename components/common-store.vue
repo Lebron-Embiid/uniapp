@@ -22,19 +22,28 @@
 		methods:{
 			toStoreDetail: function(res){
 			    var that = this; 
+				that.$level = uni.getStorageSync("level");
 				if(that.$level == 4){
 					uni.navigateTo({
 						url: "/pages/store_detail/store_detail?id="+res.id
 					})
 					return false
 				}
-				if(res.cat_id != that.$level && res.cat_id != 3 ){
-					uni.showToast({
-						title:"你不是此商品的代理，没有权限购买",
-						icon:'none',
-					});
-				     return false
-				} 
+				
+				
+					if(res.cat_id != that.$level && res.cat_id != 3 ){
+						uni.showToast({
+							title:"你不是此商品的代理，没有权限购买",
+							icon:'none',
+						});
+						
+						
+					     return false
+					} 
+				
+				
+				
+				
 				uni.navigateTo({
 					url: "/pages/store_detail/store_detail?id="+res.id
 				})

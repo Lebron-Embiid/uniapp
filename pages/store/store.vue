@@ -106,7 +106,7 @@
 										cat_id: item.list[i].cat_id,
 										title: item.list[i].name,
 										// info: "清洁皮肤，长效保湿滋润",
-										price: item.list[i].price,
+										price: item.list[i].original_price,
 										type: item.list[i].weight
 									})
 								}	
@@ -137,11 +137,29 @@
 					url: "/pages/search/search"
 				})
 			}
+		},		
+		onShow:function(){
+			var that = this;
+			that.$user_name = uni.getStorageSync("user_name");
+			if(that.$user_name == ""){
+				uni.showToast({
+					title: "请完善代理商资料！",
+					icon: "none",
+					duration: 2000
+				})
+				setTimeout(function(){
+					uni.navigateTo({
+						url: "/pages/complete_mater/complete_mater"
+					})
+				},2000)
+				return false;
+			}			
 		},
 		onLoad(opt) {
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
+			console.log(that.$access_token,that.$level)
 			setTimeout(function () {
 			uni.request({
 				url: that.$api+'default/shop&cat_id=1&access_token='+that.$access_token,
@@ -168,7 +186,7 @@
 							title: item.list[i].name,
 							cat_id: item.list[i].cat_id,
 							// info: "清洁皮肤，长效保湿滋润",
-							price: item.list[i].price,
+							price: item.list[i].original_price,
 							type: item.list[i].weight
 						})
 					}
@@ -211,7 +229,7 @@
 									cat_id: item.list[i].cat_id,
 									title: item.list[i].name,
 									// info: "清洁皮肤，长效保湿滋润",
-									price: item.list[i].price,
+									price: item.list[i].original_price,
 									type: item.list[i].weight
 								})
 							}	
@@ -296,7 +314,7 @@
 							title: item[i].name,
 							cat_id: item[i].cat_id,
 							// info: "清洁皮肤，长效保湿滋润",
-							price: item[i].price,
+							price: item[i].original_price,
 							type: item[i].weight
 						})
 					}

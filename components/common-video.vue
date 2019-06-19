@@ -14,7 +14,7 @@
 				<view class="v_title">{{item.title}}</view>
 				<view class="v_look">观看数：{{item.look}}</view>
 				<block v-if="isDownload == 1">
-					<view class="v_download" @click="toDownload(item.video)"><image src="../../static/v_download.png" mode="widthFix"></image></view>
+					<view class="v_download" @click="toShare(item.title,item.poster,item.video)"><image src="../../static/share.png" mode="widthFix"></image></view>
 				</block>
 			</view>
 		</view>
@@ -45,14 +45,19 @@
 					})					
 				}
 			},
-			toDownload: function(e){
-				uni.saveVideoToPhotosAlbum({
-					filePath: e,
-					success: function () {
-						uni.showToast({
-							title: "视频正在下载！",
-							icon: "none"
-						})
+			toShare: function(title,pic,url){
+				uni.share({
+					provider: "weixin",
+					scene: "WXSceneSession",
+					type: 4,
+					title: title,
+					imageUrl: pic,
+					mediaUrl: url,
+					success: function (res) {
+						console.log(JSON.stringify(res));
+					},
+					fail: function (err) {
+						console.log(JSON.stringify(err));
 					}
 				});
 			}

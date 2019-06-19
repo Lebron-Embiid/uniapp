@@ -9,6 +9,7 @@
 			</block>
 			<text class="ph_txt">{{time}}</text>
 		</view>
+		<view class="md_title">{{title}}</view>
 		<view class="photo_content">
 			<view class="pc_item" @click="downloadMater(idx)" v-for="(mater,idx) in maters" :key="idx">
 				<image :src="mater.cover_pic" class="c_img" mode="widthFix"></image>
@@ -30,30 +31,133 @@
 				name: "",
 				time: "",
 				num: "",
+				title: "",
 				sign: "",
 				maters: [
 					// "../../static/mater_img1.jpg","../../static/mater_img2.jpg","../../static/mater_img3.jpg",
-				]
+				],
+				providerList: []
 			}
 		},
 		methods:{
-			toShare: function(e){
-				uni.share({
-					provider: "weixin",
-					scene: "WXSenceTimeline",
-					type: 2,
-					href: "http://uniapp.dcloud.io/",
-					title: "uni-app分享",
-					summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-					imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
-					success: function (res) {
-						console.log("success:" + JSON.stringify(res));
-					},
-					fail: function (err) {
-						console.log("fail:" + JSON.stringify(err));
-					}
-				});
-			},
+			initProvider() {
+                const filters = ['weixin'];
+                uni.getProvider({
+                    service: 'share',
+                    success: (res) => {
+                        if (res.provider && res.provider.length) {
+                            for (let i = 0; i < res.provider.length; i++) {
+                                if (~filters.indexOf(res.provider[i])) {
+                                    this.providerList.push({
+                                        value: res.provider[i]
+                                    });
+                                }
+                            }
+                        }
+                    },
+                    fail: (err) => {
+                        console.error('获取服务供应商失败：' + JSON.stringify(err));
+                    }
+                });
+            },
+			toShare() {
+				var that = this;
+				// uni.showActionSheet({
+				// 	itemList: ['分享到微信好友', '分享到微信朋友圈'],
+				// 	success: function (res) {
+				// 		if(res.tapIndex == 0){
+				// 			// 分享到微信好友
+				// 			uni.share({
+				// 				provider: "weixin",
+				// 				scene: "WXSceneSession",
+				// 				type: 2,
+				// 				// href: "http://yl.demenk.com/index.html",
+				// 				// title: that.name+"分享",
+				// 				// summary: that.name+"分享图片",
+				// 				imageUrl: that.maters[0].cover_pic,
+				// 				success: function (res) {
+				// 					console.log(JSON.stringify(res));
+				// 				},
+				// 				fail: function (err) {
+				// 					console.log(JSON.stringify(err));
+				// 				}
+				// 			});
+				// 		}else if(res.tapIndex == 1){
+							var len = that.maters.length;
+							for(let i=0;i<len;i++){
+								uni.saveImageToPhotosAlbum({					
+									filePath: that.maters[i].cover_pic,				                
+									success: function () { 
+										var i_len = i+1;
+										if(i_len == len){
+											uni.setClipboardData({
+												data: that.title
+											});
+											uni.showModal({
+												title: "去微信或朋友圈分享",
+												content: "文字已复制，图片已下载到手机！",
+												confirmText: "打开微信",
+												success: (res) => {
+													if(res.confirm){
+														if (plus.os.name == 'Android') {
+																console.log(plus.os.name);
+															plus.runtime.launchApplication(
+																{
+																	pname: 'com.tencent.mm'
+																},
+																function(e) {
+																	console.log('Open system default browser failed: ' + e.message);
+																}
+															);
+														} else if (plus.os.name == 'iOS') {
+																console.log(plus.os.name);
+															plus.runtime.launchApplication({ action: 'weixin://' }, function(e) {
+																console.log('Open system default browser failed: ' + e.message);
+															});
+														}
+													}
+												},
+												fail: (err) => {
+													console.log(err)
+												}
+											})
+											
+										}
+									},
+									fail: () => {
+										uni.showToast({
+											title: '下载失败！',
+											icon: 'none',
+											duration: 1500
+										})
+									}
+								});
+							}
+							// 判断平台
+							console.log(plus.os.name)
+							
+							// 分享到微信朋友圈
+							// uni.share({
+							// 	provider: "weixin",
+							// 	scene: "WXSenceTimeline",
+							// 	type: 2,
+							// 	// href: "http://yl.demenk.com/index.html",
+							// 	// title: that.name+"分享",
+							// 	// summary: that.name+"分享图片",
+							// 	imageUrl: that.maters[0].cover_pic,
+							// 	success: function (res) {
+							// 		console.log(JSON.stringify(res));
+							// 	},
+							// 	fail: function (err) {
+							// 		console.log(JSON.stringify(err));
+							// 	}
+							// });
+						// } 
+					// }
+				// });
+				
+				
+            },
 			downloadMater: function(e){
 				let that = this;
 				console.log(that.maters[e])
@@ -122,6 +226,9 @@
 				url: "/pages/release_mater/release_mater"
 			})
 		},
+		onReady() {
+            this.initProvider();
+        },
 		onLoad(opt) {
 			let that = this;
 			that.$access_token = uni.getStorageSync("access_token");
@@ -136,6 +243,7 @@
 				success: res => {
 					var item = res.data.data;
 					that.avatar = item.source.avatar_url;
+					that.title = item.source.title;
 					that.name = item.source.username;
 					that.time = item.source.addtime;
 					that.num = item.source.browse_id;
@@ -252,5 +360,9 @@
 			color: #6d6d6d;
 			font-size: 20upx;
 		}
+	}
+	.md_title{
+		font-size: 28upx;
+		margin-bottom: 20upx;
 	}
 </style>

@@ -6,7 +6,7 @@
 			<view class="over_money">￥{{over_money}}</view>
 			<view class="over_btn_box">
 				<view class="withdraw_btn" @click="toWithdraw">提现</view>
-				<view class="withdraw_btn" @click="toRecharge">充值</view>
+				<!-- <view class="withdraw_btn" @click="toRecharge">充值</view> -->
 			</view>
 		</view>
 		<view class="record_box">
@@ -178,6 +178,7 @@
 					background: #00001f;
 					padding: 20upx 0;
 					border-radius: 5upx;
+					margin: 0 auto;
 				}
 			}
 		}

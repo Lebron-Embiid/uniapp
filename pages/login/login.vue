@@ -65,20 +65,108 @@
 						if(res.data.code!=1){
 							uni.showToast({title:res.data.data.msg,icon:'none'});
 						}else{
-
-							uni.clearStorageSync(); 
-							uni.setStorageSync('access_token',res.data.data.access_token);
-							uni.setStorageSync('level',res.data.data.level);
-							uni.showToast({title:res.data.data.msg,icon:'none',duration:1500});
-							that.$access_token = uni.getStorageSync('access_token');
-							that.$level = uni.getStorageSync('level');
-							console.log(that.$access_token)
-							console.log(that.$level)
-							setTimeout(function(){
-								uni.reLaunch({
-									url: "/pages/index/index"
+							var access_token = res.data.data.access_token;
+							console.log(res)
+							if(res.data.data.is_wx == 0){
+								uni.login({
+									provider: "weixin",
+									success: function (loginRes) {
+										// 获取用户信息
+										uni.getUserInfo({
+											provider: "weixin",
+											success: function(infoRes) {
+											 uni.request({
+												url: that.$api+'user/agent-information/&access_token='+access_token,
+												dataType: "json",
+												method: 'POST',
+												data:{  
+													"nickname": infoRes.userInfo.nickName,
+												    "wechat_open_id": infoRes.userInfo.openId,
+													"avatar_url": infoRes.userInfo.avatarUrl,
+												},
+												header: {
+													'content-type': 'application/x-www-form-urlencoded'
+												},
+												success: rely => {
+													var data = rely.data.data
+													if(rely.data.code == 0){
+														that.is_wx = 1;
+														uni.showToast({
+															title:rely.data.msg,
+															icon:'none',
+														});														
+														uni.clearStorageSync(); 
+														uni.setStorageSync('user_name',res.data.data.user_name);
+														uni.setStorageSync('access_token',res.data.data.access_token);
+														uni.setStorageSync('level',res.data.data.level);
+														uni.showToast({title:res.data.data.msg,icon:'none',duration:1500});
+														that.$access_token = uni.getStorageSync('access_token');
+														that.$level = uni.getStorageSync('level');
+														that.$user_name = uni.getStorageSync('user_name');
+														console.log(that.$access_token)
+														console.log(that.$level)
+														console.log(that.$user_name)
+														if(res.data.data.user_name == ''){								
+															setTimeout(function(){
+																uni.redirectTo({
+																	url: "/pages/complete_mater/complete_mater"
+																})
+															},1500)
+														}else{							
+															setTimeout(function(){
+																uni.reLaunch({
+																	url: "/pages/index/index"
+																})
+															},1500)
+														}
+														
+													}else{
+														uni.showToast({
+															title:rely.data.msg,
+															icon:'none',
+														});
+													}  
+												}, 
+											 });
+											}
+										});
+									},
+									fail:function(err){
+										uni.showToast({
+											title: '授权登录失败：' + err.errMsg,
+											icon: 'none',
+											duration: 1500
+										})	
+									}
 								})
-							},1500)
+							}else{
+								uni.clearStorageSync(); 
+								uni.setStorageSync('user_name',res.data.data.user_name);
+								uni.setStorageSync('access_token',res.data.data.access_token);
+								uni.setStorageSync('level',res.data.data.level);
+								uni.showToast({title:res.data.data.msg,icon:'none',duration:1500});
+								that.$access_token = uni.getStorageSync('access_token');
+								that.$level = uni.getStorageSync('level');
+								that.$user_name = uni.getStorageSync('user_name');
+								console.log(that.$access_token)
+								console.log(that.$level)
+								console.log(that.$user_name)
+								if(res.data.data.user_name == ''){								
+									setTimeout(function(){
+										uni.redirectTo({
+											url: "/pages/complete_mater/complete_mater"
+										})
+									},1500)
+								}else{							
+									setTimeout(function(){
+										uni.reLaunch({
+											url: "/pages/index/index"
+										})
+									},1500)
+								}
+							}
+
+							
 						}
 				    },
 					fail: () => {

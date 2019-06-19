@@ -174,6 +174,7 @@
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
+			that.$user_name = uni.getStorageSync("user_name");
 			if(that.$access_token == ""){
 				uni.showToast({
 					title: "请先登录！",
@@ -185,6 +186,21 @@
 						url: "/pages/login/login"
 					})
 				},2000)
+				return false;
+			}
+			
+			if(that.$user_name == ""){
+				uni.showToast({
+					title: "请完善代理商资料！",
+					icon: "none",
+					duration: 2000
+				})
+				setTimeout(function(){
+					uni.navigateTo({
+						url: "/pages/complete_mater/complete_mater"
+					})
+				},2000)
+				return false;
 			}
 		},
 		onLoad() {

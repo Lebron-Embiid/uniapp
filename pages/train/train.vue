@@ -143,6 +143,23 @@ export default{
 				url: "/pages/audio/audio?id="+e.id
 			})
 		}
+	},	
+	onShow:function(){
+		var that = this;
+		that.$user_name = uni.getStorageSync("user_name");
+		if(that.$user_name == ""){
+			uni.showToast({
+				title: "请完善代理商资料！",
+				icon: "none",
+				duration: 2000
+			})
+			setTimeout(function(){
+				uni.navigateTo({
+					url: "/pages/complete_mater/complete_mater"
+				})
+			},2000)
+			return false;
+		}			
 	},
 	onLoad(opt) {
 		var that = this;
@@ -185,6 +202,8 @@ export default{
 	},
 	onPullDownRefresh() {
 		var that = this;
+		that.page_video = 1;
+		that.page_movie = 1;
 		setTimeout(function () {
 			uni.request({
 				url: that.$api+'default/video-list&type='+that.currentTab+'&access_token='+that.$access_token,

@@ -14,7 +14,7 @@
 					<view class="section">
 						<view class="section_title">年龄</view>
 						<view class="section_right">
-							<input type="text" name="age" @input="getAge" placeholder="请输入您的年龄" :value="age" />
+							<input type="number" name="age" @input="getAge" placeholder="请输入您的年龄" :value="age" />
 						</view>
 					</view>
 					<view class="section">
@@ -67,8 +67,9 @@
 							<text>身份证反面</text>
 						</view>
 					</view>
-					<button @click="appLogin" hidden>微信授权登录</button>
-					 <view>{{code}}</view>
+					<!-- <block v-if="is_wx == 0">
+						<button @click="appLogin(providerList)">微信授权登录</button>
+					</block> -->
 				</view>
 				<view class="btn-area">
 					<!-- <button formType="submit" class="submit_btn">保存并绑定微信</button> -->
@@ -85,7 +86,7 @@
 			return{
 				username: "",
 				age: "",
-				children: "",
+				children: 0,
 				id_card: "",
 				radio_sex: [{
                     value: '0',
@@ -118,10 +119,35 @@
 				idcard_down: "",
 				user_real:0,
 				code: "",
-				userinfo: ""
+				userinfo: "", 
+				providerList: "",
+				avatar_url:'',
+				nickname:'',
+				wechat_open_id:'', 
+				is_wx: 0
 			}
 		},
 		methods:{
+			initProvider() {
+				var that = this;
+			    const filters = ['weixin'];
+			    uni.getProvider({
+			        service: 'oauth',
+			        success: (res) => {
+			            if (res.provider && res.provider.length) {
+			                for (let i = 0; i < res.provider.length; i++) {
+			                    if (~filters.indexOf(res.provider[i])) {
+			                        that.providerList = res.provider[i];
+									console.log(that.providerList);
+			                    }
+			                }
+			            }
+			        },
+			        fail: (err) => {
+			            console.error('获取服务供应商失败：' + JSON.stringify(err));
+			        }
+			    });
+			},
 			getUsername: function(e){
 				this.username = e.detail.value;
 				console.log(this.username)
@@ -222,71 +248,93 @@
 					}
 				});				
 			},
-			appLogin: function(e){
+			appLogin: function(value){
+				console.log(value);
 				var that = this;
-				// uni.getProvider({
-				// 	service: 'oauth',
-				// 	success: function (res) {
-				// 		console.log(res.provider)
-				// 		if (~res.provider.indexOf('weixin')) {
-				// 			uni.login({
-				// 				provider: 'weixin',
-				// 				success: function (loginRes) {
-				// 					console.log(JSON.stringify(loginRes));
-				// 				}
-				// 			});
-				// 		}
-				// 	},
-				// 	fail:function(res){
-				// 		uni.showToast({
-				// 			title: res.errMsg,
-				// 			icon: 'none',
-				// 			duration: 1500
-				// 		})	
-				// 	}
-				// });
+				console.log(that.$access_token)
 				uni.login({
-					provider: 'weixin',
+					provider: value,
 					success: function (loginRes) {
-						console.log(JSON.stringify(loginRes));
-						that.code = JSON.stringify(loginRes.code);
 						// 获取用户信息
 						uni.getUserInfo({
-							provider: 'weixin',
+							provider: value,
 							success: function(infoRes) {
-								console.log(JSON.stringify(infoRes.userInfo));
-								that.userinfo = JSON.stringify(infoRes.userInfo);
-							},
-							fail:function(res){
-								uni.showToast({
-									title: res.errMsg,
-									icon: 'none',
-									duration: 1500
-								})	
+							 uni.request({
+								url: that.$api+'user/agent-information/&access_token='+that.$access_token,
+								dataType: "json",
+								method: 'POST',
+								data:{  
+									"nickname": infoRes.userInfo.nickName,
+								    "wechat_open_id": infoRes.userInfo.openId,
+									"avatar_url": infoRes.userInfo.avatarUrl,
+								},
+								header: {
+									'content-type': 'application/x-www-form-urlencoded'
+								},
+								success: res => {
+									var data = res.data.data
+									if(res.data.code == 0){
+										that.is_wx = 1;
+										uni.showToast({
+											title:res.data.msg,
+											icon:'none',
+										});
+									}else{
+										uni.showToast({
+											title:res.data.msg,
+											icon:'none',
+										});
+									}  
+								}, 
+							 });
 							}
 						});
 					},
 					fail:function(res){
 						uni.showToast({
-							title: res.errMsg,
+							title: '授权登录失败：' + res.errMsg,
 							icon: 'none',
 							duration: 1500
 						})	
 					}
 				})
-				// uni.getProvider({
-				// 	service: 'oauth',
-				// 	success: function (res) {
-				// 		console.log(res.provider)
-				// 		if (~res.provider.indexOf('weixin')) {
-				// 			
-				// 		}
-				// 	}
-				// });
 			},
 			formSubmit: function(){ 
 				let that = this; 
-				
+				if(that.username == ""){
+					uni.showToast({
+						title:"请填写姓名",
+						icon:'none',
+						duration: 1000
+					});
+					return false;
+				}
+				if(that.age == 0  ||  that.age == ''){
+					uni.showToast({
+						title:"请输入年龄",
+						icon:'none',
+						duration: 1000
+					});
+					return false;
+				}
+				if(that.idcard_up == "" || that.idcard_up == "null"){
+					uni.showToast({
+						title:"请上传身份证正面照",
+						icon:'none',
+						duration: 1000
+					});
+					return false;
+				}
+				if(that.idcard_down == "" || that.idcard_down == "null"){
+					uni.showToast({
+						title:"请上传身份证反面照",
+						icon:'none',
+						duration: 1000
+					});
+					return false;
+				}
+				console.log(that.idcard_up,that.idcard_down)
+				  
 				uni.request({
 					url: that.$api+'user/setting-edit&access_token='+that.$access_token,
 					method: 'POST',
@@ -298,7 +346,7 @@
 						user_rear: that.bear_current,
 						user_child: that.children,
 						user_just: that.idcard_up,
-						user_back: that.idcard_down,
+						user_back: that.idcard_down, 
 					},
 					dataType: "json",
 					header: {
@@ -312,39 +360,15 @@
 								icon:'none',
 								duration: 1000
 							});
+							
+							uni.setStorageSync('user_name',that.username); 
+							that.$user_name = uni.getStorageSync('user_name');
 							setTimeout(function(){
-								uni.navigateTo({ 
+								uni.reLaunch({ 
 									url: "/pages/person/person"
 								})
 							},1500)
-							//绑定微信
-// 							 uni.request({
-// 							 	url: that.$api+'user/agent-information/&access_token='+that.$access_token,
-// 							 	dataType: "json",
-// 							 	method: 'POST',
-// 								data:{
-// 									code: that.code
-// 								},
-// 							 	header: {
-// 							 		'content-type': 'application/x-www-form-urlencoded'
-// 							 	},
-// 							 	success: res => {
-// 							 		var data = res.data.data
-// 							 		if(res.data.code == 0){
-// 										console.log(data)
-// 										uni.setStorageSync('access_token',data.access_token);
-// 										uni.setStorageSync('level',data.level);
-// 										uni.showToast({title:data.msg,icon:'none',duration:1500});
-// 										that.$access_token = uni.getStorageSync('access_token');
-// 										that.$level = uni.getStorageSync('level');
-// 							 		}else{
-// 							 			uni.showToast({
-// 							 				title:res.data.msg,
-// 							 				icon:'none',
-// 							 			});
-// 							 		}  
-// 							 	}, 
-// 							 });
+						
 							
 						}else{
 							uni.showToast({
@@ -363,8 +387,11 @@
 				});
 			}
 		},
-		onShow: function(){
-		},
+		onReady() {
+			var that = this;
+            that.initProvider();
+			console.log(that.providerList)
+        },
 		onLoad(opt) {
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
@@ -388,6 +415,7 @@
 						that.idcard_up = data.user_just;
 						that.idcard_down = data.user_back;
 						that.user_real = data.user_real;
+						that.is_wx = data.is_wx;
 					}else{
 						uni.showToast({
 							title:res.data.msg,

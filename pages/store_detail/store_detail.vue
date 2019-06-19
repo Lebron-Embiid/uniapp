@@ -223,7 +223,8 @@
 				if(that.is_format != 0){
 					that.fixed_show = 0;
 					uni.showToast({
-						title: "请选择规格"
+						title: "请选择规格",
+						icon: 'none'
 					})
 					return false;
 				}
@@ -266,7 +267,8 @@
 				if(that.is_format != 0){
 					that.fixed_show = 0;
 					uni.showToast({
-						title: "请选择规格"
+						title: "请选择规格",
+						icon: 'none'
 					})
 					return false;
 				}

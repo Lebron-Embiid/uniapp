@@ -1,7 +1,7 @@
 <template>
 	<view class="my_mater_box">
 		<view class="page_bg"></view>
-		<view class="list_nav">
+		<view class="list_nav" style="top:45px;">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
 		<view class="mt44"></view>

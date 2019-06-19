@@ -74,6 +74,11 @@
 		components:{
 			commonOrder
 		},
+		onBackPress() {
+			uni.reLaunch({
+				url: "/pages/person/person"
+			})
+		},
 		methods:{
 			navbarTap: function(e){
 				var that = this;
@@ -161,7 +166,7 @@
 							status: !item.list[i].pay_type,
 							// statusText: "已完成",
 							goods: item.list[i].goods_list,
-							pay: item.list[i].total_price,
+							pay: item.list[i].pay_price,
 							// finish: item.list[i].pay_type,
 							is_pay: item.list[i].is_pay,
 							is_send: item.list[i].is_send,
@@ -182,6 +187,10 @@
 		},
 		onPullDownRefresh() {
 			var that = this;
+			that.page0 = 1;
+			that.page1 = 1;
+			that.page2 = 1;
+			that.page3 = 1;
 			setTimeout(function () {
 				uni.request({
 					url: that.$api+'order/list&status='+that.currentTab+'&access_token='+that.$access_token,
@@ -203,7 +212,7 @@
 								status: !item.list[i].pay_type,
 								// statusText: "已完成",
 								goods: item.list[i].goods_list,
-								pay: item.list[i].total_price,
+								pay: item.list[i].pay_price,
 								// finish: item.list[i].pay_type,
 								is_pay: item.list[i].is_pay,
 								is_send: item.list[i].is_send,
@@ -288,7 +297,7 @@
 							status: !item.list[i].pay_type,
 							// statusText: "已完成",
 							goods: item.list[i].goods_list,
-							pay: item.list[i].total_price,
+							pay: item.list[i].pay_price,
 							// finish: item.list[i].pay_type,
 							is_pay: item.list[i].is_pay,
 							is_send: item.list[i].is_send,
@@ -340,5 +349,11 @@
 	}
 	.order_list{
 		margin-top: 55px;
+	}
+	.copy_txt{
+		color: #999;
+		font-size: 24upx;
+		text-align: center;
+		margin: 20upx 0;
 	}
 </style>

@@ -47,6 +47,8 @@
 				node_type: "",
 				last:{},
 				next:{},
+				cover_pic:'',
+				describe:'',
 			}
 		},
 		components:{
@@ -74,27 +76,48 @@
 // 						console.log('获取登录通道失败'+ JSON.stringify(e));
 // 					}
 // 				});
-				uni.share({
-					provider: "weixin",
-					scene: "WXSceneSession",
-					type: 0,
-					href: "http://uniapp.dcloud.io/",
-					title: "uni-app分享",
-					summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
-					imageUrl: "https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png",
+				var that = this;
+				uni.showActionSheet({
+					itemList: ['分享到微信好友', '分享到微信朋友圈'],
 					success: function (res) {
-						uni.showToast({
-							title: JSON.stringify(res),
-							icon: 'none',
-							duration: 1500
-						})
+						if(res.tapIndex == 0){
+							// 分享到微信好友
+							uni.share({
+								provider: "weixin",
+								scene: "WXSceneSession",
+								type: 0,
+								href: "http://uniapp.dcloud.io/",
+								title: that.title,
+								summary: that.describe,
+								imageUrl: that.cover_pic,
+								success: function (res) {
+									console.log("success:" + JSON.stringify(res));
+								},
+								fail: function (err) {
+									console.log("fail:" + JSON.stringify(err));
+								}
+							});
+						}else if(res.tapIndex == 1){
+							// 分享到微信朋友圈
+							uni.share({
+								provider: "weixin",
+								scene: "WXSenceTimeline",
+								type: 0,
+								href: "http://yl.demenk.com/index.html",
+								title: that.title,
+								summary: that.describe,
+								imageUrl: that.cover_pic,
+								success: function (res) {
+									console.log("success:" + JSON.stringify(res));
+								},
+								fail: function (err) {
+									console.log("fail:" + JSON.stringify(err));
+								}
+							});
+						}
 					},
-					fail: function (err) {
-						uni.showToast({
-							title: JSON.stringify(err),
-							icon: 'none',
-							duration: 1500
-						})
+					fail: function (res) {
+						console.log(res.errMsg);
 					}
 				});
 			}
@@ -122,6 +145,8 @@
 					that.content = res.data.data.mode.content;
 					that.last = res.data.data.last;
 					that.next = res.data.data.next;
+					that.cover_pic = res.data.data.cover_pic;
+					that.describe = res.data.data.describe;
 					console.log(that.last)
 					console.log(that.next)
 				},

@@ -6,11 +6,6 @@
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "",
 				"app-plus": {
-						"pullToRefresh": {
-							"support": true,
-							"color": "#00001f",
-							"style": "circle"
-						},
 						"titleNView": false,
 						"softinputNavBar": "none"
 //                     "bounce": "none", //关闭窗口回弹效果
