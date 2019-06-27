@@ -10,6 +10,10 @@
 </template>
 
 <script>
+	const innerAudioContext = uni.createInnerAudioContext();
+	//#ifdef APP-PLUS
+	const pp = plus.audio.createPlayer("_Doc/Audio/test.mp3");
+	//#endif
 	import uParse from '@/components/u-parse/u-parse.vue'
 	export default{
 		data(){
@@ -24,6 +28,16 @@
 		},
 		components:{
 			uParse
+		},
+		onShow() {
+			console.log(innerAudioContext.src+"1234")
+			innerAudioContext.src = "";
+			innerAudioContext.pause();
+			//#ifdef APP-PLUS
+			pp.close();
+			pp.pause();
+			pp.stop();
+			//#endif
 		},
 		onLoad(opt) {
 			let that = this;

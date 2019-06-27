@@ -48,7 +48,8 @@
 .search_form view.data-v-d11f13e2 {
     width: 83%;
     background: #eee;
-    border-radius: 10rpx;
+    -webkit-border-radius: 10rpx;
+            border-radius: 10rpx;
     position: relative;
 }
 .search_form view image.data-v-d11f13e2 {

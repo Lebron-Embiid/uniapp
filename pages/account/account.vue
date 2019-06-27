@@ -17,17 +17,17 @@
 			</view>
 		</view>
 		<view class="acc_item borbom">
-			<!-- <text>支付方式</text acc_right> -->
-			<view class="pr45">
-				支付方式
-				<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
-			</view>
-			<view class="acc_right">
-			<!-- <picker class="acc_right" @change="bindPickerChange" :value="index" :range="array"> -->
+			<text>支付方式</text acc_right>
+			<!-- <view class="pr45"> -->
+				<!-- 支付方式 -->
+				<!-- <image  src="../../static/next.png" mode="widthFix"></image> -->
+			<!-- </view> -->
+			<!-- <view class="acc_right"> -->
+			<picker class="acc_right" @change="bindPickerChange" :value="index" :range="array">
 				<view class="uni-input">{{array[index]}}</view>
-				<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
-			<!-- </picker> -->
-			</view>
+				<image src="../../static/next.png" mode="widthFix"></image>
+			</picker>
+			<!-- </view> -->
 		</view>
 		<view class="acc_content borbom">
 			<view class="content_item" v-for="(item,index) in accountList" :key="index">
@@ -72,11 +72,12 @@
 					city: "",
 					district: "",
 					detail: "",
-					is_default: ""
+					is_default: "",
+					len: 0
 				},
 				content:'',
 				cat_list : [],
-				array: ['微信支付','余额支付'],				// , '支付宝支付'
+				array: ['微信支付','支付宝支付'],				// , '余额支付'
 				index: 0,
 				express_price: 0,
 				accountList:[
@@ -122,14 +123,14 @@
 			bindPickerChange: function(e) {
 				console.log('picker发送选择改变，携带值为', e.target.value)
 				this.index = e.target.value
-				// if(this.index == 0){
+				if(this.index == 0){
 					this.payment = 0,
 					this.pay_type = 'WECHAT_PAY'	//微信支付
-				// }else if(this.index == 1){
-				// 	this.payment = 1
-				// 	// this.pay_type = 'ALIPAY'
-				// 	this.pay_type = 'BALANCE_PAY'	//余额支付
-				// }else{
+				}else if(this.index == 1){
+					this.payment = 1
+					this.pay_type = 'ALIPAY'  //支付宝支付
+				}
+				// else{
 				// 	this.payment = 3
 				// 	this.pay_type = 'BALANCE_PAY'	//余额支付
 				// }
@@ -140,10 +141,25 @@
 			},
 			toSubmit: function(e){
 				var that = this;
- 				that.mch_list[0].show = false;
- 				that.mch_list[0].show_length = 0;
- 				that.mch_list[0].offline = 0;
-  				that.mch_list[0].content = that.content;
+				console.log(that.mch_list)
+				// var mchlist = [];
+				for(var i=0;i<that.mch_list.length;i++){				
+					that.mch_list[i].show = false;
+					that.mch_list[i].show_length = 0;
+					that.mch_list[i].offline = 0;
+					that.mch_list[i].content = that.content;
+				} 
+				// for(var i=0;i<that.mch_list.length;i++){
+					// mchlist.push({
+					// 	show: false,
+					// 	show_length: 0,
+					// 	offline: 0,
+					// 	content: that.content
+					// })
+				// }
+				// that.mch_list = mchlist;
+				console.log(that.mch_list); 
+				
 				if(that.all > 10000){
 					uni.showToast({
 						title:"联系平台下单",
@@ -177,6 +193,15 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => { 
+						console.log(res.data.code); 
+						if(res.data.code == 1){
+							uni.showToast({
+								title:res.data.msg,
+								icon: 'none',
+								duration: 1500
+							})
+							return false;
+						}
 						uni.showToast({
 							title:'提交成功',
 							icon: 'none',
@@ -184,8 +209,8 @@
 						})	
 						var order_id = res.data.data.order_id;
 						if(that.all < 10000){
-							//订单提交成功跳转
-							if(that.payment != 0){ 
+							//订单提交成功跳转							
+							if(that.payment == 2){ 
 								setTimeout(function(){
 									uni.request({
 										url: that.$api+'order/pay-data&access_token='+that.$access_token,
@@ -225,10 +250,17 @@
 									})
 								},1000)
 							  }else{	
-								  console.log(res)
-									uni.request({
-										// url: that.$api+'order/pay-data&access_token='+that.$access_token,
-										url: "http://yl.demenk.com/wxpayv3/index.php",
+								  if(that.payment == 0){
+									  var provider = "wxpay";
+									  var url = "http://yl.demenk.com/wxpayv3/index.php";
+								  }else{
+									  var provider = "alipay";
+									  var url = "http://yl.demenk.com/alipayrsa2/index.php";
+								  }
+								  console.log(33333)
+								  console.log(that.payment) 
+									uni.request({ 
+										url: url,
 										method: 'GET',
 										dataType: "json",
 										data: { 
@@ -239,11 +271,10 @@
 										header: {
 											'content-type': 'application/x-www-form-urlencoded'
 										},
-										success: res => {		
-											console.log(res);
-											var list = res.data;
-											console.log(list)
-											var order_info = JSON.stringify({
+										success: res => {		 
+											var list = res.data; 
+										  if(that.payment == 0){
+											  var order_info = JSON.stringify({
 												appid:list.appid,
 												noncestr:list.noncestr,  
 												package:"Sign=WXPay",
@@ -251,13 +282,15 @@
 												prepayid:list.prepayid,
 												timestamp: list.timestamp,
 												sign:list.sign
-											})
-											console.log(order_info)
+											  })
+										  }else{
+											  var order_info =  list
+										  }
 											uni.getProvider({
 												service: "payment",
 												success: function(res){
 													uni.requestPayment({
-														provider: 'wxpay',
+														provider: provider,
 														orderInfo: order_info,
 														success: function (res) {
 															setTimeout(function(){																
@@ -285,8 +318,9 @@
 															},1500)
 														},
 														fail: function (err) {
+															console.log(JSON.stringify(err))
 															uni.showToast({
-																title: "支付失败！",
+																title: "支付失败",
 																icon: "none"
 															})
 															setTimeout(function(){
@@ -299,7 +333,7 @@
 												},
 												fail: function (err) {
 													uni.showToast({
-														title: "支付失败！",
+														title: "支付失败",
 														icon: "none"
 													})
 													setTimeout(function(){
@@ -317,7 +351,7 @@
 											})
 										}
 									});
-							   } 
+							   } 	 
 						}else{
 							uni.showToast({
 								title:'金额大于一万请需通过其他渠道支付货款',
@@ -345,36 +379,39 @@
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
-			console.log(opt)
+			// console.log(opt)
 			var data = JSON.parse(opt.data);
+			that.len = data.mch_list.length-1;
+			console.log(that.len)
 			that.cat_list = opt.cat_list;  
 			that.address = data.address;
-			that.accountList = data.mch_list[0].goods_list;
-			that.mch_list = data.mch_list; 
-				console.log(that.mch_list)
-			that.express_price = data.mch_list[0].express_price;
-			that.level_price = data.mch_list[0].level_price;
-			that.total_price = data.mch_list[0].total_price;
+			that.accountList = data.mch_list[that.len].goods_list;
+			console.log(that.accountList)
+			that.mch_list = data.mch_list;
+				// console.log(that.mch_list)
+			that.express_price = data.mch_list[that.len].express_price;
+			that.level_price = data.mch_list[that.len].level_price;
+			that.total_price = data.mch_list[that.len].total_price;
 			that.all  = parseFloat(that.level_price)+parseFloat(that.express_price)
 			
- // 			uni.request({
-// 				url: that.$api+'order/pay-data&order_id=3&access_token='+that.$access_token,
-// 				method: 'GET',
-// 				dataType: "json",
-// 				header: {
-// 					'content-type': 'application/x-www-form-urlencoded'
-// 				},
-// 				success: res => {
-// 					
-// 				},
-// 				fail: () => {
-// 					uni.showToast({
-// 						title: res.data.msg,
-// 						icon: 'none',
-// 						duration: 1500
-// 					})					
-// 				}
-// 			});			
+ 		// 	uni.request({
+			// 	url: that.$api+'order/pay-data&order_id=3&access_token='+that.$access_token,
+			// 	method: 'GET',
+			// 	dataType: "json",
+			// 	header: {
+			// 		'content-type': 'application/x-www-form-urlencoded'
+			// 	},
+			// 	success: res => {
+			// 		
+			// 	},
+			// 	fail: () => {
+			// 		uni.showToast({
+			// 			title: res.data.msg,
+			// 			icon: 'none',
+			// 			duration: 1500
+			// 		})					
+			// 	}
+			// });			
 		}
 		// onPullDownRefresh() {
 		// 	var that = this;

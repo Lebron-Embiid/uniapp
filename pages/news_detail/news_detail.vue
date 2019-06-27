@@ -30,7 +30,13 @@
 				
 				
 			</view>
+			<!-- #ifdef APP-PLUS -->  
 			<view class="page_share" @click="toShare"><image src="../../static/share.png" mode="widthFix"></image></view>
+			<!-- #endif -->
+			
+			<!-- #ifdef H5 -->  
+			<view><image src="http://yl.demenk.com/web/statics/images/youlan_code.png" style="display: block;width: 50%;margin: 20upx auto;" mode="widthFix"></image></view>
+			<!-- #endif -->
 		</view>
 	</view>
 </template>
@@ -40,6 +46,7 @@
 	export default{
 		data(){
 			return{
+				id: "",
 				title: "",
 				look: "0",
 				date: "",
@@ -86,7 +93,7 @@
 								provider: "weixin",
 								scene: "WXSceneSession",
 								type: 0,
-								href: "http://uniapp.dcloud.io/",
+								href: "http://yl.demenk.com/web/news/#/pages/news_detail/news_detail?id="+that.id,
 								title: that.title,
 								summary: that.describe,
 								imageUrl: that.cover_pic,
@@ -103,7 +110,7 @@
 								provider: "weixin",
 								scene: "WXSenceTimeline",
 								type: 0,
-								href: "http://yl.demenk.com/index.html",
+								href: "http://yl.demenk.com/web/news/#/pages/news_detail/news_detail?id="+that.id,
 								title: that.title,
 								summary: that.describe,
 								imageUrl: that.cover_pic,
@@ -139,6 +146,7 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
+					that.id = res.data.data.mode.id;
 					that.title = res.data.data.mode.title;
 					that.look = res.data.data.mode.num;
 					that.date = res.data.data.mode.addtime;
@@ -193,6 +201,7 @@
 		}
 	}
 	.detail_content{
+		-webkit-user-select: text;
 		color: #252525;
 		font-size: 24upx !important;
 		.wxParse{

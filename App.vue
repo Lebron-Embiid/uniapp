@@ -1,10 +1,47 @@
 <script>
+	var wgtVer = null;  
+	var wgtUrl = null;
+	
+	// 更新应用资源  
+		function installWgt(path){  
+			console.log(1111)
+			plus.nativeUI.showWaiting("安装wgt文件...");  
+			console.log(2222)
+			plus.runtime.install(path,{},function(){  
+			console.log(3333)
+				plus.nativeUI.closeWaiting();  
+				console.log("安装wgt文件成功！");  
+				plus.nativeUI.alert("应用资源更新完成！",function(){  
+					plus.runtime.restart();  
+				});  
+			},function(e){  
+				plus.nativeUI.closeWaiting();  
+				console.log("安装wgt文件失败["+e.code+"]："+e.message);  
+				plus.nativeUI.alert("安装wgt文件失败["+e.code+"]："+e.message);  
+			});  
+		}  
+	// 下载wgt文件   
+		function downWgt(){  
+			plus.nativeUI.showWaiting("下载wgt文件...");  
+			plus.downloader.createDownload( wgtUrl, {filename:"unpackage/debug/"}, function(d,status){  
+				if ( status == 200 ) {   
+					console.log("下载wgt成功："+d.filename);  
+					installWgt(d.filename); // 安装wgt包  
+				} else {  
+					console.log("下载wgt失败！");  
+					plus.nativeUI.alert("下载wgt失败！");  
+				}  
+				plus.nativeUI.closeWaiting();  
+			}).start();  
+		}  
 	export default {
 		globalData:{
 			pic_type: "",
-			url: ""
+			url: "",
+			audio: ""
 		},
 		onLaunch: function () {
+			this.$options.globalData.audio = uni.createInnerAudioContext();
 			//#ifdef APP-PLUS
 			console.log(plus.runtime.appid)
 			console.log(plus.runtime.version)
@@ -76,7 +113,52 @@
 // 			}, 4000);
 		},
 		onShow: function () {
-			console.log('App Show')
+			var that = this;
+			plus.runtime.getProperty(plus.runtime.appid,function(inf){  
+				wgtVer=inf.version;  
+				console.log("当前应用版本："+wgtVer); 
+				uni.request({
+				    url: that.$api+'default/edition', //仅为示例，并非真实接口地址。
+				    data: {number:wgtVer},
+					method: 'POST',
+					dataType:'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+				    success: (res) => {
+							console.log(res.data)
+						if(res.data.code == 0){ 
+							wgtUrl = res.data.data;
+							// downWgt();
+							uni.showModal({
+								content: res.data.msg,
+								confirmText:"升级APP",
+								showCancel:false,
+								success:function(){									
+									// downWgt();
+									console.log(uni.getSystemInfoSync().platform)
+									plus.runtime.openURL(wgtUrl);
+									// switch(uni.getSystemInfoSync().platform){
+									// 	case 'android':
+									// 		console.log('运行Android上')
+									// 		plus.runtime.install(wgtUrl);
+									// 		break;
+									// 	case 'ios':
+									// 		console.log('运行iOS上')
+									// 		plus.runtime.openURL(wgtUrl);
+									// 		break;
+									// 	default:
+									// 		console.log('运行在开发者工具上')
+									// 		break;
+									// }
+								}
+							})							 
+						}
+				    }
+				});
+				
+			});
+			
 		},
 		onHide: function () {
 			console.log('App Hide')
@@ -353,7 +435,9 @@
 			}
 		}
 	}
-	
+	.wxParse{
+		-webkit-user-select: text;
+	}
 	.wxParse image,.wxParse .img,.wxParse image>img{
 		display: block !important;
 		max-width: 100% !important;

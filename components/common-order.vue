@@ -42,6 +42,12 @@
 	  <block v-else>
 		  <view class="not_have">暂无相关订单</view>
 	  </block>
+	  <!-- <view class="pay_shadow" @tap="hideShadow" :class="[pay_shadow == true?'active':'']"></view>
+	  <view class="pay_type_box" :class="[pay_shadow == true?'active':'']">
+		<view class="pay_title">请选择支付方式</view>
+		<view class="pt_item"><image src="/static/wx_icon.png" mode="widthFix"></image><text>微信</text></view>
+		<view class="pt_item"><image src="/static/zfb_icon.png" mode="widthFix"></image><text>支付宝</text></view>
+	  </view> -->
 	</view>
 </template>
 
@@ -49,7 +55,9 @@
 	export default{
 		data(){
 			return{
-				
+				pay_type: '-1', 
+				// pay_shadow: false
+				pay_list: ["微信支付","支付宝支付"]
 			}
 		},
 		props:{
@@ -62,8 +70,12 @@
 			that.$level = uni.getStorageSync("level");
 		},
 		methods:{
+			// hideShadow(){
+			// 	this.pay_shadow = false;
+			// },
 			toPay: function(id,all,index){
 				var that = this; 
+				console.log(that.pay_type)
 				var order_no = that.orderList[index].order_no
 				var goods_name = that.orderList[index].goods[0].goods_name;
 				var order_id = that.orderList[index].id;
@@ -75,70 +87,89 @@
 					})	
 					return false;
 				} 
-				uni.request({
-					// url: that.$api+'order/pay-data&access_token='+that.$access_token,
-					url: "http://yl.demenk.com/wxpayv3/index.php",
-					method: 'GET',
-					dataType: "json",
-					data: {				
-						price:all,
-						goods_name:goods_name,
-						order_no:order_no, 
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: res => {					
-						var list = res.data;
-						console.log(list)
-						var order_info = JSON.stringify({
-								appid:list.appid,
-								noncestr:list.noncestr,  
-								package:"Sign=WXPay",
-								partnerid:list.partnerid,
-								prepayid:list.prepayid,
-								timestamp: list.timestamp,
-								sign:list.sign
-						})
-						console.log(order_info)
-						uni.getProvider({
-							service: "payment",
-							success: function(res){
-								uni.requestPayment({
-									provider: 'wxpay',
-									orderInfo: order_info,
-									success: function (res) {
-										uni.showToast({
-											title: "支付成功！"
-										})
-										uni.request({
-											url: that.$api+'order/wx-pay&order_id='+order_id+'&access_token='+that.$access_token,
-											method: 'GET',
-											dataType: "json", 
-											header: {
-												'content-type': 'application/x-www-form-urlencoded'
+				uni.showActionSheet({
+					itemList: that.pay_list,
+					success: function (res) {
+						if(res.tapIndex == 0){
+							that.pay_type = 0;
+							var url =  "http://yl.demenk.com/wxpayv3/index.php"; 
+							var provider = "wxpay";
+						}else{
+							that.pay_type = 1;
+							var url =  "http://yl.demenk.com/alipayrsa2/index.php";
+							var provider = "alipay";
+						}
+						uni.request({  
+							url: url,
+							method: 'GET',
+							dataType: "json",
+							data: {				
+								price:all,
+								goods_name:goods_name,
+								order_no:order_no, 
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded'
+							},
+							success: res => {					
+								var list = res.data;
+								if(that.pay_type == 0){
+									var order_info = JSON.stringify({
+											appid:list.appid,
+											noncestr:list.noncestr,  
+											package:"Sign=WXPay",
+											partnerid:list.partnerid,
+											prepayid:list.prepayid,
+											timestamp: list.timestamp,
+											sign:list.sign
+									})	
+								}else{
+						        	var order_info =  list	
+								}	 
+						  
+								uni.getProvider({
+									service: "payment",
+									success: function(res){
+										uni.requestPayment({ 
+											provider: provider,
+											orderInfo: order_info,
+											success: function (res) {
+												uni.showToast({
+													title: "支付成功！"
+												})
+												uni.request({
+													url: that.$api+'order/wx-pay&order_id='+order_id+'&access_token='+that.$access_token,
+													method: 'GET',
+													dataType: "json", 
+													header: {
+														'content-type': 'application/x-www-form-urlencoded'
+													},
+													success: res => {
+						
+													}, 
+												});
+												
 											},
-											success: res => {
-
-											}, 
+											fail: function (err) {
+												uni.showToast({
+													title: "支付失败",
+													icon: "none"
+												})  
+											}
 										});
-										
-									},
-									fail: function (err) {
-										uni.showToast({
-											title: "支付失败！",
-											icon: "none"
-										})  
 									}
-								});
+								})
+							},
+							fail: (err) => {
+								uni.showToast({
+									title: "支付失败！",
+									icon: "none"
+								})  
 							}
-						})
+						});
 					},
-					fail: () => {
-						uni.showToast({
-							title: "支付失败！",
-							icon: "none"
-						})  
+					fail: function (res) {
+						console.log(res.errMsg);
 					}
 				});
 			},
@@ -343,6 +374,54 @@
 						border: 0;
 					}
 				}
+			}
+		}
+	}
+	.pay_shadow{
+		display: none;
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		background: rgba(0,0,0,.5);
+		z-index: 38;
+		&.active{
+			display: block;
+		}
+	}
+	.pay_type_box{
+		position: fixed;
+		width: 60%;
+		left: 50%;
+		top: 36%;
+		transform: translateX(-50%);
+		z-index: 40;
+		background: #fff;
+		border-radius: 10upx;
+		padding: 50upx 30upx;
+		box-sizing: border-box;
+		display: none;
+		justify-content: space-around;
+		align-items: center;
+		flex-wrap: wrap;
+		&.active{
+			display: flex;
+		}
+		.pay_title{
+			width: 100%;
+			text-align: center;
+			font-size: 30upx;
+			margin-bottom: 50upx;
+		}
+		.pt_item{
+			font-size: 24upx;
+			text-align: center;
+			image{
+				display: block;
+				width: 74upx;
+				height: 69upx;
+				margin: 0 auto 10upx;
 			}
 		}
 	}

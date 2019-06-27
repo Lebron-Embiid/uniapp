@@ -68,12 +68,30 @@
 				header: {
 					'content-type': 'application/x-www-form-urlencoded'
 				},
-				success: res => {
-						setTimeout(function(){
-							uni.navigateTo({ 
-								url: "/pages/account/account?data="+JSON.stringify(res.data.data)
-							})
-						},1000)
+				success: res => {		
+					var url = JSON.stringify(res.data.data);
+					uni.request({
+						url: that.$api+'user/address-set-default&access_token='+that.$access_token+'&address_id='+id,
+						dataType: "json",
+						method: 'GET',
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						success: res => {
+							setTimeout(function(){
+								uni.navigateTo({ 
+									url: "/pages/account/account?data="+url
+								})
+							},1000)
+						},
+						fail: () => {
+							uni.showToast({
+								title:res.data.msg,
+								icon:'none',
+							});
+						}
+					});
+						
 					
 				},
 				fail: () => {

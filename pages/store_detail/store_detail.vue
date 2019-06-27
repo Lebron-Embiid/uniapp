@@ -218,6 +218,20 @@
 					current: that.swiperList[e]
 				})
 			},
+			minus_num: function(e){
+				var that = this;
+				that.buy_num--;
+				if(that.buy_num <= 0){
+					that.buy_num = 1;
+				}
+			},
+			plus_num: function(e){
+				var that = this;
+				that.buy_num++;
+				if(that.buy_num >= 99){
+					that.buy_num = 99;
+				}
+			},
 			toAddCar: function(e){
 				var that = this;
 				if(that.is_format != 0){
@@ -244,13 +258,13 @@
 					success: res => {
 						if(res.data.code == 0){
 							uni.showToast({
-								title: "添加购物车成功！",
+								title: "添加成功",
 								icon: "success"
 							})
 						}else{
 							uni.showToast({
-								title: "添加购物车失败！",
-								icon: "success"
+								title: "添加失败",
+								icon: "none"
 							})
 						}
 					},
@@ -264,6 +278,7 @@
 			},
 			toBuy:function(e){
 				var that = this;
+				console.log(that.buy_num);
 				if(that.is_format != 0){
 					that.fixed_show = 0;
 					uni.showToast({
@@ -352,7 +367,8 @@
 					success: res => {
 						// if(res.data.code == 1){
 							var data = res.data.data;
-							that.buy_save = data.num
+							that.buy_save = data.num;
+							that.max_price = data.goods_price;
 							if(data.pic != ''){
 								that.buy_img = data.pic
 							}
@@ -371,18 +387,6 @@
 						});
 					}
 				});
-			},
-			minus_num: function(e){
-				this.buy_num--;
-				if(this.buy_num <= 0){
-					this.buy_num = 1;
-				}
-			},
-			plus_num: function(e){
-				this.buy_num++;		
-				if(this.buy_num >= 99){
-					this.buy_num = 99;
-				}		
 			},
 			showFixed: function(e){
 				this.fixed_show = 0;
@@ -770,7 +774,8 @@
 					overflow: hidden;
 					.fl_item{
 						float: left;
-						width: 120upx;
+						// width: 120upx;
+						display: inline-block;
 						height: 50upx;
 						line-height: 50upx;
 						font-size: 28upx;
@@ -778,6 +783,8 @@
 						background: #F7F7F7;
 						border-radius: 5upx;
 						margin: 0 20upx 20upx 0;
+						padding: 0 15upx;
+						box-sizing: border-box;
 						&.active{
 							color: #fff;
 							background: #FF4444;

@@ -14,7 +14,7 @@
 			</view>
 			<view class="list-call">
 				<image class="img" src="/static/3.png"></image>
-				<input class="biaoti" type="number" v-model="code" maxlength="4" placeholder="验证码" />
+				<input class="biaoti" type="number" v-model="code" placeholder="验证码" />
 				<view class="yzm" :class="{ yzms: second>0 }" @tap="getcode">{{yanzhengma}}</view>
 			</view>
 		</view>
@@ -67,7 +67,7 @@
 				uni.request({
 				    url: this.$api+'default/user-hand-binding', //仅为示例，并非真实接口地址。
 				    data: {content:this.phoneno,code_type:'reg'},
-					method: 'POST',
+					method: 'GET',
 					dataType:'json',
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
@@ -90,18 +90,33 @@
 				});
 			},
 			bindLogin() { 
-				if (this.phoneno.length != 11) {
+				if (this.phoneno == "" && this.phoneno.length != 11) {
 				     uni.showToast({
 				        icon: 'none',
-				        title: '手机号不正确'
+				        title: '请填写正确的手机号'
 				    });
 				    return;
 				} 
+				if (this.password == "") {
+				     uni.showToast({
+				        icon: 'none',
+				        title: '密码不为空'
+				    });
+				    return;
+				} 
+				if (this.code == "") {
+				     uni.showToast({
+				        icon: 'none',
+				        title: '验证码不为空'
+				    });
+				    return;
+				}  
  				uni.request({
  				    url: this.$api+'passport/forget',
  				    data: {
  						contact_way:this.phoneno,
- 						password:this.password
+ 						password:this.password,
+						code: this.code
  					},
  					method: 'POST',
  					dataType:'json',

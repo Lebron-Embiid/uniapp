@@ -38,14 +38,16 @@ page.data-v-09bd5473 {
     width: 132rpx;
     height: 132rpx;
     position: relative;
-    border-radius: 50%;
+    -webkit-border-radius: 50%;
+            border-radius: 50%;
     margin: 0 auto 20rpx;
 }
 .change_box .change_avatar .set_avatar.data-v-09bd5473 {
       display: block;
       width: 100%;
       height: 100% !important;
-      border-radius: 50%;
+      -webkit-border-radius: 50%;
+              border-radius: 50%;
 }
 .change_box .change_avatar .camera.data-v-09bd5473 {
       position: absolute;
@@ -54,7 +56,8 @@ page.data-v-09bd5473 {
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.4);
-      border-radius: 50%;
+      -webkit-border-radius: 50%;
+              border-radius: 50%;
       z-index: 5;
       display: -webkit-box;
       display: -webkit-flex;
@@ -120,7 +123,8 @@ page.data-v-09bd5473 {
     color: #fff;
     font-size: 24rpx;
     background: #00001f;
-    border-radius: 5rpx;
+    -webkit-border-radius: 5rpx;
+            border-radius: 5rpx;
     padding: 10rpx 0 12rpx;
 }
 

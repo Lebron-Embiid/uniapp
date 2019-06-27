@@ -48,7 +48,7 @@
 			</view>
 			
 			<view class="nav_item">
-				<navigator class="navigator" url="/pages/message_list/message_list">在线列表<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" url="/pages/message_list/message_list">在线留言<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			
 			

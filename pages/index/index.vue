@@ -171,7 +171,7 @@
 			}
 		},
 		onShow:function(){
-			var that = this;
+			var that = this;			
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
 			that.$user_name = uni.getStorageSync("user_name");
@@ -206,10 +206,7 @@
 		onLoad() {
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
-			that.$level = uni.getStorageSync("level");
-		
-			console.log(that.$access_token);
-			console.log(that.$level);
+			that.$level = uni.getStorageSync("level"); 
 			// setTimeout(function () {	
 			uni.request({
 				url: that.$api+'default/index',

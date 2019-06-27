@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.code_bg.data-v-e30fc84a {
+.code_bg.data-v-3d6cb8cc {
   position: absolute;
   left: 0;
   top: 0;
@@ -32,7 +32,7 @@
   max-height: 100%;
   z-index: 3;
 }
-.code_img.data-v-e30fc84a {
+.code_img.data-v-3d6cb8cc {
   position: relative;
   z-index: 5;
   width: 300rpx;
@@ -43,8 +43,22 @@
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
 }
+.invite_txt.data-v-3d6cb8cc {
+  position: absolute;
+  display: block;
+  width: 100%;
+  bottom: 220rpx;
+  color: #fff;
+  font-size: 28rpx;
+  left: 0;
+  text-align: center;
+  z-index: 8;
+}
+.invite_txt1.data-v-3d6cb8cc {
+  bottom: 160rpx;
+}
 @media (max-width: 330px) {
-.code_img.data-v-e30fc84a {
+.code_img.data-v-3d6cb8cc {
     top: 500rpx;
 }
 }

@@ -4,13 +4,13 @@
     "iPhone",
     "iPad"
   ],
-  "id": "__UNI__764106F",
+  "id": "__UNI__com.youlan.youlanapp",
   "name": "呦蓝",
   "version": {
-    "name": "1.0.0",
-    "code": "100"
+    "name": "1.0.5",
+    "code": 100
   },
-  "description": "基于uni-app开发的商城APP",
+  "description": "呦蓝手机客户端是一款集线上商城、线上培训、素材分享、企业资讯等服务功能于一体的App",
   "launch_path": "__uniapptabbar.html",
   "developer": {
     "name": "",
@@ -20,9 +20,8 @@
   "permissions": {
     "Share": {},
     "VideoPlayer": {},
-    "Payment": {},
-    "Push": {},
     "OAuth": {},
+    "Payment": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -48,10 +47,13 @@
       "background": "#00001f"
     },
     "usingComponents": true,
+    "compatible": {
+      "ignoreVersion": true
+    },
     "distribute": {
       "icons": {
         "ios": {
-          "appstore": "static/logo1.png",
+          "appstore": "static/app_logo.png",
           "ipad": {
             "app": "unpackage/res/icons/76x76.png",
             "app@2x": "unpackage/res/icons/152x152.png",
@@ -115,19 +117,20 @@
       "plugins": {
         "oauth": {
           "weixin": {
-            "appid": "wx95c98926c0ad4cae",
-            "appsecret": "b7e8222fc19a550f74057703cdefed23"
+            "appid": "wxd53ecc0e9b1a9938",
+            "appsecret": "6cdcb743d2063194e6dc6a95031ce939"
           }
         },
         "payment": {
           "weixin": {
-            "appid": "wx95c98926c0ad4cae"
-          }
+            "appid": "wxd53ecc0e9b1a9938"
+          },
+          "alipay": {}
         },
         "share": {
           "weixin": {
-            "appid": "wx95c98926c0ad4cae",
-            "appsecret": "b7e8222fc19a550f74057703cdefed23"
+            "appid": "wxd53ecc0e9b1a9938",
+            "appsecret": "6cdcb743d2063194e6dc6a95031ce939"
           }
         },
         "push": {},
@@ -146,8 +149,9 @@
       }
     },
     "uni-app": {
-      "compilerVersion": "1.9.9",
-      "control": "v8"
+      "compilerVersion": "2.0.1",
+      "control": "v8",
+      "nvueCompiler": "weex"
     },
     "secondwebview": {
       "id": "1",

@@ -513,6 +513,7 @@
 					margin: 0 10upx 6upx 0;
 					width: 100upx;
 					max-width: 130upx;
+					font-size: 24upx;
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;

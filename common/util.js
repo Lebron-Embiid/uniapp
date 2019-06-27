@@ -80,9 +80,12 @@ const formatNumber = n => {
     return n[1] ? n : '0' + n
 }
 
+const audio = uni.createInnerAudioContext();
+
 
 export default {
 	friendlyDate,
     formatTime,
-    formatDate
+    formatDate,
+	audio
 }

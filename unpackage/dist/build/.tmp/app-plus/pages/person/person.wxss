@@ -69,7 +69,8 @@
       width: 110rpx;
       height: 110rpx;
       border: 6rpx solid #0d0b38;
-      border-radius: 50%;
+      -webkit-border-radius: 50%;
+              border-radius: 50%;
       margin: 50rpx auto 10rpx;
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
@@ -81,7 +82,8 @@
         border: 5rpx solid #0a0a41;
         -webkit-box-sizing: border-box;
                 box-sizing: border-box;
-        border-radius: 50%;
+        -webkit-border-radius: 50%;
+                border-radius: 50%;
 }
 .person_top .person_layer .person_name {
       color: #fff;
@@ -124,8 +126,10 @@
       height: 34rpx !important;
 }
 .nav_box .nav_item.radius navigator {
-    border-top-left-radius: 5rpx;
-    border-top-right-radius: 5rpx;
+    -webkit-border-top-left-radius: 5rpx;
+            border-top-left-radius: 5rpx;
+    -webkit-border-top-right-radius: 5rpx;
+            border-top-right-radius: 5rpx;
     border-bottom: 1rpx solid #F1F1F1;
     margin-bottom: 0;
 }
@@ -166,7 +170,8 @@
       height: 30rpx;
       line-height: 30rpx;
       background: #f00;
-      border-radius: 50%;
+      -webkit-border-radius: 50%;
+              border-radius: 50%;
       color: #fff;
       font-size: 10rpx;
       text-align: center;
@@ -176,5 +181,13 @@
       width: 50rpx;
       height: 41rpx !important;
       margin: 0 auto 10rpx;
+}
+.copy_txt {
+  color: #999;
+  font-size: 24rpx;
+  text-align: center;
+  -webkit-transform: translateY(-40rpx);
+      -ms-transform: translateY(-40rpx);
+          transform: translateY(-40rpx);
 }
 

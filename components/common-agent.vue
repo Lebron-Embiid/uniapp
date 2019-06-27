@@ -4,7 +4,7 @@
 			<view class="ai_left">
 				<view class="ai_img">
 					<image :src="item.avatar" mode="widthFix"></image>
-					<span>{{item.user_team}}</span>
+					<span :class="[item.user_team == '' || item.user_team == null?'':'active']">{{item.user_team}}</span>
 				</view>
 				<view class="ai_info">
 					<text>{{item.nickname}}</text>
@@ -62,9 +62,11 @@
 					margin-right: 30upx;
 					position: relative;
 					span{
+						display: none;
 						position: absolute;
 						width: 30upx;
 						height: 30upx;
+						line-height: 30upx;
 						right: -5upx;
 						bottom: -5upx;
 						border-radius: 50%;
@@ -72,6 +74,9 @@
 						font-size: 18upx;
 						background: #f00;
 						text-align: center;
+						&.active{
+							display: block;
+						}
 					}
 					image{
 						display: inline-block;

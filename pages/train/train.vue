@@ -40,6 +40,7 @@
 </template>
 
 <script>
+const innerAudioContext = uni.createInnerAudioContext();
 import commonVideo from "@/components/common-video.vue"
 export default{
 	data(){
@@ -146,6 +147,8 @@ export default{
 	},	
 	onShow:function(){
 		var that = this;
+		innerAudioContext.src = "";
+		innerAudioContext.pause();
 		that.$user_name = uni.getStorageSync("user_name");
 		if(that.$user_name == ""){
 			uni.showToast({

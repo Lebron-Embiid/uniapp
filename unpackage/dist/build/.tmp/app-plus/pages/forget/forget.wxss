@@ -76,11 +76,13 @@
 		width:470rpx;
 		height:100rpx;
 		background:-webkit-gradient(linear,right top, left top,from(rgba(63,205,235,1)),to(rgba(188,226,158,1)));
+		background:-webkit-linear-gradient(right,rgba(63,205,235,1),rgba(188,226,158,1));
 		background:-o-linear-gradient(right,rgba(63,205,235,1),rgba(188,226,158,1));
 		background:linear-gradient(-90deg,rgba(63,205,235,1),rgba(188,226,158,1));
 		-webkit-box-shadow:0rpx 0rpx 13rpx 0rpx rgba(164,217,228,0.2);
 		        box-shadow:0rpx 0rpx 13rpx 0rpx rgba(164,217,228,0.2);
-		border-radius:50rpx;
+		-webkit-border-radius:50rpx;
+		        border-radius:50rpx;
 		line-height: 100rpx;
 		text-align: center;
 		margin-left: auto;
@@ -89,6 +91,7 @@
 }
 .dlbutton-hover {
 		background:-webkit-gradient(linear,right top, left top,from(rgba(63,205,235,0.9)),to(rgba(188,226,158,0.9)));
+		background:-webkit-linear-gradient(right,rgba(63,205,235,0.9),rgba(188,226,158,0.9));
 		background:-o-linear-gradient(right,rgba(63,205,235,0.9),rgba(188,226,158,0.9));
 		background:linear-gradient(-90deg,rgba(63,205,235,0.9),rgba(188,226,158,0.9));
 }
@@ -100,7 +103,8 @@
 		text-align: center;
 		height:58rpx;
 		border:1rpx solid rgba(255,131,30,1);
-		border-radius: 50rpx;
+		-webkit-border-radius: 50rpx;
+		        border-radius: 50rpx;
 }
 .yzms {
 		color: #999999 !important;

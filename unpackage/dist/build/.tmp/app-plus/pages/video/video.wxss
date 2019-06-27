@@ -1,18 +1,18 @@
 
-.video_box.data-v-be9dc146{
+.video_box.data-v-eee31e66{
 	padding: 30rpx 20rpx;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 }
-#myVideo.data-v-be9dc146{
+#myVideo.data-v-eee31e66{
 	display: block;
-	position: fixed;
+	/* position: fixed;
 	left: 0;
-	top: 0;
+	top: 0; */
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 }
-.video_title.data-v-be9dc146{
+.video_title.data-v-eee31e66{
 	font-size: 28rpx;
 	margin-top: 10rpx;
 }

@@ -1,11 +1,6 @@
 {
   "navigationStyle": "custom",
   "navigationBarTitleText": "",
-  "pullToRefresh": {
-    "support": true,
-    "color": "#00001f",
-    "style": "circle"
-  },
   "titleNView": false,
   "softinputNavBar": "none",
   "usingComponents": {

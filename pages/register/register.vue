@@ -19,6 +19,10 @@
 				<input class="biaoti" v-model="password" type="text" maxlength="32" placeholder="登录密码" :password="!showPassword" />
 				<image class="img" :src="showPassword?'/static/shilu-login/op.png':'/static/shilu-login/cl.png'" @tap="display"></image>
 			</view>
+			<view class="list-call">
+				<image class="img" src="/static/4.png"></image>
+				<input class="biaoti" v-model="invitation" type="number" placeholder="邀请码" />
+			</view>
 			<!-- <view class="list-call">
 				<image class="img" src="/static/shilu-login/4.png"></image>
 				<input class="biaoti" v-model="invitation" type="text" maxlength="12" placeholder="邀请码" />
@@ -123,10 +127,38 @@
 // 				    });
 // 				    return;
 // 				}
+				if (that.phoneno == "") {
+				    uni.showToast({
+				        icon: 'none',
+				        title: '手机号不能为空'
+				    });
+				    return;
+				} 
 				if (that.phoneno.length !=11) {
 				    uni.showToast({
 				        icon: 'none',
 				        title: '手机号不正确'
+				    });
+				    return;
+				} 
+				if (that.invitation == "") {
+				    uni.showToast({
+				        icon: 'none',
+				        title: '邀请码不能为空'
+				    });
+				    return;
+				} 
+				if (that.password == "") {
+				    uni.showToast({
+				        icon: 'none',
+				        title: '请输入密码'
+				    });
+				    return;
+				} 
+				if (that.code == "") {
+				    uni.showToast({
+				        icon: 'none',
+				        title: '请输入验证码'
 				    });
 				    return;
 				} 
@@ -137,7 +169,7 @@
 						contact_way:that.phoneno,
 						password:that.password,
 						code:that.code,
-// 						invitation:this.invitation
+						referrer:that.invitation
 					},
 					method: 'POST',
 					dataType:'json',

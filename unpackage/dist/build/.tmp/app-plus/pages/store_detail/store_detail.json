@@ -10,6 +10,7 @@
     "type": "transparent"
   },
   "usingComponents": {
+    "u-parse": "/components/u-parse/u-parse",
     "common-swiper": "/components/common-swiper"
   }
 }

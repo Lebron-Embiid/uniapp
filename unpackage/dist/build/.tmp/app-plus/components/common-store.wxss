@@ -24,7 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.common_store.data-v-3d61ce0c {
+.common_store.data-v-56d130bc {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -42,23 +42,23 @@
           flex-wrap: wrap;
   padding-bottom: 30rpx;
 }
-.common_store .store_item.data-v-3d61ce0c {
+.common_store .store_item.data-v-56d130bc {
     width: 50%;
     padding: 10rpx 40rpx 30rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     border-bottom: 1rpx solid #e5e5e5;
 }
-.common_store .store_item.data-v-3d61ce0c:nth-of-type(2n-1) {
+.common_store .store_item.data-v-56d130bc:nth-of-type(2n-1) {
       border-right: 1rpx solid #e5e5e5;
 }
-.common_store .store_item image.data-v-3d61ce0c {
+.common_store .store_item image.data-v-56d130bc {
       display: block;
       width: 250rpx;
       height: 230rpx !important;
       margin: 10rpx auto 30rpx;
 }
-.common_store .store_item .si_title.data-v-3d61ce0c {
+.common_store .store_item .si_title.data-v-56d130bc {
       color: #160c11;
       font-size: 22rpx;
       overflow: hidden;
@@ -66,7 +66,7 @@
          text-overflow: ellipsis;
       white-space: nowrap;
 }
-.common_store .store_item .si_info.data-v-3d61ce0c {
+.common_store .store_item .si_info.data-v-56d130bc {
       color: #7d7d7d;
       font-size: 20rpx;
       overflow: hidden;
@@ -75,11 +75,11 @@
       white-space: nowrap;
       margin: 5rpx 0 10rpx;
 }
-.common_store .store_item .si_price.data-v-3d61ce0c {
+.common_store .store_item .si_price.data-v-56d130bc {
       color: #00001f;
       font-size: 24rpx;
 }
-.common_store .store_item .si_price text.data-v-3d61ce0c {
+.common_store .store_item .si_price text.data-v-56d130bc {
         float: right;
         color: #4d4d4d;
         font-size: 18rpx;

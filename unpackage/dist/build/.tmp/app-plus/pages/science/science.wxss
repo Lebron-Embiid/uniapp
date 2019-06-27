@@ -94,7 +94,8 @@ page.data-v-3ee69ecf {
     color: #fff;
     font-size: 26rpx;
     background: #000;
-    border-radius: 5rpx;
+    -webkit-border-radius: 5rpx;
+            border-radius: 5rpx;
     text-align: center;
     padding: 14rpx 0 16rpx;
 }

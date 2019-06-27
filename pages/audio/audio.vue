@@ -9,7 +9,7 @@
 				</view>
 				<view class="ai_title">{{title}}</view>
 				<view class="ai_info">听众：{{look}}</view>
-				<imt-audio :control="control" :autoplay="auto" :src="src" :duration="duration" @click="changeRotate"></imt-audio>
+				<imt-audio ref="audios" :control="control" :autoplay="auto" :isPause="ispause" :src="src" :duration="duration"></imt-audio>
 			</view>
 			<view class="audio_title">
 				<block v-if="content!=''">
@@ -24,10 +24,12 @@
 <script>
 import imtAudio from "@/components/imt-audio/imt-audio.vue"
 import uParse from '@/components/u-parse/u-parse.vue'
+import audio from '@/common/util.js'
 const innerAudioContext = uni.createInnerAudioContext();
 export default{
 	data(){
 		return{
+			id: "",
 			isRotate: true,
 			title: "",
 			look: "",
@@ -37,7 +39,8 @@ export default{
 			pic_url: "",
 			control: false,
 			auto: true,
-			content: ""
+			content: "",
+			ispause: true
 		}
 	},
 	components: {
@@ -57,10 +60,14 @@ export default{
 	},
 	onLoad(opt) {
 		var that = this;
+		that.id = opt.id;
+	},
+	onShow() {
+		var that = this;
 		that.$access_token = uni.getStorageSync("access_token");
 		that.$level = uni.getStorageSync("level");
 		uni.request({
-			url: that.$api+'default/video-detail&access_token='+that.$access_token+'&id='+opt.id,
+			url: that.$api+'default/video-detail&access_token='+that.$access_token+'&id='+that.id,
 			method: 'GET',
 			dataType: "json",
 			header: {
@@ -86,10 +93,9 @@ export default{
 			}
 		});
 	},
-	destroyed(){
-		console.log(123);
-		this.src = "";
-		this.duration = 0
+	onBackPress() {
+		// audio.pause();
+		this.$refs.audios.next();
 	}
 }
 </script>

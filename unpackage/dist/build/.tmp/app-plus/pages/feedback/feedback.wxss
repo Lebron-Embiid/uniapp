@@ -55,7 +55,8 @@ page.data-v-25507f2b {
   color: #fff;
   font-size: 24rpx;
   background: #00001f;
-  border-radius: 5rpx;
+  -webkit-border-radius: 5rpx;
+          border-radius: 5rpx;
   padding: 6rpx 0 8rpx;
   margin-top: 70rpx;
 }

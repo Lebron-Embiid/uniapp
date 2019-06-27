@@ -15,7 +15,6 @@
 </template>
 
 <script>
-	const audio = uni.createInnerAudioContext(); //创建音频
 	export default {
 		data() {
 			return {
@@ -29,6 +28,7 @@
 		},
 		props: {
 			src: String, //音频链接
+			isPause: Boolean,
 			autoplay: Boolean, //是否自动播放
 			duration: Number, //总时长（单位：s）
 			control: {
@@ -45,10 +45,13 @@
 			//返回prev事件
 			prev() {
 				this.$emit('prev')
+				
 			},
 			//返回next事件
 			next() {
 				this.$emit('next')
+				getApp().globalData.audio.pause()
+				this.paused = false
 			},
 			//格式化时长
 			format(num) {
@@ -58,53 +61,54 @@
 			//播放/暂停操作
 			operation() {
 				if (this.paused) {
-					audio.play()
+					getApp().globalData.audio.play()
 					this.paused = true
 					this.loading = true
 				} else {
-					audio.pause()
+					getApp().globalData.audio.pause()
 					this.paused = false
 				}
 			},
 			//完成拖动事件
 			change(e) {
-				audio.seek(e.detail.value)
+				getApp().globalData.audio.seek(e.detail.value)
 				this.currentTime = this.format(e.detail.value)
 				this.paused = false
-				audio.play()
+				getApp().globalData.audio.play()
 			}
 		},
 		onUnload(){
-			audio.pause();
+			getApp().globalData.audio.pause();
 			this.paused = true;
 			this.current = 0;
 		},
 		onHide(){
-			audio.pause();
+			getApp().globalData.audio.pause();
 			this.paused = true;
 		},
 		created() {
-			audio.src = this.src
+			getApp().globalData.audio.src = this.src
 			this.current = 0
 			this.durationTime = this.format(this.duration)
-			audio.autoplay = this.autoplay
+			getApp().globalData.audio.autoplay = this.autoplay
+			this.paused = this.isPause;
 			//音频进度更新事件
-			audio.onTimeUpdate(() => {
+			getApp().globalData.audio.onTimeUpdate(() => {
 				// if (!this.seek) {
-					this.current = audio.currentTime
+					this.current = getApp().globalData.audio.currentTime
 				// }
 			})
 			//音频播放事件
-			audio.onPlay(() => {
+			getApp().globalData.audio.onPlay(() => {
 				this.paused = false
 				this.loading = false
 			})
 			//音频暂停事件
-			audio.onPause(() => {
+			getApp().globalData.audio.onPause(() => {
 				this.paused = true
 			})
 			//音频结束事件
-			audio.onEnded(() => {
+			getApp().globalData.audio.onEnded(() => {
 				if (this.continue) {
 					this.next()
 				} else {
@@ -116,7 +120,7 @@
 				}
 			})
 			//音频完成更改进度事件
-			audio.onSeeked(() => {
+			getApp().globalData.audio.onSeeked(() => {
 				this.seek = false
 				// this.current = audio.currentTime
 			})
@@ -124,9 +128,9 @@
 		watch: {
 			//监听音频地址更改
 			src(e) {
-				audio.src = e
+				getApp().globalData.audio.src = e
 				this.current = 0
-				audio.play()
+				getApp().globalData.audio.play()
 				this.loading = true
 			},
 			//监听总时长改变
@@ -137,7 +141,8 @@
 			current(e) {
 				this.currentTime = this.format(e)
 			}
-		}
+		},
+		
 	}
 </script>
 

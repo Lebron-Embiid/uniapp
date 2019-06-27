@@ -2,7 +2,7 @@
     "name" : "呦蓝",
     "appid" : "__UNI__com.youlan.youlanapp",
     "description" : "呦蓝手机客户端是一款集线上商城、线上培训、素材分享、企业资讯等服务功能于一体的App",
-    "versionName" : "1.0.0",
+    "versionName" : "1.0.5",
     "versionCode" : 100,
     "transformPx" : false,
     "app-plus" : {
@@ -62,7 +62,8 @@
                 "payment" : {
                     "weixin" : {
                         "appid" : "wxd53ecc0e9b1a9938"
-                    }
+                    },
+                    "alipay" : {}
                 },
                 "share" : {
                     "weixin" : {
@@ -122,7 +123,7 @@
     },
     "h5" : {
         "router" : {
-            "base" : "/youlan/"
+            "base" : "/web/news/"
         }
     }
 }

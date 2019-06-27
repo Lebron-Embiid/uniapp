@@ -4,11 +4,22 @@
 		<view class="photo_head">
 			<image :src="avatar" class="avatar_img" mode="widthFix"></image>
 			<text class="ph_name">{{name}}</text>
+			<text class="ph_txt">{{time}}</text>
+			<text class="ph_txt">浏览人数：{{num}}</text>
+			<block v-if="sign == 1">
+				<text class="ph_sign">精选</text>
+			</block>
+			<!-- <text class="ph_download">前往下载&gt;</text> -->
+			<!-- <image src="../../static/share.png" class="share_img" mode="widthFix"></image> -->
+		</view>
+		<!-- <view class="photo_head">
+			<image :src="avatar" class="avatar_img" mode="widthFix"></image>
+			<text class="ph_name">{{name}}</text>
 			<block v-if="sign == 1">
 				<text class="ph_sign">精选</text>
 			</block>
 			<text class="ph_txt">{{time}}</text>
-		</view>
+		</view> -->
 		<view class="md_title">{{title}}</view>
 		<view class="photo_content">
 			<view class="pc_item" @click="downloadMater(idx)" v-for="(mater,idx) in maters" :key="idx">
@@ -18,7 +29,7 @@
 		</view>
 		<view class="photo_bottom">
 			<view class="pb_share" @click="toShare"><image src="../../static/share.png" mode="widthFix"></image>一键转发</view>
-			<view class="pb_num">浏览：{{num}}</view>
+			<!-- <view class="pb_num">浏览：{{num}}</view> -->
 		</view>
 	</view>
 </template>
@@ -274,25 +285,64 @@
 		box-sizing: border-box;
 		overflow: hidden;
 	}
+	// .photo_head{
+	// 	overflow: hidden;
+	// 	color: #00001f;
+	// 	font-size: 22upx;
+	// 	margin-bottom: 20upx;
+	// 	.avatar_img{
+	// 		display: inline-block;
+	// 		vertical-align: middle;
+	// 		width: 48upx;
+	// 		height: 48upx !important;
+	// 		border-radius: 50%;
+	// 		margin: 0 10upx 6upx 0;
+	// 	}
+	// 	.ph_name{
+	// 		display: inline-block;
+	// 		vertical-align: middle;
+	// 		margin: 0 10upx 8upx 0;
+	// 		width: 130upx;
+	// 		max-width: 130upx;
+	// 		font-size: 24upx;
+	// 		overflow: hidden;
+	// 		text-overflow: ellipsis;
+	// 		white-space: nowrap;
+	// 	}
+	// 	.ph_txt{
+	// 		color: #6d6d6d;
+	// 		font-size: 20upx;
+	// 		float: right;
+	// 		margin-top: 8upx;
+	// 	}
+	// 	.ph_sign{
+	// 		color: #fff;
+	// 		font-size: 22upx;
+	// 		background: #f00;
+	// 		border-radius: 5upx;
+	// 		padding: 5upx 10upx 6upx;
+	// 	}
+	// }
 	.photo_head{
 		overflow: hidden;
 		color: #00001f;
-		font-size: 22upx;
-		margin-bottom: 20upx;
+		font-size: 26upx;
+		margin-bottom: 15upx;
 		.avatar_img{
 			display: inline-block;
 			vertical-align: middle;
-			width: 41upx;
-			height: 41upx !important;
+			width: 48upx;
+			height: 48upx !important;
 			border-radius: 50%;
 			margin: 0 10upx 6upx 0;
 		}
 		.ph_name{
 			display: inline-block;
 			vertical-align: middle;
-			margin: 0 10upx 8upx 0;
-			width: 130upx;
+			margin: 0 10upx 6upx 0;
+			width: 100upx;
 			max-width: 130upx;
+			font-size: 26upx;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -300,8 +350,7 @@
 		.ph_txt{
 			color: #6d6d6d;
 			font-size: 20upx;
-			float: right;
-			margin-top: 8upx;
+			margin-right: 40upx;
 		}
 		.ph_sign{
 			color: #fff;
@@ -309,6 +358,20 @@
 			background: #f00;
 			border-radius: 5upx;
 			padding: 5upx 10upx 6upx;
+		}
+		.ph_download{
+			color: #f00;
+			display: block;
+			float: right;
+			margin-top: 10upx;
+			font-size: 22upx;
+		}
+		.share_img{
+			display: block;
+			width: 30upx;
+			height: 32upx !important;
+			float: right;
+			margin-top: 8upx;
 		}
 	}
 	.photo_content{
@@ -342,7 +405,7 @@
 	}
 	.photo_bottom{
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-end;
 		align-items: center;
 		margin-top: 30upx;
 		.pb_share{
@@ -364,5 +427,6 @@
 	.md_title{
 		font-size: 28upx;
 		margin-bottom: 20upx;
+		-webkit-user-select: text;
 	}
 </style>

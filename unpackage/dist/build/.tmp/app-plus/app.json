@@ -6,6 +6,7 @@
     "pages/forget/forget",
     "pages/train/train",
     "pages/video/video",
+    "pages/video1/video1",
     "pages/audio/audio",
     "pages/mater/mater",
     "pages/mater_detail/mater_detail",
@@ -98,11 +99,12 @@
       }
     }
   },
+  "nvueCompiler": "weex",
   "splashscreen": {
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
   "appname": "呦蓝",
-  "compilerVersion": "1.9.9",
+  "compilerVersion": "2.0.1",
   "usingComponents": {}
 }

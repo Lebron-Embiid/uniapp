@@ -63,7 +63,8 @@ uni-picker .uni-picker-item {
   background: #fff;
   margin-top: 30rpx;
   position: relative;
-  border-radius: 5px;
+  -webkit-border-radius: 5px;
+          border-radius: 5px;
 }
 .form_box input {
     width: 80%;
@@ -120,7 +121,8 @@ uni-picker .uni-picker-item {
 .index_swiper .uni-swiper-dots .uni-swiper-dot {
     width: 29rpx;
     height: 5rpx;
-    border-radius: 20rpx;
+    -webkit-border-radius: 20rpx;
+            border-radius: 20rpx;
     background: rgba(255, 255, 255, 0.48);
 }
 .index_swiper .uni-swiper-dots .uni-swiper-dot-active {
@@ -128,7 +130,8 @@ uni-picker .uni-picker-item {
 }
 .video_item {
   margin-bottom: 30rpx;
-  border-radius: 10rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   -webkit-box-shadow: 0 0 20rpx #D6D6DB;
           box-shadow: 0 0 20rpx #D6D6DB;
 }
@@ -175,7 +178,8 @@ uni-picker .uni-picker-item {
         display: block;
         width: 75rpx;
         height: 75rpx !important;
-        border-radius: 50%;
+        -webkit-border-radius: 50%;
+                border-radius: 50%;
 }
 .video_item .v_info .v_title {
       color: #00001f;
@@ -216,7 +220,8 @@ uni-audio {
     padding: 50rpx 30rpx 40rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    border-radius: 10rpx;
+    -webkit-border-radius: 10rpx;
+            border-radius: 10rpx;
 }
 .audio_list .audio_item .audio_img {
       position: relative;
@@ -233,7 +238,8 @@ uni-audio {
         position: absolute;
         width: 89rpx;
         height: 89rpx !important;
-        border-radius: 50%;
+        -webkit-border-radius: 50%;
+                border-radius: 50%;
         left: 50%;
         top: 50%;
         -webkit-transform: translate(-50%, -50%);
@@ -307,10 +313,14 @@ uni-audio {
       width: 260rpx;
       height: 260rpx !important;
 }
-.wxParse image, .wxParse .img {
-  max-width: 100% !important;
+.wxParse {
+  -webkit-user-select: text;
 }
-.uni-video-fullscreen {
-  display: none !important;
+.wxParse image, .wxParse .img, .wxParse image > ._img {
+  display: block !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 1 !important;
 }
 

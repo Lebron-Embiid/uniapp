@@ -317,7 +317,9 @@
 					});
 					return false;
 				}
-				if(that.idcard_up == "" || that.idcard_up == "null"){
+				console.log(that.idcard_up)
+				console.log(that.idcard_down)
+				if(that.idcard_up == 0){
 					uni.showToast({
 						title:"请上传身份证正面照",
 						icon:'none',
@@ -325,7 +327,7 @@
 					});
 					return false;
 				}
-				if(that.idcard_down == "" || that.idcard_down == "null"){
+				if(that.idcard_down == 0){
 					uni.showToast({
 						title:"请上传身份证反面照",
 						icon:'none',
@@ -333,7 +335,7 @@
 					});
 					return false;
 				}
-				console.log(that.idcard_up,that.idcard_down)
+				 
 				  
 				uni.request({
 					url: that.$api+'user/setting-edit&access_token='+that.$access_token,
@@ -353,7 +355,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {						
-						var data = res.data.data 
+						var data = res.data.data;
 						if(res.data.code == 0){
 							uni.showToast({
 								title:res.data.msg,
@@ -413,7 +415,7 @@
 						that.bear_current = data.user_rear;
 						that.children = data.user_child;
 						that.idcard_up = data.user_just;
-						that.idcard_down = data.user_back;
+						that.idcard_down = data.user_back; 
 						that.user_real = data.user_real;
 						that.is_wx = data.is_wx;
 					}else{
