@@ -3,34 +3,33 @@
 		<view class="page_bg"></view>
 		<form @submit="formSubmit">
 			<view class="over_till">账户余额：<text>￥{{over_money}}</text></view>
-			<view class="section">
-				<view class="left_txt">姓名<text>*</text></view>
-				<input type="text" name="name" @input="setName" :value="name" />
+			<!-- <view class="section"> -->
+				<!-- <view class="left_txt">姓名<text>*</text></view> -->
+				<!-- <input type="text" name="name" @input="setName" :value="name" /> -->
 				<!-- <view class="txt">{{username}}</view> -->
-			</view>
-			<view class="section">
-				<view class="left_txt">帐号<text>*</text></view>
-				<input type="text" name="username" @input="setUserName" :value="username" />
+			<!-- </view> -->
+			<!-- <view class="section"> -->
+				<!-- <view class="left_txt">帐号<text>*</text></view> -->
+				<!-- <input type="text" name="username" @input="setUserName" :value="username" /> -->
 				<!-- <view class="txt">{{username}}</view> -->
-			</view>
+			<!-- </view> -->
 			<view class="section">
 				<view class="left_txt">提现金额<text>*</text></view>
 				<input type="number" name="money" @input="setMoney" :value="money" />
 			</view>
-			<view class="section">
+			<view class="section" style="justify-content: space-between;">
 				<view class="left_txt">提现方式</view>
 				<view class="txt">
-					<view class="pic_box">
-					<!-- <picker class="pic_box" @change="bindPickerChange" :value="index" :range="array"> -->
+					<!-- <view class="pic_box"> -->
+					<picker class="pic_box" @change="bindPickerChange" :value="index" :range="array">
                         <view class="uni-input">{{array[index]}}</view>
-						<!-- <image src="../../static/next.png" mode="widthFix"></image> -->
-						
-					</view>
-                    <!-- </picker> -->
+						<image src="../../static/next.png" mode="widthFix"></image>
+                    </picker>
+					<!-- </view> -->
 				</view>
 			</view>
 			<view class="section section_img">
-				<view class="left_txt">二维码</view>
+				<view class="left_txt">收款二维码</view>
 				<view class="img" @click="selectCode"><image :src="code_img" mode=""></image></view>
 			</view>
 			<view class="btn-area">
@@ -98,21 +97,21 @@
 			formSubmit: function(e){
 				console.log(this.money);
 				var that = this;
-				if(that.name == ''){
-					uni.showToast({
-						title:"姓名不为空",
-						icon:'none', 
-					});
-					return false;
-				} 
-				console.log(that.username)
-				if(that.username == ''){
-					uni.showToast({
-						title:"账号不为空",
-						icon:'none', 
-					});
-					return false;
-				}
+				// if(that.name == ''){
+				// 	uni.showToast({
+				// 		title:"姓名不为空",
+				// 		icon:'none', 
+				// 	});
+				// 	return false;
+				// } 
+				// console.log(that.username)
+				// if(that.username == ''){
+				// 	uni.showToast({
+				// 		title:"账号不为空",
+				// 		icon:'none', 
+				// 	});
+				// 	return false;
+				// }
 				if(that.money == ''){
 					uni.showToast({
 						title:"提现金额不为空",
@@ -204,8 +203,9 @@
 			.left_txt{
 				color: #00001f;
 				font-size: 24upx;
-				width: 120upx;
-				margin-right: 30upx;
+				// width: 140upx;
+				width: 23%;
+				// margin-right: 30upx;
 				border-right: 1upx solid #eee;
 				text{
 					color: #f00;
@@ -214,7 +214,9 @@
 			.txt{
 				color: #333;
 				font-size: 20upx;
-				width: 80%;
+				width: 75%;
+				padding-left: 30upx;
+				box-sizing: border-box;
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
@@ -235,6 +237,7 @@
 				width: 180upx;
 				height: 180upx;
 				border: 1px solid #eee;
+				margin-left: 30upx;
 				position: relative;
 				&:after{
 					content: "+";

@@ -61,8 +61,8 @@
 						<view class="auth_item">
 							<view class="ai_image" @click="selectCardDown">
 								<image src="../../static/id_card_img1.jpg" class="bg_img" mode="widthFix"></image>
-								<div class="card_img bs" :style="'background: url('+idcard_down+');'"></div>
-								<!-- <image :src="idcard_down" class="card_img" mode="widthFix"></image> -->
+								<!-- <div class="card_img bs" :style="'background: url('+idcard_down+');'"></div> -->
+								<image :src="idcard_down" class="card_img" mode="widthFix"></image>
 							</view>
 							<text>身份证反面</text>
 						</view>
@@ -243,7 +243,9 @@
 										icon:'none',
 									});
 								}  
-							}
+							},
+							
+							
 						});
 					}
 				});				

@@ -7,8 +7,8 @@
 		<view class="mt44"></view>
 		<!-- 我下载的素材 -->
 		<view class="my_mater my_down_mater" v-show="currentTab == 1">
-			<view class="my_item" v-for="(item,index) in downList" :key="index">
-				<image :src="item.url" mode="widthFix"></image> 				 
+			<view class="my_item" v-for="(item,index) in downList" @tap="toPreview(index)" :key="index">
+				<image :src="item.url" mode="aspectFill"></image> 				 
 			</view>
 		</view>
 	</view>
@@ -69,6 +69,17 @@
 				uni.navigateTo({
 					url: "/pages/mater_detail/mater_detail?id="+e
 				})
+			},
+			toPreview(cur){
+				var that = this;
+				var dow_imgs = [];
+				for(let i in that.downList){
+					dow_imgs.push(that.downList[i].url);
+				}
+				uni.previewImage({
+					current: dow_imgs[cur],
+					urls: dow_imgs
+				});
 			}
 		},
 		onLoad(opt) {

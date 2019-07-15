@@ -41,7 +41,7 @@
 				navbar: [
 					// { name: '艾璐卡' },{ name: '纽西之谜'},{ name: '特价商品'}
 				],
-				currentTab:1,
+				currentTab:3,
                 cat:[],
 				storeList:[
 // 					{
@@ -87,6 +87,12 @@
 			navbarTap: function(e){
 				var that = this;
 				that.currentTab = e; 
+				that.page_count1 = 1;
+				that.page_count2 = 1;
+				that.page_count3 = 1;
+				that.page1 = 1;
+				that.page2 = 1;
+				that.page3 = 1;
 				uni.startPullDownRefresh(); 
 					uni.request({
 						url: that.$api+'default/goods-list&cat_id='+e+'&access_token='+that.$access_token,
@@ -299,7 +305,10 @@
 				that.page3 = parseInt(that.page3)+parseInt(1)
 				var page = that.page3; 
 			} 
-						 
+			
+			uni.showLoading({
+				title: '加载中'
+			});
 			uni.request({
 				url: that.$api+'default/goods-list&cat_id='+that.currentTab+'&access_token='+that.$access_token,
 				method: 'GET',
@@ -319,7 +328,8 @@
 						})
 					}
 					that.storeList = that.storeList.concat(storeList) 
-					console.log(that.storeList)
+					uni.hideLoading();
+					console.log(that.storeList);
 				},
 				fail: () => {
 					uni.showToast({
@@ -374,7 +384,9 @@
 				border-bottom: 1upx solid transparent;
 				display: inline-block;
 				margin-left: 20upx;
+				display: none;
 				&.active{
+					display: inline-block;
 					color: #000027;
 					border-bottom: 1upx solid #000;
 				}

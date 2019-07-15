@@ -146,17 +146,20 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					that.id = res.data.data.mode.id;
-					that.title = res.data.data.mode.title;
-					that.look = res.data.data.mode.num;
-					that.date = res.data.data.mode.addtime;
-					that.content = res.data.data.mode.content;
-					that.last = res.data.data.last;
-					that.next = res.data.data.next;
-					that.cover_pic = res.data.data.cover_pic;
-					that.describe = res.data.data.describe;
+					var data = res.data.data;
+					console.log(data)
+					that.id = data.mode.id;
+					that.title = data.mode.title;
+					that.look = data.mode.num;
+					that.date = data.mode.addtime;
+					that.content = data.mode.content;
+					that.last = data.last;
+					that.next = data.next;
+					that.cover_pic = data.mode.cover_pic;
+					that.describe = data.mode.describe;
 					console.log(that.last)
 					console.log(that.next)
+			console.log(that.cover_pic)
 				},
 				fail: () => {
 					uni.showToast({

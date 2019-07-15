@@ -1,7 +1,7 @@
 <template>
 	<view class="common_store">
 		<view class="store_item" v-for="(item,index) in storeList" @click="toStoreDetail(item)" :key="index">
-			<image :src="item.src" mode="widthFix"></image>
+			<image :src="item.src" mode="aspectFit"></image>
 			<view class="si_title">{{item.title}}</view>
 			<view class="si_info">{{item.info}}</view>
 			<view class="si_price">￥{{item.price}}<text>规格：{{item.type}}</text></view>

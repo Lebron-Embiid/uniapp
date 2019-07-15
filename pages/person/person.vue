@@ -161,13 +161,13 @@
 					uni.setStorageSync('level',level);
 					that.$level = uni.getStorageSync("level");
 					console.log(that.$level)
-				},
-				fail: () => {
-					uni.showToast({
-						title:res.data.msg,
-						icon:'none',
-					});
 				}
+				// fail: (res) => {
+				// 	uni.showToast({
+				// 		title:res.data.msg,
+				// 		icon:'none',
+				// 	});
+				// }
 			});
 			uni.startPullDownRefresh(); 
 		},
@@ -197,13 +197,13 @@
 						uni.setStorageSync('level',level);
 						that.$level = uni.getStorageSync("level");
 						console.log(that.$level)
-					},
-					fail: () => {
-						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						});
 					}
+					// fail: (res) => {
+					// 	uni.showToast({
+					// 		title:res.data.msg,
+					// 		icon:'none',
+					// 	});
+					// }
 				});
 				uni.stopPullDownRefresh();
 			}, 1000);

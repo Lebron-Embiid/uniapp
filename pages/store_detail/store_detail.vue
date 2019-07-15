@@ -11,7 +11,7 @@
 		<view class="detail_info borbom">
 			<view class="di_title">{{title}}</view>
 			<!-- <view class="di_info">{{info}}</view> -->
-			<view class="di_price">￥{{max_price}}
+			<view class="di_price">￥{{max_price}} <text class="line">￥{{original_price}}</text>
 				<block v-if="gauge != '' || gauge != 0">
 					<text>规格：{{gauge}}{{unit}}</text>
 				</block>
@@ -80,9 +80,9 @@
 		<view class="fixed_shadow" @click="hideFixed" v-show="!fixed_show"></view>
 		<view class="fixed_layer" :animation="animationData" v-show="!fixed_show">
 			<view class="fixed_top">
-				<view class="ft_img"><image :src="buy_img" mode="widthFix"></image></view>
+				<view class="ft_img" @tap="toBigImg"><image :src="buy_img" mode="widthFix"></image></view>
 				<view class="ft_info">
-					<view class="fi_price">￥{{max_price}}</view>
+					<view class="fi_price">￥{{price}}</view>
 					<view class="fi_save">库存{{buy_save}}</view>
 					<view class="fi_close" @click="hideFixed"><image src="../../static/close.png" mode="widthFix"></image></view>
 				</view>
@@ -130,6 +130,7 @@
 				info: "深层清洁皮肤，长效保湿滋润",
 				price: "",
 				max_price:'',
+				original_price: '',
 				gauge: "",
 				unit: "",
 				content: "",
@@ -176,6 +177,15 @@
 			commonSwiper
 		},
 		methods:{
+			toBigImg(){
+				var that = this;
+				var buyImg = [];
+				buyImg.push(that.buy_img);
+				uni.previewImage({
+					urls: buyImg,
+					current: 0
+				});
+			},
 			navbarTap: function(e){
 				var that = this;
 				that.currentTab = e;
@@ -263,7 +273,7 @@
 							})
 						}else{
 							uni.showToast({
-								title: "添加失败",
+								title: res.data.msg,
 								icon: "none"
 							})
 						}
@@ -315,14 +325,14 @@
 // 								icon: "success",
 // 								duration:1000
 // 							}) 
-							setTimeout(function(){
+							// setTimeout(function(){
 								uni.navigateTo({ 
 									url: "/pages/account/account?data="+JSON.stringify(res.data.data)+"&cat_list="+JSON.stringify(that.attr_id)
 								})
-							},1000)
+							// },1000)
 						}else{
 							uni.showToast({
-								title:"立即购买失败",
+								title:res.data.msg,
 								icon:'none',
 							});
 						}
@@ -336,7 +346,7 @@
 				});
 			},
 			selectFormat: function(id,sid,index,idx){
-				var that = this;
+				var that = this;				
 				let arr_id = [];
 				that.attr[index] = {
 					attr_group_id: that.buy_format[index].id,
@@ -368,6 +378,7 @@
 						// if(res.data.code == 1){
 							var data = res.data.data;
 							that.buy_save = data.num;
+							that.price = data.goods_price;
 							that.max_price = data.goods_price;
 							if(data.pic != ''){
 								that.buy_img = data.pic
@@ -410,6 +421,9 @@
 			}
 		},
 		onLoad(opt) {
+			uni.showLoading({
+				title: '加载中'
+			});
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
@@ -440,17 +454,22 @@
 							list: item.attr_group_list[i].attr_list,
 							current: [-1,-1]
 						});
+						// if(formatList[i].length == 1 || formatList[i].list.length == 1){
+						// 	formatList[i].current = [0,0];
+						// }
 					}
 					that.swiperList = swiperList;
 					that.title = item.name;
 					that.price = item.price;
 					that.max_price = item.max_price;//显示价格
+					that.original_price = item.original_price;
 					that.buy_save = item.num;
 					that.buy_format = formatList;
 					that.buy_img = that.swiperList[0];
 					that.content = item.detail;
 					that.gauge = item.gauge;
-					that.unit = item.unit
+					that.unit = item.unit;
+					uni.hideLoading();
   				},
 				fail: err => {
 					uni.showToast({
@@ -588,7 +607,10 @@
 			text{
 				color: #a1a1a1;
 				font-size: 22upx;
-				margin-left: 70upx;
+				margin-left: 50upx;
+				&.line{
+					text-decoration: line-through;
+				}
 			}
 		}
 	}

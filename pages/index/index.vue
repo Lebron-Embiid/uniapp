@@ -32,7 +32,7 @@
             <view class="scroll_box">
                 <scroll-view class="scroll-view_H" scroll-x="true">
                     <view :id="item.ref" class="scroll-view-item_H" v-for="(item,index) in hot_products" @click="toProductDetail(item.id,item.cat_id)" :key="index">
-						<div class="p_img"><image :src="item.src" mode="widthFix"></image></div>
+						<div class="p_img"><image :src="item.src" mode="aspectFit"></image></div>
 						<view class="product_content">
 							<view class="product_title">{{item.title}}</view>
 							<view class="product_price">￥{{item.price}}<text>规格：{{item.format}}</text></view>
@@ -205,6 +205,9 @@
 		},
 		onLoad() {
 			var that = this;
+			// uni.showLoading({
+			// 	title: '加载中'
+			// });
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level"); 
 			// setTimeout(function () {	
@@ -255,72 +258,73 @@
 					that.mater_products = mater_products;
 					that.hot_products = hot_products;
 					that.swiperList = swiperList;
-				},
-				fail: () => {
-					uni.showToast({title:res.data.msg,icon:'none'});
+					// uni.hideLoading();
 				}
+				// fail: () => {
+				// 	uni.showToast({title:res.data.msg,icon:'none'});
+				// }
 			})
 			// }, 1000);
-			// uni.startPullDownRefresh(); 
+			uni.startPullDownRefresh(); 
 		},
-		// onPullDownRefresh() {
-		// 	var that = this;
-		// 	setTimeout(function () {
-		// 		uni.request({
-		// 			url: that.$api+'default/index',
-		// 			method: 'GET',
-		// 			dataType: "json",
-		// 			header: {
-		// 				'content-type': 'application/x-www-form-urlencoded'
-		// 			},
-		// 			success: res => {
-		// 				var article = [];
-		// 				var mater_products = [];
-		// 				var hot_products = [];
-		// 				var swiperList = [];
-		// 				var item = res.data.data;
-		// 				for(let i in item.article){
-		// 					article.push({
-		// 						id: item.article[i].id,
-		// 						title: item.article[i].title,
-		// 						info: item.article[i].describe,
-		// 						look: item.article[i].num,
-		// 						date: date.formatDate(parseInt(item.article[i].addtime)),
-		// 						src: item.article[i].cover_pic
-		// 					})
-		// 				}
-		// 				for(let i in item.list){
-		// 					mater_products.push({
-		// 						id: item.list[i].id,
-		// 						src: item.list[i].cover_pic
-		// 					})
-		// 				}
-		// 				for(let i in item.goods){
-		// 					hot_products.push({
-		// 						id: item.goods[i].id,
-		// 						src: item.goods[i].cover_pic,
-		// 						cat_id: item.goods[i].cat_id,
-		// 						title: item.goods[i].name,
-		// 						// info: "清洁皮肤，长效保湿滋润",
-		// 						price: item.goods[i].price,
-		// 						format: item.goods[i].gauge, 
-		// 					})
-		// 				}
-		// 				for(let i in item.nav){
-		// 					swiperList.push(item.nav[i].pic_url)
-		// 				}
-		// 				that.news_list = article;
-		// 				that.mater_products = mater_products;
-		// 				that.hot_products = hot_products;
-		// 				that.swiperList = swiperList;
-		// 			},
-		// 			fail: () => {
-		// 				uni.showToast({title:res.data.msg,icon:'none'});
-		// 			}
-		// 		})
-		// 		uni.stopPullDownRefresh();
-		// 	}, 1000);
-		// }
+		onPullDownRefresh() {
+			var that = this;
+			setTimeout(function () {
+				uni.request({
+					url: that.$api+'default/index',
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						var article = [];
+						var mater_products = [];
+						var hot_products = [];
+						var swiperList = [];
+						var item = res.data.data;
+						for(let i in item.article){
+							article.push({
+								id: item.article[i].id,
+								title: item.article[i].title,
+								info: item.article[i].describe,
+								look: item.article[i].num,
+								date: date.formatDate(parseInt(item.article[i].addtime)),
+								src: item.article[i].cover_pic
+							})
+						}
+						for(let i in item.list){
+							mater_products.push({
+								id: item.list[i].id,
+								src: item.list[i].cover_pic
+							})
+						}
+						for(let i in item.goods){
+							hot_products.push({
+								id: item.goods[i].id,
+								src: item.goods[i].cover_pic,
+								cat_id: item.goods[i].cat_id,
+								title: item.goods[i].name,
+								// info: "清洁皮肤，长效保湿滋润",
+								price: item.goods[i].price,
+								format: item.goods[i].gauge, 
+							})
+						}
+						for(let i in item.nav){
+							swiperList.push(item.nav[i].pic_url)
+						}
+						that.news_list = article;
+						that.mater_products = mater_products;
+						that.hot_products = hot_products;
+						that.swiperList = swiperList;
+					}
+					// fail: () => {
+					// 	uni.showToast({title:res.data.msg,icon:'none'});
+					// }
+				})
+				uni.stopPullDownRefresh();
+			}, 1000);
+		}
 	}
 </script>
 

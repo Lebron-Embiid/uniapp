@@ -76,7 +76,7 @@
 											provider: "weixin",
 											success: function(infoRes) {
 											 uni.request({
-												url: that.$api+'user/agent-information/&access_token='+access_token,
+												url: that.$api+'user/agent-information&access_token='+access_token,
 												dataType: "json",
 												method: 'POST',
 												data:{  
@@ -89,7 +89,7 @@
 												},
 												success: rely => {
 													var data = rely.data.data
-													if(rely.data.code == 0){
+													// if(rely.data.code == 0){
 														that.is_wx = 1;
 														uni.showToast({
 															title:rely.data.msg,
@@ -99,7 +99,6 @@
 														uni.setStorageSync('user_name',res.data.data.user_name);
 														uni.setStorageSync('access_token',res.data.data.access_token);
 														uni.setStorageSync('level',res.data.data.level);
-														uni.showToast({title:res.data.data.msg,icon:'none',duration:1500});
 														that.$access_token = uni.getStorageSync('access_token');
 														that.$level = uni.getStorageSync('level');
 														that.$user_name = uni.getStorageSync('user_name');
@@ -120,12 +119,12 @@
 															},1500)
 														}
 														
-													}else{
-														uni.showToast({
-															title:rely.data.msg,
-															icon:'none',
-														});
-													}  
+													// }else{
+													// 	uni.showToast({
+													// 		title:rely.data.msg,
+													// 		icon:'none',
+													// 	});
+													// }  
 												}, 
 											 });
 											}
@@ -133,7 +132,7 @@
 									},
 									fail:function(err){
 										uni.showToast({
-											title: '授权登录失败：' + err.errMsg,
+											title: '授权登录失败',
 											icon: 'none',
 											duration: 1500
 										})	

@@ -3,37 +3,37 @@
 	var wgtUrl = null;
 	
 	// 更新应用资源  
-		function installWgt(path){  
-			console.log(1111)
-			plus.nativeUI.showWaiting("安装wgt文件...");  
-			console.log(2222)
-			plus.runtime.install(path,{},function(){  
-			console.log(3333)
-				plus.nativeUI.closeWaiting();  
-				console.log("安装wgt文件成功！");  
-				plus.nativeUI.alert("应用资源更新完成！",function(){  
-					plus.runtime.restart();  
-				});  
-			},function(e){  
-				plus.nativeUI.closeWaiting();  
-				console.log("安装wgt文件失败["+e.code+"]："+e.message);  
-				plus.nativeUI.alert("安装wgt文件失败["+e.code+"]："+e.message);  
-			});  
-		}  
-	// 下载wgt文件   
-		function downWgt(){  
-			plus.nativeUI.showWaiting("下载wgt文件...");  
-			plus.downloader.createDownload( wgtUrl, {filename:"unpackage/debug/"}, function(d,status){  
-				if ( status == 200 ) {   
-					console.log("下载wgt成功："+d.filename);  
-					installWgt(d.filename); // 安装wgt包  
-				} else {  
-					console.log("下载wgt失败！");  
-					plus.nativeUI.alert("下载wgt失败！");  
-				}  
-				plus.nativeUI.closeWaiting();  
-			}).start();  
-		}  
+	// 	function installWgt(path){  
+	// 		console.log(1111)
+	// 		plus.nativeUI.showWaiting("安装wgt文件...");  
+	// 		console.log(2222)
+	// 		plus.runtime.install(path,{},function(){  
+	// 		console.log(3333)
+	// 			plus.nativeUI.closeWaiting();  
+	// 			console.log("安装wgt文件成功！");  
+	// 			plus.nativeUI.alert("应用资源更新完成！",function(){  
+	// 				plus.runtime.restart();  
+	// 			});  
+	// 		},function(e){  
+	// 			plus.nativeUI.closeWaiting();  
+	// 			console.log("安装wgt文件失败["+e.code+"]："+e.message);  
+	// 			plus.nativeUI.alert("安装wgt文件失败["+e.code+"]："+e.message);  
+	// 		});  
+	// 	}  
+	// // 下载wgt文件   
+	// 	function downWgt(){  
+	// 		plus.nativeUI.showWaiting("下载wgt文件...");  
+	// 		plus.downloader.createDownload( wgtUrl, {filename:"unpackage/debug/"}, function(d,status){  
+	// 			if ( status == 200 ) {   
+	// 				console.log("下载wgt成功："+d.filename);  
+	// 				installWgt(d.filename); // 安装wgt包  
+	// 			} else {  
+	// 				console.log("下载wgt失败！");  
+	// 				plus.nativeUI.alert("下载wgt失败！");  
+	// 			}  
+	// 			plus.nativeUI.closeWaiting();  
+	// 		}).start();  
+	// 	}  
 	export default {
 		globalData:{
 			pic_type: "",
@@ -42,62 +42,7 @@
 		},
 		onLaunch: function () {
 			this.$options.globalData.audio = uni.createInnerAudioContext();
-			//#ifdef APP-PLUS
-			console.log(plus.runtime.appid)
-			console.log(plus.runtime.version)
-			var server = "https://www.example.com/update"; //检查更新地址
-			//升级检测数据
-			var req = {
-				"appid": plus.runtime.appid,
-				"version": plus.runtime.version
-			};
-			uni.request({
-				url: server,
-				data: req,
-				success: (res) => {
-					if (res.statusCode == 200 && res.data.status === 1) {
-						 //提醒用户更新
-						uni.showModal({
-							title: "更新提示",
-							content: res.data.note,
-							success: (res) => {
-								if (res.confirm) {
-									plus.runtime.openURL(res.data.url);
-								}
-							}
-						})
-					}
-				}
-			})
-			//#endif
-			//#ifdef APP-PLUS
-			// console.log(plus.runtime.appid)
-			// console.log(plus.runtime.version)
-			// var server = "https://www.example.com/update"; //检查更新地址
-			// //升级检测数据
-			// var req = {
-			// 	"appid": plus.runtime.appid,
-			// 	"version": plus.runtime.version
-			// };
-			// uni.request({
-			// 	url: server,
-			// 	data: req,
-			// 	success: (res) => {
-			// 		if (res.statusCode == 200 && res.data.status === 1) {
-			// 			 //提醒用户更新
-			// 			uni.showModal({
-			// 				title: "更新提示",
-			// 				content: res.data.note,
-			// 				success: (res) => {
-			// 					if (res.confirm) {
-			// 						plus.runtime.openURL(res.data.url);
-			// 					}
-			// 				}
-			// 			})
-			// 		}
-			// 	}
-			// })
-			//#endif
+			
 			console.log('App Launch');
 			//app启动时打开启动广告页
 // 			var w = plus.webview.open(

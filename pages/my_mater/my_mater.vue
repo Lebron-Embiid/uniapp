@@ -1,14 +1,14 @@
 <template>
 	<view class="my_mater_box">
 		<view class="page_bg"></view>
-		<view class="list_nav" style="top:45px;">
+		<view class="list_nav">
 			<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==index ? 'active' : '']" @click="navbarTap(index)">{{item.name}}</view>
 		</view>
 		<view class="mt44"></view>
 		<!-- 我发布的素材 -->
 		<view class="my_mater" v-show="currentTab == 0">
-			<view class="my_item" v-for="(item,index) in myMaterList" :key="index">
-				<image :src="item.cover_pic" mode="widthFix"></image>
+			<view class="my_item" v-for="(item,index) in myMaterList" @tap="toPreview(index)" :key="index">
+				<image :src="item.cover_pic" mode="aspectFill"></image>
 				<view class="my_down">{{item.lower}}</view>
 			</view>
 		</view>
@@ -76,6 +76,17 @@
 				uni.navigateTo({
 					url: "/pages/mater_detail/mater_detail?id="+e
 				})
+			},
+			toPreview(cur){
+				var that = this;
+				var dow_imgs = [];
+				for(let i in that.downList){
+					dow_imgs.push(that.downList[i].url);
+				}
+				uni.previewImage({
+					current: dow_imgs[cur],
+					urls: dow_imgs
+				});
 			}
 		},
 		onLoad(opt) {
