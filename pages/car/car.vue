@@ -11,7 +11,7 @@
 		<view v-for="(item,index) in cart" :key="index" style="background-color: #FFFFFF;">
 			<!-- 按营销活动分组的商品 -->
 			<view>
-				<scroll-view style="width: 100%;white-space: nowrap;border-bottom: 1px solid #F6F6F6;" scroll-x= "true" :scroll-left='scrollposition' scroll-with-animation="true" v-if="item.id > -99">
+				<scroll-view style="width: 100%;white-space: nowrap;border-bottom: 1px solid #F6F6F6;" scroll-x= "true" :scroll-left='scrollposition' scroll-with-animation="true">
 					<view class="glance-shop-cart-scrollx-items" style="display: inline-block;width: 100%;">
 						<view class="glance-shop-cart-scrollx-items-item">
 							<!-- 勾选 -->
@@ -102,6 +102,7 @@
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
+			that.isselectedall = true
 			// 从缓存或服务端获取到购物车商品 这里示例数据如下：
 			// var objcart = [
 // 				{
@@ -136,11 +137,11 @@
 							// attributes:'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
 							quantity: item[i].num,
 							price: item[i].unitPrice,
-							attr_list:item[i].attr_list
+							attr_list:item[i].attr_list,
+							max_num: item[i].max_num
 						})
 					}
 					that.cart = carList;
-					
  					// 默认勾选购物车所有商品 合计金额 合计数量
 					for (let i = 0; i < that.cart.length; i++) {
 							// 总金额 
@@ -187,6 +188,7 @@
 		// 停止刷新
 		onPullDownRefresh() {
 			var that = this;
+			that.scrollhoming();
 			setTimeout(function () {
 				uni.request({
 					url: that.$api+'cart/list&access_token='+that.$access_token,
@@ -208,11 +210,24 @@
 								// attributes:'持久滋润·饱满显色·细腻亮泽·抚平唇纹',
 								quantity: item[i].num,
 								price: item[i].unitPrice,
-								attr_list:item[i].attr_list
+								attr_list:item[i].attr_list,
+								max_num: item[i].max_num
 							})
 						}
 						that.cart = carList;
-						
+						that.totalamount = 0;
+						for (let i = 0; i < that.cart.length; i++) {
+								// 总金额 
+								that.totalamount = that.totalamount + that.cart[i].price * that.cart[i].quantity
+								// 总数量
+								that.cntitems = that.cntitems + that.cart[i].quantity;
+								that.index.push(i)
+								that.goods_list.push({
+									cart_id:that.cart[i].id
+								})
+						}
+						that.totalamount = that.fmamount(that.totalamount) 
+						that.isselectedall = true
 						// 默认勾选购物车所有商品 合计金额 合计数量
 // 						for (let i = 0; i < that.cart.length; i++) {
 // 								// 总金额 
@@ -306,7 +321,7 @@
 							if (this.cart[i].id == id){
 								this.cart[i].id = - this.cart[i].id 
 								// 累计总金额和总数量 勾选时加
-								if (this.isselected(this.cart[i].id)){								
+								if (this.isselected(this.cart[i].id)){	
 									// this.index.push(idx)
 									// 更新总数量
 									this.cntitems = this.cntitems + this.cart[i].quantity
@@ -316,6 +331,7 @@
 									// 最后已勾选则 全选
 									if (this._isselectedall()){
 										this.isselectedall = true
+										this.cart[i].checked = false;
 									}
 								}else{	 
 // 									if(this.cart[idx] == this.cart[i]){		
@@ -328,6 +344,7 @@
 									this.totalamount = this.totalamount - this.cart[i].price * this.cart[i].quantity
 									this.totalamount = this.fmamount(this.totalamount)
 									this.isselectedall = false
+									this.cart[i].checked = true;
 								}
 								return false;
 							}
@@ -362,6 +379,7 @@
 											title:res.data.msg,
 											icon:'none',
 										});
+										uni.startPullDownRefresh();
 										for (let i = 0; i < that.cart.length; i++) {
 											if (that.cart[i].id == itemid){
 												// 勾选状态下更新数量和金额
@@ -427,6 +445,15 @@
 						// 这里需要进行超卖控制 商品可售卖的数量 这里面示例可售卖100
 						if ((this.cart[i].id == itemid) && (this.cart[i].quantity < 100)){
 							// 更新item数量
+							console.log(this.cart[i].quantity)
+							console.log(this.cart[i].max_num)
+							if(this.list[i].num >= this.cart[i].max_num){
+								uni.showToast({
+									title: "该商品库存不足",
+									icon:'none',
+								});
+								return false;
+							}
 							this.cart[i].quantity = this.cart[i].quantity +1
 							this.list[i].num = this.cart[i].quantity
 							this.list[i].num = this.cart[i].quantity
@@ -522,7 +549,7 @@
 			// 生成订单
 			createorder(){
 				var that = this;
-				// console.log(that.list)
+				console.log(that.totalamount)
 				// console.log(JSON.parse(that.list[1]))
 				// 合计金额大于0 创建订单
 				if (that.totalamount == 0){
@@ -541,14 +568,17 @@
 								s_index.push(i)
 							}
 					}  
-								 console.log(s_cart)
-								 console.log(s_index.length)
-					 for (let i = 0; i < s_index.length; i++) { 
+					 console.log(s_cart)
+					 console.log(s_index)
+					 for (let i =  0; i < s_index.length; i++) { 
+					 console.log(that.list[i])
+						 
+						 	console.log(that.list[i])
 						uni.request({
 							url: that.$api+'cart/cart-edit&access_token='+that.$access_token,
 							method: 'POST',
 							data: {
-								list: JSON.stringify([that.list[i]]),
+								list: JSON.stringify([that.list[s_index[i]]]),
 								mch_list:JSON.stringify([])
 							},
 							dataType: "json",
@@ -565,7 +595,7 @@
 										  })	
 										}		
 										that.mch_list[0].mch_id = 0;
-										that.mch_list[0].goods_list = ss_list;  	
+										that.mch_list[0].goods_list = ss_list;
 										if(i == s_index.length-1){
 											 console.log(i)
 										 uni.request({
@@ -579,6 +609,13 @@
 												'content-type': 'application/x-www-form-urlencoded'
 											},
 											success: res => { 
+												if(res.data.code == 1){
+													uni.showToast({
+														title: res.data.msg,
+														icon: 'none'
+													})	
+													return false;
+												}
 													setTimeout(function(){
 														uni.navigateTo({ 
 															url: "/pages/account/account?data="+JSON.stringify(res.data.data)

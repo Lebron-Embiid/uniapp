@@ -380,6 +380,13 @@
 			}
 		}
 	}
+	.not_have{
+		width: 100%;
+		text-align: center;
+		margin: 300upx 0 0;
+		font-size: 28upx;
+		color: #999;
+	} 
 	.wxParse{
 		-webkit-user-select: text;
 	}

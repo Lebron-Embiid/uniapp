@@ -8,6 +8,9 @@
 		</view>
 		<view class="news_content">
 			<commonNews :news_list="news_list"></commonNews>
+			<!-- <block v-if="news_list == '' || news_list.length == 0">
+				<view class="not_have">暂无新闻</view>
+			</block> -->
 		</view>
 		<!-- <block v-if="news_list != ''">
 			<view class="page_box">
@@ -148,6 +151,9 @@
 			   });
 			   return false;
 			}
+			uni.showLoading({
+				title: "加载中"
+			})	
 			 
 		   that.page = parseInt(that.page)+parseInt(1)	
 			uni.request({
@@ -169,6 +175,7 @@
 					}
 					that.news_list = that.news_list.concat(news_list)
 					  console.log(that.news_list) 
+					  uni.hideLoading();
 				},
 				fail: () => {
 					uni.showToast({

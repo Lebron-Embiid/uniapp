@@ -88,6 +88,8 @@
 		},
 		onPullDownRefresh() {
 			var that = this;
+			that.page = 1;
+			that.page_count = 1;
 			setTimeout(function () {
 				uni.request({
 					url: that.$api+'recharge/index&access_token='+that.$access_token,
@@ -124,7 +126,10 @@
 				icon:'none',
 			   });
 			   return false;
-			}			 
+			}	
+			uni.showLoading({
+				title: "加载中"
+			})			 
 		   that.page = parseInt(that.page)+parseInt(1)	
 			uni.request({
 				url: that.$api+'recharge/index&access_token='+that.$access_token,
@@ -133,7 +138,8 @@
 				success: res => {
 					let list = res.data.data.rebate.list;   
 					that.record_list = that.record_list.concat(list)
-					  console.log(that.record_list) 
+					  console.log(that.record_list)
+					   uni.hideLoading();
 				},
 				fail: () => {
 					uni.showToast({

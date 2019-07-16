@@ -10,6 +10,9 @@
 			<view class="my_item" v-for="(item,index) in downList" @tap="toPreview(index)" :key="index">
 				<image :src="item.url" mode="aspectFill"></image> 				 
 			</view>
+			<block v-if="downList == '' || downList.length == 0">
+				<view class="not_have">暂无下载素材</view>
+			</block>
 		</view>
 	</view>
 </template>
@@ -86,26 +89,28 @@
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
-			setTimeout(function () {
-				uni.request({
-					url: that.$api+'user/order-source-list&access_token='+that.$access_token,
-					method: 'GET',
-					dataType: "json",
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: res => {
-						that.page_down_count = res.data.data.page_count;
-						that.downList = res.data.data.list 					
-					},
-					fail: () => {
-						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						});
-					}
-				});
-			}, 1000);
+			// uni.showLoading({
+			// 	title: "加载中"
+			// })
+			uni.request({
+				url: that.$api+'user/order-source-list&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.page_down_count = res.data.data.page_count;
+					that.downList = res.data.data.list 					
+					// uni.hideLoading()
+				},
+				fail: (res) => {
+					uni.showToast({
+						title:res.msg,
+						icon:'none',
+					});
+				}
+			});
 			uni.startPullDownRefresh(); 
 		},
 		onPullDownRefresh() {

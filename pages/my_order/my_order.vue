@@ -83,6 +83,10 @@
 			navbarTap: function(e){
 				var that = this;
 				that.currentTab = e;
+				that.page0 = 1;
+				that.page1 = 1;
+				that.page2 = 1;
+				that.page3 = 1;
 				uni.startPullDownRefresh(); 
 				uni.request({
 					url: that.$api+'order/list&status='+that.currentTab+'&access_token='+that.$access_token,
@@ -242,6 +246,9 @@
 				   });
 				   return false;
 				}
+				uni.showLoading({
+					title: "加载中"
+				})	
 				that.page0 = parseInt(that.page0)+parseInt(1)	
 				var page = that.page0		
 			}else if(that.currentTab == 1){
@@ -252,6 +259,9 @@
 				   });
 				   return false;
 				}
+				uni.showLoading({
+					title: "加载中"
+				})	
 				that.page1  = parseInt(that.page1)+parseInt(1)	
 				var page = that. page1		
 			}else if(that.currentTab == 2){
@@ -262,6 +272,9 @@
 				   });
 				   return false;
 				}
+				uni.showLoading({
+					title: "加载中"
+				})	
 				that.page2 = parseInt(that.page2)+parseInt(1)	
 				var page = that.page2		
 			}else if(that.currentTab == 3){ 
@@ -272,6 +285,9 @@
 				   });
 				   return false;
 				}
+				uni.showLoading({
+					title: "加载中"
+				})	
 				that.page3 = parseInt(that.page3)+parseInt(1)	
 				var page = that.page3	
 			}
@@ -307,7 +323,8 @@
 						})
 					}
 					that.orderList = that.orderList.concat(orderList)
-					 console.log(that.orderList)
+					 console.log(that.orderList);
+					 uni.hideLoading();
 				},
 				fail: () => {
 					uni.showToast({

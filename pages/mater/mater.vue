@@ -69,6 +69,10 @@
 			navbarTap: function(e){
 				var that = this;
 				that.currentTab = e;
+				that.page = 1;
+				that.page_id = 1;
+				that.page_source_count = 1;
+				that.page_movie_count = 1;
 				uni.startPullDownRefresh(); 
 				if(that.currentTab == 0){
 					uni.request({
@@ -382,6 +386,9 @@
 					   });
 					   return false;
 					}
+					uni.showLoading({
+						title: "加载中"
+					})
 				   that.page = parseInt(that.page)+parseInt(1)				   
 					uni.request({
 						url: that.$api+'default/source-list&access_token='+that.$access_token,
@@ -400,7 +407,7 @@
 							  		id: item_list[i].id,
 							  		avatar: item_list[i].avatar_url,
 							  		name: item_list[i].nickname,
-									title: item.list[i].title,
+									title: item_list[i].title,
 							  		time: item_list[i].addtime,
 							  		num: item_list[i].read_count,
 							  		sign: item_list[i].type,
@@ -408,6 +415,7 @@
 							  	})
 							  } 
 							that.photo_list = that.photo_list.concat(photo_list)
+							uni.hideLoading();
 						      console.log(that.photo_list)
 						},
 						fail: () => {
@@ -427,6 +435,9 @@
 					   });
 					   return false;
 					}
+					uni.showLoading({
+						title: "加载中"
+					})
 					that.page_id = parseInt(that.page_id)+parseInt(1)	
 					uni.request({
 						url: that.$api+'default/movies-list&access_token='+that.$access_token,
@@ -452,6 +463,7 @@
 							
 							that.video_list = that.video_list.concat(video_list) 
 							console.log(that.video_list)
+							uni.hideLoading()
 						},
 						fail: () => {
 							uni.showToast({

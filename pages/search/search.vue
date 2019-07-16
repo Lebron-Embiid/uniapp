@@ -115,6 +115,9 @@
 			   });
 			   return false;
 			}	
+			uni.showLoading({
+				title: "加载中"
+			})
 			that.page = parseInt(that.page)+parseInt(1)	 											  
 			uni.request({
 				url: that.$api+'default/goods-list&keyword='+that.keyword+'&access_token='+that.$access_token,
@@ -135,11 +138,12 @@
 					} 
 					that.searchList = that.searchList.concat(list) 
  					console.log(that.searchList)
+					uni.hideLoading()
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
-						title: res.data.msg,
+						title: res.msg,
 						duration: 2000
 					})
 				}

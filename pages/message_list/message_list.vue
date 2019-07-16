@@ -7,6 +7,10 @@
 				<view class="si_answer"><text>答：</text><view>{{item.reply_content}}</view></view>
 				<view class="si_showAll" @click="toShowAll(index)"><image src="../../static/next.png" mode=""></image><block v-if="item.show == 'true'">隐藏</block><block v-else>展开</block></view>
 			</view>
+			
+			<block v-if="science_list == '' || science_list.length == 0">
+				<view class="not_have">暂无留言</view>
+			</block>
 		</view>
 		<!-- <block v-if="science_list != ''">
 		<view class="page_box">
@@ -97,6 +101,9 @@
 			   });
 			   return false;
 			}
+			uni.showLoading({
+				title: "加载中"
+			})
 			if(that.page)
 		   that.page = parseInt(that.page)+parseInt(1)	
 			uni.request({
@@ -105,7 +112,8 @@
 				data:{page:that.page},
 				success: res => {
 					let news_list =  res.data.data.list;						
-					that.science_list = that.science_list.concat(news_list)
+					that.science_list = that.science_list.concat(news_list);
+					uni.hideLoading();
 				},
 				fail: () => {
 					uni.showToast({

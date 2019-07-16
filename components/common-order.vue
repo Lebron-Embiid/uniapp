@@ -253,12 +253,7 @@
 </script>
 
 <style scoped lang="scss">
-	.not_have{
-		text-align: center;
-		margin: 300upx 0 0;
-		font-size: 28upx;
-		color: #999;
-	} 
+	
 	.order_item{
 		background: #fff;
 		padding: 25upx;

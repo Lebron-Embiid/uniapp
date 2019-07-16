@@ -11,6 +11,9 @@
 				<image :src="item.cover_pic" mode="aspectFill"></image>
 				<view class="my_down">{{item.lower}}</view>
 			</view>
+			<block v-if="myMaterList == '' || myMaterList.length == 0">
+				<view class="not_have">暂无发布素材</view>
+			</block>
 		</view>
 		<!-- 我下载的素材 -->
 		<!-- <view class="my_mater my_down_mater" v-show="currentTab == 1">
@@ -93,26 +96,28 @@
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
-			setTimeout(function () {
-				uni.request({
-					url: that.$api+'user/topic-list&access_token='+that.$access_token,
-					method: 'GET',
-					dataType: "json",
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: res => {
-						that.page_count = res.data.data.page_count;
-						that.myMaterList = res.data.data.list 					
-					},
-					fail: () => {
-						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						});
-					}
-				});	
-			}, 1000);
+			// uni.showLoading({
+			// 	title: "加载中"
+			// })
+			uni.request({
+				url: that.$api+'user/topic-list&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.page_count = res.data.data.page_count;
+					that.myMaterList = res.data.data.list
+					// uni.hideLoading()
+				},
+				fail: (res) => {
+					uni.showToast({
+						title:res.msg,
+						icon:'none',
+					});
+				}
+			});	
 			uni.startPullDownRefresh(); 
 		},
 		onPullDownRefresh() {
@@ -183,6 +188,7 @@
 						// var list = res.data.data.list;
 						that.myMaterList = that.myMaterList.concat(list)
 						console.log(that.myMaterList) 
+						
 					},
 					fail: () => {
 						uni.showToast({

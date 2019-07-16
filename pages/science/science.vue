@@ -117,6 +117,9 @@
 			   });
 			   return false;
 			}
+			uni.showLoading({
+				title: "加载中"
+			})	
 			if(that.page)
 		   that.page = parseInt(that.page)+parseInt(1)	
 			uni.request({
@@ -135,6 +138,7 @@
 					}
 					that.science_list = that.science_list.concat(news_list)
 					  console.log(that.science_list) 
+					  uni.hideLoading();
 				},
 				fail: () => {
 					uni.showToast({

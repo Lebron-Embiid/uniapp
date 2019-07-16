@@ -6,7 +6,7 @@
 		</view>
 		<view class="store_content">
 			<view class="store_nav">
-				<view v-for="(item,index) in navbar" :key="index" :class="[currentTab==item.id ? 'active' : '']" @click="navbarTap(item.id)">{{item.name}}</view>
+				<view v-for="(item,index) in navbar" class="nav" :key="index" :class="[currentTab==item.id ? 'active' : '']" @click="navbarTap(item.id)">{{item.name}}</view>
 			</view>
 			<view class="store_list">
 				<commonStore :storeList="storeList"></commonStore>
@@ -129,9 +129,9 @@
 								console.log(that.page_count3)
 							// }
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
-								title:res.data.msg,
+								title:res.msg,
 								icon:'none',
 							});
 						}
@@ -166,7 +166,9 @@
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
 			console.log(that.$access_token,that.$level)
-			setTimeout(function () {
+			uni.showLoading({
+				title: "加载中"
+			})
 			uni.request({
 				url: that.$api+'default/shop&cat_id=1&access_token='+that.$access_token,
 				dataType: "json",
@@ -203,19 +205,28 @@
 					that.navbar = navbar;
 					that.storeList = storeList;
 					that.swiperList = swiperList;
+					uni.hideLoading();
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
-						title:res.data.msg,
+						title:res.msg,
 						icon:'none',
 					});
 				}
 			});
-			}, 1000);
 			uni.startPullDownRefresh(); 
 		},
 		onPullDownRefresh() {
 			var that = this;
+			that.page_count1 = 1;
+			that.page_count2 = 1;
+			that.page_count3 = 1;
+			that.page1 = 1;
+			that.page2 = 1;
+			that.page3 = 1;
+			uni.showLoading({
+				title: "加载中"
+			})
 			setTimeout(function () {
 				uni.request({
 					url: that.$api+'default/goods-list&cat_id='+that.currentTab+'&access_token='+that.$access_token,
@@ -247,14 +258,12 @@
 							}else if(that.currentTab == 3){
 								that.page_count3 = res.data.data.page_count;
 							}
-							console.log(that.page_count1)
-							console.log(that.page_count2)
-							console.log(that.page_count3)
+							uni.hideLoading();
 						// }
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
-							title:res.data.msg,
+							title:res.msg,
 							icon:'none',
 						});
 					}
@@ -266,9 +275,6 @@
 		onReachBottom(){
 			let that = this;
 			if(that.currentTab == 1){	
-				console.log(1111)
-				console.log(that.page_count1)
-				console.log(that.page1)
 				if(that.page1 == that.page_count1){
 				   uni.showToast({
 					title:"没有更多数据了",
@@ -279,9 +285,6 @@
 				that.page1 = parseInt(that.page1)+parseInt(1)							
 				var page = that.page1;
 			}else if(that.currentTab == 2){
-				console.log(2222)
-				console.log(that.page_count2)
-				console.log(that.page2)
 				if(that.page2 == that.page_count2){
 				   uni.showToast({
 					title:"没有更多数据了",
@@ -292,9 +295,6 @@
 				that.page2 = parseInt(that.page2)+parseInt(1)
 				var page = that.page2;
 			}else if(that.currentTab == 3){
-				console.log(33333)
-				console.log(that.page_count3)
-				console.log(that.page_count3)
 				if(that.page3 == that.page_count3){
 				   uni.showToast({
 					title:"没有更多数据了",
@@ -329,12 +329,11 @@
 					}
 					that.storeList = that.storeList.concat(storeList) 
 					uni.hideLoading();
-					console.log(that.storeList);
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
-						title: res.data.msg,
+						title: res.msg,
 						duration: 2000
 					})
 				}
@@ -379,14 +378,13 @@
 			font-size: 28upx;
 			text-align: center;
 			margin-bottom: 40upx;
-			view{
+			.nav{
 				padding: 20upx 10upx;
 				border-bottom: 1upx solid transparent;
 				display: inline-block;
 				margin-left: 20upx;
 				display: none;
 				&.active{
-					display: inline-block;
 					color: #000027;
 					border-bottom: 1upx solid #000;
 				}

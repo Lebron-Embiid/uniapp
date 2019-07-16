@@ -192,8 +192,8 @@
 					header: {
 						'content-type': 'application/x-www-form-urlencoded'
 					},
-					success: res => { 
-						console.log(res.data.code); 
+					success: res => {
+						console.log(res.data.code);
 						if(res.data.code == 1){
 							uni.showToast({
 								title:res.data.msg,
@@ -258,7 +258,7 @@
 									  var url = "http://yl.demenk.com/alipayrsa2/index.php";
 								  }
 								  console.log(33333)
-								  console.log(that.payment) 
+								  console.log(that.payment)
 									uni.request({ 
 										url: url,
 										method: 'GET',

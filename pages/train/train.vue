@@ -102,6 +102,10 @@ export default{
 		navbarTap: function(e){
 			var that = this;
 			that.currentTab = e;
+			that.page_video = 1;
+			that.page_video_count = 1;
+			that.page_movie = 1;
+			that.page_movie_count = 1;
 				uni.startPullDownRefresh(); 
 				uni.request({
 					url: that.$api+'default/video-list&type='+that.currentTab+'&access_token='+that.$access_token,
@@ -256,7 +260,10 @@ export default{
 				icon:'none',
 			   });
 			   return false;
-			}		
+			}	
+			uni.showLoading({
+				title: "加载中"
+			})	
 			that.page_video = parseInt(that.page_video)+parseInt(1)
 			var page = that.page_video	
 		}else{
@@ -267,6 +274,9 @@ export default{
 			   });
 			   return false;
 			}		
+			uni.showLoading({
+				title: "加载中"
+			})
 			that.page_movie = parseInt(that.page_movie)+parseInt(1)
 			var page = that.page_movie	 
 		} 
@@ -289,7 +299,8 @@ export default{
 						video: item[i].url							
 					})
 				}
-				that.video_list = that.video_list.concat(video_list)
+				that.video_list = that.video_list.concat(video_list);
+				uni.hideLoading();
  			},
 			fail: () => {
 				uni.showToast({

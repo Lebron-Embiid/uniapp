@@ -94,6 +94,9 @@
 				// 				}
 				// 			});
 				// 		}else if(res.tapIndex == 1){
+						uni.showLoading({
+							title: "正在下载中"
+						})
 							var len = that.maters.length;
 							for(let i=0;i<len;i++){
 								uni.saveImageToPhotosAlbum({					
@@ -127,6 +130,7 @@
 															});
 														}
 													}
+													uni.hideLoading();
 												},
 												fail: (err) => {
 													console.log(err)
