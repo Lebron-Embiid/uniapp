@@ -35,14 +35,14 @@
 								}
 							});
 						}
-					},
-					fail: function (res) {
-						uni.showToast({
-							title: "保存失败！",
-							icon: 'none',
-							duration: 1500
-						})
 					}
+					// fail: function (res) {
+					// 	uni.showToast({
+					// 		title: "保存失败！",
+					// 		icon: 'none',
+					// 		duration: 1500
+					// 	})
+					// }
 				});
 			},
 		},

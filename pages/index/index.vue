@@ -75,7 +75,7 @@
 			return{
 				logo: "../../static/logo.png",
 				swiperList: [
-					// "../../static/index_banner.jpg","../../static/index_banner.jpg","../../static/index_banner.jpg",
+					// "../../static/index_banner1.jpg","../../static/index_banner2.jpg"
 					],
 				navList:[
 					{
