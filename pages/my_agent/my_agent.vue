@@ -7,6 +7,9 @@
 		<!-- 一级代理 -->
 		<view class="agent_list" v-show="currentTab == 0">
 			<commonAgent :agentList="agentList1"></commonAgent>
+			<!-- <block v-if="agentList1 == '' || agentList1.length == 0">
+				<view class="not_have">暂无代理</view>
+			</block> -->
 		</view>
 		<!-- 二级代理 -->
 		<view class="agent_list" v-show="currentTab == 1">
@@ -67,15 +70,15 @@
 							that.agentList1 = res.data.data.list;		 
 						// }
 						if(that.currentTab == 0){						
-							that.page_one_count = res.data.data.page_count;	
+							that.page_one_count = res.data.data.data.page_count;	
 						}else{							
-							that.page_tow_count = res.data.data.page_count;	
+							that.page_tow_count = res.data.data.data.page_count;	
 						}
 						console.log(1111)
 						console.log(that.agentList1)
 						
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -101,7 +104,7 @@
 						console.log(res)
 					// if(res.data.code == 0){
 						that.agentList1 = res.data.data.data.list;	
-						that.page_one_count = res.data.data.page_count;	
+						that.page_one_count = res.data.data.data.page_count;	
 						that.navbar[0].num	=  res.data.data.one_count;
 						that.navbar[1].num	=  res.data.data.tow_count;
 					// } 	
@@ -110,7 +113,7 @@
 						console.log(that.page_one_count)
 									
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',
@@ -121,7 +124,42 @@
 			uni.startPullDownRefresh(); 
 		},
 		onPullDownRefresh() {
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			that.page_one=1;
+			that.page_one_count=1;
+			that.page_tow=1;
+			that.page_tow_count=1;
 			setTimeout(function () {
+				uni.request({
+					url: that.$api+'user/agent-list&access_token='+that.$access_token,
+					method: 'GET',
+					data:{level_id:0},
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+							console.log(res)
+						// if(res.data.code == 0){
+							that.agentList1 = res.data.data.data.list;	
+							that.page_one_count = res.data.data.data.page_count;	
+							that.navbar[0].num	=  res.data.data.one_count;
+							that.navbar[1].num	=  res.data.data.tow_count;
+						// } 	
+							console.log(1111)
+							console.log(that.agentList1)
+							console.log(that.page_one_count)
+										
+					},
+					fail: (res) => {
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none',
+						});
+					}
+				});
 				uni.stopPullDownRefresh();
 			}, 1000);
 		},
@@ -129,6 +167,10 @@
 		//上拉触底
 		onReachBottom(){
 			let that = this;
+			uni.showLoading({
+				title: "加载中"
+			})
+			console.log(that.page_one);
 			if(that.currentTab == 0){
 				if(that.page_one == that.page_one_count){
 				   uni.showToast({
@@ -149,10 +191,7 @@
 				}
 				 that.page_tow = parseInt(that.page_tow)+parseInt(1)	
 				 var page = that.page_tow
-			} 
-			
-			 
-		  
+			} 						
 			uni.request({
 				url: that.$api+'user/agent-list&access_token='+that.$access_token,
 				method: 'GET',
@@ -162,11 +201,11 @@
 					'content-type': 'application/x-www-form-urlencoded'
 				},
 				success: res => {
-					let agentList1 = res.data.data.list; 	 
+					let agentList1 = res.data.data.data.list; 	 
 					that.agentList1 = that.agentList1.concat(agentList1)
-					  console.log(that.agentList1) 
+					uni.hideLoading();
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,

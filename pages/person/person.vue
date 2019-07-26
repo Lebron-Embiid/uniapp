@@ -35,7 +35,7 @@
 				<navigator class="navigator" url="/pages/my_agent/my_agent">我的会员<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
-				<navigator class="navigator" :url="'/pages/my_promotion/my_promotion?code='+code+'&mobile='+mobile">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" url="/pages/my_promotion/my_promotion">我的推广<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
 				<navigator class="navigator" url="/pages/car/car">我的购物车<image src="../../static/next.png" mode="widthFix"></image></navigator>
@@ -44,12 +44,11 @@
 				<navigator class="navigator" url="/pages/my_mater/my_mater">我的素材<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
 			<view class="nav_item">
-				<navigator class="navigator" url="/pages/feedback/feedback">意见反馈<image src="../../static/next.png" mode="widthFix"></image></navigator>
+				<navigator class="navigator" url="/pages/message_list/message_list">在线客服<image src="../../static/next.png" mode="widthFix"></image></navigator>
 			</view>
-			
-			<view class="nav_item">
-				<navigator class="navigator" url="/pages/message_list/message_list">在线留言<image src="../../static/next.png" mode="widthFix"></image></navigator>
-			</view>
+			<!-- <view class="nav_item">
+				<navigator class="navigator" url="/pages/feedback/feedback">我的客服<image src="../../static/next.png" mode="widthFix"></image></navigator>
+			</view> -->
 			
 			
 			<!-- <view class="nav_item">
@@ -78,7 +77,8 @@
 				status_1:0,
 				status_2:0,
 				status_3:0,
-				mobile: ""
+				mobile: "",
+				invitation_code: ""
 			}
 		},
 		methods:{
@@ -157,6 +157,7 @@
 					that.status_2 = data.order_count.status_2;
 					that.status_3 = data.order_count.status_3;
 					that.mobile = data.user_info.mobile;
+					that.invitation_code = data.user_info.invitation_code;
 					var level = data.user_info.brand_id;
 					uni.setStorageSync('level',level);
 					that.$level = uni.getStorageSync("level");
@@ -194,9 +195,10 @@
 						that.status_2 = data.order_count.status_2;
 						that.status_3 = data.order_count.status_3;					
 						var level = data.user_info.brand_id;
+						that.invitation_code = data.user_info.invitation_code;
 						uni.setStorageSync('level',level);
 						that.$level = uni.getStorageSync("level");
-						console.log(that.$level)
+						console.log(that.invitation_code)
 					}
 					// fail: (res) => {
 					// 	uni.showToast({

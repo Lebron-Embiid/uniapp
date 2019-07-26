@@ -242,8 +242,7 @@
   width: 16px;
   height: 16px;
   border: solid 1px lightgray;
-  -webkit-border-radius: 50%;
-          border-radius: 50%;
+  border-radius: 50%;
 }
 .glance-shop-cart-itemselected-img {
   width: 20px;

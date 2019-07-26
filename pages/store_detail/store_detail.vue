@@ -15,6 +15,7 @@
 				<block v-if="gauge != '' || gauge != 0">
 					<text>规格：{{gauge}}{{unit}}</text>
 				</block>
+				<text>已售：{{sales}}</text>
 			</view>
 		</view>
 		<view class="auth_box borbom">
@@ -107,6 +108,9 @@
 				</view>
 			</view>
 		</view>
+		<view class="contact_customer" @tap.stop="toContact">
+			<image src="../../static/kefu.png" mode="widthFix"></image>
+		</view>
 	</view>
 </template>
 
@@ -132,6 +136,7 @@
 				max_price:'',
 				original_price: '',
 				gauge: "",
+				sales: "",
 				unit: "",
 				content: "",
 				fixed_show: 1,
@@ -177,6 +182,11 @@
 			commonSwiper
 		},
 		methods:{
+			toContact: function(){
+				uni.navigateTo({
+					url: "/pages/feedback/feedback"
+				})
+			},
 			toBigImg(){
 				var that = this;
 				var buyImg = [];
@@ -207,7 +217,7 @@
 							// that.score_all = res.data.data.comment_count.score_all;
 							// that.page_count = res.data.data.page_count; 
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -391,7 +401,7 @@
 // 							})
 						// }
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -463,6 +473,7 @@
 					that.price = item.price;
 					that.max_price = item.max_price;//显示价格
 					that.original_price = item.original_price;
+					that.sales = item.sales;
 					that.buy_save = item.num;
 					that.buy_format = formatList;
 					that.buy_img = that.swiperList[0];
@@ -517,6 +528,7 @@
 						that.title = item.name;
 						that.price = item.price;
 						that.max_price = item.max_price;//显示价格
+						that.sales = item.sales;
 						that.buy_save = item.num;
 						that.buy_format = formatList;
 						that.buy_img = that.swiperList[0];
@@ -562,7 +574,7 @@
 					that.comment_list = that.comment_list.concat(comment_list)
 					  console.log(that.comment_list)
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',

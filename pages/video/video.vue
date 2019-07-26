@@ -60,7 +60,7 @@
 						that.video = res.data.data.url,
 						that.content = res.data.data.content
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -79,7 +79,7 @@
 						that.video = res.data.data.url;
 						this.videoContext.requestFullScreen(0);
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',

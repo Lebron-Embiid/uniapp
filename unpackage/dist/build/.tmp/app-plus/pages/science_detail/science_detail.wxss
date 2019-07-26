@@ -24,21 +24,21 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-f0a355fc {
+page.data-v-257e7faa {
   background: #f5f5f7 !important;
 }
-.science_detail.data-v-f0a355fc {
+.science_detail.data-v-257e7faa {
   padding: 50rpx 45rpx 100rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   background: #fff;
 }
-.si_question.data-v-f0a355fc {
+.si_question.data-v-257e7faa {
   color: #333;
   font-size: 26rpx;
   margin-bottom: 20rpx;
 }
-.si_answer.data-v-f0a355fc {
+.si_answer.data-v-257e7faa {
   color: #333;
   font-size: 22rpx;
 }

@@ -221,7 +221,7 @@
 										});
 									} 
 								},
-								fail: () => {
+								fail: (res) => {
 									uni.showToast({
 										title:res.data.msg,
 										icon:'none',
@@ -265,7 +265,7 @@
 					that.sign = item.source.type;
 					that.maters = item.topic;
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',

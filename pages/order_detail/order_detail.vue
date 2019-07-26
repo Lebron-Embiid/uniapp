@@ -101,7 +101,7 @@
 							duration: 1500
 						})
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none',
@@ -129,7 +129,7 @@
 					console.log(that.orders)
 					 
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title: res.data.msg,
 						icon: 'none',

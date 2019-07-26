@@ -3,13 +3,17 @@
 		<view class="page_bg"></view>
 		<form @submit="formSubmit">
 			<view class="section">
-				<textarea @input="getMessage" name="message" :value="message" maxlength="-1" placeholder="请把您的问题留给我们，我们会提供让您满意的答复~~" />
+				<textarea @input="getMessage" name="message" :value="message" maxlength="-1" placeholder="请输入您的问题，如是订单问题，请填写订单号和详细问题。如是邀请码问题，请填写上级手机号、邀请码和详细问题" />
 			</view>
 			<view class="section">
 				<input @input="getUsername" type="text" name="username" :value="username" placeholder="称呼" />
 			</view>
 			<view class="section">
 				<input @input="getPhone" type="text" name="phone" maxlength="11" :value="phone" placeholder="联系方式" />
+			</view>
+			<view class="section def">
+				<text>客服工作时间：周一至周五9:00-18:00</text>
+				<text>非工作时间请留言，客服上班后将尽快给您答复或与您联系。</text>
 			</view>
 			<view class="btn-area">
 				<button formType="submit">提交留言</button>
@@ -24,13 +28,27 @@
 			return{
 				message: "",
 				username: "",
-				phone: ""
+				phone: "",
+				isClick: 0
 			}
 		},
 		onLoad:function(){
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
+			uni.request({
+				url: that.$api+'user/extension&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.username = res.data.data.user_info.nickname;
+					that.phone = res.data.data.user_info.mobile;
+					console.log(that.username,that.phone);
+				}
+			});
 		},
 		methods:{
 			getMessage: function(e){
@@ -44,6 +62,9 @@
 			},
 			formSubmit: function(e){
 				let that = this;
+				if(that.isClick == 1){
+					return false;
+				}
 				if(that.message == ""){
 					uni.showToast({
 						title: "请填写问题！",
@@ -82,6 +103,7 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: function(res) {
+							that.isClick = 1;
 							uni.showToast({
 								title: res.data.msg,
 								icon: 'none',
@@ -117,17 +139,26 @@
 			margin-bottom: 15upx;
 			padding: 20upx 25upx;
 			box-sizing: border-box;
+			&.def{
+				background: none;
+				border: 0;
+			}
 			textarea{
 				display: block;
 				width: 100%;
 				color: #737373;
-				font-size: 20upx;
+				font-size: 24upx;
 			}
 			input{
 				padding: 0 25upx;
 				box-sizing: border-box;
 				color: #00001f;
-				font-size: 20upx;
+				font-size: 24upx;
+			}
+			text{
+				display: block;
+				font-size: 24upx;
+				margin-bottom: 10upx;
 			}
 		}
 		.btn-area{

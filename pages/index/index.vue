@@ -35,7 +35,7 @@
 						<div class="p_img"><image :src="item.src" mode="aspectFit"></image></div>
 						<view class="product_content">
 							<view class="product_title">{{item.title}}</view>
-							<view class="product_price">￥{{item.price}}<text>规格：{{item.format}}</text></view>
+							<view class="product_price">￥{{item.price}}<text>已售：{{item.format}}</text></view>
 						</view>
 					</view>
                 </scroll-view>
@@ -62,6 +62,10 @@
 			<view class="news_box">
 				<commonNews :news_list="news_list"></commonNews>
 			</view>
+		</view>
+		
+		<view class="contact_customer" @tap.stop="toContact">
+			<image src="../../static/kefu.png" mode="widthFix"></image>
 		</view>
 	</view>
 </template>
@@ -130,6 +134,11 @@
 			commonNews
 		},
 		methods:{
+			toContact: function(){
+				uni.navigateTo({
+					url: "/pages/feedback/feedback"
+				})
+			},
 			toDetail: function(idx,url){
 				if(idx == 0){
 					uni.reLaunch({
@@ -172,6 +181,7 @@
 		},
 		onShow:function(){
 			var that = this;			
+			console.log(getApp().globalData.mobile);
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
 			that.$user_name = uni.getStorageSync("user_name");
@@ -260,7 +270,7 @@
 					that.swiperList = swiperList;
 					// uni.hideLoading();
 				}
-				// fail: () => {
+				// fail: (res) => {
 				// 	uni.showToast({title:res.data.msg,icon:'none'});
 				// }
 			})
@@ -318,7 +328,7 @@
 						that.hot_products = hot_products;
 						that.swiperList = swiperList;
 					}
-					// fail: () => {
+					// fail: (res) => {
 					// 	uni.showToast({title:res.data.msg,icon:'none'});
 					// }
 				})
@@ -430,10 +440,13 @@
 					.product_price{
 						color: #00001f;
 						font-size: 24upx;
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
 						text{
-							float: right;
+							// float: right;
 							color: #4d4d4d;
-							font-size: 18upx;
+							font-size: 20upx;
 						}
 					}
 				}

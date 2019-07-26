@@ -39,7 +39,7 @@
 					that.logo = item.cover_pic;
 					that.content = item.content;
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',

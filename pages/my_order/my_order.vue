@@ -148,7 +148,6 @@
 			let that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
-			setTimeout(function () {
 			that.currentTab = parseInt(opt.id);
 			uni.request({
 				url: that.$api+'order/list&status='+opt.id+'&access_token='+that.$access_token,
@@ -186,7 +185,6 @@
 					
 				}
 			})
-			}, 1000);
 			uni.startPullDownRefresh(); 
 		},
 		onPullDownRefresh() {
@@ -326,7 +324,7 @@
 					 console.log(that.orderList);
 					 uni.hideLoading();
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,

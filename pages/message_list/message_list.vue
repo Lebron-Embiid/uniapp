@@ -4,12 +4,15 @@
 		<view class="science_ul">
 			<view class="science_item" :class="[item.show == 'true'?'':'active']" v-for="(item,index) in science_list" :key="index">
 				<view class="si_question">{{item.content}}</view>
-				<view class="si_answer"><text>答：</text><view>{{item.reply_content}}</view></view>
-				<view class="si_showAll" @click="toShowAll(index)"><image src="../../static/next.png" mode=""></image><block v-if="item.show == 'true'">隐藏</block><block v-else>展开</block></view>
+				<view class="si_answer"><text>答：</text><view><block>{{item.reply_content}}</block></view></view>
+				<view class="si_showAll" :class="[item.isNum < 60?'hide':'']" @click="toShowAll(index)">
+					<image src="../../static/next.png" mode="widthFix"></image>
+					<block v-if="item.show == 'true'">隐藏</block><block v-else>展开</block>
+				</view>
 			</view>
 			
 			<block v-if="science_list == '' || science_list.length == 0">
-				<view class="not_have">暂无留言</view>
+				<view class="not_have">暂无提问</view>
 			</block>
 		</view>
 		<!-- <block v-if="science_list != ''">
@@ -45,6 +48,11 @@
 				this.keyword = e.detail.value;
 			}
 		},
+		onNavigationBarButtonTap: function(){
+			uni.navigateTo({
+				url: "/pages/feedback/feedback"
+			})
+		},
 		onLoad(){
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
@@ -54,11 +62,27 @@
 				url: that.$api+'default/article-message-list&access_token='+that.$access_token,
 				method: 'GET',
 				success: res => {
-					var science_list = res.data.data.list;					
+					var science_list = [];					
 					that.page_count = res.data.data.page_count;
+					for(let i in res.data.data.list){
+						var item = res.data.data.list;
+						var num = 0;
+						if(item[i].reply_content != null){
+							num = item[i].reply_content.length;							
+						}
+						science_list.push({
+							addtime: item[i].addtime,
+							content: item[i].content,
+							id: item[i].id,
+							reply_content: item[i].reply_content != ""?item[i].reply_content:'等待回复',
+							show: item[i].show,
+							isNum: num
+						})
+					}
 					that.science_list = science_list;
+					console.log(that.science_list)
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,
@@ -75,12 +99,28 @@
 				uni.request({
 					url: that.$api+'default/article-message-list&access_token='+that.$access_token,
 					method: 'GET',
-					success: res => {
-						var science_list = res.data.data.list;					
+					success: res => {				
 						that.page_count = res.data.data.page_count;
+						var science_list = [];					
+						that.page_count = res.data.data.page_count;
+						for(let i in res.data.data.list){
+							var item = res.data.data.list;
+							var num = 0;
+							if(item[i].reply_content != null){
+								num = item[i].reply_content.length;							
+							}
+							science_list.push({
+								addtime: item[i].addtime,
+								content: item[i].content,
+								id: item[i].id,
+								reply_content: item[i].reply_content != ""?item[i].reply_content:'等待回复',
+								show: item[i].show,
+								isNum: num
+							})
+						}
 						that.science_list = science_list;
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							icon: 'none',
 							title: res.data.msg,
@@ -111,11 +151,26 @@
 				method: 'GET',
 				data:{page:that.page},
 				success: res => {
-					let news_list =  res.data.data.list;						
+					var news_list = [];					
+					for(let i in res.data.data.list){
+						var item = res.data.data.list;
+						var num = 0;
+						if(item[i].reply_content != null){
+							num = item[i].reply_content.length;							
+						}
+						news_list.push({
+							addtime: item[i].addtime,
+							content: item[i].content,
+							id: item[i].id,
+							reply_content: item[i].reply_content != ""?item[i].reply_content:'等待回复',
+							show: item[i].show,
+							isNum: num
+						})
+					}					
 					that.science_list = that.science_list.concat(news_list);
 					uni.hideLoading();
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,
@@ -171,6 +226,9 @@
 				transform: rotate(-90deg);
 				margin-right: 15upx;
 			}
+		}
+		.si_showAll.hide{
+			display: none !important;
 		}
 		&.active{
 			.si_question{

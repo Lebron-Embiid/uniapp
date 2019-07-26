@@ -2,8 +2,11 @@
 	<view class="my_promotion_box">
 		<image :src="code_bg" class="code_bg" @longpress="toDownImg" mode="widthFix"></image>
 		<!-- <image :src="code_img[0]" class="code_img" @tap="previewImg" mode="widthFix"></image> -->
-		<text class="invite_txt">您的邀请人编号：{{mobile}}</text>
-		<text class="invite_txt invite_txt1">长按图片下载</text>
+		<text class="invite_txt copy">您的邀请人编号：呦蓝VIP不设邀请码</text>
+		<!-- {{invitation_code}} -->
+		<block v-if="isproxy != 0">
+			<text class="invite_txt invite_txt1" style="bottom: 77px" >选择邀请码复制，长按图片下载 </text>
+		</block>
 	</view>
 </template>
 
@@ -13,7 +16,8 @@
 			return{
 				code_bg: "http://yl.demenk.com/web/statics/images/tuiguang_bg.jpg",
 				code_img: ["../../static/code_img.jpg"],
-				mobile: ""
+				invitation_code: "",
+				isproxy: 0
 			}
 		},
 		methods:{
@@ -47,10 +51,46 @@
 			},
 		},
 		onLoad: function(opt){ 
-			this.code_img[0] = opt.code;
-			this.mobile = opt.mobile;
-			console.log(opt)
- 		}
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			uni.request({
+				url: that.$api+'user/extension&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.code_img[0] = res.data.data.user_info.code;
+					that.invitation_code  = res.data.data.user_info.invitation_code;
+					that.isproxy = res.data.data.user_info.brand_id;
+					uni.startPullDownRefresh()
+				}
+			});
+ 		},
+		onPullDownRefresh() {
+			var that = this;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			setTimeout(function(){
+				uni.request({
+					url: that.$api+'user/extension&access_token='+that.$access_token,
+					method: 'GET',
+					dataType: "json",
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
+					success: res => {
+						console.log(res.data.data);
+						that.code_img[0] = res.data.data.user_info.code;
+						that.invitation_code  = res.data.data.user_info.invitation_code;
+						that.isproxy = res.data.data.user_info.brand_id;
+						uni.stopPullDownRefresh();
+					}
+				});
+			},1000)
+		}
 	}
 </script>
 
@@ -82,6 +122,9 @@
 		left: 0;
 		text-align: center;
 		z-index: 8;
+		&.copy{
+			-webkit-user-select: text;
+		}
 	}
 	.invite_txt1{
 		bottom: 160upx;

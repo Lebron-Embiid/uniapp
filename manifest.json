@@ -2,7 +2,7 @@
     "name" : "呦蓝",
     "appid" : "__UNI__com.youlan.youlanapp",
     "description" : "呦蓝手机客户端是一款集线上商城、线上培训、素材分享、企业资讯等服务功能于一体的App",
-    "versionName" : "2.6",
+    "versionName" : "2.9",
     "versionCode" : 100,
     "transformPx" : false,
     "app-plus" : {
@@ -47,7 +47,10 @@
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                    "<uses-permission android:name=\"android.permission.WRITE_PROFILE\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SECURE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_USER_DICTIONARY\"/>"
                 ]
             },
             "ios" : {},

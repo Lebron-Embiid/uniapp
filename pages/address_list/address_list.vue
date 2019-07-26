@@ -2,7 +2,7 @@
 	<view class="address-list">
 		<view class="page_bg"></view>
 		<view class="a-address" v-for="(item,index) in addressList" :key="index">
-			<view class="left-text" :class="item.isDefault == 0? 'active':''"  @tap="goodsAddess(item.id)">
+			<view class="left-text" :class="item.isDefault == 0? 'active':''"  @tap.once="goodsAddess(item.id)">
 				<view class="name-tel">
 					收货人：{{item.linkMan}} <text>{{item.mobile}}</text>
 				</view>
@@ -78,25 +78,25 @@
 							'content-type': 'application/x-www-form-urlencoded'
 						},
 						success: res => {
-							setTimeout(function(){
-								uni.navigateTo({ 
-									url: "/pages/account/account?data="+url
-								})
-							},1000)
+							uni.showLoading({
+								title: "加载中"
+							})
+							uni.redirectTo({ 
+								url: "/pages/account/account?data="+url
+							})
+							uni.hideLoading()
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
 							});
 						}
 					});
-						
-					
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
-						title:"",
+						title:res.data.msg,
 						icon:'none',
 					});
 				}
@@ -119,7 +119,7 @@
 					success: res => {
 						
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -158,7 +158,7 @@
 							})
 						},1500)
 				 	},
-				 	fail: () => {
+				 	fail: (res) => {
 				 		uni.showToast({
 				 			title:res.data.msg,
 				 			icon:'none',
@@ -184,15 +184,13 @@
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
-			setTimeout(function () {
-				that.mch_list = JSON.parse(opt.mch_list);
-				console.log(that.mch_list)
-			}, 1000);
-			uni.startPullDownRefresh(); 
+			that.mch_list = JSON.parse(opt.mch_list);
+			console.log(opt);
+			console.log(that.mch_list)
 		},
 		onPullDownRefresh(){
 			setTimeout(function () {
-				uni.stopPullDownRefresh();
+				
 			}, 1000);
 		},
 		onShow() {

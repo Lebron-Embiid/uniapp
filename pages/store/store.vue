@@ -18,6 +18,9 @@
 					<commonStore :storeList="storeList"></commonStore>
 			</view> -->
 		</view>
+		<view class="contact_customer" @tap.stop="toContact">
+			<image src="../../static/kefu.png" mode="widthFix"></image>
+		</view>
 	</view>
 </template>
 
@@ -84,6 +87,11 @@
 			commonStore
 		},
 		methods:{
+			toContact: function(){
+				uni.navigateTo({
+					url: "/pages/feedback/feedback"
+				})
+			},
 			navbarTap: function(e){
 				var that = this;
 				that.currentTab = e; 
@@ -113,7 +121,8 @@
 										title: item.list[i].name,
 										// info: "清洁皮肤，长效保湿滋润",
 										price: item.list[i].original_price,
-										type: item.list[i].weight
+										type: item.list[i].weight,
+										sales: item.list[i].sales
 									})
 								}	
 								that.storeList = storeList1;
@@ -131,7 +140,7 @@
 						},
 						fail: (res) => {
 							uni.showToast({
-								title:res.msg,
+								title:res.data.msg,
 								icon:'none',
 							});
 						}
@@ -170,7 +179,7 @@
 				title: "加载中"
 			})
 			uni.request({
-				url: that.$api+'default/shop&cat_id=1&access_token='+that.$access_token,
+				url: that.$api+'default/shop&cat_id='+that.currentTab+'&access_token='+that.$access_token,
 				dataType: "json",
 				method: 'GET',
 				header: {
@@ -195,7 +204,8 @@
 							cat_id: item.list[i].cat_id,
 							// info: "清洁皮肤，长效保湿滋润",
 							price: item.list[i].original_price,
-							type: item.list[i].weight
+							type: item.list[i].weight,
+							sales: item.list[i].sales
 						})
 					}
 					for(let i in item.shop_banner){
@@ -209,7 +219,7 @@
 				},
 				fail: (res) => {
 					uni.showToast({
-						title:res.msg,
+						title:res.data.msg,
 						icon:'none',
 					});
 				}
@@ -247,7 +257,8 @@
 									title: item.list[i].name,
 									// info: "清洁皮肤，长效保湿滋润",
 									price: item.list[i].original_price,
-									type: item.list[i].weight
+									type: item.list[i].weight,
+									sales: item.list[i].sales
 								})
 							}	
 							that.storeList = storeList1;
@@ -263,7 +274,7 @@
 					},
 					fail: (res) => {
 						uni.showToast({
-							title:res.msg,
+							title:res.data.msg,
 							icon:'none',
 						});
 					}
@@ -324,7 +335,8 @@
 							cat_id: item[i].cat_id,
 							// info: "清洁皮肤，长效保湿滋润",
 							price: item[i].original_price,
-							type: item[i].weight
+							type: item[i].weight,
+							sales: item[i].sales
 						})
 					}
 					that.storeList = that.storeList.concat(storeList) 
@@ -333,7 +345,7 @@
 				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
-						title: res.msg,
+						title: res.data.msg,
 						duration: 2000
 					})
 				}

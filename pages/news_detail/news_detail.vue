@@ -133,6 +133,9 @@
 			let that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
+			uni.showLoading({
+				title: '加载中'
+			})
 			console.log(opt.id)
 			uni.request({
 				url: that.$api+'default/article-detail&id=1',
@@ -157,11 +160,12 @@
 					that.next = data.next;
 					that.cover_pic = data.mode.cover_pic;
 					that.describe = data.mode.describe;
+					uni.hideLoading()
 					console.log(that.last)
 					console.log(that.next)
 			console.log(that.cover_pic)
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,

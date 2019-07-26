@@ -32,6 +32,19 @@
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
+			uni.request({
+				url: that.$api+'user/user-info&access_token='+that.$access_token,
+				method: 'GET',
+				dataType: "json",
+				header: {
+					'content-type': 'application/x-www-form-urlencoded'
+				},
+				success: res => {
+					that.username = res.data.data.user_info.nickname;
+					that.phone = res.data.data.user_info.mobile;
+					console.log(that.username,that.phone);
+				}
+			});
 		},
 		methods:{
 			getProblem: function(e){
@@ -92,13 +105,16 @@
 								duration: 1500
 							})
 							setTimeout(function(){
-								 uni.navigateTo({ 
-								 	url: "/pages/science/science"
+								 // uni.navigateTo({ 
+								 // 	url: "/pages/science/science"
+								 // })
+								 uni.navigateBack({
+								 	delta: 1
 								 })
 							},1500)
 						}
 					},
-					fail:function(err){
+					fail:function(res){
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none',

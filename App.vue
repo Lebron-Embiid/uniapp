@@ -261,6 +261,9 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+				&.six{
+					width: 60%;
+				}
 			}
 			.v_look{
 				color: #4f4f50;
@@ -268,9 +271,12 @@
 			}
 			.v_download{
 				position: absolute;
-				right: 50upx;
+				right: 30upx;
 				top: 45upx;
 				z-index: 5;
+				&.last{
+					right: 100upx;
+				}
 				image{
 					display: block;
 					width: 40upx;
@@ -400,4 +406,19 @@
 	// .uni-video-fullscreen{
 	// 	display: none !important;
 	// }
+	.contact_customer{
+		position: fixed;
+		right: 30upx;
+		bottom: 300upx;
+		z-index: 10;
+		border-radius: 50%;
+		overflow: hidden;
+		box-shadow: 0 0 20upx #f5f5f5;
+		image{
+			display: block;
+			width: 112upx;
+			height: 112upx;
+			border-radius: 50%;
+		}
+	}
 </style>

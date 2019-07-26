@@ -63,8 +63,7 @@ uni-picker .uni-picker-item {
   background: #fff;
   margin-top: 30rpx;
   position: relative;
-  -webkit-border-radius: 5px;
-          border-radius: 5px;
+  border-radius: 5px;
 }
 .form_box input {
     width: 80%;
@@ -121,8 +120,7 @@ uni-picker .uni-picker-item {
 .index_swiper .uni-swiper-dots .uni-swiper-dot {
     width: 29rpx;
     height: 5rpx;
-    -webkit-border-radius: 20rpx;
-            border-radius: 20rpx;
+    border-radius: 20rpx;
     background: rgba(255, 255, 255, 0.48);
 }
 .index_swiper .uni-swiper-dots .uni-swiper-dot-active {
@@ -130,8 +128,7 @@ uni-picker .uni-picker-item {
 }
 .video_item {
   margin-bottom: 30rpx;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   -webkit-box-shadow: 0 0 20rpx #D6D6DB;
           box-shadow: 0 0 20rpx #D6D6DB;
 }
@@ -178,8 +175,7 @@ uni-picker .uni-picker-item {
         display: block;
         width: 75rpx;
         height: 75rpx !important;
-        -webkit-border-radius: 50%;
-                border-radius: 50%;
+        border-radius: 50%;
 }
 .video_item .v_info .v_title {
       color: #00001f;
@@ -190,15 +186,21 @@ uni-picker .uni-picker-item {
          text-overflow: ellipsis;
       white-space: nowrap;
 }
+.video_item .v_info .v_title.six {
+        width: 60%;
+}
 .video_item .v_info .v_look {
       color: #4f4f50;
       font-size: 20rpx;
 }
 .video_item .v_info .v_download {
       position: absolute;
-      right: 50rpx;
+      right: 30rpx;
       top: 45rpx;
       z-index: 5;
+}
+.video_item .v_info .v_download.last {
+        right: 100rpx;
 }
 .video_item .v_info .v_download image {
         display: block;
@@ -220,8 +222,7 @@ uni-audio {
     padding: 50rpx 30rpx 40rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    -webkit-border-radius: 10rpx;
-            border-radius: 10rpx;
+    border-radius: 10rpx;
 }
 .audio_list .audio_item .audio_img {
       position: relative;
@@ -238,8 +239,7 @@ uni-audio {
         position: absolute;
         width: 89rpx;
         height: 89rpx !important;
-        -webkit-border-radius: 50%;
-                border-radius: 50%;
+        border-radius: 50%;
         left: 50%;
         top: 50%;
         -webkit-transform: translate(-50%, -50%);
@@ -313,6 +313,13 @@ uni-audio {
       width: 260rpx;
       height: 260rpx !important;
 }
+.not_have {
+  width: 100%;
+  text-align: center;
+  margin: 300rpx 0 0;
+  font-size: 28rpx;
+  color: #999;
+}
 .wxParse {
   -webkit-user-select: text;
 }
@@ -322,5 +329,21 @@ uni-audio {
   margin: 0 !important;
   padding: 0 !important;
   opacity: 1 !important;
+}
+.contact_customer {
+  position: fixed;
+  right: 30rpx;
+  bottom: 300rpx;
+  z-index: 10;
+  border-radius: 50%;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 20rpx #f5f5f5;
+          box-shadow: 0 0 20rpx #f5f5f5;
+}
+.contact_customer image {
+    display: block;
+    width: 112rpx;
+    height: 112rpx;
+    border-radius: 50%;
 }
 

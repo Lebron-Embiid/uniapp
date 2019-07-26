@@ -21,7 +21,7 @@
 			</view>
 			<view class="list-call">
 				<image class="img" src="/static/4.png"></image>
-				<input class="biaoti" v-model="invitation" type="number" placeholder="邀请码" />
+				<input class="biaoti" v-model="invitation" type="text" placeholder="邀请码" />
 			</view>
 			<!-- <view class="list-call">
 				<image class="img" src="/static/shilu-login/4.png"></image>
@@ -141,10 +141,10 @@
 				    });
 				    return;
 				} 
-				if (that.invitation == "") {
+				if (that.invitation == "" || that.invitation == "0") {
 				    uni.showToast({
 				        icon: 'none',
-				        title: '邀请码不能为空'
+				        title: '邀请码有误'
 				    });
 				    return;
 				} 

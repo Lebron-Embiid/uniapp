@@ -78,8 +78,7 @@
         line-height: 30rpx;
         right: -5rpx;
         bottom: -5rpx;
-        -webkit-border-radius: 50%;
-                border-radius: 50%;
+        border-radius: 50%;
         color: #fff;
         font-size: 18rpx;
         background: #f00;
@@ -93,8 +92,7 @@
         vertical-align: middle;
         width: 100%;
         height: 100% !important;
-        -webkit-border-radius: 50%;
-                border-radius: 50%;
+        border-radius: 50%;
         margin: 0 15rpx 8rpx 0;
 }
 .agent_box .agent_item .ai_right.data-v-ab17fc6e {

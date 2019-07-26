@@ -37,7 +37,7 @@
 					that.question = res.data.data.title;
 					that.answer = res.data.data.content;
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,

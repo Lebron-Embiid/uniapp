@@ -141,7 +141,7 @@
 					  console.log(that.record_list)
 					   uni.hideLoading();
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,

@@ -362,16 +362,18 @@
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
-								duration: 1000
+								duration: 3000
 							});
 							
 							uni.setStorageSync('user_name',that.username); 
 							that.$user_name = uni.getStorageSync('user_name');
+							
+							
 							setTimeout(function(){
 								uni.reLaunch({ 
 									url: "/pages/person/person"
 								})
-							},1500)
+							},3500)
 						
 							
 						}else{
@@ -382,7 +384,7 @@
 							});
 						}
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -427,7 +429,7 @@
 						});
 					}  
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',

@@ -26,6 +26,9 @@
 						<button @click="toCancle(item.id)">取消订单</button>
 						<button @click="toPay(item.id,item.pay,index)">去支付</button>
 					</block>
+					<block v-if="item.is_pay == 1 && current == 1">
+						<button @click="toContact(item.id)">联系客服</button>
+					</block>
 					<block v-if="item.is_send == 1 && current == 2">			
 						<block v-if="item.express != ''">
 						   <button @click="logisticsOrder(item.id)">查看物流</button>
@@ -137,6 +140,7 @@
 												uni.showToast({
 													title: "支付成功！"
 												})
+												
 												uni.request({
 													url: that.$api+'order/wx-pay&order_id='+order_id+'&access_token='+that.$access_token,
 													method: 'GET',
@@ -145,10 +149,13 @@
 														'content-type': 'application/x-www-form-urlencoded'
 													},
 													success: res => {
-						
+														
 													}, 
 												});
 												
+												uni.navigateTo({
+													url: "/pages/my_order/my_order?id=1"
+												})
 											},
 											fail: function (err) {
 												uni.showToast({
@@ -173,34 +180,46 @@
 					}
 				});
 			},
+			toContact: function(e){
+				uni.navigateTo({
+					url: "/pages/feedback/feedback"
+				})
+			},
 			toCancle: function(e){
 				var that = this;
-				uni.request({
-					url: that.$api+'order/revoke&order_id='+e+'&access_token='+that.$access_token,
-					method: 'GET',
-					dataType: "json",
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					success: res => {
-						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						}); 
-						setTimeout(function(){
-							 uni.redirectTo({
-							 	url: "/pages/my_order/my_order?id="+that.current
-							 })
-						},1000)
-					},
-					fail: () => {
-						uni.showToast({
-							title:res.data.msg,
-							icon:'none',
-						});
-						
+				uni.showModal({
+					title: "提示",
+					content: "取消订单等同删除订单，请确定是否取消？",
+					success: (res) => {
+						if(res.confirm){
+							uni.request({
+								url: that.$api+'order/revoke&order_id='+e+'&access_token='+that.$access_token,
+								method: 'GET',
+								dataType: "json",
+								header: {
+									'content-type': 'application/x-www-form-urlencoded'
+								},
+								success: res => {
+									uni.showToast({
+										title:res.data.msg,
+										icon:'none',
+									}); 
+									setTimeout(function(){
+										 uni.redirectTo({
+										 	url: "/pages/my_order/my_order?id="+that.current
+										 })
+									},1000)
+								},
+								fail: (res) => {
+									uni.showToast({
+										title:res.data.msg,
+										icon:'none',
+									});
+								}
+							});
+						}
 					}
-				});
+				})
 			},
 			toOrderDetail: function(e){
 				console.log(e)
@@ -239,7 +258,7 @@
 							 })
 						},1000)
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',

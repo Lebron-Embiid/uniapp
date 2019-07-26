@@ -91,7 +91,7 @@ export default{
 					}
 					that.video_list = video_list1;
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',
@@ -135,7 +135,7 @@ export default{
 						}
 						that.video_list = video_list1;
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -197,7 +197,7 @@ export default{
 				that.page_video_count = res.data.data.page_count;
 				that.video_list = video_list;
 			},
-			fail: () => {
+			fail: (res) => {
 				uni.showToast({
 					title:res.data.msg,
 					icon:'none',
@@ -302,7 +302,7 @@ export default{
 				that.video_list = that.video_list.concat(video_list);
 				uni.hideLoading();
  			},
-			fail: () => {
+			fail: (res) => {
 				uni.showToast({
 					icon: 'none',
 					title: res.data.msg,

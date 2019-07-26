@@ -1,15 +1,4 @@
 {
   "navigationBarTitleText": "呦蓝百科",
-  "titleNView": {
-    "buttons": [
-      {
-        "type": "none",
-        "float": "right",
-        "text": "在线留言",
-        "fontSize": "14px",
-        "width": "auto"
-      }
-    ]
-  },
   "usingComponents": {}
 }

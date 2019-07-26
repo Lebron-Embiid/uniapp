@@ -24,16 +24,16 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.ai_info.data-v-f6e1f6ee {
+.ai_info.data-v-3485fe92 {
   color: #4f4f50;
   font-size: 20rpx;
   margin: 10rpx 0 20rpx;
   text-align: right;
 }
-.audio_title.data-v-f6e1f6ee {
+.audio_title.data-v-3485fe92 {
   font-size: 28rpx;
 }
-.audio_title image.data-v-f6e1f6ee {
+.audio_title image.data-v-3485fe92 {
     display: block;
     max-width: 100%;
 }

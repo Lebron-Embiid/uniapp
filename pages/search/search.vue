@@ -7,7 +7,7 @@
 		<!-- #endif -->
 		<view class="search_form">
 			<view><image src="../../static/search.png" mode="widthFix"></image><input type="text" placeholder="请输入搜索内容" @blur="confirm" @input="getKeyword" :value="keyword" /></view>
-			<button @click="back">取消</button>
+			<button @click="back">搜索</button>
 		</view>
 		<view class="search_content">
 			<view class="search_item" v-for="(item,index) in searchList" @click="toStoreDetail(item.id)" :key="index">
@@ -55,10 +55,39 @@
 			loadMore() {
 				this.getList(2);
 			},
-			back: function(e){
-				uni.navigateBack({
-					delta: 1
-				})
+			back: function(e){			
+					var that = this;
+					uni.request({
+						url: that.$api+'default/search&keyword='+that.keyword,
+						method: 'GET',
+						success: res => {
+							var list = [];
+							for(let i in res.data.data.list){
+								var item = res.data.data.list;
+								list.push({
+									id: item[i].id,
+									src: item[i].pic_url,
+									title: item[i].name,
+									info: "",
+									price: item[i].price,
+									type: item[i].weight,
+								})
+							}
+							that.page_count = res.data.data.page_count;
+							that.searchList = list;
+							console.log(that.searchList)
+						},
+						fail: (res) => {
+							uni.showToast({
+								icon: 'none',
+								title: res.data.msg,
+								duration: 2000
+							})					
+						}
+					});
+				// uni.navigateBack({
+				// 	delta: 1
+				// })
 			},
 			toStoreDetail: function(e){
 				uni.navigateTo({
@@ -90,7 +119,7 @@
 						that.searchList = list;
 						console.log(that.searchList)
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							icon: 'none',
 							title: res.data.msg,
@@ -143,7 +172,7 @@
 				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
-						title: res.msg,
+						title: res.data.msg,
 						duration: 2000
 					})
 				}

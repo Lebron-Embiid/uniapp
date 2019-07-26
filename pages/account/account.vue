@@ -55,7 +55,7 @@
 		</view>
 		<view class="fixed_account">
 			<view class="fa_left">总计：￥{{all}}</view>
-			<view class="fa_right" @click="toSubmit">提交</view>
+			<view class="fa_right" @tap.once="toSubmit">提交</view>
 		</view>
 	</view>
 </template>
@@ -108,6 +108,11 @@
 				pay_type:'WECHAT_PAY'				
 			}
 		},
+		onBackPress() {
+			uni.reLaunch({
+				url: "/pages/store/store"
+			})
+		},
 		methods:{
 			toAddress: function(){ 
 				console.log(JSON.stringify(this.mch_list))
@@ -141,6 +146,10 @@
 			},
 			toSubmit: function(e){
 				var that = this;
+				uni.showLoading({
+					title: "加载中",
+					mask: true
+				})
 				console.log(that.mch_list)
 				// var mchlist = [];
 				for(var i=0;i<that.mch_list.length;i++){				
@@ -210,8 +219,7 @@
 						var order_id = res.data.data.order_id;
 						if(that.all < 10000){
 							//订单提交成功跳转							
-							if(that.payment == 2){ 
-								setTimeout(function(){
+							if(that.payment == 2){  
 									uni.request({
 										url: that.$api+'order/pay-data&access_token='+that.$access_token,
 										method: 'GET',
@@ -234,21 +242,16 @@
 													duration: 1500
 												})	
 												if(res.data.code == 0){ 
-													setTimeout(function(){
-														uni.navigateTo({ 
-															url: "/pages/my_order/my_order?id=1"
-														})
-													},1500)
+													uni.navigateTo({ 
+														url: "/pages/my_order/my_order?id=1"
+													})
 												}else{ 
-													setTimeout(function(){
-														uni.navigateTo({ 
-															url: "/pages/my_order/my_order?id=0"
-														})
-													},1500)
+													uni.navigateTo({ 
+														url: "/pages/my_order/my_order?id=0"
+													})
 												}	 																		
 										 }
-									})
-								},1000)
+									}) 
 							  }else{	
 								  if(that.payment == 0){
 									  var provider = "wxpay";
@@ -256,9 +259,7 @@
 								  }else{
 									  var provider = "alipay";
 									  var url = "http://yl.demenk.com/alipayrsa2/index.php";
-								  }
-								  console.log(33333)
-								  console.log(that.payment)
+								  } 
 									uni.request({ 
 										url: url,
 										method: 'GET',
@@ -272,6 +273,7 @@
 											'content-type': 'application/x-www-form-urlencoded'
 										},
 										success: res => {		 
+											uni.hideLoading();
 											var list = res.data; 
 										  if(that.payment == 0){
 											  var order_info = JSON.stringify({
@@ -292,8 +294,7 @@
 													uni.requestPayment({
 														provider: provider,
 														orderInfo: order_info,
-														success: function (res) {
-															setTimeout(function(){																
+														success: function (res) { 															
 																uni.request({
 																	url: that.$api+'order/wx-pay&order_id='+order_id+'&access_token='+that.$access_token,
 																	method: 'GET',
@@ -314,8 +315,7 @@
 																			url: "/pages/my_order/my_order?id=0"
 																		})
 																	}
-																});																
-															},1500)
+																});	 
 														},
 														fail: function (err) {
 															console.log(JSON.stringify(err))
@@ -345,6 +345,7 @@
 											})
 										},
 										fail: () => {
+											uni.hideLoading();
 											uni.showToast({
 												title: "支付失败！",
 												icon: "none"

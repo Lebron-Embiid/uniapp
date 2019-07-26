@@ -58,7 +58,7 @@
 						 
 						that.logists = res.data.data.list
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none',
@@ -93,7 +93,7 @@
 					that.exprss_content = res.data.data.exprss_content 
 					that.logists = res.data.data.list 
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title: res.data.msg,
 						icon: 'none',

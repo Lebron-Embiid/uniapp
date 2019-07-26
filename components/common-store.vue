@@ -4,7 +4,7 @@
 			<image :src="item.src" mode="aspectFit"></image>
 			<view class="si_title">{{item.title}}</view>
 			<view class="si_info">{{item.info}}</view>
-			<view class="si_price">￥{{item.price}}<text>规格：{{item.type}}</text></view>
+			<view class="si_price">￥{{item.price}}<!-- <text>规格：{{item.type}}</text> --><text>已售：{{item.sales}}</text></view>
 		</view>
 	</view>
 </template>
@@ -76,9 +76,17 @@
 			.si_title{
 				color: #160c11;
 				font-size: 22upx;
-				overflow: hidden;
+				height: 32px;
+				// overflow: hidden;
+				// text-overflow: ellipsis;
+				// white-space: nowrap;
+				overflow : hidden;
 				text-overflow: ellipsis;
-				white-space: nowrap;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				word-wrap: break-word;
+				word-break: break-all;
 			}
 			.si_info{
 				color: #7d7d7d;
@@ -91,10 +99,13 @@
 			.si_price{
 				color: #00001f;
 				font-size: 24upx;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 				text{
-					float: right;
+					// float: right;
 					color: #4d4d4d;
-					font-size: 18upx;
+					font-size: 20upx;
 				}
 			}
 		}

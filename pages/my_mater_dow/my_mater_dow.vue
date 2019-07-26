@@ -59,7 +59,7 @@
 							that.page_down_count = res.data.data.page_count;
 							that.downList = res.data.data.list 					
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -106,7 +106,7 @@
 				},
 				fail: (res) => {
 					uni.showToast({
-						title:res.msg,
+						title:res.data.msg,
 						icon:'none',
 					});
 				}
@@ -128,7 +128,7 @@
 							that.page_count = res.data.data.page_count;
 							that.myMaterList = res.data.data.list 					
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -147,7 +147,7 @@
 							that.page_down_count = res.data.data.page_count;
 							that.downList = res.data.data.list 					
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -182,7 +182,7 @@
 						that.myMaterList = that.myMaterList.concat(list)
 						console.log(that.myMaterList) 
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							icon: 'none',
 							title: res.data.msg,
@@ -208,7 +208,7 @@
  						that.downList = that.downList.concat(list)
 						console.log(that.downList) 
 					}, 
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							icon: 'none',
 							title: res.data.msg,

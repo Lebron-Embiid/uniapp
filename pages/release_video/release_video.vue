@@ -24,7 +24,7 @@
 				</view>
 			</view>
 		</view>
-		<text style="color: #f00;font-size: 24upx;padding: 10upx 30upx;">视频格式：mp4</text>
+		<text style="color: #f00;font-size: 24upx;padding: 10upx 30upx;">视频格式：mp4，封面图尺寸建议为：710*356</text>
 	</view>
 </template>
 
@@ -38,7 +38,8 @@
 				poster: "",
 				video: "",
 				isControls: false,
-				isPlay: false
+				isPlay: false,
+				isClick: 0
 			}
 		},
 		methods:{
@@ -137,12 +138,15 @@
 			}, 1000);
 		},
 		onNavigationBarButtonTap: function(){
+			var that = this;
 			uni.showModal({
 				title: "提示",
 				content: "确定发布？",
 				success: (res) => {
+						if(that.isClick == 1){
+							return false;
+						}
 					// if(res.confirm){
-						var that = this;
 						if(that.title == ""){
 							uni.showToast({
 								title: "请填写标题！",
@@ -184,6 +188,7 @@
 								'content-type': 'application/x-www-form-urlencoded'
 							},
 							success: res => {
+								that.isClick = 1;
 								if(res.data.code == 0){
 									uni.showToast({
 										title: res.data.msg,
@@ -197,7 +202,7 @@
 									},1000)
 								}
 							},
-							fail: () => {
+							fail: (res) => {
 								uni.showToast({
 									title:res.data.msg,
 									icon:'none',

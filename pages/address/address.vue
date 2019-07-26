@@ -134,7 +134,7 @@
 								})
 							},1500)
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none',
@@ -176,7 +176,7 @@
 							},1500)
 						
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title: res.data.msg,
 							icon: 'none',
@@ -214,7 +214,7 @@
 				},
 				
 				 
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',

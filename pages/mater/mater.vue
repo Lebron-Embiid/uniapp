@@ -100,7 +100,7 @@
 							that.page_source_count = res.data.data.page_count;
 							that.photo_list = photo_list;
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -132,7 +132,7 @@
 							that.page_movie_count = res.data.data.page_count;
 							that.video_list = video_list;
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -186,7 +186,7 @@
 						that.page_source_count = res.data.data.page_count;
 						that.photo_list = photo_list;
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -222,7 +222,7 @@
 				 			that.page_movie_count = res.data.data.page_count;
 				 			that.video_list = video_list;
 				 		},
-				 		fail: () => {
+				 		fail: (res) => {
 				 			uni.showToast({
 				 				title:res.data.msg,
 				 				icon:'none',
@@ -289,7 +289,7 @@
 					that.page_source_count = res.data.data.page_count;
 					that.photo_list = photo_list;
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',
@@ -332,7 +332,7 @@
 							that.page_source_count = res.data.data.page_count;
 							that.photo_list = photo_list;
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -363,8 +363,9 @@
 							}
 							that.page_movie_count = res.data.data.page_count;
 							that.video_list = video_list;
+							console.log(that.video_list)
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -418,16 +419,14 @@
 							uni.hideLoading();
 						      console.log(that.photo_list)
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
 							});
 						}
 					});
-				}else{
-					console.log(that.page_id)
-					console.log(that.page_movie_count)
+				}else{ 
 					if(that.page_id == that.page_movie_count){
 					   uni.showToast({
 						title:"没有更多数据了",
@@ -453,6 +452,7 @@
 							var page_count = res.data.data.page_count; 
 							for(let i in item){
 								video_list.push({
+									id: item[i].id,
 									poster: item[i].cove_pic,
 									avatar: item[i].avatar_url,
 									title: item[i].title,
@@ -465,7 +465,7 @@
 							console.log(that.video_list)
 							uni.hideLoading()
 						},
-						fail: () => {
+						fail: (res) => {
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -511,6 +511,9 @@
 				color: #00001f;
 				font-size: 26upx;
 				margin-bottom: 15upx;
+				// display: flex;
+				// justify-content: flex-start;
+				// align-items: center;
 				.avatar_img{
 					display: inline-block;
 					vertical-align: middle;
@@ -523,8 +526,8 @@
 					display: inline-block;
 					vertical-align: middle;
 					margin: 0 10upx 6upx 0;
-					width: 100upx;
-					max-width: 130upx;
+					width: 150upx;
+					max-width: 150upx;
 					font-size: 24upx;
 					overflow: hidden;
 					text-overflow: ellipsis;
@@ -536,6 +539,7 @@
 					margin-right: 40upx;
 				}
 				.ph_sign{
+					display: inline-block;
 					color: #fff;
 					font-size: 22upx;
 					background: #f00;

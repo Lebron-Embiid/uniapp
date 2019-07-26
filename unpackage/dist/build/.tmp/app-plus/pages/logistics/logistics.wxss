@@ -24,14 +24,14 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.logist_top.data-v-46a3017a {
+.logist_top.data-v-5e285e9c {
   padding: 30rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   overflow: hidden;
   border-bottom: 18rpx solid #f3f3f3;
 }
-.logist_top .lt_img.data-v-46a3017a {
+.logist_top .lt_img.data-v-5e285e9c {
     width: 176rpx;
     height: 176rpx;
     float: left;
@@ -39,12 +39,12 @@
     border: 1px solid #E7E7E7;
     position: relative;
 }
-.logist_top .lt_img image.data-v-46a3017a {
+.logist_top .lt_img image.data-v-5e285e9c {
       display: block;
       width: 176rpx;
       height: 176rpx !important;
 }
-.logist_top .lt_img view.data-v-46a3017a {
+.logist_top .lt_img view.data-v-5e285e9c {
       position: absolute;
       width: 100%;
       height: 42rpx;
@@ -57,29 +57,29 @@
       z-index: 3;
       text-align: center;
 }
-.logist_top .lt_word.data-v-46a3017a {
+.logist_top .lt_word.data-v-5e285e9c {
     color: #333;
     font-size: 22rpx;
 }
-.logist_top .lt_word view.data-v-46a3017a {
+.logist_top .lt_word view.data-v-5e285e9c {
       margin: 5rpx 0 12rpx;
 }
-.logist_top .lt_word view text.data-v-46a3017a {
+.logist_top .lt_word view text.data-v-5e285e9c {
         margin-left: 25rpx;
 }
-.logist_top .lt_word view text.red.data-v-46a3017a {
+.logist_top .lt_word view text.red.data-v-5e285e9c {
           color: #fa3d34;
 }
-.logist_top .lt_word view text.blue.data-v-46a3017a {
+.logist_top .lt_word view text.blue.data-v-5e285e9c {
           color: #00a0e9;
 }
-.logist_top .lt_word view.log_erpss.data-v-46a3017a {
+.logist_top .lt_word view.log_erpss.data-v-5e285e9c {
         font-size: 32rpx;
 }
-.logist_content.data-v-46a3017a {
+.logist_content.data-v-5e285e9c {
   padding-bottom: 60rpx;
 }
-.logist_content .lc_remark.data-v-46a3017a {
+.logist_content .lc_remark.data-v-5e285e9c {
     padding: 25rpx 30rpx 20rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -87,21 +87,21 @@
     font-size: 24rpx;
     border-bottom: 1px solid #F0F0F0;
 }
-.logist_content .lc_remark image.data-v-46a3017a {
+.logist_content .lc_remark image.data-v-5e285e9c {
       display: inline-block;
       vertical-align: middle;
       margin: 0 15rpx 6rpx 0;
       width: 37rpx;
       height: 29rpx !important;
 }
-.logist_content .logist_box.data-v-46a3017a {
+.logist_content .logist_box.data-v-5e285e9c {
     padding: 0 30rpx;
 }
-.logist_content .logist_box .logist_item.data-v-46a3017a {
+.logist_content .logist_box .logist_item.data-v-5e285e9c {
       padding-left: 40rpx;
       position: relative;
 }
-.logist_content .logist_box .logist_item.data-v-46a3017a :before {
+.logist_content .logist_box .logist_item.data-v-5e285e9c :before {
         content: "";
         display: block;
         width: 1px;
@@ -112,36 +112,35 @@
         background: #E2E2E2;
         z-index: 1;
 }
-.logist_content .logist_box .logist_item.data-v-46a3017a :after {
+.logist_content .logist_box .logist_item.data-v-5e285e9c :after {
         content: "";
         display: block;
         width: 10px;
         height: 10px;
-        -webkit-border-radius: 50%;
-                border-radius: 50%;
+        border-radius: 50%;
         background: #ccc;
         position: absolute;
         left: 0;
         top: 35rpx;
         z-index: 2;
 }
-.logist_content .logist_box .logist_item .li_box.data-v-46a3017a {
+.logist_content .logist_box .logist_item .li_box.data-v-5e285e9c {
         padding: 30rpx 0 20rpx;
         border-bottom: 1px solid #F1F1F1;
 }
-.logist_content .logist_box .logist_item .li_box .li_title.data-v-46a3017a {
+.logist_content .logist_box .logist_item .li_box .li_title.data-v-5e285e9c {
           color: #333;
           font-size: 22rpx;
           margin-bottom: 5rpx;
 }
-.logist_content .logist_box .logist_item .li_box .li_time.data-v-46a3017a {
+.logist_content .logist_box .logist_item .li_box .li_time.data-v-5e285e9c {
           color: #666;
           font-size: 20rpx;
 }
-.logist_content .logist_box .logist_item:first-of-type .li_box .li_title.data-v-46a3017a {
+.logist_content .logist_box .logist_item:first-of-type .li_box .li_title.data-v-5e285e9c {
         color: #fa3d34;
 }
-.logist_content .logist_box .logist_item.data-v-46a3017a:first-of-type :after {
+.logist_content .logist_box .logist_item.data-v-5e285e9c:first-of-type :after {
         background: #fa3d34;
 }
 

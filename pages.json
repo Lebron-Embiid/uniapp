@@ -197,20 +197,20 @@
 		{
 			"path": "pages/science/science",
 			"style": {
-				"navigationBarTitleText": "呦蓝百科",
-				"app-plus":{
-					"titleNView":{
-						"buttons":[
-							{
-								"type": "none",
-								"float": "right",
-								"text": "在线留言",
-								"fontSize": "14px",
-								"width": "auto"
-							}
-						]
-					}
-				}
+				"navigationBarTitleText": "呦蓝百科"
+				// "app-plus":{
+				// 	"titleNView":{
+				// 		"buttons":[
+				// 			{
+				// 				"type": "none",
+				// 				"float": "right",
+				// 				"text": "百科提问",
+				// 				"fontSize": "14px",
+				// 				"width": "auto"
+				// 			}
+				// 		]
+				// 	}
+				// }
 			}
 		},
 		{
@@ -222,13 +222,13 @@
 		{
 			"path": "pages/message/message",
 			"style": {
-				"navigationBarTitleText": "在线留言"
+				"navigationBarTitleText": "意见反馈"
 			}
 		},
 		{
 			"path": "pages/feedback/feedback",
 			"style": {
-				"navigationBarTitleText": "意见反馈"
+				"navigationBarTitleText": "联系客服"
 			}
 		},
 		{
@@ -422,7 +422,15 @@
 		{
 			"path": "pages/my_promotion/my_promotion",
 			"style": {
-				"navigationBarTitleText": "我的推广"
+				"navigationBarTitleText": "我的推广",
+				"enablePullDownRefresh": true,
+				"app-plus":{
+					"pullToRefresh": {
+                        "support": true,
+                        "color": "#00001f",
+                        "style": "circle"
+                    }
+				}
 			}
 		},
 		{
@@ -471,14 +479,25 @@
 		{
 			"path": "pages/message_list/message_list",
 			"style": {
-				"navigationBarTitleText": "在线留言",
+				"navigationBarTitleText": "在线客服",
 				"enablePullDownRefresh": true,
 				"app-plus":{
 					"pullToRefresh": {
-                        "support": true,
-                        "color": "#00001f",
-                        "style": "circle"
-                    }
+						"support": true,
+						"color": "#00001f",
+						"style": "circle"
+					},
+					"titleNView":{
+						"buttons":[
+							{
+								"type": "none",
+								"float": "right",
+								"text": "联系客服",
+								"fontSize": "14px",
+								"width": "auto"
+							}
+						]
+					}
 				}
 			}
 		},

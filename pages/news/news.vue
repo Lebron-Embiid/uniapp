@@ -98,7 +98,7 @@
 						that.page_count = res.data.data.page_count;
 						that.news_list = news_list;
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							icon: 'none',
 							title: res.data.msg,
@@ -131,7 +131,7 @@
 					that.page_count = res.data.data.page_count;
 					that.news_list = news_list;
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,
@@ -177,7 +177,7 @@
 					  console.log(that.news_list) 
 					  uni.hideLoading();
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,

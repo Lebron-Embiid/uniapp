@@ -85,7 +85,7 @@ export default{
 				that.audio_logo = res.data.data.pic_url;
 				that.content = res.data.data.content;
 			},
-			fail: () => {
+			fail: (res) => {
 				uni.showToast({
 					title:res.data.msg,
 					icon:'none',

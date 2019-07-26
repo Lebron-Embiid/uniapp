@@ -63,7 +63,7 @@
 						}
 						that.science_list = science_list;
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							icon: 'none',
 							title: res.data.msg,
@@ -98,7 +98,7 @@
 					that.page_count = res.data.data.page_count;
 					that.science_list = science_list;
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,
@@ -120,7 +120,7 @@
 			uni.showLoading({
 				title: "加载中"
 			})	
-			if(that.page)
+			// if(that.page)
 		   that.page = parseInt(that.page)+parseInt(1)	
 			uni.request({
 				url: that.$api+'default/article-list&cat_id=3',
@@ -140,7 +140,7 @@
 					  console.log(that.science_list) 
 					  uni.hideLoading();
 				},
-				fail: () => {
+				fail: (res) => {
 					uni.showToast({
 						icon: 'none',
 						title: res.data.msg,

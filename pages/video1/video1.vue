@@ -58,7 +58,7 @@
 						that.video = res.data.data.url,
 						that.content = res.data.data.content
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -76,7 +76,7 @@
 					success: res => {
 						that.video = res.data.data.url;
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',

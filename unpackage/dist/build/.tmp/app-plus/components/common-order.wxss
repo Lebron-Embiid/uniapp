@@ -24,13 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.not_have.data-v-7297a9c4 {
-  text-align: center;
-  margin: 300rpx 0 0;
-  font-size: 28rpx;
-  color: #999;
-}
-.order_item.data-v-7297a9c4 {
+.order_item.data-v-6036b684 {
   background: #fff;
   padding: 25rpx;
   -webkit-box-sizing: border-box;
@@ -38,7 +32,7 @@
   overflow: hidden;
   margin-bottom: 20rpx;
 }
-.order_item .order_top.data-v-7297a9c4 {
+.order_item .order_top.data-v-6036b684 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -54,45 +48,45 @@
     border-bottom: 1px solid #F7F7F9;
     padding-bottom: 20rpx;
 }
-.order_item .order_top view.data-v-7297a9c4 {
+.order_item .order_top view.data-v-6036b684 {
       color: #797979;
       font-size: 22rpx;
 }
-.order_item .order_top view image.data-v-7297a9c4 {
+.order_item .order_top view image.data-v-6036b684 {
         display: inline-block;
         vertical-align: middle;
         margin: 0 10rpx 5rpx 0;
         width: 26rpx;
         height: 26rpx !important;
 }
-.order_item .order_top text.data-v-7297a9c4 {
+.order_item .order_top text.data-v-6036b684 {
       font-size: 22rpx;
 }
-.order_item .order_top text.active.data-v-7297a9c4 {
+.order_item .order_top text.active.data-v-6036b684 {
         color: #fa3930;
 }
-.order_item .order_info.data-v-7297a9c4 {
+.order_item .order_info.data-v-6036b684 {
     overflow: hidden;
     padding: 20rpx 0 25rpx;
     border-bottom: 1px solid #F7F7F9;
 }
-.order_item .order_info .oi_left.data-v-7297a9c4 {
+.order_item .order_info .oi_left.data-v-6036b684 {
       float: left;
       margin-right: 30rpx;
       width: 140rpx;
       height: 140rpx;
       border: 1px solid #EAEAEA;
 }
-.order_item .order_info .oi_left image.data-v-7297a9c4 {
+.order_item .order_info .oi_left image.data-v-6036b684 {
         display: block;
         width: 139rpx;
         height: 139rpx !important;
 }
-.order_item .order_info .oi_center.data-v-7297a9c4 {
+.order_item .order_info .oi_center.data-v-6036b684 {
       float: left;
       width: 420rpx;
 }
-.order_item .order_info .oi_center .oi_title.data-v-7297a9c4 {
+.order_item .order_info .oi_center .oi_title.data-v-6036b684 {
         color: #1f1f1f;
         font-size: 28rpx;
         margin: 10rpx 0 5rpx;
@@ -101,7 +95,7 @@
            text-overflow: ellipsis;
         white-space: nowrap;
 }
-.order_item .order_info .oi_center .oi_info.data-v-7297a9c4, .order_item .order_info .oi_center .oi_type.data-v-7297a9c4 {
+.order_item .order_info .oi_center .oi_info.data-v-6036b684, .order_item .order_info .oi_center .oi_type.data-v-6036b684 {
         color: #747474;
         font-size: 22rpx;
         margin-bottom: 20rpx;
@@ -110,23 +104,23 @@
            text-overflow: ellipsis;
         white-space: nowrap;
 }
-.order_item .order_info .oi_center .oi_type.data-v-7297a9c4 {
+.order_item .order_info .oi_center .oi_type.data-v-6036b684 {
         margin-bottom: 0;
 }
-.order_item .order_info .oi_right.data-v-7297a9c4 {
+.order_item .order_info .oi_right.data-v-6036b684 {
       float: right;
       text-align: right;
 }
-.order_item .order_info .oi_right .oi_price.data-v-7297a9c4 {
+.order_item .order_info .oi_right .oi_price.data-v-6036b684 {
         color: #797979;
         font-size: 24rpx;
         margin: 10rpx 0 6rpx;
 }
-.order_item .order_info .oi_right .oi_num.data-v-7297a9c4 {
+.order_item .order_info .oi_right .oi_num.data-v-6036b684 {
         color: #868686;
         font-size: 20rpx;
 }
-.order_item .order_bottom.data-v-7297a9c4 {
+.order_item .order_bottom.data-v-6036b684 {
     overflow: hidden;
     display: -webkit-box;
     display: -webkit-flex;
@@ -142,18 +136,18 @@
             align-items: center;
     margin-top: 20rpx;
 }
-.order_item .order_bottom .ob_price.data-v-7297a9c4 {
+.order_item .order_bottom .ob_price.data-v-6036b684 {
       color: #797979;
       font-size: 22rpx;
 }
-.order_item .order_bottom .ob_price text.data-v-7297a9c4 {
+.order_item .order_bottom .ob_price text.data-v-6036b684 {
         color: #fa3930;
         font-size: 26rpx;
 }
-.order_item .order_bottom .ob_btn.data-v-7297a9c4 {
+.order_item .order_bottom .ob_btn.data-v-6036b684 {
       overflow: hidden;
 }
-.order_item .order_bottom .ob_btn button.data-v-7297a9c4 {
+.order_item .order_bottom .ob_btn button.data-v-6036b684 {
         float: left;
         color: #333;
         font-size: 24rpx;
@@ -161,14 +155,14 @@
         border: 1px solid #9B9B9B;
         margin-left: 25rpx;
 }
-.order_item .order_bottom .ob_btn button.data-v-7297a9c4:active {
+.order_item .order_bottom .ob_btn button.data-v-6036b684:active {
           color: #fa3930;
           border: 1px solid #fa3930;
 }
-.order_item .order_bottom .ob_btn button.data-v-7297a9c4:after {
+.order_item .order_bottom .ob_btn button.data-v-6036b684:after {
           border: 0;
 }
-.pay_shadow.data-v-7297a9c4 {
+.pay_shadow.data-v-6036b684 {
   display: none;
   position: fixed;
   width: 100%;
@@ -178,10 +172,10 @@
   background: rgba(0, 0, 0, 0.5);
   z-index: 38;
 }
-.pay_shadow.active.data-v-7297a9c4 {
+.pay_shadow.active.data-v-6036b684 {
     display: block;
 }
-.pay_type_box.data-v-7297a9c4 {
+.pay_type_box.data-v-6036b684 {
   position: fixed;
   width: 60%;
   left: 50%;
@@ -191,8 +185,7 @@
           transform: translateX(-50%);
   z-index: 40;
   background: #fff;
-  -webkit-border-radius: 10rpx;
-          border-radius: 10rpx;
+  border-radius: 10rpx;
   padding: 50rpx 30rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -208,23 +201,23 @@
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
 }
-.pay_type_box.active.data-v-7297a9c4 {
+.pay_type_box.active.data-v-6036b684 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
 }
-.pay_type_box .pay_title.data-v-7297a9c4 {
+.pay_type_box .pay_title.data-v-6036b684 {
     width: 100%;
     text-align: center;
     font-size: 30rpx;
     margin-bottom: 50rpx;
 }
-.pay_type_box .pt_item.data-v-7297a9c4 {
+.pay_type_box .pt_item.data-v-6036b684 {
     font-size: 24rpx;
     text-align: center;
 }
-.pay_type_box .pt_item image.data-v-7297a9c4 {
+.pay_type_box .pt_item image.data-v-6036b684 {
       display: block;
       width: 74rpx;
       height: 69rpx;

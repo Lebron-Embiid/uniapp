@@ -25,40 +25,55 @@
 		data(){
 			return{
 				title: "",
-				photos: []
+				photos: [],
+				isClick: 0
 			}
 		},
 		methods:{
 			selectPhoto: function(e){
 				var that = this;
 				uni.chooseImage({
-					count: 1, //默认9
+					count: 9, //默认9
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: function (res) {
-						console.log(res.tempFilePaths[0])
-						uni.uploadFile({
-							url: that.$api+'default/upload-image', //图片接口
-							filePath: res.tempFilePaths[0],
-							name: 'image',
-							success: (uploadFileRes) => {
-								var data = JSON.parse(uploadFileRes.data);
-								if(data.code == 0){
+						console.log(res.tempFilePaths);
+						uni.showLoading({
+							title: "上传中"
+						})
+						for(let i in res.tempFilePaths){
+							console.log(res.tempFilePaths[i]);
+							uni.uploadFile({
+								url: that.$api+'default/upload-image', //图片接口
+								filePath: res.tempFilePaths[i],
+								name: 'image',
+								success: (uploadFileRes) => {
+									var data = JSON.parse(uploadFileRes.data);
+									if(data.code == 0){
+											// var type=/\.[^\.]+$/.exec(url)[0]; //获取后缀
+											// var type = "."+data.data.extension;
+											// getApp().globalData.pic_type = type;
+											// uploadFile(res.tempFilePaths[0]);
+										if(that.photos.length >= 9){
+											uni.showToast({
+												title: "最多发布图片9张",
+												icon: 'none'
+											})
+											return false;
+										}
 										var url = data.data.url;
-										// var type=/\.[^\.]+$/.exec(url)[0]; //获取后缀
-										// var type = "."+data.data.extension;
-										// getApp().globalData.pic_type = type;
-										// uploadFile(res.tempFilePaths[0]);
-									that.photos.push(url);
-								}else{
-									uni.showToast({
-										title:data.msg,
-										icon:'none',
-									});
+										that.photos.push(url);
+									}else{
+										uni.showToast({
+											title:data.msg,
+											icon:'none',
+										});
+									}
 								}
-								 
-							}
-						});
+							});
+						}
+						uni.hideLoading();
+						
 // 						var len = res.tempFilePaths.length;
 // 						for(var i=0;i<len;i++){
 // 							uni.getImageInfo({
@@ -70,7 +85,7 @@
 // 							that.photos.push(res.tempFilePaths[i])
 // 						}
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',
@@ -110,12 +125,15 @@
 			}, 1000);
 		},
 		onNavigationBarButtonTap: function(){
+			var that = this;
 			uni.showModal({
 				title: "提示",
 				content: "确定发布？",
 				success: (res) => {
 					if(res.confirm){
-						var that = this;
+						if(that.isClick == 1){
+							return false;
+						}
 						if(that.photos.length == 0){
 							uni.showToast({
 								title: "请上传图片！",
@@ -147,6 +165,7 @@
 								'content-type': 'application/x-www-form-urlencoded'
 							},
 							success: res => {
+								that.isClick = 1;
 								if(res.data.code == 0){
 									uni.showToast({
 										title: res.data.msg,
@@ -160,7 +179,7 @@
 									},1500)
 								}
 							},
-							fail: () => {
+							fail: (res) => {
 								uni.showToast({
 									title:res.data.msg,
 									icon:'none',
@@ -239,8 +258,5 @@
 			height: 47upx !important;
 			margin: 0 auto 10upx;
 		}
-	}
-	.item_box:nth-of-type(3n){
-		margin-right: 0;
 	}
 </style>

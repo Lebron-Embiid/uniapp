@@ -6,8 +6,7 @@
 .imt-audio {
 	padding: 30rpx;
 	background: #fff;
-	-webkit-border-radius: 20rpx;
-	        border-radius: 20rpx;
+	border-radius: 20rpx;
 }
 .audio-wrapper {
 	display: -webkit-box;
@@ -51,8 +50,7 @@
 	font-size: 40rpx;
 	line-height: 1;
 	border: 4rpx solid;
-	-webkit-border-radius: 50%;
-	        border-radius: 50%;
+	border-radius: 50%;
 	padding: 10rpx;
 }
 .audio-control-prev {

@@ -161,7 +161,7 @@
 							});
 						}
 					},
-					fail: () => {
+					fail: (res) => {
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none',

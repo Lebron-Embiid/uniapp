@@ -24,10 +24,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.status_bar.data-v-d11f13e2, .top_view.data-v-d11f13e2 {
+.status_bar.data-v-2f75a991, .top_view.data-v-2f75a991 {
   background: #fff !important;
 }
-.search_form.data-v-d11f13e2 {
+.search_form.data-v-2f75a991 {
   padding: 10rpx 20rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -45,14 +45,13 @@
       -ms-flex-align: center;
           align-items: center;
 }
-.search_form view.data-v-d11f13e2 {
+.search_form view.data-v-2f75a991 {
     width: 83%;
     background: #eee;
-    -webkit-border-radius: 10rpx;
-            border-radius: 10rpx;
+    border-radius: 10rpx;
     position: relative;
 }
-.search_form view image.data-v-d11f13e2 {
+.search_form view image.data-v-2f75a991 {
       display: block;
       position: absolute;
       left: 20rpx;
@@ -64,39 +63,39 @@
       width: 31rpx;
       height: 31rpx !important;
 }
-.search_form view input.data-v-d11f13e2 {
+.search_form view input.data-v-2f75a991 {
       display: block;
       color: #333;
       font-size: 28rpx;
       padding: 6rpx 20rpx 6rpx 70rpx;
 }
-.search_form button.data-v-d11f13e2 {
+.search_form button.data-v-2f75a991 {
     width: 15%;
     padding: 0;
     margin: 0;
     font-size: 28rpx;
     background: none;
 }
-.search_form button.data-v-d11f13e2:after {
+.search_form button.data-v-2f75a991:after {
       border: 0;
 }
-.search_content.data-v-d11f13e2 {
+.search_content.data-v-2f75a991 {
   padding: 30rpx 20rpx;
   border-top: 1px solid #eee;
 }
-.search_content .search_item.data-v-d11f13e2 {
+.search_content .search_item.data-v-2f75a991 {
     padding-bottom: 10rpx;
     border-bottom: 1px solid #eee;
     overflow: hidden;
 }
-.search_content .search_item image.data-v-d11f13e2 {
+.search_content .search_item image.data-v-2f75a991 {
       display: block;
       float: left;
       width: 150rpx;
       height: 130rpx !important;
       margin-right: 30rpx;
 }
-.search_content .search_item .si_title.data-v-d11f13e2 {
+.search_content .search_item .si_title.data-v-2f75a991 {
       color: #160c11;
       font-size: 22rpx;
       overflow: hidden;
@@ -105,7 +104,7 @@
       white-space: nowrap;
       margin: 10rpx 0 5rpx;
 }
-.search_content .search_item .si_info.data-v-d11f13e2 {
+.search_content .search_item .si_info.data-v-2f75a991 {
       color: #7d7d7d;
       font-size: 20rpx;
       overflow: hidden;
@@ -114,11 +113,11 @@
       white-space: nowrap;
       margin: 8rpx 0 15rpx;
 }
-.search_content .search_item .si_price.data-v-d11f13e2 {
+.search_content .search_item .si_price.data-v-2f75a991 {
       color: #00001f;
       font-size: 24rpx;
 }
-.search_content .search_item .si_price text.data-v-d11f13e2 {
+.search_content .search_item .si_price text.data-v-2f75a991 {
         float: right;
         color: #4d4d4d;
         font-size: 18rpx;
