@@ -1,6 +1,7 @@
 {
   "navigationStyle": "custom",
   "navigationBarTitleText": "",
+  "enablePullDownRefresh": true,
   "pullToRefresh": {
     "support": true,
     "color": "#00001f",

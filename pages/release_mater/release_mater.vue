@@ -49,6 +49,7 @@
 								name: 'image',
 								success: (uploadFileRes) => {
 									var data = JSON.parse(uploadFileRes.data);
+									console.log(data)
 									if(data.code == 0){
 											// var type=/\.[^\.]+$/.exec(url)[0]; //获取后缀
 											// var type = "."+data.data.extension;

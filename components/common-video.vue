@@ -19,6 +19,7 @@
 				</block>
 			</view>
 		</view>
+		<view class="down_process" :class="[isDown == true?'active':'']">下载中: {{process_num}}</view>
 	</view>
 </template>
 
@@ -26,7 +27,8 @@
 	export default{
 		data(){
 			return{
-				
+				process_num: '',
+				isDown: false
 			}
 		},
 		props:{
@@ -63,14 +65,16 @@
 				});
 			},
 			toDownload: function(src){
+				var that = this;
 				uni.showModal({
 					title: "提示",
 					content: "确认下载该视频？",
 					success: (res) => {
 						if(res.confirm){
-							uni.showLoading({
-								title: '下载中'
-							})
+							that.isDown = true;
+							// uni.showLoading({
+							// 	title: '下载中:'+ that.process
+							// })
 							console.log(src);
 							// uni.downloadFile({
 							// 	url: src, //仅为示例，并非真实的资源
@@ -86,9 +90,7 @@
 							// 	}
 							// });
 							
-							
-							
-							uni.downloadFile({
+							const downloadTask = uni.downloadFile({
 								url: src,
 								success: (res) => {
 									if (res.statusCode === 200) {
@@ -96,7 +98,7 @@
 										uni.saveVideoToPhotosAlbum({
 											filePath: res.tempFilePath,
 											success: function () {
-												uni.hideLoading();
+												// uni.hideLoading();
 												uni.showToast({
 													title: '下载完成',
 													icon: 'none'
@@ -113,20 +115,21 @@
 								}
 							});
 							
-// 							downloadTask.onProgressUpdate((res) => {
-// 								uni.showLoading({
-// 									title: '下载中: ' + res.progress +'%'
-// 								})
-// 								// console.log('下载进度' + res.progress);
-// 								// console.log('已经下载的数据长度' + res.totalBytesWritten);
-// 								// console.log('预期需要下载的数据总长度' + res.totalBytesExpectedToWrite);
-// 
-// 								// 测试条件，取消下载任务。
-// 								if (res.progress == 100) {
-// 									uni.hideLoading();
-// 									// downloadTask.abort();
-// 								}
-// 							});
+							downloadTask.onProgressUpdate((res) => {
+								console.log('下载进度' + res.progress);
+								// console.log('已经下载的数据长度' + res.totalBytesWritten);
+								// console.log('预期需要下载的数据总长度' + res.totalBytesExpectedToWrite);
+
+								// 测试条件，取消下载任务。
+								if (res.progress == 100) {
+									that.process_num = '';
+									that.isDown = false;
+									// uni.hideLoading();
+									// downloadTask.abort();
+								}else{
+									that.process_num = res.progress + '%'
+								}
+							});
 						}
 					},
 					fail: (err) => {
@@ -138,5 +141,24 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.down_process{
+		position: fixed;
+		display: inline-block;
+		padding: 30upx;
+		box-sizing: border-box;
+		border-radius: 10upx;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%,-50%);
+		background: rgba(0,0,0,.8);
+		color: #fff;
+		font-size: 32upx;
+		text-align: center;
+		display: none;
+		z-index: 10;
+	}
+	.down_process.active{
+		display: block;
+	}
 </style>

@@ -95,11 +95,11 @@
 					success: function (res) {
 						if(res.tapIndex == 0){
 							that.pay_type = 0;
-							var url =  "http://yl.demenk.com/wxpayv3/index.php"; 
+							var url =  "http://app.youlan-china.com/wxpayv3/index.php"; 
 							var provider = "wxpay";
 						}else{
 							that.pay_type = 1;
-							var url =  "http://yl.demenk.com/alipayrsa2/index.php";
+							var url =  "http://app.youlan-china.com/alipayrsa2/index.php";
 							var provider = "alipay";
 						}
 						uni.request({  

@@ -43,7 +43,7 @@
 		methods: {
 		    bindLogin() {
 				var that = this;
-				if (that.phoneno.length != 11) {
+				if (this.phoneno.length != 11) {
 				     uni.showToast({
 				        icon: 'none',
 				        title: '手机号不正确'
@@ -53,8 +53,8 @@
 				uni.request({
 				    url: that.$api+'passport/mobile-login',
 				    data: {
-						contact_way:that.phoneno,
-						password:that.password
+						contact_way:this.phoneno,
+						password:this.password
 					},
 					method: 'POST',
 					dataType:'json',
@@ -75,15 +75,6 @@
 										uni.getUserInfo({
 											provider: "weixin",
 											success: function(infoRes) {
-											if(infoRes.userInfo.nickName == ""){
-												infoRes.userInfo.nickName = that.phoneno;
-											}
-											if(infoRes.userInfo.openId == ""){
-												infoRes.userInfo.openId = that.phoneno;
-											}
-											if(infoRes.userInfo.avatarUrl == ""){
-												infoRes.userInfo.avatarUrl = "/web/statics/images/avatar.png";
-											}
 											 uni.request({
 												url: that.$api+'user/agent-information&access_token='+access_token,
 												dataType: "json",

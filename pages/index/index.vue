@@ -181,11 +181,10 @@
 		},
 		onShow:function(){
 			var that = this;			
-			console.log(getApp().globalData.mobile);
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
 			that.$user_name = uni.getStorageSync("user_name");
-			if(that.$access_token == ""){
+			if(that.$access_token == "" || that.$access_token == undefined){
 				uni.showToast({
 					title: "请先登录！",
 					icon: "none",

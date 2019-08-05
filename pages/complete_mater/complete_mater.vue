@@ -200,7 +200,7 @@
 					success: function (res) {
 						console.log(JSON.stringify(res.tempFilePaths));
 						var uploadCard1 =  uni.uploadFile({
-							url: that.$api+'default/upload-image', //图片接口
+							url: that.$api+'default/upload-card', //图片接口
 							filePath: res.tempFilePaths[0],
 							name: 'image',
 							success: (uploadFileRes) => {
@@ -228,7 +228,7 @@
 					success: function (res) {
 						console.log(JSON.stringify(res.tempFilePaths));
 						uni.uploadFile({
-							url: that.$api+'default/upload-image', //图片接口
+							url: that.$api+'default/upload-card', //图片接口
 							filePath: res.tempFilePaths[0],
 							name: 'image',
 							success: (uploadFileRes) => {
@@ -402,6 +402,20 @@
 			var that = this;
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
+			console.log(that.$access_token);
+			if(that.$access_token == "" || that.$access_token == undefined){
+				uni.showToast({
+					title: "请先登录！",
+					icon: "none",
+					duration: 2000
+				})
+				setTimeout(function(){
+					uni.reLaunch({
+						url: "/pages/login/login"
+					})
+				},2000)
+				return false;
+			}
 			uni.request({
 				url: that.$api+'user/setting/&access_token='+that.$access_token,
 				dataType: "json",

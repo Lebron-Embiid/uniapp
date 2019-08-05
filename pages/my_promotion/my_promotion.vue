@@ -2,7 +2,7 @@
 	<view class="my_promotion_box">
 		<image :src="code_bg" class="code_bg" @longpress="toDownImg" mode="widthFix"></image>
 		<!-- <image :src="code_img[0]" class="code_img" @tap="previewImg" mode="widthFix"></image> -->
-		<text class="invite_txt copy">您的邀请人编号：呦蓝VIP不设邀请码</text>
+		<text class="invite_txt copy">您的邀请人编号：{{invitation_code}}</text>
 		<!-- {{invitation_code}} -->
 		<block v-if="isproxy != 0">
 			<text class="invite_txt invite_txt1" style="bottom: 77px" >选择邀请码复制，长按图片下载 </text>
@@ -14,7 +14,7 @@
 	export default{
 		data(){
 			return{
-				code_bg: "http://yl.demenk.com/web/statics/images/tuiguang_bg.jpg",
+				code_bg: "http://app.youlan-china.com/web/statics/images/tuiguang_bg.jpg",
 				code_img: ["../../static/code_img.jpg"],
 				invitation_code: "",
 				isproxy: 0

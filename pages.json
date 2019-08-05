@@ -395,6 +395,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true,
 				"app-plus":{
 					"pullToRefresh": {
                         "support": true,

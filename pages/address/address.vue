@@ -17,8 +17,17 @@
 			<text>所在地区</text>
 			<!-- <cityPicker :themeColor="themeColor" ref="cityPicker" :pickerValueDefault="cityPickerValueDefault"
 			@onCancel="onCancel" @onConfirm="onConfirm"></cityPicker> -->
-			<view class="acc_right">
-				<view><addressd @changes="childClick"></addressd><!-- {{pickerText}} --></view>
+			<w-picker 
+				mode="region" 
+				:defaultVal="cityPickerValueDefault" 
+				@confirm="onConfirm" 
+				ref="region" 
+				:themeColor="themeColor" 
+			></w-picker>
+			<view class="acc_right" @tap="toShowRegion">
+				<view>
+				{{pickerText}}
+				<!-- <addressd @changes="childClick" ref="address"></addressd> --><!-- {{pickerText}} --></view>
 				<image src="../../static/next.png" mode="widthFix"></image>
 			</view>
 		</view>
@@ -44,6 +53,7 @@
 <script>
 	import cityPicker from '@/components/citypicker/cityPicker.vue'
 	import addressd from "@/components/jm-address/jm-address.vue"
+	import wPicker from "@/components/w-picker/w-picker.vue";
 	export default{
 		data(){
 			return{
@@ -54,13 +64,17 @@
 				pic: [],
 				name: "",
 				phone: "",
+				province_id: "",
+				city_id: "",
+				district_id: "",
 				detail: "",
 				id:0
 			}
 		},
 		components:{
 			cityPicker,
-			addressd
+			addressd,
+			wPicker
 		},
 		methods:{
 			childClick(e) {
@@ -69,6 +83,19 @@
 				this.district_id = e.district_id;
 				console.log(this.province_id,this.city_id,this.district_id)
             },
+			toShowRegion(e){
+				this.$refs.region.show();
+			},
+			onConfirm(e){
+				console.log(e);
+				var that = this;
+				that.cityPickerValueDefault = e.defaultVal;
+				this.$refs.region.pickVal = e.defaultVal;
+				that.pickerText = e.checkArr[0]+'-'+e.checkArr[1]+'-'+e.checkArr[2];
+				that.province_id = e.checkValue[0];
+				that.city_id = e.checkValue[1];
+				that.district_id = e.checkValue[2];
+			},
 
 			// onCancel(e) {
    //              this.$refs.cityPicker.pickerCancel();
@@ -107,6 +134,46 @@
 			//添加
 			addAddress(e){
 				var that = this;
+				if(that.name == ''){
+					uni.showToast({
+						title: '收货人不能为空',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(that.phone == ''){
+					uni.showToast({
+						title: '联系电话不能为空',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(!(/^1[3456789]\d{9}$/.test(that.phone))){
+					uni.showToast({
+						title: '请输入正确的手机号码',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(that.province_id == '' || that.city_id == '' || that.district_id == ''){
+					uni.showToast({
+						title: '所在地区不能为空',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(that.detail == ''){
+					uni.showToast({
+						title: '详细地址不能为空',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
 				uni.request({
 					url: that.$api+'user/address-save&access_token='+that.$access_token,
 					method: 'POST',
@@ -123,16 +190,16 @@
 						'content-type': 'application/x-www-form-urlencoded'
 					},
 					success: res => {
-							uni.showToast({
-								title: res.data.msg,
-								icon: 'none',
-								duration: 1500
+						uni.showToast({
+							title: res.data.msg,
+							icon: 'none',
+							duration: 1500
+						})
+						setTimeout(function(){
+							uni.navigateBack({
+							 delta:1
 							})
-							setTimeout(function(){
-								uni.navigateBack({
-								 delta:1
-								})
-							},1500)
+						},1500)
 					},
 					fail: (res) => {
 						uni.showToast({
@@ -147,6 +214,46 @@
 			//修改
 			editAddress(e){
 				var that = this;
+				if(that.name == ''){
+					uni.showToast({
+						title: '收货人不能为空',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(that.phone == ''){
+					uni.showToast({
+						title: '联系电话不能为空',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(!(/^1[3456789]\d{9}$/.test(that.phone))){
+					uni.showToast({
+						title: '请输入正确的手机号码',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(that.province_id == '' || that.city_id == '' || that.district_id == ''){
+					uni.showToast({
+						title: '所在地区不能为空',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
+				if(that.detail == ''){
+					uni.showToast({
+						title: '详细地址不能为空',
+						icon: 'none',
+						duration: 1500
+					})
+					return false;
+				}
 				uni.request({
 					url: that.$api+'user/address-edit&access_token='+that.$access_token,
 					method: 'POST',
@@ -201,19 +308,21 @@
 				},
 				success: res => {
 					console.log(res)
-					that.id = res.data.data.address_id,
-					that.name = res.data.data.name,
-					that.phone = res.data.data.mobile,
-					that.arr[0] = res.data.data.district.province.id,
-					that.arr[1] =  res.data.data.district.city.id,
-					that.pic[0] =  res.data.data.district.province.name,
-					that.pic[1] = res.data.data.district.city.name,
-					that.pic[2] =  res.data.data.district.district.name,
-					that.arr[2] =  res.data.data.district.district.id,
-					that.detail =  res.data.data.detail 
+					that.id = res.data.data.address_id;
+					that.name = res.data.data.name;
+					that.phone = res.data.data.mobile;
+					that.arr[0] = res.data.data.district.province.id;
+					that.arr[1] =  res.data.data.district.city.id;
+					that.pic[0] =  res.data.data.district.province.name;
+					that.pic[1] = res.data.data.district.city.name;
+					that.pic[2] =  res.data.data.district.district.name;
+					that.arr[2] =  res.data.data.district.district.id;
+					that.detail =  res.data.data.detail;
+					if(that.pic[0] != '' || that.pic[1] != '' || that.pic[2] != ''){
+						that.pickerText = that.pic[0]+'-'+that.pic[1]+'-'+that.pic[2];
+					}
+					console.log(that.arr,that.pic);
 				},
-				
-				 
 				fail: (res) => {
 					uni.showToast({
 						title:res.data.msg,

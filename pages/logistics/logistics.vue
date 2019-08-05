@@ -20,6 +20,9 @@
 						<view class="li_time">{{item.AcceptTime}}</view>
 					</view>
 				</view>
+				<block v-if="logists == '' || logists.length == 0">
+					<view class="not_have">暂无数据</view>
+				</block>
 			</view>
 		</view>
 	</view>

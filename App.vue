@@ -38,11 +38,26 @@
 		globalData:{
 			pic_type: "",
 			url: "",
-			audio: ""
+			audio: "",
+			and_ios: 0
 		},
 		onLaunch: function () {
 			this.$options.globalData.audio = uni.createInnerAudioContext();
 			
+			switch(uni.getSystemInfoSync().platform){
+				case 'android':
+					console.log('运行Android上')
+					this.$options.globalData.and_ios = 0;
+					break;
+				case 'ios':
+					console.log('运行iOS上')
+					this.$options.globalData.and_ios = 1;
+					break;
+				default:
+					console.log('运行在开发者工具上')
+					break;
+			}
+			console.log(this.$options.globalData.and_ios);
 			console.log('App Launch');
 			//app启动时打开启动广告页
 // 			var w = plus.webview.open(
@@ -64,7 +79,7 @@
 				console.log("当前应用版本："+wgtVer); 
 				uni.request({
 				    url: that.$api+'default/edition', //仅为示例，并非真实接口地址。
-				    data: {number:wgtVer},
+				    data: {number:wgtVer,type:that.$options.globalData.and_ios},
 					method: 'POST',
 					dataType:'json',
 					header: {

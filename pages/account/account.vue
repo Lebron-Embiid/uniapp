@@ -255,10 +255,10 @@
 							  }else{	
 								  if(that.payment == 0){
 									  var provider = "wxpay";
-									  var url = "http://yl.demenk.com/wxpayv3/index.php";
+									  var url = "http://app.youlan-china.com/wxpayv3/index.php";
 								  }else{
 									  var provider = "alipay";
-									  var url = "http://yl.demenk.com/alipayrsa2/index.php";
+									  var url = "http://app.youlan-china.com/alipayrsa2/index.php";
 								  } 
 									uni.request({ 
 										url: url,

@@ -134,6 +134,47 @@
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
 		},
+		onPullDownRefresh() {
+			var that = this;
+			that.page = 1;
+			that.page_count = 1;
+			that.$access_token = uni.getStorageSync("access_token");
+			that.$level = uni.getStorageSync("level");
+			uni.startPullDownRefresh();
+			uni.showLoading({
+				title: "加载中"
+			})
+			uni.request({
+				url: that.$api+'default/search&keyword='+that.keyword,
+				method: 'GET',
+				success: res => {
+					var list = [];
+					for(let i in res.data.data.list){
+						var item = res.data.data.list;
+						list.push({
+							id: item[i].id,
+							src: item[i].pic_url,
+							title: item[i].name,
+							info: "",
+							price: item[i].price,
+							type: item[i].weight,
+						})
+					}
+					that.page_count = res.data.data.page_count;
+					that.searchList = list;
+					uni.hideLoading()
+					uni.stopPullDownRefresh();
+					console.log(that.searchList)
+				},
+				fail: (res) => {
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})					
+				}
+			});
+		},
 		//上拉触底
 		onReachBottom(){	
 			var that = this;		

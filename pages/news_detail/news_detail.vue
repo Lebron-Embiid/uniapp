@@ -35,7 +35,7 @@
 			<!-- #endif -->
 			
 			<!-- #ifdef H5 -->  
-			<view><image src="http://yl.demenk.com/web/statics/images/youlan_code.png" style="display: block;width: 50%;margin: 20upx auto;" mode="widthFix"></image></view>
+			<view><image src="http://app.youlan-china.com/web/statics/images/youlan_code.png" style="display: block;width: 50%;margin: 20upx auto;" mode="widthFix"></image></view>
 			<!-- #endif -->
 		</view>
 	</view>
@@ -93,7 +93,7 @@
 								provider: "weixin",
 								scene: "WXSceneSession",
 								type: 0,
-								href: "http://yl.demenk.com/web/news/#/pages/news_detail/news_detail?id="+that.id,
+								href: "http://app.youlan-china.com/web/news/#/pages/news_detail/news_detail?id="+that.id,
 								title: that.title,
 								summary: that.describe,
 								imageUrl: that.cover_pic,
@@ -110,7 +110,7 @@
 								provider: "weixin",
 								scene: "WXSenceTimeline",
 								type: 0,
-								href: "http://yl.demenk.com/web/news/#/pages/news_detail/news_detail?id="+that.id,
+								href: "http://app.youlan-china.com/web/news/#/pages/news_detail/news_detail?id="+that.id,
 								title: that.title,
 								summary: that.describe,
 								imageUrl: that.cover_pic,
