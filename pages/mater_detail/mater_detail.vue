@@ -95,7 +95,7 @@
 				// 			});
 				// 		}else if(res.tapIndex == 1){
 						uni.showLoading({
-							title: "正在下载中"
+							title: "正下载中"
 						})
 							var len = that.maters.length;
 							for(let i=0;i<len;i++){
@@ -181,6 +181,10 @@
 					content: "确定下载该图片？",
 					success: (res) => {
 						if(res.confirm){
+							uni.showLoading({
+								title: "下载中"
+							})
+							
 							uni.request({
 								url: that.$api+'user/order-source&access_token='+that.$access_token,
 								method: 'POST',
@@ -194,12 +198,40 @@
 									'content-type': 'application/x-www-form-urlencoded'
 								},
 								success: res => {
-									var data = res.data 
+									var data = res.data;
 									if(data.code == 0){
-										console.log(111)
-										uni.saveImageToPhotosAlbum({					
-											filePath: that.maters[e].cover_pic,				                
+										console.log(that.maters[e].cover_pic);
+										// uni.downloadFile({
+										// 	url: that.maters[e].cover_pic,
+										// 	success: (ress) => {
+										// 		if (ress.statusCode === 200) {
+										// 			console.log(ress.tempFilePath);
+										// 			uni.saveImageToPhotosAlbum({
+										// 				filePath: ress.tempFilePath,
+										// 				success: function () { 
+										// 					uni.hideLoading();
+										// 					uni.showToast({
+										// 						title: '下载成功',
+										// 						icon: 'none',
+										// 						duration: 1500
+										// 					})
+										// 				},
+										// 			})
+										// 		}
+										// 	},
+										// 	fail() {
+										// 		uni.hideLoading();
+										// 		uni.showToast({
+										// 			title: '下载失败！',
+										// 			icon: 'none',
+										// 			duration: 1500
+										// 		})
+										// 	}
+										// });
+										uni.saveImageToPhotosAlbum({
+											filePath: that.maters[e].cover_pic,
 											success: function () { 
+												uni.hideLoading();
 												uni.showToast({
 													title: '下载成功',
 													icon: 'none',
@@ -207,6 +239,7 @@
 												})
 											},
 											fail: () => {
+												uni.hideLoading();
 												uni.showToast({
 													title: '下载失败！',
 													icon: 'none',
@@ -215,6 +248,7 @@
 											}
 										});
 									}else{ 
+										uni.hideLoading();
 										uni.showToast({
 											title:data.msg,
 											icon:'none',
@@ -222,6 +256,7 @@
 									} 
 								},
 								fail: (res) => {
+									uni.hideLoading();
 									uni.showToast({
 										title:res.data.msg,
 										icon:'none',

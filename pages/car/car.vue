@@ -8,7 +8,7 @@
 		</view>
 		
 		<!-- 购物车商品 -->
-		<view v-for="(item,index) in cart" :key="index" style="background-color: #FFFFFF;">
+		<view v-if="!shownullcart" v-for="(item,index) in cart" :key="index" style="background-color: #FFFFFF;">
 			<!-- 按营销活动分组的商品 -->
 			<view>
 				<scroll-view style="width: 100%;white-space: nowrap;border-bottom: 1px solid #F6F6F6;" scroll-x= "true" :scroll-left='scrollposition' scroll-with-animation="true">
@@ -375,11 +375,15 @@
 								success: res => {
 									// if(res.data.code == 1){
 										// 删除购物车商品时 更新合计金额
+										// uni.showLoading({
+										// 	title: '正在删除'
+										// })
 										uni.showToast({
 											title:res.data.msg,
 											icon:'none',
+											duration: 2000
 										});
-										uni.startPullDownRefresh();
+										// uni.startPullDownRefresh();
 										for (let i = 0; i < that.cart.length; i++) {
 											if (that.cart[i].id == itemid){
 												// 勾选状态下更新数量和金额

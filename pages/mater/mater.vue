@@ -171,7 +171,9 @@
 					},
 					success: res => {
 						var photo_list = [];
+						console.log(222);
 						var item = res.data.data;
+						console.log(item);
 						for(let i in item.list){
 							photo_list.push({
 								id: item.list[i].id,
@@ -261,9 +263,11 @@
 		},
 		onLoad(opt) {
 			var that = this;
+						console.log(6666);
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
 			setTimeout(function () {
+						console.log(3333);
 			uni.request({
 				url: that.$api+'default/source-list&access_token='+that.$access_token,
 				method: 'GET',
@@ -273,7 +277,9 @@
 				},
 				success: res => {
 					var photo_list = [];
+						console.log(1111);
 					var item = res.data.data;
+						console.log(item);
 					for(let i in item.list){
 						photo_list.push({
 							id: item.list[i].id,
@@ -307,6 +313,7 @@
 			that.keywords_video = "";
 			setTimeout(function () {
 				if(that.currentTab == 0){
+						console.log(8888);
 					uni.request({
 						url: that.$api+'default/source-list&access_token='+that.$access_token,
 						method: 'GET',
@@ -316,7 +323,9 @@
 						},
 						success: res => {
 							var photo_list = [];
+						console.log(7777);
 							var item = res.data.data;
+						console.log(item);
 							for(let i in item.list){
 								photo_list.push({
 									id: item.list[i].id,
