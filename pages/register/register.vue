@@ -34,11 +34,11 @@
 			<text>注册</text>
 		</view>
 		
-		<!-- <view class="xieyi">
+		<view class="xieyi">
 			<image @tap="xieyitong" :src="xieyi==true?'/static/ty1.png':'/static/ty0.png'"></image>
 			<text @tap="xieyitong"> 同意</text>
-			<navigator url="blog?id=1" open-type="navigate">《软件用户协议》</navigator>
-		</view> -->
+			<navigator url="/pages/agreement/agreement" open-type="navigate">我已阅读并同意《用户协议》</navigator>
+		</view>
 	</view>
 </template>
 
@@ -120,13 +120,13 @@
 			},
 		    bindLogin() {
 				var that = this;
-// 				if (this.xieyi == false) {
-// 				    uni.showToast({
-// 				        icon: 'none',
-// 				        title: '请先阅读《软件用户协议》'
-// 				    });
-// 				    return;
-// 				}
+				if (this.xieyi == false) {
+				    uni.showToast({
+				        icon: 'none',
+				        title: '请先阅读《软件用户协议》'
+				    });
+				    return;
+				}
 				if (that.phoneno == "") {
 				    uni.showToast({
 				        icon: 'none',
@@ -212,7 +212,7 @@
 		background:rgba(63,205,235,1);
 		/* box-shadow:0upx 12upx 13upx 0upx rgba(63,205,235,0.47); */
 		border-radius:50%;
-		margin-top: 50upx;
+		margin-top: 200upx;
 		margin-left: auto;
 		margin-right: auto;
 	}

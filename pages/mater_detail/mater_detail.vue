@@ -95,51 +95,67 @@
 				// 			});
 				// 		}else if(res.tapIndex == 1){
 						uni.showLoading({
-							title: "正下载中"
+							title: "下载中"
 						})
 							var len = that.maters.length;
 							for(let i=0;i<len;i++){
-								uni.saveImageToPhotosAlbum({					
-									filePath: that.maters[i].cover_pic,				                
-									success: function () { 
-										var i_len = i+1;
-										if(i_len == len){
-											uni.setClipboardData({
-												data: that.title
-											});
-											uni.showModal({
-												title: "去微信或朋友圈分享",
-												content: "文字已复制，图片已下载到手机！",
-												confirmText: "打开微信",
-												success: (res) => {
-													if(res.confirm){
-														if (plus.os.name == 'Android') {
-																console.log(plus.os.name);
-															plus.runtime.launchApplication(
-																{
-																	pname: 'com.tencent.mm'
-																},
-																function(e) {
-																	console.log('Open system default browser failed: ' + e.message);
+								uni.downloadFile({
+									url: that.maters[i].cover_pic,
+									success: (ress) => {
+										if (ress.statusCode === 200) {
+											console.log(ress.tempFilePath);
+											uni.saveImageToPhotosAlbum({
+												filePath: ress.tempFilePath,				                
+												success: function () { 
+													var i_len = i+1;
+													if(i_len == len){
+														uni.setClipboardData({
+															data: that.title
+														});
+														uni.showModal({
+															title: "去微信或朋友圈分享",
+															content: "文字已复制，图片已下载到手机！",
+															confirmText: "打开微信",
+															success: (res) => {
+																if(res.confirm){
+																	if (plus.os.name == 'Android') {
+																			console.log(plus.os.name);
+																		plus.runtime.launchApplication(
+																			{
+																				pname: 'com.tencent.mm'
+																			},
+																			function(e) {
+																				console.log('Open system default browser failed: ' + e.message);
+																			}
+																		);
+																	} else if (plus.os.name == 'iOS') {
+																			console.log(plus.os.name);
+																		plus.runtime.launchApplication({ action: 'weixin://' }, function(e) {
+																			console.log('Open system default browser failed: ' + e.message);
+																		});
+																	}
 																}
-															);
-														} else if (plus.os.name == 'iOS') {
-																console.log(plus.os.name);
-															plus.runtime.launchApplication({ action: 'weixin://' }, function(e) {
-																console.log('Open system default browser failed: ' + e.message);
-															});
-														}
+																uni.hideLoading();
+															},
+															fail: (err) => {
+																console.log(err)
+															}
+														})
+														
 													}
-													uni.hideLoading();
 												},
-												fail: (err) => {
-													console.log(err)
+												fail: () => {
+													uni.showToast({
+														title: '下载失败！',
+														icon: 'none',
+														duration: 1500
+													})
 												}
-											})
-											
+											});
 										}
 									},
-									fail: () => {
+									fail() {
+										uni.hideLoading();
 										uni.showToast({
 											title: '下载失败！',
 											icon: 'none',
@@ -201,44 +217,25 @@
 									var data = res.data;
 									if(data.code == 0){
 										console.log(that.maters[e].cover_pic);
-										// uni.downloadFile({
-										// 	url: that.maters[e].cover_pic,
-										// 	success: (ress) => {
-										// 		if (ress.statusCode === 200) {
-										// 			console.log(ress.tempFilePath);
-										// 			uni.saveImageToPhotosAlbum({
-										// 				filePath: ress.tempFilePath,
-										// 				success: function () { 
-										// 					uni.hideLoading();
-										// 					uni.showToast({
-										// 						title: '下载成功',
-										// 						icon: 'none',
-										// 						duration: 1500
-										// 					})
-										// 				},
-										// 			})
-										// 		}
-										// 	},
-										// 	fail() {
-										// 		uni.hideLoading();
-										// 		uni.showToast({
-										// 			title: '下载失败！',
-										// 			icon: 'none',
-										// 			duration: 1500
-										// 		})
-										// 	}
-										// });
-										uni.saveImageToPhotosAlbum({
-											filePath: that.maters[e].cover_pic,
-											success: function () { 
-												uni.hideLoading();
-												uni.showToast({
-													title: '下载成功',
-													icon: 'none',
-													duration: 1500
-												})
+										uni.downloadFile({
+											url: that.maters[e].cover_pic,
+											success: (ress) => {
+												if (ress.statusCode === 200) {
+													console.log(ress.tempFilePath);
+													uni.saveImageToPhotosAlbum({
+														filePath: ress.tempFilePath,
+														success: function () { 
+															uni.hideLoading();
+															uni.showToast({
+																title: '下载成功',
+																icon: 'none',
+																duration: 1500
+															})
+														},
+													})
+												}
 											},
-											fail: () => {
+											fail() {
 												uni.hideLoading();
 												uni.showToast({
 													title: '下载失败！',
@@ -247,6 +244,25 @@
 												})
 											}
 										});
+										// uni.saveImageToPhotosAlbum({
+										// 	filePath: that.maters[e].cover_pic,
+										// 	success: function () { 
+										// 		uni.hideLoading();
+										// 		uni.showToast({
+										// 			title: '下载成功',
+										// 			icon: 'none',
+										// 			duration: 1500
+										// 		})
+										// 	},
+										// 	fail: () => {
+										// 		uni.hideLoading();
+										// 		uni.showToast({
+										// 			title: '下载失败！',
+										// 			icon: 'none',
+										// 			duration: 1500
+										// 		})
+										// 	}
+										// });
 									}else{ 
 										uni.hideLoading();
 										uni.showToast({

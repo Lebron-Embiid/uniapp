@@ -26,11 +26,15 @@
 				uni.showActionSheet({
 					itemList: ["保存图片"],
 					success: function (res) {
+						uni.showLoading({
+							title: "保存中"
+						})
 						console.log(res.tapIndex)
 						if(res.tapIndex == 0){
 							uni.saveImageToPhotosAlbum({
 								filePath: that.code_bg,
 								success: function () { 
+									uni.hideLoading();
 									uni.showToast({
 										title: '图片已保存至相册',
 										icon: 'none',

@@ -509,6 +509,12 @@
 			}
 		},
 		{
+			"path": "pages/agreement/agreement",
+			"style": {
+				"navigationBarTitleText": "用户协议"
+			}
+		},
+		{
 			"path": "pages/list/list",
 			"style": {
 				
