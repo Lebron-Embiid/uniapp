@@ -26,7 +26,7 @@
 					<view class="pc_title">{{item.title}}</view>
 					<view class="photo_content">
 						<view class="pc_item" v-for="(mater,idx) in item.maters" :key="idx">
-							<image :src="mater.cover_pic" class="c_img" mode="aspectFill"></image>
+							<image :src="mater.cover_pic" lazy-load="true" class="c_img" mode="aspectFill"></image>
 							<!-- <image src="../../static/download.png" class="download_icon" mode="widthFix"></image> -->
 						</view>
 					</view>
@@ -263,11 +263,11 @@
 		},
 		onLoad(opt) {
 			var that = this;
-						console.log(6666);
 			that.$access_token = uni.getStorageSync("access_token");
 			that.$level = uni.getStorageSync("level");
-			setTimeout(function () {
-						console.log(3333);
+			uni.showLoading({
+				title: "加载中"
+			})
 			uni.request({
 				url: that.$api+'default/source-list&access_token='+that.$access_token,
 				method: 'GET',
@@ -277,7 +277,6 @@
 				},
 				success: res => {
 					var photo_list = [];
-						console.log(1111);
 					var item = res.data.data;
 						console.log(item);
 					for(let i in item.list){
@@ -294,15 +293,16 @@
 					}
 					that.page_source_count = res.data.data.page_count;
 					that.photo_list = photo_list;
+					uni.hideLoading();
 				},
 				fail: (res) => {
+					uni.hideLoading();
 					uni.showToast({
 						title:res.data.msg,
 						icon:'none',
 					});
 				}
 			});
-			}, 1000);
 			uni.startPullDownRefresh(); 
 		},
 		onPullDownRefresh(){
@@ -311,9 +311,11 @@
 			that.page_id = 1;
 			that.keywords = "";
 			that.keywords_video = "";
+			uni.showLoading({
+				title: '加载中'
+			})
 			setTimeout(function () {
 				if(that.currentTab == 0){
-						console.log(8888);
 					uni.request({
 						url: that.$api+'default/source-list&access_token='+that.$access_token,
 						method: 'GET',
@@ -323,7 +325,6 @@
 						},
 						success: res => {
 							var photo_list = [];
-						console.log(7777);
 							var item = res.data.data;
 						console.log(item);
 							for(let i in item.list){
@@ -340,8 +341,10 @@
 							}
 							that.page_source_count = res.data.data.page_count;
 							that.photo_list = photo_list;
+							uni.hideLoading();
 						},
 						fail: (res) => {
+							uni.hideLoading();
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -372,9 +375,11 @@
 							}
 							that.page_movie_count = res.data.data.page_count;
 							that.video_list = video_list;
+							uni.hideLoading();
 							console.log(that.video_list)
 						},
 						fail: (res) => {
+							uni.hideLoading();
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -399,7 +404,7 @@
 					uni.showLoading({
 						title: "加载中"
 					})
-				   that.page = parseInt(that.page)+parseInt(1)				   
+				   that.page = parseInt(that.page)+parseInt(1);
 					uni.request({
 						url: that.$api+'default/source-list&access_token='+that.$access_token,
 						method: 'GET',
@@ -412,7 +417,7 @@
 							var photo_list = []; 
 							that.page_count = res.data.data.page_count; 
 							var item_list = res.data.data.list; 
-							  for(let i in item_list){
+							for(let i in item_list){
 							  	photo_list.push({
 							  		id: item_list[i].id,
 							  		avatar: item_list[i].avatar_url,
@@ -423,12 +428,12 @@
 							  		sign: item_list[i].type,
 							  		maters: item_list[i].cover_pic[0]
 							  	})
-							  } 
+							} 
 							that.photo_list = that.photo_list.concat(photo_list)
 							uni.hideLoading();
-						      console.log(that.photo_list)
 						},
 						fail: (res) => {
+							uni.hideLoading();
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -475,6 +480,7 @@
 							uni.hideLoading()
 						},
 						fail: (res) => {
+							uni.hideLoading();
 							uni.showToast({
 								title:res.data.msg,
 								icon:'none',
@@ -488,6 +494,7 @@
 </script>
 
 <style scoped lang="scss">
+	image{will-change: transform}
 	page{background: #f5f5f7 !important;}
 	.form_box{
 		float: none;

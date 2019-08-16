@@ -1,6 +1,4 @@
 {
-  "navigationBarTitleText": "活动资讯",
-  "usingComponents": {
-    "common-news": "/components/common-news"
-  }
+  "usingComponents": {},
+  "navigationBarTitleText": "活动资讯"
 }

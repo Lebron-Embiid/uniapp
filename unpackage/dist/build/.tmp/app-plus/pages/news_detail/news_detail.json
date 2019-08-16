@@ -1,6 +1,4 @@
 {
-  "navigationBarTitleText": "活动资讯",
-  "usingComponents": {
-    "u-parse": "/components/u-parse/u-parse"
-  }
+  "usingComponents": {},
+  "navigationBarTitleText": "活动资讯"
 }

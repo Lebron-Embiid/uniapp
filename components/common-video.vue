@@ -2,7 +2,7 @@
 	<view class="common_box">
 		<view class="video_item" v-for="(item,index) in video_list" :key="index">
 			<view class="v_poster" @click="toVideoDetail(item.id)">
-				<image :src="item.poster" class="poster_img" mode="widthFix"></image>
+				<image :src="item.poster" class="poster_img" lazy-load="true" mode="widthFix"></image>
 				<view class="v_play">
 					<image src="../../static/play_btn.png" mode="widthFix"></image>
 				</view>

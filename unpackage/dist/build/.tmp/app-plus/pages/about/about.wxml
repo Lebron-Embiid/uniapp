@@ -1,1 +1,2 @@
-<view class="about_box data-v-77cc2694"><view class="page_bg data-v-77cc2694"></view><image class="logo_img data-v-77cc2694" src="{{logo}}" mode="widthFix"></image><view class="about_title data-v-77cc2694">{{title}}</view><view class="about_content data-v-77cc2694"><block wx:if="{{content!=''}}"><block class="data-v-77cc2694"><u-parse vue-id="1" content="{{content}}" class="data-v-77cc2694" bind:__l="__l"></u-parse></block></block></view></view>
+<import src="./about.vue.wxml" />
+    <template is="2575d527" data="{{ ...$root['0'], $root }}"/>

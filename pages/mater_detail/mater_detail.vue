@@ -23,7 +23,7 @@
 		<view class="md_title">{{title}}</view>
 		<view class="photo_content">
 			<view class="pc_item" @click="downloadMater(idx)" v-for="(mater,idx) in maters" :key="idx">
-				<image :src="mater.cover_pic" class="c_img" mode="widthFix"></image>
+				<image :src="mater.cover_pic" lazy-load="true" class="c_img" mode="widthFix"></image>
 				<image src="../../static/download.png" class="download_icon" mode="widthFix"></image>
 			</view>
 		</view>

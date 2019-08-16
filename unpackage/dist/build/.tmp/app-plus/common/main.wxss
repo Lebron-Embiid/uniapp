@@ -25,6 +25,9 @@
 /* 透明度 */
 /* 文章场景相关 */
 /*每个页面公共css */
+image {
+  will-change: transform;
+}
 .page_bg {
   background: #f5f5f7 !important;
   min-height: 100%;

@@ -24,10 +24,10 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-page.data-v-4f285edc {
+page.data-v-7e753fdc {
   background: #f5f5f7 !important;
 }
-.feedback_box .section.data-v-4f285edc {
+.feedback_box .section.data-v-7e753fdc {
   background: #fff;
   border: 1px solid #E2E2E2;
   border-left: 0;
@@ -38,29 +38,29 @@ page.data-v-4f285edc {
           box-sizing: border-box;
   overflow: hidden;
 }
-.feedback_box .section.def.data-v-4f285edc {
+.feedback_box .section.def.data-v-7e753fdc {
     background: none;
     border: 0;
 }
-.feedback_box .section textarea.data-v-4f285edc {
+.feedback_box .section textarea.data-v-7e753fdc {
     display: block;
     width: 100%;
     color: #737373;
     font-size: 24rpx;
 }
-.feedback_box .section input.data-v-4f285edc {
+.feedback_box .section input.data-v-7e753fdc {
     padding: 0 25rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     color: #00001f;
     font-size: 24rpx;
 }
-.feedback_box .section text.data-v-4f285edc {
+.feedback_box .section text.data-v-7e753fdc {
     display: block;
     font-size: 24rpx;
     margin-bottom: 10rpx;
 }
-.feedback_box .btn-area button.data-v-4f285edc {
+.feedback_box .btn-area button.data-v-7e753fdc {
   width: 80%;
   color: #fff;
   font-size: 24rpx;
@@ -69,17 +69,17 @@ page.data-v-4f285edc {
   padding: 6rpx 0 8rpx;
   margin-top: 70rpx;
 }
-.release_item.data-v-4f285edc {
+.release_item.data-v-7e753fdc {
   float: left;
   margin: 0 20rpx 20rpx 0;
   position: relative;
 }
-.release_item .photo_img.data-v-4f285edc {
+.release_item .photo_img.data-v-7e753fdc {
     display: block;
     width: 220rpx;
     height: 220rpx !important;
 }
-.release_item .close_img.data-v-4f285edc {
+.release_item .close_img.data-v-7e753fdc {
     display: block;
     width: 50rpx;
     height: 50rpx !important;
@@ -88,7 +88,7 @@ page.data-v-4f285edc {
     right: 0;
     z-index: 5;
 }
-.release_btn.data-v-4f285edc {
+.release_btn.data-v-7e753fdc {
   float: left;
   border: 1px dashed #EDEDED;
   width: 220rpx;
@@ -111,7 +111,7 @@ page.data-v-4f285edc {
   color: #9e9e9e;
   font-size: 24rpx;
 }
-.release_btn image.data-v-4f285edc {
+.release_btn image.data-v-7e753fdc {
     display: block;
     width: 57rpx;
     height: 47rpx !important;

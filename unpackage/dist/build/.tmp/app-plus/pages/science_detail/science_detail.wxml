@@ -1,1 +1,2 @@
-<view class="science_detail data-v-257e7faa"><view class="page_bg data-v-257e7faa"></view><view class="si_question data-v-257e7faa">{{question}}</view><view class="si_answer data-v-257e7faa"><block wx:if="{{answer!=''}}"><block class="data-v-257e7faa"><u-parse vue-id="1" content="{{answer}}" class="data-v-257e7faa" bind:__l="__l"></u-parse></block></block></view></view>
+<import src="./science_detail.vue.wxml" />
+    <template is="2407100b" data="{{ ...$root['0'], $root }}"/>

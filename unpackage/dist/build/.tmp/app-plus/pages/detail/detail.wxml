@@ -1,1 +1,2 @@
-<view><view class="banner"><image class="banner-img" src="{{banner.image_url}}"></image><view class="banner-title">{{banner.title}}</view></view><view class="article-meta"><text class="article-author">{{banner.source}}</text><text class="article-text">发表于</text><text class="article-time">{{banner.datetime}}</text></view><view class="article-content"><rich-text nodes="{{content}}"></rich-text></view></view>
+<import src="./detail.vue.wxml" />
+    <template is="6449436b" data="{{ ...$root['0'], $root }}"/>

@@ -1,4 +1,5 @@
 {
+  "usingComponents": {},
   "navigationStyle": "custom",
   "navigationBarTitleText": "",
   "enablePullDownRefresh": true,
@@ -8,9 +9,5 @@
     "style": "circle"
   },
   "titleNView": false,
-  "softinputNavBar": "none",
-  "usingComponents": {
-    "common-swiper": "/components/common-swiper",
-    "common-news": "/components/common-news"
-  }
+  "softinputNavBar": "none"
 }

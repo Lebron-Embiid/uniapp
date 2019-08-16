@@ -41,6 +41,7 @@
     "pages/complete_mater/complete_mater",
     "pages/message_list/message_list",
     "pages/recharge/recharge",
+    "pages/agreement/agreement",
     "pages/detail/detail",
     "pages/test/test",
     "pages/ucenter/ucenter"
@@ -51,6 +52,7 @@
     "navigationBarBackgroundColor": "#00001f",
     "backgroundColor": "#FFFFFF"
   },
+  "usingComponents": {},
   "tabBar": {
     "color": "rgba(255,255,255,.7)",
     "selectedColor": "rgba(255,255,255,1)",
@@ -94,16 +96,17 @@
       "pages/list/list.html": {
         "window": {
           "usingComponents": {}
-        }
+        },
+        "nvue": true
       }
     }
   },
   "nvueCompiler": "weex",
+  "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": true,
     "autoclose": false
   },
   "appname": "呦蓝",
-  "compilerVersion": "2.1.3",
-  "usingComponents": {}
+  "compilerVersion": "2.2.1"
 }

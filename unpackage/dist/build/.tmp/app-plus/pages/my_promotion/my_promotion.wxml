@@ -1,1 +1,2 @@
-<view class="my_promotion_box data-v-2774aac5"><image class="code_bg data-v-2774aac5" src="{{code_bg}}" mode="widthFix" data-event-opts="{{[['longpress',[['toDownImg',['$event']]]]]}}" bindlongpress="__e"></image><text class="invite_txt copy data-v-2774aac5">{{"您的邀请人编号："+invitation_code}}</text><block wx:if="{{isproxy!=0}}"><block class="data-v-2774aac5"><text class="invite_txt invite_txt1 data-v-2774aac5" style="bottom:77px;">选择邀请码复制，长按图片下载</text></block></block></view>
+<import src="./my_promotion.vue.wxml" />
+    <template is="6acac94b" data="{{ ...$root['0'], $root }}"/>

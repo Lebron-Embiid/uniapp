@@ -32,7 +32,7 @@
             <view class="scroll_box">
                 <scroll-view class="scroll-view_H" scroll-x="true">
                     <view :id="item.ref" class="scroll-view-item_H" v-for="(item,index) in hot_products" @click="toProductDetail(item.id,item.cat_id)" :key="index">
-						<div class="p_img"><image :src="item.src" mode="aspectFit"></image></div>
+						<div class="p_img"><image :src="item.src" lazy-load="true" mode="aspectFit"></image></div>
 						<view class="product_content">
 							<view class="product_title">{{item.title}}</view>
 							<view class="product_price">￥{{item.price}}<text>已售：{{item.format}}</text></view>
@@ -49,7 +49,7 @@
 		        <scroll-view class="scroll-view" scroll-x="true">
 		            <view class="mater_item" v-for="(item,index) in mater_products" @click="toMaterDetail(item.id)" :key="index">
 		            	<view class="m_img">
-		            		<image :src="item.src" mode="aspectFill"></image>
+		            		<image :src="item.src" lazy-load="true" mode="aspectFill"></image>
 		            	</view>
 		            </view>
 		        </scroll-view>

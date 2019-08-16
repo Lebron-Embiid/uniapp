@@ -11,7 +11,7 @@
 				<view class="oi_left"><image :src="goods.goods_pic" mode="widthFix"></image></view>
 				<view class="oi_center">
 					<view class="oi_title">{{goods.goods_name}}</view>
-					<view class="oi_info"><text v-for="(attr,idx) in goods.attr_list" :key="idx">{{attr.attr_group_name}}: {{attr.attr_name}}</text></view>
+					<view class="oi_info"><text v-for="(attr,idxs) in goods.attr_list" :key="idxs">{{attr.attr_group_name}}: {{attr.attr_name}}</text></view>
 					<!-- <view class="oi_type">规格：{{goods.type}}</view> -->
 				</view>
 				<view class="oi_right">

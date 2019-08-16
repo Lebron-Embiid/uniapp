@@ -1,12 +1,10 @@
 {
+  "usingComponents": {},
   "navigationBarTitleText": "我的会员",
   "enablePullDownRefresh": true,
   "pullToRefresh": {
     "support": true,
     "color": "#00001f",
     "style": "circle"
-  },
-  "usingComponents": {
-    "common-agent": "/components/common-agent"
   }
 }

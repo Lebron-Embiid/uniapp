@@ -1,8 +1,4 @@
 {
-  "navigationBarTitleText": "收货地址",
-  "usingComponents": {
-    "city-picker": "/components/citypicker/cityPicker",
-    "addressd": "/components/jm-address/jm-address",
-    "w-picker": "/components/w-picker/w-picker"
-  }
+  "usingComponents": {},
+  "navigationBarTitleText": "收货地址"
 }

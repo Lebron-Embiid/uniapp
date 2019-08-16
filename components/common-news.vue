@@ -10,7 +10,7 @@
 				</view>
 			</view>
 			<view class="item_right">
-				<image :src="item.src" mode="aspectFill"></image>
+				<image :src="item.src" lazy-load="true" mode="aspectFill"></image>
 			</view>
 		</view>
 	</view>

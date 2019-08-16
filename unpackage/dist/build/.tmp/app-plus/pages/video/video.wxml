@@ -1,1 +1,2 @@
-<view class="video_box data-v-ad3018ba"><video id="myVideo" autoplay="true" direction="-90" show-fullscreen-btn="{{full}}" show-play-btn="{{play}}" show-center-play-btn="{{play}}" src="{{video}}" class="data-v-ad3018ba"></video><view class="video_title data-v-ad3018ba"><block wx:if="{{content!=''}}"><block class="data-v-ad3018ba"><u-parse vue-id="1" content="{{content}}" class="data-v-ad3018ba" bind:__l="__l"></u-parse></block></block></view></view>
+<import src="./video.vue.wxml" />
+    <template is="25e2cc83" data="{{ ...$root['0'], $root }}"/>

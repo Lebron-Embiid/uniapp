@@ -1,1 +1,2 @@
-<view class="news_box data-v-1ff2f450"><view class="search_box data-v-1ff2f450"><form data-event-opts="{{[['tap',[['toSearch',['$event']]]]]}}" class="form_box data-v-1ff2f450" bindtap="__e"><input type="text" placeholder="请输入您要搜索的关键词" name="keyword" value="" data-event-opts="{{[['input',[['getKeyword',['$event']]]]]}}" bindinput="__e" class="data-v-1ff2f450"/><button class="data-v-1ff2f450"><image src="../../static/search.png" mode="widthFix" class="data-v-1ff2f450"></image></button></form></view><view class="news_content data-v-1ff2f450"><common-news vue-id="1" news_list="{{news_list}}" class="data-v-1ff2f450" bind:__l="__l"></common-news></view></view>
+<import src="./news.vue.wxml" />
+    <template is="5efb7a2b" data="{{ ...$root['0'], $root }}"/>

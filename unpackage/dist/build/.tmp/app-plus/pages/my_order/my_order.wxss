@@ -24,6 +24,232 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.order_item.data-v-d4d630c8 {
+  background: #fff;
+  padding: 25rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+.order_item .order_top.data-v-d4d630c8 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border-bottom: 1px solid #F7F7F9;
+    padding-bottom: 20rpx;
+}
+.order_item .order_top view.data-v-d4d630c8 {
+      color: #797979;
+      font-size: 22rpx;
+}
+.order_item .order_top view image.data-v-d4d630c8 {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 10rpx 5rpx 0;
+        width: 26rpx;
+        height: 26rpx !important;
+}
+.order_item .order_top text.data-v-d4d630c8 {
+      font-size: 22rpx;
+}
+.order_item .order_top text.active.data-v-d4d630c8 {
+        color: #fa3930;
+}
+.order_item .order_info.data-v-d4d630c8 {
+    overflow: hidden;
+    padding: 20rpx 0 25rpx;
+    border-bottom: 1px solid #F7F7F9;
+}
+.order_item .order_info .oi_left.data-v-d4d630c8 {
+      float: left;
+      margin-right: 30rpx;
+      width: 140rpx;
+      height: 140rpx;
+      border: 1px solid #EAEAEA;
+}
+.order_item .order_info .oi_left image.data-v-d4d630c8 {
+        display: block;
+        width: 139rpx;
+        height: 139rpx !important;
+}
+.order_item .order_info .oi_center.data-v-d4d630c8 {
+      float: left;
+      width: 420rpx;
+}
+.order_item .order_info .oi_center .oi_title.data-v-d4d630c8 {
+        color: #1f1f1f;
+        font-size: 28rpx;
+        margin: 10rpx 0 5rpx;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        white-space: nowrap;
+}
+.order_item .order_info .oi_center .oi_info.data-v-d4d630c8, .order_item .order_info .oi_center .oi_type.data-v-d4d630c8 {
+        color: #747474;
+        font-size: 22rpx;
+        margin-bottom: 20rpx;
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+           text-overflow: ellipsis;
+        white-space: nowrap;
+}
+.order_item .order_info .oi_center .oi_type.data-v-d4d630c8 {
+        margin-bottom: 0;
+}
+.order_item .order_info .oi_right.data-v-d4d630c8 {
+      float: right;
+      text-align: right;
+}
+.order_item .order_info .oi_right .oi_price.data-v-d4d630c8 {
+        color: #797979;
+        font-size: 24rpx;
+        margin: 10rpx 0 6rpx;
+}
+.order_item .order_info .oi_right .oi_num.data-v-d4d630c8 {
+        color: #868686;
+        font-size: 20rpx;
+}
+.order_item .order_bottom.data-v-d4d630c8 {
+    overflow: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    margin-top: 20rpx;
+}
+.order_item .order_bottom .ob_price.data-v-d4d630c8 {
+      color: #797979;
+      font-size: 22rpx;
+}
+.order_item .order_bottom .ob_price text.data-v-d4d630c8 {
+        color: #fa3930;
+        font-size: 26rpx;
+}
+.order_item .order_bottom .ob_btn.data-v-d4d630c8 {
+      overflow: hidden;
+}
+.order_item .order_bottom .ob_btn button.data-v-d4d630c8 {
+        float: left;
+        color: #333;
+        font-size: 24rpx;
+        background: #fff;
+        border: 1px solid #9B9B9B;
+        margin-left: 25rpx;
+}
+.order_item .order_bottom .ob_btn button.data-v-d4d630c8:active {
+          color: #fa3930;
+          border: 1px solid #fa3930;
+}
+.order_item .order_bottom .ob_btn button.data-v-d4d630c8:after {
+          border: 0;
+}
+.pay_shadow.data-v-d4d630c8 {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 38;
+}
+.pay_shadow.active.data-v-d4d630c8 {
+    display: block;
+}
+.pay_type_box.data-v-d4d630c8 {
+  position: fixed;
+  width: 60%;
+  left: 50%;
+  top: 36%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 40;
+  background: #fff;
+  border-radius: 10rpx;
+  padding: 50rpx 30rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: none;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.pay_type_box.active.data-v-d4d630c8 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.pay_type_box .pay_title.data-v-d4d630c8 {
+    width: 100%;
+    text-align: center;
+    font-size: 30rpx;
+    margin-bottom: 50rpx;
+}
+.pay_type_box .pt_item.data-v-d4d630c8 {
+    font-size: 24rpx;
+    text-align: center;
+}
+.pay_type_box .pt_item image.data-v-d4d630c8 {
+      display: block;
+      width: 74rpx;
+      height: 69rpx;
+      margin: 0 auto 10rpx;
+}
+
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
 page.data-v-2738ab10 {
   background: #f5f5f5 !important;
   overflow: hidden;

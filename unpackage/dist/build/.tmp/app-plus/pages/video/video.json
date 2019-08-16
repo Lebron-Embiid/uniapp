@@ -1,8 +1,6 @@
 {
+  "usingComponents": {},
   "navigationBarTitleText": "视频",
   "animationType": "fade-in",
-  "animationDuration": 300,
-  "usingComponents": {
-    "u-parse": "/components/u-parse/u-parse"
-  }
+  "animationDuration": 300
 }

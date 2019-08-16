@@ -7,11 +7,11 @@
   "id": "__UNI__com.youlan.youlanapp",
   "name": "呦蓝",
   "version": {
-    "name": "3.0",
-    "code": 100
+    "name": "3.0.7",
+    "code": 107
   },
   "description": "呦蓝手机客户端是一款集线上商城、线上培训、素材分享、企业资讯等服务功能于一体的App",
-  "launch_path": "__uniapptabbar.html",
+  "launch_path": "__uniappservice.html",
   "developer": {
     "name": "",
     "email": "",
@@ -46,14 +46,14 @@
       "style": "light",
       "background": "#00001f"
     },
-    "usingComponents": true,
+    "usingComponents": false,
     "compatible": {
       "ignoreVersion": true
     },
     "distribute": {
       "icons": {
         "ios": {
-          "appstore": "static/app_logo.png",
+          "appstore": "unpackage/res/icons/1024x1024.png",
           "ipad": {
             "app": "unpackage/res/icons/76x76.png",
             "app@2x": "unpackage/res/icons/152x152.png",
@@ -89,6 +89,7 @@
         "permissions": [
           "<uses-feature android:name=\"android.hardware.camera\"/>",
           "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_CHECKIN_PROPERTIES\"/>",
           "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
           "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
           "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
@@ -116,7 +117,13 @@
           "<uses-permission android:name=\"android.permission.WRITE_USER_DICTIONARY\"/>"
         ]
       },
-      "apple": {},
+      "apple": {
+        "privacyDescription": {
+          "NSPhotoLibraryUsageDescription": "呦蓝会在发布素材和实名认证服务中访问您的相册权限，如果不允许的话将会导致图片无法上传。",
+          "NSCameraUsageDescription": "呦蓝在发布视频时需访问您的相机权限，如果不允许的话将会导致无法拍摄视频。",
+          "NSPhotoLibraryAddUsageDescription": "呦蓝会下载素材图片或视频保存到您的相册中，如果不允许的话将会导致图片和视频无法保存。"
+        }
+      },
       "plugins": {
         "oauth": {
           "weixin": {
@@ -152,17 +159,10 @@
       }
     },
     "uni-app": {
-      "compilerVersion": "2.1.3",
-      "control": "v8",
-      "nvueCompiler": "weex"
-    },
-    "secondwebview": {
-      "id": "1",
-      "launch_path": "__uniappview.html",
-      "kernel": "WKWebview",
-      "mode": "child",
-      "top": 0,
-      "bottom": 56
+      "compilerVersion": "2.2.1",
+      "control": "webview",
+      "nvueCompiler": "weex",
+      "renderer": "auto"
     }
   }
 }

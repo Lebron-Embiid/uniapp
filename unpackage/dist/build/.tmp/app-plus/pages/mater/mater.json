@@ -1,4 +1,5 @@
 {
+  "usingComponents": {},
   "navigationBarTitleText": "素材",
   "enablePullDownRefresh": true,
   "pullToRefresh": {
@@ -16,8 +17,5 @@
         "width": "auto"
       }
     ]
-  },
-  "usingComponents": {
-    "common-video": "/components/common-video"
   }
 }

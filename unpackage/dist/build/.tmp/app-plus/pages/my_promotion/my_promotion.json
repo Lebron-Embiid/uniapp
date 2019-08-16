@@ -1,10 +1,10 @@
 {
+  "usingComponents": {},
   "navigationBarTitleText": "我的推广",
   "enablePullDownRefresh": true,
   "pullToRefresh": {
     "support": true,
     "color": "#00001f",
     "style": "circle"
-  },
-  "usingComponents": {}
+  }
 }

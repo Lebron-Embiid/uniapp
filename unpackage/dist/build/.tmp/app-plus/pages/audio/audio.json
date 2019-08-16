@@ -1,7 +1,4 @@
 {
-  "navigationBarTitleText": "音频",
-  "usingComponents": {
-    "imt-audio": "/components/imt-audio/imt-audio",
-    "u-parse": "/components/u-parse/u-parse"
-  }
+  "usingComponents": {},
+  "navigationBarTitleText": "音频"
 }

@@ -1,6 +1,4 @@
 {
-  "navigationBarTitleText": "呦蓝百科",
-  "usingComponents": {
-    "u-parse": "/components/u-parse/u-parse"
-  }
+  "usingComponents": {},
+  "navigationBarTitleText": "呦蓝百科"
 }
