@@ -1,5 +1,4 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "发布图片",
   "enablePullDownRefresh": true,
   "pullToRefresh": {
@@ -17,5 +16,6 @@
         "width": "auto"
       }
     ]
-  }
+  },
+  "usingComponents": {}
 }

@@ -7,11 +7,11 @@
   "id": "__UNI__com.youlan.youlanapp",
   "name": "呦蓝",
   "version": {
-    "name": "3.0.7",
-    "code": 107
+    "name": "3.0.8",
+    "code": 108
   },
   "description": "呦蓝手机客户端是一款集线上商城、线上培训、素材分享、企业资讯等服务功能于一体的App",
-  "launch_path": "__uniappservice.html",
+  "launch_path": "__uniapptabbar.html",
   "developer": {
     "name": "",
     "email": "",
@@ -46,7 +46,7 @@
       "style": "light",
       "background": "#00001f"
     },
-    "usingComponents": false,
+    "usingComponents": true,
     "compatible": {
       "ignoreVersion": true
     },
@@ -159,10 +159,18 @@
       }
     },
     "uni-app": {
-      "compilerVersion": "2.2.1",
-      "control": "webview",
+      "compilerVersion": "2.2.2",
+      "control": "v8",
       "nvueCompiler": "weex",
       "renderer": "auto"
+    },
+    "secondwebview": {
+      "id": "1",
+      "launch_path": "__uniappview.html",
+      "kernel": "WKWebview",
+      "mode": "child",
+      "top": 0,
+      "bottom": 56
     }
   }
 }

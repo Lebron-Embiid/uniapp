@@ -45,7 +45,6 @@
 			//返回prev事件
 			prev() {
 				this.$emit('prev')
-				
 			},
 			//返回next事件
 			next() {

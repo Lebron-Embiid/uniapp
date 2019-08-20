@@ -17,7 +17,7 @@
 			</view>
 		</view>
 		<view class="acc_item borbom">
-			<text>支付方式</text acc_right>
+			<text>支付方式</text>
 			<!-- <view class="pr45"> -->
 				<!-- 支付方式 -->
 				<!-- <image  src="../../static/next.png" mode="widthFix"></image> -->
@@ -82,22 +82,22 @@
 				express_price: 0,
 				accountList:[
 					{
-						id: 1,
-						img: "../../static/order_img1.jpg",
-						title: "艾璐卡柔雾丝绒唇釉",
-						info: "持久滋润·饱满显色·细腻亮泽·抚平唇纹",
-						num: 1,
-						type: "6.8ml",
-						price: 118
+						// id: 1,
+						// img: "../../static/order_img1.jpg",
+						// title: "艾璐卡柔雾丝绒唇釉",
+						// info: "持久滋润·饱满显色·细腻亮泽·抚平唇纹",
+						// num: 1,
+						// type: "6.8ml",
+						// price: 118
 					},
 					{
-						id: 2,
-						img: "../../static/order_img2.jpg",
-						title: "艾璐卡柔雾丝绒唇釉",
-						info: "持久滋润·饱满显色·细腻亮泽·抚平唇纹",
-						num: 1,
-						type: "6.8ml",
-						price: 138
+						// id: 2,
+						// img: "../../static/order_img2.jpg",
+						// title: "艾璐卡柔雾丝绒唇釉",
+						// info: "持久滋润·饱满显色·细腻亮泽·抚平唇纹",
+						// num: 1,
+						// type: "6.8ml",
+						// price: 138
 					}
 				],
 				all: 118,

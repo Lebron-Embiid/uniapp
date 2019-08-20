@@ -1,5 +1,4 @@
 {
-  "usingComponents": {},
   "navigationStyle": "custom",
   "navigationBarTitleText": "",
   "enablePullDownRefresh": true,
@@ -8,5 +7,8 @@
     "color": "#00001f",
     "style": "circle"
   },
-  "titleNView": false
+  "titleNView": false,
+  "usingComponents": {
+    "uni-load-more": "/components/uni-load-more/uni-load-more"
+  }
 }

@@ -52,7 +52,6 @@
     "navigationBarBackgroundColor": "#00001f",
     "backgroundColor": "#FFFFFF"
   },
-  "usingComponents": {},
   "tabBar": {
     "color": "rgba(255,255,255,.7)",
     "selectedColor": "rgba(255,255,255,1)",
@@ -108,5 +107,6 @@
     "autoclose": false
   },
   "appname": "呦蓝",
-  "compilerVersion": "2.2.1"
+  "compilerVersion": "2.2.2",
+  "usingComponents": {}
 }

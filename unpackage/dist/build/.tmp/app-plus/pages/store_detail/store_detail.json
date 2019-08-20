@@ -1,5 +1,4 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "产品详情",
   "enablePullDownRefresh": true,
   "pullToRefresh": {
@@ -9,5 +8,9 @@
   },
   "titleNView": {
     "type": "transparent"
+  },
+  "usingComponents": {
+    "u-parse": "/components/u-parse/u-parse",
+    "common-swiper": "/components/common-swiper"
   }
 }

@@ -43,7 +43,7 @@
 		},
 		onLaunch: function () {
 			this.$options.globalData.audio = uni.createInnerAudioContext();
-			
+			// console.log(this.$options.globalData.audio);
 			switch(uni.getSystemInfoSync().platform){
 				case 'android':
 					console.log('运行Android上')

@@ -66,6 +66,9 @@ export default{
 		var that = this;
 		that.$access_token = uni.getStorageSync("access_token");
 		that.$level = uni.getStorageSync("level");
+		uni.showLoading({
+			title: '加载中'
+		})
 		uni.request({
 			url: that.$api+'default/video-detail&access_token='+that.$access_token+'&id='+that.id,
 			method: 'GET',
@@ -76,20 +79,23 @@ export default{
 			success: res => {
 				that.title = res.data.data.title;
 				that.look = res.data.data.num;
-				that.src = res.data.data.url;
-				innerAudioContext.src = res.data.data.url;
+				that.src = 'http://'+res.data.data.url;
+				innerAudioContext.src = 'http://'+res.data.data.url;
 				console.log(innerAudioContext.src)
 				innerAudioContext.onCanplay(function(){
 					that.duration = parseInt(Math.ceil(innerAudioContext.duration));
+					console.log(that.duration);
 				}) 
 				that.audio_logo = res.data.data.pic_url;
 				that.content = res.data.data.content;
+				uni.hideLoading();
 			},
 			fail: (res) => {
 				uni.showToast({
 					title:res.data.msg,
 					icon:'none',
 				});
+				uni.hideLoading();
 			}
 		});
 	},

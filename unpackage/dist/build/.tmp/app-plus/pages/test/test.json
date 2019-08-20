@@ -1,8 +1,10 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "倒数",
   "enablePullDownRefresh": true,
   "titleNView": {
     "type": "transparent"
+  },
+  "usingComponents": {
+    "sunsin-upimg": "/components/sunui-upimg/sunui-upimg"
   }
 }

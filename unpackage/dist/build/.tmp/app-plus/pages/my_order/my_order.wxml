@@ -1,2 +1,1 @@
-<import src="./my_order.vue.wxml" />
-    <template is="221fe5aa" data="{{ ...$root['0'], $root }}"/>
+<view class="my_order_box data-v-2738ab10"><view class="page_bg data-v-2738ab10"></view><view class="order_nav data-v-2738ab10"><block wx:for="{{navbar}}" wx:for-item="item" wx:for-index="index" wx:key="index"><view data-event-opts="{{[['tap',[['navbarTap',[index]]]]]}}" class="{{['data-v-2738ab10',currentTab==index?'active':'']}}" bindtap="__e">{{item.name}}</view></block></view><view class="order_list data-v-2738ab10"><common-order vue-id="1" orderList="{{orderList}}" current="{{currentTab}}" class="data-v-2738ab10" bind:__l="__l"></common-order></view></view>

@@ -28,6 +28,7 @@
 			</view>
 			<view class="section def">
 				<text>客服工作时间：周一至周五9:00-18:00</text>
+				<text>客服邮箱：3347235855@qq.com</text>
 				<text>非工作时间请留言，客服上班后将尽快给您答复或与您联系。</text>
 			</view>
 			<view class="btn-area">
