@@ -105,7 +105,8 @@
 				total_price:0,
 				mch_list:[],
 				payment:0,
-				pay_type:'WECHAT_PAY'				
+				pay_type:'WECHAT_PAY',
+				click_num: 0
 			}
 		},
 		onBackPress() {
@@ -146,6 +147,10 @@
 			},
 			toSubmit: function(e){
 				var that = this;
+				// that.click_num++;
+				// if(that.click_num > 1){
+				// 	return false;
+				// }
 				uni.showLoading({
 					title: "加载中",
 					mask: true
